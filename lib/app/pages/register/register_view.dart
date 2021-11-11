@@ -1,7 +1,16 @@
+import 'package:dwellu/app/widgets/form%20fields/custom_button.dart';
+import 'package:dwellu/app/widgets/form%20fields/custom_field_layout.dart';
+import 'package:dwellu/app/widgets/form%20fields/custom_flat_button.dart';
+import 'package:dwellu/app/widgets/form%20fields/custom_icon_button.dart';
+import 'package:dwellu/app/widgets/form%20fields/custom_select_field.dart';
+import 'package:dwellu/app/widgets/form%20fields/custom_text_field.dart';
+import 'package:dwellu/app/widgets/form%20fields/title_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:dwellu/app/pages/register/register_controller.dart';
 import 'package:dwellu/data/repositories/data_authentication_repository.dart';
+import 'package:dwellu/app/widgets/custom_appbar.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 
 
@@ -22,107 +31,134 @@ class _RegisterPageState extends ViewState<RegisterPage, RegisterController> {
   Widget get view {
     return Scaffold(
       key: globalKey,
-      appBar: AppBar(
-        title: Text('Registration Form'),
+      appBar: CustomAppBar(
+        title: 'Create an Account',
+        centerTitle: true,
       ),
+      backgroundColor: Colors.white,
       body: ControlledWidgetBuilder<RegisterController>(
         builder: (context, controller) {
-          var _formKey = controller.registerFormKey;
+          Size size = MediaQuery.of(context).size;
 
-          return Form(
-            key: _formKey,
-            child: ListView(
+          return SingleChildScrollView(
+            padding: EdgeInsets.only(bottom: 50.0),
+            child: Column(
               children: [
-                Container(
-                  padding: EdgeInsets.symmetric(horizontal: 70.0),
-                  child: TextFormField(
-                    controller: controller.firstNameTextController,
-                    decoration: InputDecoration(
-                      labelText: 'First Name',
-                      hintText: 'Input your First Name',
-                    ),
-                    validator: (value) {
-                      if (value.length < 1 || value == null)
-                        return "Enter your first name";
-                      else
-                        return null;
-                    },
+                SizedBox(
+                  height: size.height,
+                  child: Stack(
+                    overflow: Overflow.visible,
+                    children: [
+                      Container(
+                        height: size.height * 0.33,
+                        child: Stack(
+                          children: <Widget>[
+                            Container(
+                              decoration: BoxDecoration(
+                                gradient: LinearGradient(
+                                  begin: FractionalOffset.bottomCenter,
+                                  end: FractionalOffset.topCenter,
+                                  colors: [Color.fromRGBO(51, 212, 157, 1.0), Color.fromRGBO(229, 250, 243, 0.9)]
+                                ),
+                                borderRadius: BorderRadius.only(
+                                  bottomLeft: Radius.circular(30.0),
+                                  bottomRight: Radius.circular(30.0)
+                                ),
+                              ),
+                            ),
+                            Container(
+                              alignment: Alignment.center,
+                              child: SizedBox(
+                                width: 200,
+                                height: 200,
+                                child: SvgPicture.asset('assets/create_account.svg')
+                              )
+                            ),
+                          ]
+                        ),
+                      ),
+                      Positioned(
+                        top: size.height * 0.31,
+                        left: 0,
+                        right: 0,
+                        child: Container(
+                          margin: EdgeInsets.symmetric(horizontal: 40.0),  
+                          padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.all(Radius.circular(4.0)),
+                            boxShadow: [
+                              BoxShadow(
+                                offset: Offset(0, 4),
+                                blurRadius: 5,
+                                color: Color.fromRGBO(0, 0, 0, 0.25)
+                              )
+                            ]
+                          ),
+                          child: Form(
+                            child: Column(
+                              children: [
+                                TitleField(
+                                  title: 'Enter Full Name'
+                                ),
+                                CustomFieldLayout(
+                                  child: Row(
+                                    children: [
+                                      Flexible(
+                                        child: CustomTextField(
+                                          hintText: 'First Name',
+                                        ),
+                                      ),
+                                      SizedBox(width: 8.0),
+                                      Flexible(
+                                        child: CustomTextField(
+                                          hintText: 'Last Name',
+                                        ),
+                                      ),
+                                    ],
+                                  )
+                                ),
+                                TitleField(
+                                  title: 'Enter Mobile Number'
+                                ),
+                                CustomTextField(
+                                  hintText: '+63',
+                                ),
+                                TitleField(
+                                  title: 'I am a'
+                                ),
+                                CustomSelectField(
+                                  isRequired: true, 
+                                  value: null,
+                                  items: ['Real Estate Broker', 'Real Estate Salesperson'],
+                                  onChanged: (val) {
+                                    print(val);
+                                  },
+                                ),
+                                TitleField(
+                                  title: 'Enter your License #'
+                                ),
+                                CustomTextField(
+                                  hintText: 'Enter your License #',
+                                ),
+                                SizedBox(height: 20.0),
+                                CustomIconButton(
+                                  iconData: Icons.arrow_right_alt,
+                                  onPressed: () {},
+                                )
+                              ],
+                            ),
+                          ),
+                        )
+                      )
+                    ],
                   ),
-                ),
-                Container(
-                  padding: EdgeInsets.symmetric(horizontal: 70.0),
-                  child: TextFormField(
-                    controller: controller.lastNameTextController,
-                    decoration: InputDecoration(
-                      labelText: 'Last Name',
-                      hintText: 'Input your Last Name',
-                    ),
-                    validator: (value) {
-                      if (value.length < 1 || value == null)
-                        return "Enter your last name";
-                      else
-                        return null;
-                    },
-                  ),
-                ),
-                Container(
-                  padding: EdgeInsets.symmetric(horizontal: 70.0),
-                  child: TextFormField(
-                    controller: controller.emailTextController,
-                    decoration: InputDecoration(
-                      labelText: 'Email',
-                      hintText: 'Input your Email Address',
-                    ),
-                    validator: (value) {
-                      Pattern emailPattern = r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
-                      RegExp regex = new RegExp(emailPattern);
-                      if (!regex.hasMatch(value))
-                        return 'Enter Valid Email';
-                      else
-                        return null;
-                    },
-                  ),
-                ),
-                Container(
-                  padding: EdgeInsets.symmetric(horizontal: 70.0),
-                  child: TextFormField(
-                    controller: controller.passwordTextController,
-                    obscureText: true,
-                    decoration: InputDecoration(
-                      labelText: 'Password',
-                      hintText: 'Input your Password',
-                    ),
-                    validator: (value) {
-                      if (value.length < 1 || value == null)
-                        return "Enter your password";
-                      else if (value.length < 5)
-                        return "Password must be at least 5 characters";
-                      else
-                        return null;
-                    },
-                  ),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    TextButton(  
-                      child: Text('Register', style: TextStyle(fontSize: 20.0)), 
-                      onPressed: () {
-                        print('register user');
-                        if (_formKey.currentState.validate()) {
-                          _formKey.currentState.save();
-                          controller.register();
-                        }
-                      },  
-                    ),
-                  ],
-                ),
-                
+                )
               ],
             ),
           );
         }
-      ),
+      )
     );
   }
   
