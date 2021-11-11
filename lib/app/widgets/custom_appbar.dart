@@ -1,3 +1,4 @@
+import 'package:dwellu/app/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 
 class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
@@ -23,14 +24,11 @@ class _CustomAppBarState extends State<CustomAppBar>{
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      title: Text(
-        widget.title,
-        style: TextStyle(
-          color: Color(0xff2E353D),
-          fontFamily: 'Poppins',
-          fontSize: 18.0,
-          fontWeight: FontWeight.w600
-        ),
+      title: CustomText(
+        text: widget.title,
+        color: Color(0xff2E353D),
+        fontSize: 18.0,
+        fontWeight: FontWeight.w600
       ),
       centerTitle: widget.centerTitle,
       backgroundColor: Colors.white,

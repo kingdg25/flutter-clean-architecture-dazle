@@ -1,4 +1,5 @@
 import 'package:dwellu/app/utils/dwellu.dart';
+import 'package:dwellu/app/widgets/custom_text.dart';
 import 'package:dwellu/app/widgets/form%20fields/custom_field_layout.dart';
 import 'package:flutter/material.dart';
 
@@ -11,7 +12,6 @@ class CustomSelectField extends StatelessWidget {
 
   final String hintText;
   final double fontSize;
-  final double labelFontSize;
 
   final Function validator;
   final Function onTap;
@@ -24,7 +24,6 @@ class CustomSelectField extends StatelessWidget {
     @required this.items,
     this.hintText,
     this.fontSize = 16.0,
-    this.labelFontSize = 16.0,
     this.validator,
     this.onTap,
     this.onSaved
@@ -36,12 +35,9 @@ class CustomSelectField extends StatelessWidget {
         return arr.map<DropdownMenuItem<String>>((item) =>
           new DropdownMenuItem<String>(
             value: item ?? '',
-            child: Text(
-              item ?? '', 
-              style: TextStyle(
-                color: Dwellu.appTextColor,
-                fontFamily: "Poppins",
-              )
+            child: CustomText(
+              text: item ?? '', 
+              color: Dwellu.appTextColor
             ),
           )
         ).toList();

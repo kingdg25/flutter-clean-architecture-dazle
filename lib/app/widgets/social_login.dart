@@ -1,3 +1,4 @@
+import 'package:dwellu/app/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'dart:io' show Platform;
 
@@ -57,15 +58,11 @@ class SocialLogin extends StatelessWidget {
                 ),
               ),
               Flexible(
-                child: Text(
-                  text,
-                  style: TextStyle(
-                    fontSize: 16.0,
-                    fontFamily: "SF Pro",
-                    fontWeight: FontWeight.w500,
-                    color: textColor,
-                  ),
-                  overflow: TextOverflow.ellipsis,
+                child: CustomText(
+                  text: text,
+                  fontSize: 16.0,
+                  fontWeight: FontWeight.w500,
+                  color: textColor,
                   textAlign: TextAlign.center
                 ),
               ),

@@ -1,4 +1,5 @@
 import 'package:dwellu/app/utils/dwellu.dart';
+import 'package:dwellu/app/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 
 
@@ -40,14 +41,11 @@ class CustomButton extends StatelessWidget {
     bool main,
     double fontSize,
   }) {
-    return Text(
-      text,
-      style: TextStyle(
-        color: (textColor != null) ? textColor : (main ? Colors.white : backgroudColor),
-        fontSize: fontSize,
-        fontFamily: 'Montserrat',
-        fontWeight: FontWeight.w700,
-      ),
+    return CustomText(
+      text: text,
+      color: (textColor != null) ? textColor : (main ? Colors.white : backgroudColor),
+      fontSize: fontSize,
+      fontWeight: FontWeight.w700,
     );
   }
 
