@@ -1,6 +1,5 @@
-import 'package:dwellu/app/widgets/form%20fields/custom_button.dart';
+import 'package:dwellu/app/utils/dwellu.dart';
 import 'package:dwellu/app/widgets/form%20fields/custom_field_layout.dart';
-import 'package:dwellu/app/widgets/form%20fields/custom_flat_button.dart';
 import 'package:dwellu/app/widgets/form%20fields/custom_icon_button.dart';
 import 'package:dwellu/app/widgets/form%20fields/custom_select_field.dart';
 import 'package:dwellu/app/widgets/form%20fields/custom_text_field.dart';
@@ -58,7 +57,7 @@ class _RegisterPageState extends ViewState<RegisterPage, RegisterController> {
                                 gradient: LinearGradient(
                                   begin: FractionalOffset.bottomCenter,
                                   end: FractionalOffset.topCenter,
-                                  colors: [Color.fromRGBO(51, 212, 157, 1.0), Color.fromRGBO(229, 250, 243, 0.9)]
+                                  colors: [Dwellu.appMainColor, Color.fromRGBO(229, 250, 243, 0.9)]
                                 ),
                                 borderRadius: BorderRadius.only(
                                   bottomLeft: Radius.circular(30.0),

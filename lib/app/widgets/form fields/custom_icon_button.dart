@@ -1,3 +1,4 @@
+import 'package:dwellu/app/utils/dwellu.dart';
 import 'package:flutter/material.dart';
 
 class CustomIconButton extends StatelessWidget {
@@ -19,7 +20,7 @@ class CustomIconButton extends StatelessWidget {
       child: FlatButton(
         materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
         padding: EdgeInsets.symmetric(vertical: 6.0),
-        color: Color.fromRGBO(51, 212, 157, 1.0),
+        color: Dwellu.appMainColor,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(5.0))
         ),
