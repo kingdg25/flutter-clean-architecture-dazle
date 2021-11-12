@@ -37,6 +37,7 @@ class _RegisterPageState extends ViewState<RegisterPage, RegisterController> {
       backgroundColor: Colors.white,
       body: ControlledWidgetBuilder<RegisterController>(
         builder: (context, controller) {
+          var _formKey = controller.registerFormKey;
           Size size = MediaQuery.of(context).size;
 
           return SingleChildScrollView(
@@ -95,6 +96,7 @@ class _RegisterPageState extends ViewState<RegisterPage, RegisterController> {
                             ]
                           ),
                           child: Form(
+                            key: _formKey,
                             child: Column(
                               children: [
                                 TitleField(
@@ -105,12 +107,14 @@ class _RegisterPageState extends ViewState<RegisterPage, RegisterController> {
                                     children: [
                                       Flexible(
                                         child: CustomTextField(
+                                          controller: controller.firstNameTextController,
                                           hintText: 'First Name',
                                         ),
                                       ),
                                       SizedBox(width: 8.0),
                                       Flexible(
                                         child: CustomTextField(
+                                          controller: controller.lastNameTextController,
                                           hintText: 'Last Name',
                                         ),
                                       ),
