@@ -27,7 +27,7 @@ class CustomButton extends StatelessWidget {
     this.expanded = false,
     this.main = true,
     this.fontSize = 13.0,
-    this.height = 46.0,
+    this.height = 40.0,
     this.width,
     this.borderRadius = 15.0,
     this.backgroudColor = Dwellu.appMainColor,
@@ -66,7 +66,7 @@ class CustomButton extends StatelessWidget {
         child: Container(
           constraints: BoxConstraints(
             minWidth: 100,
-            maxWidth: 270,
+            maxWidth: 300,
           ),
           height: height,
           width: width,

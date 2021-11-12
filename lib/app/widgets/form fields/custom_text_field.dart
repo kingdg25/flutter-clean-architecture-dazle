@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 
 class CustomTextField extends StatelessWidget {
   final String hintText;
+  final Color hintColor;
   final TextEditingController controller;
 
   final String initialValue;
@@ -15,27 +16,31 @@ class CustomTextField extends StatelessWidget {
   
   final TextInputType keyboardType;
   final double fontSize;
-  final double labelFontSize;
 
   final Function validator;
   final Function onTap;
   final Function onSaved;
 
   final List<TextInputFormatter> inputFormatters;
+
+  final Color fillColor;
+  final bool filled;
   
   CustomTextField({
     this.hintText,
+    this.hintColor = const Color.fromRGBO(154, 160, 166, 1.0),
     this.controller,
     this.initialValue,
     this.readOnly = false,
     this.isRequired = false,
     this.keyboardType = TextInputType.text,
     this.fontSize = 16.0,
-    this.labelFontSize = 16.0,
     this.validator,
     this.onTap,
     this.onSaved,
-    this.inputFormatters
+    this.inputFormatters,
+    this.fillColor = const Color.fromRGBO(255, 255, 255, 0.4),
+    this.filled = false
   });
 
   @override
@@ -63,17 +68,25 @@ class CustomTextField extends StatelessWidget {
         ),
         decoration: InputDecoration(
           isDense: true,
+          filled: filled,
+          fillColor: fillColor,
           contentPadding: EdgeInsets.all(14.0),
-          border: OutlineInputBorder(),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(5.0)
+          ),
           enabledBorder: OutlineInputBorder(
-            borderSide:  BorderSide(color: Color.fromRGBO(154, 160, 166, 1.0)),
+            borderSide:  BorderSide(
+              color: filled ? fillColor : Color.fromRGBO(154, 160, 166, 1.0)
+            ),
           ),
           focusedBorder: OutlineInputBorder(
-            borderSide:  BorderSide(color: Color.fromRGBO(154, 160, 166, 1.0)),
+            borderSide:  BorderSide(
+              color: filled ? fillColor : Color.fromRGBO(154, 160, 166, 1.0)
+            ),
           ),
           hintText: hintText,
           hintStyle: TextStyle(
-            color: Color.fromRGBO(154, 160, 166, 1.0)
+            color: hintColor
           )
         ),
       )
