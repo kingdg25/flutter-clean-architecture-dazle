@@ -1,4 +1,9 @@
-import 'package:flutter/gestures.dart';
+import 'package:dwellu/app/utils/dwellu.dart';
+import 'package:dwellu/app/widgets/custom_text.dart';
+import 'package:dwellu/app/widgets/form%20fields/custom_button.dart';
+import 'package:dwellu/app/widgets/form%20fields/custom_flat_button.dart';
+import 'package:dwellu/app/widgets/form%20fields/custom_text_field.dart';
+import 'package:dwellu/app/widgets/form%20fields/custom_password_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:dwellu/app/pages/login/login_controller.dart';
@@ -256,147 +261,162 @@ class _LoginPageState extends ViewState<LoginPage, LoginController> {
   Widget get view {
     return Scaffold(
       key: globalKey,
-      appBar: AppBar(
-        title: Text('Login Form'),
-      ),
-      body: Column(
-        children: [
-          ControlledWidgetBuilder<LoginController>(
-            builder: (context, controller) {
-              var _formKey = controller.loginFormKey;
+      backgroundColor: Dwellu.appMainColor,
+      body: ControlledWidgetBuilder<LoginController>(
+        builder: (context, controller) {
+          var _formKey = controller.loginFormKey;
 
-              return Form(
-                key: _formKey,
-                child: ListView(
-                  shrinkWrap: true,
+          return Center(
+            child: SingleChildScrollView(
+              padding: EdgeInsets.only(
+                top: MediaQuery.of(context).orientation == Orientation.landscape ? 80.0 : 20.0,
+                bottom: 40.0,
+                left: 40.0,
+                right: 40.0
+              ),
+              child: Container(
+                constraints: BoxConstraints(maxWidth: 300, minWidth: 250),
+                child: Column(
                   children: [
-                    Container(
-                      padding: EdgeInsets.symmetric(horizontal: 70.0),
-                      child: TextFormField(
-                        controller: controller.emailTextController,
-                        decoration: InputDecoration(
-                          labelText: 'Email',
-                          hintText: 'Input your Email Address',
-                        ),
-                        validator: (value) {
-                          Pattern emailPattern = r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
-                          RegExp regex = new RegExp(emailPattern);
-                          if (!regex.hasMatch(value))
-                            return 'Enter Valid Email';
-                          else
-                            return null;
-                        },
+                    CustomText(
+                      text: "Welcome",
+                      fontSize: 30.0,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold
+                    ),
+                    CustomText(
+                      text: 'Sign in to continue',
+                      fontSize: 18.0,
+                      color: Colors.white,
+                      fontWeight: FontWeight.w500,
+                    ),
+                    SizedBox(height: 30.0),
+                    Form(
+                      key: _formKey,
+                      child: Column(
+                        children: [
+                          CustomTextField(
+                            controller: controller.emailTextController,
+                            hintText: 'Email Address',
+                            filled: true,
+                            hintColor: Colors.white,
+                            validator: (value) {
+                              Pattern emailPattern = r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+                              RegExp regex = new RegExp(emailPattern);
+                              if (!regex.hasMatch(value)){
+                                return 'Enter Valid Email';
+                              }
+                              return null;
+                            },
+                          ),
+                          CustomPasswordField(
+                            controller: controller.passwordTextController,
+                            hintText: 'Password',
+                            filled: true,
+                            hintColor: Colors.white,
+                            validator: (value) {
+                              if (value.length < 8) {
+                                return "Password must be at least 8 characters.";
+                              }
+                              return null;
+                            },
+                          )
+                        ],
                       ),
                     ),
                     Container(
-                      padding: EdgeInsets.symmetric(horizontal: 70.0),
-                      child: TextFormField(
-                        controller: controller.passwordTextController,
-                        obscureText: true,
-                        decoration: InputDecoration(
-                          labelText: 'Password',
-                          hintText: 'Input your Password',
-                        ),
-                        validator: (value) {
-                          if (value.length < 1 || value == null)
-                            return "Enter your password";
-                          else if (value.length < 5)
-                            return "Password must be at least 5 characters";
-                          else
-                            return null;
-                        },
-                      ),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        TextButton(  
-                          child: Text('Login', style: TextStyle(fontSize: 20.0)), 
-                          onPressed: () {
-                            print('login user');
-                            if (_formKey.currentState.validate()) {
-                              _formKey.currentState.save();
-                              controller.login();
-                            }
-                          },  
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              );
-            }
-          ),
-          SizedBox(height: 30.0),
-          Container(
-            child: ControlledWidgetBuilder<LoginController>(
-              builder: (context, controller) {
-                return Text.rich(
-                  TextSpan(
-                    children: [
-                      TextSpan(
-                        text: 'Forgot Password',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold
-                        ),
-                        recognizer: TapGestureRecognizer()
-                        ..onTap = () async {
+                      alignment: Alignment.centerRight,
+                      child: CustomFlatButton(
+                        text: 'Forgot Password?',
+                        color: Colors.white,
+                        fontSize: 13.0,
+                        onPressed: () {
                           forgotPassDialog(
                             controller: controller,
                           );
                         }
-                      )
-                    ]
-                  ),
-                  textAlign: TextAlign.center,
-                );
-              }
-            ),
-          ),
-          SizedBox(height: 50.0),
-          Container(
-            child: Text.rich(
-              TextSpan(
-                children: [
-                  TextSpan(
-                    text: 'Not yet registered? '
-                  ),
-                  TextSpan(
-                    text: 'Register here',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold
+                      ),
                     ),
-                    recognizer: TapGestureRecognizer()
-                    ..onTap = () async {
-                      print('go to restration form');
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (buildContext) => RegisterPage()
+                    SizedBox(height: 30.0),
+                    CustomButton(
+                      text: 'SIGN IN',
+                      backgroudColor: Color.fromRGBO(0, 126, 203, 1.0),
+                      expanded: true,
+                      borderRadius: 10.0,
+                      onPressed: () {
+                        FocusScope.of(context).unfocus();
+
+                        if (_formKey.currentState.validate()) {
+                          _formKey.currentState.save();
+                          controller.login();
+                        }
+                      }
+                    ),
+                    SizedBox(height: 30.0),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Expanded(
+                          child: Divider(
+                            color: Colors.white,
+                            thickness: 1.0,
+                            endIndent: 8.0,
+                          ),
+                        ),
+                        CustomText(
+                          text: 'OR',
+                          fontSize: 11.0,
+                          color: Colors.white,
+                          fontWeight: FontWeight.w400,
+                        ),
+                        Expanded(
+                          child: Divider(
+                            color: Colors.white,
+                            thickness: 1.0,
+                            indent: 8.0,
+                          ),
                         )
-                      );
-                    }
-                  )
-                ]
+                      ],
+                    ),
+                    SizedBox(height: 30.0),
+                    SocialLogin(
+                      googleHandleSignIn: controller.googleSignIn,
+                      facebookHandleSignIn: controller.facebookSignIn,
+                      appleHandleSignIn: null, 
+                    ),
+                    SizedBox(height: 80.0),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Flexible(
+                          child: CustomText(
+                            text: "Don’t have an account yet?",
+                            color: Colors.white,
+                            fontWeight: FontWeight.w500,
+                          )
+                        ),
+                        CustomFlatButton(
+                          text: 'Click here',
+                          color: Color.fromRGBO(0, 126, 203, 1.0),
+                          fontWeight: FontWeight.w500,
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (buildContext) => RegisterPage()
+                              )
+                            );
+                          },
+                        )
+                      ]
+                    )
+                  ],
+                ),
               ),
-              textAlign: TextAlign.center,
             ),
-          ),
-          SizedBox(height: 50.0),
-          Container(
-            padding: EdgeInsets.symmetric(horizontal: 70.0),
-            child: ControlledWidgetBuilder<LoginController>(
-              builder: (context, controller) {
-                return SocialLogin(
-                  googleHandleSignIn: controller.googleSignIn,
-                  facebookHandleSignIn: controller.facebookSignIn,
-                  appleHandleSignIn: null, 
-                );
-              }
-            )
-          )
-        ],
-      ),
+          );
+        }
+      )
     );
   }
 }
