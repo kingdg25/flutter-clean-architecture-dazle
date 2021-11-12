@@ -9,6 +9,8 @@ class RegisterController extends Controller {
   GlobalKey<FormState> _registerFormKey = GlobalKey<FormState>();
   GlobalKey<FormState> get registerFormKey => _registerFormKey;
 
+  PageController registerPageController;
+
   final TextEditingController _firstNameTextController;
   TextEditingController get firstNameTextController => _firstNameTextController;
 
@@ -30,6 +32,7 @@ class RegisterController extends Controller {
       _lastNameTextController = TextEditingController(),
       _emailTextController = TextEditingController(),
       _passwordTextController = TextEditingController(),
+      registerPageController = PageController(),
       super();
   
 
