@@ -1,7 +1,7 @@
 import 'dart:ui';
 
-import 'package:dwellu/app/utils/dwellu.dart';
-import 'package:dwellu/app/widgets/form%20fields/custom_field_layout.dart';
+import 'package:dwellu/app/utils/app.dart';
+import 'package:dwellu/app/widgets/form_fields/custom_field_layout.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -62,7 +62,7 @@ class CustomTextField extends StatelessWidget {
         keyboardType: keyboardType,
         style: TextStyle(
           decorationStyle: TextDecorationStyle.dotted,
-          color: Dwellu.appTextColor,
+          color: App.appTextColor,
           fontFamily: "Poppins",
           fontSize: fontSize
         ),

@@ -1,4 +1,4 @@
-import 'package:dwellu/app/utils/dwellu.dart';
+import 'package:dwellu/app/utils/app.dart';
 import 'package:dwellu/app/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 
@@ -30,7 +30,7 @@ class CustomButton extends StatelessWidget {
     this.height = 40.0,
     this.width,
     this.borderRadius = 5.0,
-    this.backgroudColor = Dwellu.appMainColor,
+    this.backgroudColor = App.appMainColor,
     this.textColor,
     this.elevation = 0.0,
     this.disabledColor = Colors.white30,

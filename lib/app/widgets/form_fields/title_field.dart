@@ -1,4 +1,3 @@
-import 'package:dwellu/app/utils/dwellu.dart';
 import 'package:dwellu/app/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 
@@ -21,9 +20,9 @@ class TitleField extends StatelessWidget {
   Widget mainText() {
     return CustomText(
       text: title,
-      color: Dwellu.appTextColor,
+      color: Color.fromRGBO(46, 53, 61, 1.0),
       fontSize: fontSize, 
-      fontWeight: FontWeight.w400,
+      fontWeight: FontWeight.w500,
     );
   }
 
@@ -44,9 +43,9 @@ class TitleField extends StatelessWidget {
         ]
       ),
       style: TextStyle(
-        color: Dwellu.appTextColor,
+        color: Color.fromRGBO(46, 53, 61, 1.0),
         fontSize: fontSize, 
-        fontWeight: FontWeight.w400,
+        fontWeight: FontWeight.w500,
         fontFamily: 'Poppins',
       )
     );

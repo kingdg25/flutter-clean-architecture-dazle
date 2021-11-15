@@ -1,6 +1,6 @@
-import 'package:dwellu/app/utils/dwellu.dart';
+import 'package:dwellu/app/utils/app.dart';
 import 'package:dwellu/app/widgets/custom_text.dart';
-import 'package:dwellu/app/widgets/form%20fields/custom_field_layout.dart';
+import 'package:dwellu/app/widgets/form_fields/custom_field_layout.dart';
 import 'package:flutter/material.dart';
 
 class CustomSelectField extends StatelessWidget {
@@ -37,7 +37,7 @@ class CustomSelectField extends StatelessWidget {
             value: item ?? '',
             child: CustomText(
               text: item ?? '', 
-              color: Dwellu.appTextColor
+              color: App.appTextColor
             ),
           )
         ).toList();
@@ -60,7 +60,7 @@ class CustomSelectField extends StatelessWidget {
         items: customSelectMenuItems(items),
         style: TextStyle(
           decorationStyle: TextDecorationStyle.dotted,
-          color: Dwellu.appTextColor,
+          color: App.appTextColor,
           fontFamily: "Poppins",
           fontSize: fontSize
         ),

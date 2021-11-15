@@ -1,5 +1,5 @@
-import 'package:dwellu/app/utils/dwellu.dart';
-import 'package:dwellu/app/widgets/form%20fields/custom_field_layout.dart';
+import 'package:dwellu/app/utils/app.dart';
+import 'package:dwellu/app/widgets/form_fields/custom_field_layout.dart';
 import 'package:flutter/material.dart';
 
 class CustomPasswordField extends StatefulWidget {
@@ -46,16 +46,19 @@ class _CustomPasswordFieldState extends State<CustomPasswordField> {
         controller: widget.controller,
         obscureText: _obscureText,
         onSaved: widget.onSaved,
-        validator: (widget.isRequired && widget.validator == null) ? (val) {
+        validator: (val) {
           if (val.length == 0){
             return "Required field.";
           }
+          else if (val.length < 8) {
+            return "Password must be at least 8 characters.";
+          }
           return null;
-        } : widget.validator,
+        },
         keyboardType: widget.keyboardType,
         style: TextStyle(
           decorationStyle: TextDecorationStyle.dotted,
-          color: Dwellu.appTextColor,
+          color: App.appTextColor,
           fontFamily: "Poppins",
           fontSize: widget.fontSize
         ),
