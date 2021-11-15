@@ -7,7 +7,7 @@ class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
 
   CustomAppBar({
     Key key,
-    @required this.title,
+    this.title,
     this.centerTitle = false,
     
   }) : preferredSize = Size.fromHeight(60.0), super(key: key);
@@ -25,7 +25,7 @@ class _CustomAppBarState extends State<CustomAppBar>{
   Widget build(BuildContext context) {
     return AppBar(
       title: CustomText(
-        text: widget.title,
+        text: widget.title ?? '',
         color: Color(0xff2E353D),
         fontSize: 18.0,
         fontWeight: FontWeight.w600
