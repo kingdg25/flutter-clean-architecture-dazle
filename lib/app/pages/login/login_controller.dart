@@ -1,10 +1,13 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:dwellu/app/pages/home/home_view.dart';
 import 'package:dwellu/app/pages/login/login_presenter.dart';
 import 'package:dwellu/app/pages/login/login_view.dart';
 import 'package:flutter_overlay_loader/flutter_overlay_loader.dart';
-import 'package:dwellu/app/utils/custom_function.dart';
+import 'package:dwellu/app/utils/app_constants.dart';
+import 'package:pin_code_fields/pin_code_fields.dart';
 
 
 
@@ -42,6 +45,17 @@ class LoginController extends Controller {
   String get userVerificationCode => _userVerficationCode;
   set setUserVerificationCode (String value) => _userVerficationCode = value;
 
+  PageController forgotPasswordPageController;
+
+  GlobalKey<FormState> forgotPasswordFormKey;
+  final TextEditingController forgotPasswordEmailTextController;
+  
+  bool resendVerificationCode;
+  TextEditingController verificationCodeTextController;
+  StreamController<ErrorAnimationType> verificationCodeErrorController;
+
+  GlobalKey<FormState> resetPasswordFormKey;
+
 
   LoginController(userRepo)
     : loginPresenter = LoginPresenter(userRepo),
@@ -54,6 +68,13 @@ class LoginController extends Controller {
     _resetPassVerficationCode = '',
     _userVerficationCode = '',
     _resetPasswordTextController = TextEditingController(),
+    forgotPasswordPageController = PageController(),
+    forgotPasswordFormKey = GlobalKey<FormState>(),
+    forgotPasswordEmailTextController = TextEditingController(),
+    resendVerificationCode = false,
+    verificationCodeTextController = TextEditingController(),
+    verificationCodeErrorController = StreamController<ErrorAnimationType>(),
+    resetPasswordFormKey = GlobalKey<FormState>(),
     super();
   
 
@@ -108,8 +129,8 @@ class LoginController extends Controller {
       print('forgot pass on next $res ${res.toString()}');
       _resetPassVerficationCode = res;
       
-      if (res != null) {
-        _resetPageController.nextPage(
+      if (res != null && !resendVerificationCode) {
+        forgotPasswordPageController.nextPage(
           duration: Duration(milliseconds: 500),
           curve: Curves.ease
         );
@@ -136,6 +157,8 @@ class LoginController extends Controller {
     loginPresenter.resetPasswordOnComplete = () {
       print('reset pass on complete');
       Loader.hide();
+      Navigator.pop(getContext());
+
       _statusDialog(true, 'Successfully Change Password.');
     };
 
@@ -172,10 +195,12 @@ class LoginController extends Controller {
   @override
   void onDisposed() {
     loginPresenter.dispose(); // don't forget to dispose of the presenter
+    verificationCodeErrorController.close();
     _emailTextController.dispose();
     _passwordTextController.dispose();
     _forgotEmailTextController.dispose();
     _resetPasswordTextController.dispose();
+    forgotPasswordPageController.dispose();
     Loader.hide();
     super.onDisposed();
   }
@@ -200,36 +225,36 @@ class LoginController extends Controller {
     Navigator.popAndPushNamed(getContext(), LoginPage.id);
   }
 
-  void forgotPassword() {
+  void forgotPassword({bool resend = false}) {
     print('forgot password ${_forgotEmailTextController.text}');
     Loader.show(getContext());
+
+    resendVerificationCode = resend;
 
     loginPresenter.forgotPassword(_forgotEmailTextController.text);
   }
 
   void verifyCode() {
     print('verify code: $_resetPassVerficationCode user code input: $_userVerficationCode');
-    Loader.show(getContext());
-
-    Future.delayed(Duration(milliseconds: 200), () {
-      if(_resetPassVerficationCode != _userVerficationCode){
-        _statusDialog(false, 'mismatch code.');
-      }
-      else{
-        _resetPageController.nextPage(
-          duration: Duration(milliseconds: 500),
-          curve: Curves.ease
-        );
-      }
-      Loader.hide();
-    });
+    print(verificationCodeTextController.text);
+    var userInputCode = verificationCodeTextController.text;
+    
+    if (userInputCode.length != 4 || userInputCode != _resetPassVerficationCode) {
+      verificationCodeErrorController.add(ErrorAnimationType.shake); // Triggering error shake animation
+    }
+    else{
+      forgotPasswordPageController.nextPage(
+        duration: Duration(milliseconds: 500),
+        curve: Curves.ease
+      );
+    }
   }
 
   void resetPassword() {
     print('reset password ${_forgotEmailTextController.text} $_userVerficationCode ${_resetPasswordTextController.text}');
     Loader.show(getContext());
 
-    loginPresenter.resetPassword(_forgotEmailTextController.text, _userVerficationCode, _resetPasswordTextController.text);
+    loginPresenter.resetPassword(_forgotEmailTextController.text, verificationCodeTextController.text, _resetPasswordTextController.text);
   }
 
 
