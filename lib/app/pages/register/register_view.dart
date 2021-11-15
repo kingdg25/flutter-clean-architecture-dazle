@@ -1,10 +1,10 @@
-import 'package:dwellu/app/widgets/form%20fields/custom_button.dart';
-import 'package:dwellu/app/widgets/form%20fields/custom_field_layout.dart';
-import 'package:dwellu/app/widgets/form%20fields/custom_icon_button.dart';
-import 'package:dwellu/app/widgets/form%20fields/custom_password_field.dart';
-import 'package:dwellu/app/widgets/form%20fields/custom_select_field.dart';
-import 'package:dwellu/app/widgets/form%20fields/custom_text_field.dart';
-import 'package:dwellu/app/widgets/form%20fields/title_field.dart';
+import 'package:dwellu/app/widgets/form_fields/custom_button.dart';
+import 'package:dwellu/app/widgets/form_fields/custom_field_layout.dart';
+import 'package:dwellu/app/widgets/form_fields/custom_icon_button.dart';
+import 'package:dwellu/app/widgets/form_fields/custom_password_field.dart';
+import 'package:dwellu/app/widgets/form_fields/custom_select_field.dart';
+import 'package:dwellu/app/widgets/form_fields/custom_text_field.dart';
+import 'package:dwellu/app/widgets/form_fields/title_field.dart';
 import 'package:dwellu/app/pages/register/components/register_layout.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
@@ -97,7 +97,6 @@ class _RegisterPageState extends ViewState<RegisterPage, RegisterController> {
                     ),
                     SizedBox(height: 20.0),
                     CustomIconButton(
-                      iconData: Icons.arrow_right_alt,
                       onPressed: () {
                         _pageController.nextPage(
                           duration: Duration(milliseconds: 500),
@@ -122,7 +121,17 @@ class _RegisterPageState extends ViewState<RegisterPage, RegisterController> {
                       title: 'Email Address'
                     ),
                     CustomTextField(
+                      // controller: controller.emailTextController,
+                      keyboardType: TextInputType.emailAddress,
                       hintText: 'Email Address',
+                      validator: (value) {
+                        Pattern emailPattern = r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+                        RegExp regex = new RegExp(emailPattern);
+                        if (!regex.hasMatch(value)){
+                          return 'Enter Valid Email';
+                        }
+                        return null;
+                      },
                     ),
                     TitleField(
                       title: 'Password'
