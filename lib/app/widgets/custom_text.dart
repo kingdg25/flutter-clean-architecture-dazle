@@ -7,6 +7,8 @@ class CustomText extends StatelessWidget {
   final Color color;
   final FontWeight fontWeight;
   final TextAlign textAlign;
+  final TextOverflow overflow;
+  final double height;
 
 
   CustomText({
@@ -14,7 +16,9 @@ class CustomText extends StatelessWidget {
     this.fontSize = 14.0,
     this.color = Colors.black,
     this.fontWeight = FontWeight.normal,
-    this.textAlign = TextAlign.left
+    this.textAlign = TextAlign.left,
+    this.overflow = TextOverflow.ellipsis,
+    this.height = 1.5
   });
 
 
@@ -27,8 +31,9 @@ class CustomText extends StatelessWidget {
         color: color,
         fontWeight: fontWeight,
         fontFamily: "Poppins",
+        height: height
       ),
-      overflow: TextOverflow.ellipsis,
+      overflow: overflow,
       textAlign: textAlign,
     );
   }
