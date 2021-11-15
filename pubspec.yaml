@@ -12,7 +12,6 @@ dependencies:
   cupertino_icons: ^1.0.0
   flutter_clean_architecture: ^4.1.1
   http: ^0.12.2
-  flutter_verification_code: ^0.2.1
   shared_preferences: ^0.5.12+4
   flutter_auth_buttons: ^0.10.0
   google_sign_in: ^4.5.9
@@ -21,6 +20,7 @@ dependencies:
   flutter_overlay_loader: ^0.0.2
   flutter_svg: ^0.19.1
   # device_preview: ^0.4.8
+  pin_code_fields: ^6.1.0
 
 dev_dependencies:
   flutter_test:
