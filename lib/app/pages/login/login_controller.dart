@@ -14,67 +14,43 @@ import 'package:pin_code_fields/pin_code_fields.dart';
 class LoginController extends Controller {
   final LoginPresenter loginPresenter;
 
-  GlobalKey<FormState> _loginFormKey = GlobalKey<FormState>();
-  GlobalKey<FormState> get loginFormKey => _loginFormKey;
+  /// for login
+  GlobalKey<FormState> loginFormKey;
+  final TextEditingController emailTextController;
+  final TextEditingController passwordTextController;
 
-  final TextEditingController _emailTextController;
-  TextEditingController get emailTextController => _emailTextController;
 
-  final TextEditingController _passwordTextController;
-  TextEditingController get passwordTextController => _passwordTextController;
-
-  PageController _resetPageController = PageController();
-  PageController get resetPageController => _resetPageController;
-
-  GlobalKey<FormState> _forgotPassFormKey = GlobalKey<FormState>();
-  GlobalKey<FormState> get forgotPassFormKey => _forgotPassFormKey;
-
-  GlobalKey<FormState> _changePassFormKey = GlobalKey<FormState>();
-  GlobalKey<FormState> get changePassFormKey => _changePassFormKey;
-
-  final TextEditingController _forgotEmailTextController;
-  TextEditingController get forgotEmailTextController => _forgotEmailTextController;
-
-  final TextEditingController _resetPasswordTextController;
-  TextEditingController get resetPasswordTextController => _resetPasswordTextController;
-
-  String _resetPassVerficationCode;
-  String get resetPassVerificationCode => _resetPassVerficationCode;
-
-  String _userVerficationCode;
-  String get userVerificationCode => _userVerficationCode;
-  set setUserVerificationCode (String value) => _userVerficationCode = value;
-
+  /// forgot password
   PageController forgotPasswordPageController;
 
   GlobalKey<FormState> forgotPasswordFormKey;
   final TextEditingController forgotPasswordEmailTextController;
   
+  /// verify code
+  String verificationCode;
   bool resendVerificationCode;
   TextEditingController verificationCodeTextController;
   StreamController<ErrorAnimationType> verificationCodeErrorController;
 
+  /// reset password
   GlobalKey<FormState> resetPasswordFormKey;
+  final TextEditingController resetPasswordTextController;
 
 
   LoginController(userRepo)
     : loginPresenter = LoginPresenter(userRepo),
-    _loginFormKey = GlobalKey<FormState>(),
-    _emailTextController = TextEditingController(),
-    _passwordTextController = TextEditingController(),
-    _forgotPassFormKey = GlobalKey<FormState>(),
-    _forgotEmailTextController = TextEditingController(),
-    _resetPageController = PageController(),
-    _resetPassVerficationCode = '',
-    _userVerficationCode = '',
-    _resetPasswordTextController = TextEditingController(),
+    loginFormKey = GlobalKey<FormState>(),
+    emailTextController = TextEditingController(),
+    passwordTextController = TextEditingController(),
     forgotPasswordPageController = PageController(),
     forgotPasswordFormKey = GlobalKey<FormState>(),
     forgotPasswordEmailTextController = TextEditingController(),
+    verificationCode = '',
     resendVerificationCode = false,
     verificationCodeTextController = TextEditingController(),
     verificationCodeErrorController = StreamController<ErrorAnimationType>(),
     resetPasswordFormKey = GlobalKey<FormState>(),
+    resetPasswordTextController = TextEditingController(),
     super();
   
 
@@ -127,7 +103,7 @@ class LoginController extends Controller {
     //forgot password
     loginPresenter.forgotPasswordOnNext = (res) {
       print('forgot pass on next $res ${res.toString()}');
-      _resetPassVerficationCode = res;
+      verificationCode = res;
       
       if (res != null && !resendVerificationCode) {
         forgotPasswordPageController.nextPage(
@@ -196,25 +172,23 @@ class LoginController extends Controller {
   void onDisposed() {
     loginPresenter.dispose(); // don't forget to dispose of the presenter
     verificationCodeErrorController.close();
-    _emailTextController.dispose();
-    _passwordTextController.dispose();
-    _forgotEmailTextController.dispose();
-    _resetPasswordTextController.dispose();
+    emailTextController.dispose();
+    passwordTextController.dispose();
     forgotPasswordPageController.dispose();
     Loader.hide();
     super.onDisposed();
   }
 
   void clearTextController(){
-    _emailTextController.clear();
-    _passwordTextController.clear();
+    emailTextController.clear();
+    passwordTextController.clear();
   }
 
   void login() async {
-    print('login ${_emailTextController.text} ${_passwordTextController.text}');
+    print('login ${emailTextController.text} ${passwordTextController.text}');
     Loader.show(getContext());
 
-    loginPresenter.loginUser(_emailTextController.text, _passwordTextController.text);
+    loginPresenter.loginUser(emailTextController.text, passwordTextController.text);
   }
 
   void homePage() {
@@ -226,20 +200,19 @@ class LoginController extends Controller {
   }
 
   void forgotPassword({bool resend = false}) {
-    print('forgot password ${_forgotEmailTextController.text}');
+    print('forgot password ${forgotPasswordEmailTextController.text}');
     Loader.show(getContext());
 
     resendVerificationCode = resend;
 
-    loginPresenter.forgotPassword(_forgotEmailTextController.text);
+    loginPresenter.forgotPassword(forgotPasswordEmailTextController.text);
   }
 
   void verifyCode() {
-    print('verify code: $_resetPassVerficationCode user code input: $_userVerficationCode');
-    print(verificationCodeTextController.text);
     var userInputCode = verificationCodeTextController.text;
+    print('verify code: $verificationCode, user code input: $userInputCode');
     
-    if (userInputCode.length != 4 || userInputCode != _resetPassVerficationCode) {
+    if (userInputCode.length != 4 || userInputCode != verificationCode) {
       verificationCodeErrorController.add(ErrorAnimationType.shake); // Triggering error shake animation
     }
     else{
@@ -251,10 +224,10 @@ class LoginController extends Controller {
   }
 
   void resetPassword() {
-    print('reset password ${_forgotEmailTextController.text} $_userVerficationCode ${_resetPasswordTextController.text}');
+    print('reset password ${forgotPasswordEmailTextController.text} ${verificationCodeTextController.text} ${resetPasswordTextController.text}');
     Loader.show(getContext());
 
-    loginPresenter.resetPassword(_forgotEmailTextController.text, verificationCodeTextController.text, _resetPasswordTextController.text);
+    loginPresenter.resetPassword(forgotPasswordEmailTextController.text, verificationCodeTextController.text, resetPasswordTextController.text);
   }
 
 

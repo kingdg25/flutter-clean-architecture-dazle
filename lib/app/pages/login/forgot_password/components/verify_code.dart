@@ -51,7 +51,7 @@ class VerifyCode extends StatelessWidget {
               child: Container(
                 alignment: Alignment.centerLeft,
                 child: CustomText(
-                  text: '4 digit code has been sent to ${controller.forgotEmailTextController.text ?? ''}',
+                  text: '4 digit code has been sent to ${controller.forgotPasswordEmailTextController.text ?? ''}',
                   fontSize: 13.0,
                   color: Color.fromRGBO(154, 160, 166, 1.0),
                   overflow: TextOverflow.clip,

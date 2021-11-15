@@ -64,7 +64,7 @@ class ForgotPassword extends StatelessWidget {
                 title: 'Email Address'
               ),
               CustomTextField(
-                controller: controller.forgotEmailTextController,
+                controller: controller.forgotPasswordEmailTextController,
                 keyboardType: TextInputType.emailAddress,
                 hintText: 'Email Address',
                 validator: (value) {
