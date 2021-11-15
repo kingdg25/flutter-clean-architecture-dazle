@@ -6,32 +6,25 @@ import 'package:dwellu/app/utils/app_constants.dart';
 
 
 class RegisterController extends Controller {
-  GlobalKey<FormState> _registerFormKey = GlobalKey<FormState>();
-  GlobalKey<FormState> get registerFormKey => _registerFormKey;
 
   PageController registerPageController;
+  GlobalKey<FormState> registerFormKey;
 
-  final TextEditingController _firstNameTextController;
-  TextEditingController get firstNameTextController => _firstNameTextController;
+  final TextEditingController firstNameTextController;
+  final TextEditingController lastNameTextController;
+  final TextEditingController emailTextController;
+  final TextEditingController passwordTextController;
 
-  final TextEditingController _lastNameTextController;
-  TextEditingController get lastNameTextController => _lastNameTextController;
-
-  final TextEditingController _emailTextController;
-  TextEditingController get emailTextController => _emailTextController;
-
-  final TextEditingController _passwordTextController;
-  TextEditingController get passwordTextController => _passwordTextController;
 
   final RegisterPresenter registerPresenter;
 
   RegisterController(userRepo)
     : registerPresenter = RegisterPresenter(userRepo),
-      _registerFormKey = GlobalKey<FormState>(),
-      _firstNameTextController = TextEditingController(),
-      _lastNameTextController = TextEditingController(),
-      _emailTextController = TextEditingController(),
-      _passwordTextController = TextEditingController(),
+      registerFormKey = GlobalKey<FormState>(),
+      firstNameTextController = TextEditingController(),
+      lastNameTextController = TextEditingController(),
+      emailTextController = TextEditingController(),
+      passwordTextController = TextEditingController(),
       registerPageController = PageController(),
       super();
   
@@ -61,17 +54,17 @@ class RegisterController extends Controller {
   }
 
   void clearTextController(){
-    _firstNameTextController.clear();
-    _lastNameTextController.clear();
-    _emailTextController.clear();
-    _passwordTextController.clear();
+    firstNameTextController.clear();
+    lastNameTextController.clear();
+    emailTextController.clear();
+    passwordTextController.clear();
   }
 
   void register() {
     Loader.show(getContext());
 
     Future.delayed(Duration(seconds: 1), () {
-      registerPresenter.registerUser(_firstNameTextController.text, _lastNameTextController.text, _emailTextController.text, _passwordTextController.text);
+      registerPresenter.registerUser(firstNameTextController.text, lastNameTextController.text, emailTextController.text, passwordTextController.text);
     });
   }
 
@@ -114,10 +107,10 @@ class RegisterController extends Controller {
   @override
   void onDisposed() {
     registerPresenter.dispose(); // don't forget to dispose of the presenter
-    _firstNameTextController.dispose();
-    _lastNameTextController.dispose();
-    _emailTextController.dispose();
-    _passwordTextController.dispose();
+    firstNameTextController.dispose();
+    lastNameTextController.dispose();
+    emailTextController.dispose();
+    passwordTextController.dispose();
     Loader.hide();
     super.onDisposed();
   }
