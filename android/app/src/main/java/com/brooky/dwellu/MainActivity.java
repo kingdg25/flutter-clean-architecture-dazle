@@ -1,4 +1,4 @@
-package com.brooky.dwellu;
+package com.brooky.dazle;
 
 import io.flutter.embedding.android.FlutterActivity;
 
