@@ -50,10 +50,10 @@ class _RegisterPageState extends ViewState<RegisterPage, RegisterController> {
             page1Height = size.height + 250;
           }
           else if (size.height <= 740){
-            page1Height = size.height + 180;
+            page1Height = size.height + 200;
           }
           else {
-            page1Height = size.height + 100;
+            page1Height = size.height + 120;
           }
 
           var page1 = SingleChildScrollView(
