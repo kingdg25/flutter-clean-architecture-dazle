@@ -4,10 +4,12 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 
 class RegisterLayout extends StatelessWidget {
+  final double height;
   final String svgAsset;
   final Widget child;
 
   RegisterLayout({
+    @required this.height,
     @required this.svgAsset,
     @required this.child
   });
@@ -17,7 +19,7 @@ class RegisterLayout extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
     
     return SizedBox(
-      height: size.height,
+      height: height,
       child: Stack(
         overflow: Overflow.visible,
         children: [
@@ -51,11 +53,11 @@ class RegisterLayout extends StatelessWidget {
           ),
           Positioned(
             top: size.height * 0.31,
-            left: 0,
-            right: 0,
+            left: 40,
+            right: 40,
+            bottom: 40,
             child: Container(
-              margin: EdgeInsets.symmetric(horizontal: 40.0),  
-              padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
+              padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.all(Radius.circular(4.0)),
