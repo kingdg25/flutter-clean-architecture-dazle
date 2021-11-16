@@ -5,13 +5,13 @@ import 'package:flutter/material.dart';
 class CustomPasswordField extends StatefulWidget {
   final String hintText;
   final Color hintColor;
+  
   final TextEditingController controller;
   final bool isRequired;
   
   final TextInputType keyboardType;
   final double fontSize;
 
-  final Function validator;
   final Function onSaved;
 
   final Color fillColor;
@@ -25,7 +25,6 @@ class CustomPasswordField extends StatefulWidget {
     this.isRequired = false,
     this.keyboardType = TextInputType.text,
     this.fontSize = 16.0,
-    this.validator,
     this.onSaved,
     this.fillColor = const Color.fromRGBO(255, 255, 255, 0.4),
     this.filled = false
