@@ -9,14 +9,14 @@ class RegisterController extends Controller {
 
   PageController registerPageController;
 
-  GlobalKey<FormState> registerFormKey;
+  GlobalKey<FormState> registerFormKeyPage1;
   final TextEditingController firstNameTextController;
   final TextEditingController lastNameTextController;
   final TextEditingController mobileNumberTextController;
-  final TextEditingController positionTextController;
   final TextEditingController licenseTextController;
+  String position;
 
-  GlobalKey<FormState> register2FormKey;
+  GlobalKey<FormState> registerFormKeyPage2;
   final TextEditingController emailTextController;
   final TextEditingController passwordTextController;
 
@@ -26,15 +26,15 @@ class RegisterController extends Controller {
   RegisterController(userRepo)
     : registerPresenter = RegisterPresenter(userRepo),
       registerPageController = PageController(),
-      registerFormKey = GlobalKey<FormState>(),
+      registerFormKeyPage1 = GlobalKey<FormState>(),
       firstNameTextController = TextEditingController(),
       lastNameTextController = TextEditingController(),
       mobileNumberTextController = TextEditingController(),
-      positionTextController = TextEditingController(),
       licenseTextController = TextEditingController(),
-      register2FormKey = GlobalKey<FormState>(),
+      registerFormKeyPage2 = GlobalKey<FormState>(),
       emailTextController = TextEditingController(),
       passwordTextController = TextEditingController(),
+      position = null,
       super();
   
 
@@ -60,6 +60,11 @@ class RegisterController extends Controller {
       _statusDialog(false, '${e.toString()}');
       refreshUI();
     };
+  }
+
+  setPosition(value){
+    print('setposition $value');
+    position = value;
   }
 
   void clearTextController(){
