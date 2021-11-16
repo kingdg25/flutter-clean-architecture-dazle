@@ -139,11 +139,14 @@ class DataAuthenticationRepository extends AuthenticationRepository {
   }
 
   @override
-  Future<void> register({String firstName, String lastName, String email, String password}) async {
+  Future<void> register({String firstName, String lastName, String mobileNumber, String position, String licenseNumber, String email, String password}) async {
     Map params = {
       "user": {
         "firstname": firstName,
         "lastname": lastName,
+        "mobile_number": mobileNumber,
+        "position": position,
+        "license_number": licenseNumber,
         "email": email,
         "password": password
       }

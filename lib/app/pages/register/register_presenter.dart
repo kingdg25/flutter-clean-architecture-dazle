@@ -11,8 +11,24 @@ class RegisterPresenter extends Presenter {
   RegisterPresenter(userRepo)
     : registerUserUseCase = RegisterUserUseCase(userRepo);
   
-  void registerUser(String firstName, String lastName, String email, String password) {
-    registerUserUseCase.execute(_RegisterUserUseCaseObserver(this), RegisterUserUseCaseParams(firstName, lastName, email, password));
+  void registerUser(
+    String firstName,
+    String lastName,
+    String mobileNumber,
+    String position,
+    String licenseNumber,
+    String email,
+    String password
+  ) {
+    registerUserUseCase.execute(_RegisterUserUseCaseObserver(this), RegisterUserUseCaseParams(
+      firstName,
+      lastName,
+      mobileNumber,
+      position,
+      licenseNumber,
+      email,
+      password
+    ));
   }
 
   @override

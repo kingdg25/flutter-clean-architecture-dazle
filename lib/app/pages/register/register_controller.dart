@@ -13,8 +13,8 @@ class RegisterController extends Controller {
   final TextEditingController firstNameTextController;
   final TextEditingController lastNameTextController;
   final TextEditingController mobileNumberTextController;
-  final TextEditingController licenseTextController;
   String position;
+  final TextEditingController licenseNumberTextController;
 
   GlobalKey<FormState> registerFormKeyPage2;
   final TextEditingController emailTextController;
@@ -30,11 +30,11 @@ class RegisterController extends Controller {
       firstNameTextController = TextEditingController(),
       lastNameTextController = TextEditingController(),
       mobileNumberTextController = TextEditingController(),
-      licenseTextController = TextEditingController(),
+      position = null,
+      licenseNumberTextController = TextEditingController(),
       registerFormKeyPage2 = GlobalKey<FormState>(),
       emailTextController = TextEditingController(),
       passwordTextController = TextEditingController(),
-      position = null,
       super();
   
 
@@ -70,6 +70,9 @@ class RegisterController extends Controller {
   void clearTextController(){
     firstNameTextController.clear();
     lastNameTextController.clear();
+    mobileNumberTextController.clear();
+    position = null;
+    licenseNumberTextController.clear();
     emailTextController.clear();
     passwordTextController.clear();
   }
@@ -78,7 +81,16 @@ class RegisterController extends Controller {
     Loader.show(getContext());
 
     Future.delayed(Duration(seconds: 1), () {
-      registerPresenter.registerUser(firstNameTextController.text, lastNameTextController.text, emailTextController.text, passwordTextController.text);
+      registerPresenter.registerUser(
+        firstNameTextController.text, 
+        lastNameTextController.text, 
+        mobileNumberTextController.text,
+        position,
+        licenseNumberTextController.text,
+
+        emailTextController.text, 
+        passwordTextController.text
+      );
     });
   }
 

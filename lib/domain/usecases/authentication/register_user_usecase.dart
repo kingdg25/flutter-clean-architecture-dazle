@@ -15,7 +15,11 @@ class RegisterUserUseCase extends UseCase<void, RegisterUserUseCaseParams> {
     try {
       await dataAuthenticationRepository.register(
         firstName: params.firstName, 
-        lastName: params.lastName, 
+        lastName: params.lastName,
+        mobileNumber: params.mobileNumber,
+        position: params.position,
+        licenseNumber: params.licenseNumber,
+
         email: params.email, 
         password: params.password
       );
@@ -38,7 +42,19 @@ class RegisterUserUseCase extends UseCase<void, RegisterUserUseCaseParams> {
 class RegisterUserUseCaseParams {
   final String firstName;
   final String lastName;
+  final String mobileNumber;
+  final String position;
+  final String licenseNumber;
   final String email;
   final String password;
-  RegisterUserUseCaseParams(this.firstName, this.lastName, this.email, this.password);
+
+  RegisterUserUseCaseParams(
+    this.firstName,
+    this.lastName,
+    this.mobileNumber,
+    this.position,
+    this.licenseNumber,
+    this.email,
+    this.password
+  );
 }
