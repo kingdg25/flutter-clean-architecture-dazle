@@ -39,15 +39,29 @@ class _RegisterPageState extends ViewState<RegisterPage, RegisterController> {
       backgroundColor: Colors.white,
       body: ControlledWidgetBuilder<RegisterController>(
         builder: (context, controller) {
-          var _formKey = controller.registerFormKey;
           var _pageController = controller.registerPageController;
+          var _formKey1 = controller.registerFormKeyPage1;
+          var _formKey2 = controller.registerFormKeyPage2;
+
+          Size size = MediaQuery.of(context).size;
+          double page1Height = 0.0;
+
+          if (size.height <= 569){
+            page1Height = size.height + 250;
+          }
+          else if (size.height <= 740){
+            page1Height = size.height + 180;
+          }
+          else {
+            page1Height = size.height + 100;
+          }
 
           var page1 = SingleChildScrollView(
-            padding: EdgeInsets.only(bottom: 50.0),
             child: RegisterLayout(
+              height: page1Height,
               svgAsset: 'assets/create_account.svg',
               child: Form(
-                key: _formKey,
+                key: _formKey1,
                 child: Column(
                   children: [
                     TitleField(
@@ -60,6 +74,7 @@ class _RegisterPageState extends ViewState<RegisterPage, RegisterController> {
                             child: CustomTextField(
                               controller: controller.firstNameTextController,
                               hintText: 'First Name',
+                              isRequired: true,
                             ),
                           ),
                           SizedBox(width: 8.0),
@@ -67,6 +82,7 @@ class _RegisterPageState extends ViewState<RegisterPage, RegisterController> {
                             child: CustomTextField(
                               controller: controller.lastNameTextController,
                               hintText: 'Last Name',
+                              isRequired: true,
                             ),
                           ),
                         ],
@@ -76,7 +92,9 @@ class _RegisterPageState extends ViewState<RegisterPage, RegisterController> {
                       title: 'Enter Mobile Number'
                     ),
                     CustomTextField(
+                      controller: controller.mobileNumberTextController,
                       hintText: '+63',
+                      isRequired: true,
                     ),
                     TitleField(
                       title: 'I am a'
@@ -84,51 +102,59 @@ class _RegisterPageState extends ViewState<RegisterPage, RegisterController> {
                     CustomSelectField(
                       hintText: 'I am a',
                       isRequired: true, 
-                      value: null,
+                      value: controller.position,
                       items: ['Real Estate Broker', 'Real Estate Salesperson'],
-                      onChanged: (val) {
-                        print(val);
-                      },
+                      onChanged: controller.setPosition,
                     ),
                     TitleField(
                       title: 'Enter your License #'
                     ),
                     CustomTextField(
+                      controller: controller.licenseTextController,
                       hintText: 'Enter your License #',
+                      isRequired: true,
                     ),
                     SizedBox(height: 20.0),
                     CustomIconButton(
                       onPressed: () {
-                        _pageController.nextPage(
-                          duration: Duration(milliseconds: 500),
-                          curve: Curves.ease
-                        );
+                        FocusScope.of(context).unfocus();
+
+                        if (_formKey1.currentState.validate()) {
+                          _formKey1.currentState.save();
+
+                          _pageController.nextPage(
+                            duration: Duration(milliseconds: 500),
+                            curve: Curves.ease
+                          );
+                        }
                       },
                     )
                   ],
                 ),
               ),
-            )
+            ),
           );
 
           var page2 = SingleChildScrollView(
-            padding: EdgeInsets.only(bottom: 50.0),
             child: RegisterLayout(
+              height: size.height,
               svgAsset: 'assets/create_account_2.svg', 
               child: Form(
+                key: _formKey2,
                 child: Column(
                   children: [
                     TitleField(
                       title: 'Email Address'
                     ),
                     CustomEmailField(
-                      // controller: controller.emailTextController,
+                      controller: controller.emailTextController,
                       hintText: 'Email Address'
                     ),
                     TitleField(
                       title: 'Password'
                     ),
                     CustomPasswordField(
+                      controller: controller.passwordTextController,
                       hintText: 'Password',
                     ),
                     SizedBox(height: 20.0),
@@ -136,6 +162,11 @@ class _RegisterPageState extends ViewState<RegisterPage, RegisterController> {
                       text: 'Submit',
                       expanded: true,
                       onPressed: () {
+                        FocusScope.of(context).unfocus();
+
+                        if (_formKey2.currentState.validate()) {
+                          _formKey2.currentState.save();
+                        }
                       },
                     )
                   ],
