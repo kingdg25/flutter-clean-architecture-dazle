@@ -2,8 +2,8 @@ import 'package:dazle/app/pages/login/forgot_password/forgot_password_screen.dar
 import 'package:dazle/app/utils/app.dart';
 import 'package:dazle/app/widgets/custom_text.dart';
 import 'package:dazle/app/widgets/form_fields/custom_button.dart';
+import 'package:dazle/app/widgets/form_fields/custom_email_field.dart';
 import 'package:dazle/app/widgets/form_fields/custom_flat_button.dart';
-import 'package:dazle/app/widgets/form_fields/custom_text_field.dart';
 import 'package:dazle/app/widgets/form_fields/custom_password_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
@@ -65,32 +65,17 @@ class _LoginPageState extends ViewState<LoginPage, LoginController> {
                       key: _formKey,
                       child: Column(
                         children: [
-                          CustomTextField(
+                          CustomEmailField(
                             controller: controller.emailTextController,
-                            keyboardType: TextInputType.emailAddress,
                             hintText: 'Email Address',
                             filled: true,
-                            hintColor: Colors.white,
-                            validator: (value) {
-                              Pattern emailPattern = r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
-                              RegExp regex = new RegExp(emailPattern);
-                              if (!regex.hasMatch(value)){
-                                return 'Enter Valid Email';
-                              }
-                              return null;
-                            },
+                            hintColor: Colors.white
                           ),
                           CustomPasswordField(
                             controller: controller.passwordTextController,
                             hintText: 'Password',
                             filled: true,
-                            hintColor: Colors.white,
-                            validator: (value) {
-                              if (value.length < 8) {
-                                return "Password must be at least 8 characters.";
-                              }
-                              return null;
-                            },
+                            hintColor: Colors.white
                           )
                         ],
                       ),

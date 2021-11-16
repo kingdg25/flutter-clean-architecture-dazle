@@ -1,4 +1,5 @@
 import 'package:dazle/app/widgets/form_fields/custom_button.dart';
+import 'package:dazle/app/widgets/form_fields/custom_email_field.dart';
 import 'package:dazle/app/widgets/form_fields/custom_field_layout.dart';
 import 'package:dazle/app/widgets/form_fields/custom_icon_button.dart';
 import 'package:dazle/app/widgets/form_fields/custom_password_field.dart';
@@ -120,18 +121,9 @@ class _RegisterPageState extends ViewState<RegisterPage, RegisterController> {
                     TitleField(
                       title: 'Email Address'
                     ),
-                    CustomTextField(
+                    CustomEmailField(
                       // controller: controller.emailTextController,
-                      keyboardType: TextInputType.emailAddress,
-                      hintText: 'Email Address',
-                      validator: (value) {
-                        Pattern emailPattern = r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
-                        RegExp regex = new RegExp(emailPattern);
-                        if (!regex.hasMatch(value)){
-                          return 'Enter Valid Email';
-                        }
-                        return null;
-                      },
+                      hintText: 'Email Address'
                     ),
                     TitleField(
                       title: 'Password'

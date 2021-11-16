@@ -1,8 +1,8 @@
 import 'package:dazle/app/pages/login/login_controller.dart';
 import 'package:dazle/app/widgets/custom_text.dart';
+import 'package:dazle/app/widgets/form_fields/custom_email_field.dart';
 import 'package:dazle/app/widgets/form_fields/custom_field_layout.dart';
 import 'package:dazle/app/widgets/form_fields/custom_icon_button.dart';
-import 'package:dazle/app/widgets/form_fields/custom_text_field.dart';
 import 'package:dazle/app/widgets/form_fields/title_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
@@ -63,18 +63,9 @@ class ForgotPassword extends StatelessWidget {
               TitleField(
                 title: 'Email Address'
               ),
-              CustomTextField(
+              CustomEmailField(
                 controller: controller.forgotPasswordEmailTextController,
-                keyboardType: TextInputType.emailAddress,
-                hintText: 'Email Address',
-                validator: (value) {
-                  Pattern emailPattern = r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
-                  RegExp regex = new RegExp(emailPattern);
-                  if (!regex.hasMatch(value)){
-                    return 'Enter Valid Email';
-                  }
-                  return null;
-                },
+                hintText: 'Email Address'
               ),
               SizedBox(height: 20.0),
               CustomIconButton(
