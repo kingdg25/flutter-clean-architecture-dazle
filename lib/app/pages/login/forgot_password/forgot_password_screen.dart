@@ -31,7 +31,7 @@ class _ForgotPasswordMainState extends ViewState<ForgotPasswordScreen, LoginCont
           var _pageController = controller.forgotPasswordPageController;
 
           return PageView(
-            // physics: NeverScrollableScrollPhysics(),
+            physics: NeverScrollableScrollPhysics(),
             controller: _pageController,
             children: [
               ForgotPassword(),
