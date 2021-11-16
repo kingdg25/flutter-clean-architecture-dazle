@@ -1,5 +1,5 @@
-import 'package:dwellu/app/utils/app.dart';
-import 'package:dwellu/app/widgets/form_fields/custom_field_layout.dart';
+import 'package:dazle/app/utils/app.dart';
+import 'package:dazle/app/widgets/form_fields/custom_field_layout.dart';
 import 'package:flutter/material.dart';
 
 class CustomPasswordField extends StatefulWidget {

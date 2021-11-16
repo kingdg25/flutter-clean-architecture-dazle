@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
-import 'package:dwellu/app/pages/home/home_controller.dart';
-import 'package:dwellu/app/widgets/user_data.dart';
-import 'package:dwellu/data/repositories/data_todo_repository.dart';
-import 'package:dwellu/domain/entities/todo.dart';
-import 'package:dwellu/data/constants.dart';
+import 'package:dazle/app/pages/home/home_controller.dart';
+import 'package:dazle/app/widgets/user_data.dart';
+import 'package:dazle/data/repositories/data_todo_repository.dart';
+import 'package:dazle/domain/entities/todo.dart';
+import 'package:dazle/data/constants.dart';
 
 
 

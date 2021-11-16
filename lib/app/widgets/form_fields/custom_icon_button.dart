@@ -1,4 +1,4 @@
-import 'package:dwellu/app/utils/app.dart';
+import 'package:dazle/app/utils/app.dart';
 import 'package:flutter/material.dart';
 
 class CustomIconButton extends StatelessWidget {

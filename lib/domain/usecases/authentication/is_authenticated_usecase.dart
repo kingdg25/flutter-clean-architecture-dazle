@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
-import 'package:dwellu/data/repositories/data_authentication_repository.dart';
+import 'package:dazle/data/repositories/data_authentication_repository.dart';
 
 
 class IsAuthenticatedUseCase extends UseCase<IsAuthenticatedUseCaseResponse, IsAuthenticatedUseCaseParams> {

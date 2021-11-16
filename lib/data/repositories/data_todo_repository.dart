@@ -1,10 +1,10 @@
 import 'dart:math';
 import 'dart:convert' as convert;
 
-import 'package:dwellu/domain/entities/todo.dart';
-import 'package:dwellu/domain/entities/todo_user.dart';
-import 'package:dwellu/domain/repositories/todo_repository.dart';
-import 'package:dwellu/data/constants.dart';
+import 'package:dazle/domain/entities/todo.dart';
+import 'package:dazle/domain/entities/todo_user.dart';
+import 'package:dazle/domain/repositories/todo_repository.dart';
+import 'package:dazle/data/constants.dart';
 import 'package:http/http.dart' as http;
 
 

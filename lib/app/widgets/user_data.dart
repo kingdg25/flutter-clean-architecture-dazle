@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:dwellu/app/pages/home/home_controller.dart';
+import 'package:dazle/app/pages/home/home_controller.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 
 

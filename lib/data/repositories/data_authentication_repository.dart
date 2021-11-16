@@ -1,9 +1,9 @@
 import 'dart:convert' as convert;
 import 'package:http/http.dart' as http;
 
-import 'package:dwellu/data/constants.dart';
-import 'package:dwellu/domain/entities/todo_user.dart';
-import 'package:dwellu/domain/repositories/authentication_repository.dart';
+import 'package:dazle/data/constants.dart';
+import 'package:dazle/domain/entities/todo_user.dart';
+import 'package:dazle/domain/repositories/authentication_repository.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 

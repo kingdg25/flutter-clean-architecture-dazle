@@ -1,4 +1,4 @@
-import 'package:dwellu/app/widgets/custom_text.dart';
+import 'package:dazle/app/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 
 class TitleField extends StatelessWidget {

@@ -1,9 +1,9 @@
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
-import 'package:dwellu/domain/usecases/authentication/social_login_usecase.dart';
-import 'package:dwellu/domain/usecases/authentication/is_authenticated_usecase.dart';
-import 'package:dwellu/domain/usecases/authentication/login_user_usecase.dart';
-import 'package:dwellu/domain/usecases/authentication/forgot_password_usecase.dart';
-import 'package:dwellu/domain/usecases/authentication/reset_password_usecase.dart';
+import 'package:dazle/domain/usecases/authentication/social_login_usecase.dart';
+import 'package:dazle/domain/usecases/authentication/is_authenticated_usecase.dart';
+import 'package:dazle/domain/usecases/authentication/login_user_usecase.dart';
+import 'package:dazle/domain/usecases/authentication/forgot_password_usecase.dart';
+import 'package:dazle/domain/usecases/authentication/reset_password_usecase.dart';
 
 
 class LoginPresenter extends Presenter {

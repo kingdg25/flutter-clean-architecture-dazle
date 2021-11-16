@@ -2,11 +2,11 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
-import 'package:dwellu/app/pages/home/home_view.dart';
-import 'package:dwellu/app/pages/login/login_presenter.dart';
-import 'package:dwellu/app/pages/login/login_view.dart';
+import 'package:dazle/app/pages/home/home_view.dart';
+import 'package:dazle/app/pages/login/login_presenter.dart';
+import 'package:dazle/app/pages/login/login_view.dart';
 import 'package:flutter_overlay_loader/flutter_overlay_loader.dart';
-import 'package:dwellu/app/utils/app_constants.dart';
+import 'package:dazle/app/utils/app_constants.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
 

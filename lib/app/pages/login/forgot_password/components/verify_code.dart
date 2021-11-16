@@ -1,9 +1,9 @@
-import 'package:dwellu/app/utils/app.dart';
-import 'package:dwellu/app/pages/login/login_controller.dart';
-import 'package:dwellu/app/widgets/custom_text.dart';
-import 'package:dwellu/app/widgets/form_fields/custom_field_layout.dart';
-import 'package:dwellu/app/widgets/form_fields/custom_flat_button.dart';
-import 'package:dwellu/app/widgets/form_fields/custom_icon_button.dart';
+import 'package:dazle/app/utils/app.dart';
+import 'package:dazle/app/pages/login/login_controller.dart';
+import 'package:dazle/app/widgets/custom_text.dart';
+import 'package:dazle/app/widgets/form_fields/custom_field_layout.dart';
+import 'package:dazle/app/widgets/form_fields/custom_flat_button.dart';
+import 'package:dazle/app/widgets/form_fields/custom_icon_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';

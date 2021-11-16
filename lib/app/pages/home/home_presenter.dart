@@ -1,10 +1,10 @@
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
-import 'package:dwellu/domain/usecases/add_todo_usecase.dart';
-import 'package:dwellu/domain/usecases/authentication/get_user_usecase.dart';
-import 'package:dwellu/domain/usecases/authentication/logout_user_usecase.dart';
-import 'package:dwellu/domain/usecases/delete_todo_usecase.dart';
-import 'package:dwellu/domain/usecases/get_all_todo_usecase.dart';
-import 'package:dwellu/domain/usecases/update_todo_usecase.dart';
+import 'package:dazle/domain/usecases/add_todo_usecase.dart';
+import 'package:dazle/domain/usecases/authentication/get_user_usecase.dart';
+import 'package:dazle/domain/usecases/authentication/logout_user_usecase.dart';
+import 'package:dazle/domain/usecases/delete_todo_usecase.dart';
+import 'package:dazle/domain/usecases/get_all_todo_usecase.dart';
+import 'package:dazle/domain/usecases/update_todo_usecase.dart';
 
 class HomePresenter extends Presenter {
   Function addTodoOnNext;

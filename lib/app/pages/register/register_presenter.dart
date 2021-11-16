@@ -1,5 +1,5 @@
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
-import 'package:dwellu/domain/usecases/authentication/register_user_usecase.dart';
+import 'package:dazle/domain/usecases/authentication/register_user_usecase.dart';
 
 class RegisterPresenter extends Presenter {
   Function registerUserOnNext;

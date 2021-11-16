@@ -1,16 +1,16 @@
-import 'package:dwellu/app/widgets/form_fields/custom_button.dart';
-import 'package:dwellu/app/widgets/form_fields/custom_field_layout.dart';
-import 'package:dwellu/app/widgets/form_fields/custom_icon_button.dart';
-import 'package:dwellu/app/widgets/form_fields/custom_password_field.dart';
-import 'package:dwellu/app/widgets/form_fields/custom_select_field.dart';
-import 'package:dwellu/app/widgets/form_fields/custom_text_field.dart';
-import 'package:dwellu/app/widgets/form_fields/title_field.dart';
-import 'package:dwellu/app/pages/register/components/register_layout.dart';
+import 'package:dazle/app/widgets/form_fields/custom_button.dart';
+import 'package:dazle/app/widgets/form_fields/custom_field_layout.dart';
+import 'package:dazle/app/widgets/form_fields/custom_icon_button.dart';
+import 'package:dazle/app/widgets/form_fields/custom_password_field.dart';
+import 'package:dazle/app/widgets/form_fields/custom_select_field.dart';
+import 'package:dazle/app/widgets/form_fields/custom_text_field.dart';
+import 'package:dazle/app/widgets/form_fields/title_field.dart';
+import 'package:dazle/app/pages/register/components/register_layout.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
-import 'package:dwellu/app/pages/register/register_controller.dart';
-import 'package:dwellu/data/repositories/data_authentication_repository.dart';
-import 'package:dwellu/app/widgets/custom_appbar.dart';
+import 'package:dazle/app/pages/register/register_controller.dart';
+import 'package:dazle/data/repositories/data_authentication_repository.dart';
+import 'package:dazle/app/widgets/custom_appbar.dart';
 
 
 

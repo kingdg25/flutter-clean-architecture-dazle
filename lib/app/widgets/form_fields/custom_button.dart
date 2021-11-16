@@ -1,5 +1,5 @@
-import 'package:dwellu/app/utils/app.dart';
-import 'package:dwellu/app/widgets/custom_text.dart';
+import 'package:dazle/app/utils/app.dart';
+import 'package:dazle/app/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 
 

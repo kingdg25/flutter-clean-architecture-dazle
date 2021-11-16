@@ -1,7 +1,7 @@
 // import 'package:device_preview/device_preview.dart';
-import 'package:dwellu/app/pages/home/home_view.dart';
-import 'package:dwellu/app/pages/login/login_view.dart';
-import 'package:dwellu/app/pages/register/register_view.dart';
+import 'package:dazle/app/pages/home/home_view.dart';
+import 'package:dazle/app/pages/login/login_view.dart';
+import 'package:dazle/app/pages/register/register_view.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 
 import 'package:flutter/material.dart';

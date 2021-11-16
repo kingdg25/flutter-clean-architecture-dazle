@@ -1,4 +1,4 @@
-import 'package:dwellu/domain/entities/todo.dart';
+import 'package:dazle/domain/entities/todo.dart';
 
 abstract class TodoRepository {
   Future<void> addTodo(String todo);

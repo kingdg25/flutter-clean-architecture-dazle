@@ -3,8 +3,8 @@
 import 'dart:async';
 
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
-import 'package:dwellu/domain/entities/todo.dart';
-import 'package:dwellu/domain/repositories/todo_repository.dart';
+import 'package:dazle/domain/entities/todo.dart';
+import 'package:dazle/domain/repositories/todo_repository.dart';
 
 class UpdateTodoUseCase extends UseCase<UpdateTodoUseCaseResponse, UpdateTodoUseCaseParams> {
   final TodoRepository todoRepository;

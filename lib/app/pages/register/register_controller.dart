@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
-import 'package:dwellu/app/pages/register/register_presenter.dart';
+import 'package:dazle/app/pages/register/register_presenter.dart';
 import 'package:flutter_overlay_loader/flutter_overlay_loader.dart';
-import 'package:dwellu/app/utils/app_constants.dart';
+import 'package:dazle/app/utils/app_constants.dart';
 
 
 class RegisterController extends Controller {

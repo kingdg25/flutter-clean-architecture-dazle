@@ -1,9 +1,9 @@
-import 'package:dwellu/app/pages/login/forgot_password/components/forgot_password.dart';
-import 'package:dwellu/app/pages/login/forgot_password/components/reset_password.dart';
-import 'package:dwellu/app/pages/login/forgot_password/components/verify_code.dart';
-import 'package:dwellu/app/pages/login/login_controller.dart';
-import 'package:dwellu/app/widgets/custom_appbar.dart';
-import 'package:dwellu/data/repositories/data_authentication_repository.dart';
+import 'package:dazle/app/pages/login/forgot_password/components/forgot_password.dart';
+import 'package:dazle/app/pages/login/forgot_password/components/reset_password.dart';
+import 'package:dazle/app/pages/login/forgot_password/components/verify_code.dart';
+import 'package:dazle/app/pages/login/login_controller.dart';
+import 'package:dazle/app/widgets/custom_appbar.dart';
+import 'package:dazle/data/repositories/data_authentication_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 
