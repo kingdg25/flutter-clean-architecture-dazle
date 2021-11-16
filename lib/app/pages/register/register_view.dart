@@ -166,6 +166,8 @@ class _RegisterPageState extends ViewState<RegisterPage, RegisterController> {
 
                         if (_formKey2.currentState.validate()) {
                           _formKey2.currentState.save();
+
+                          controller.register();
                         }
                       },
                     )

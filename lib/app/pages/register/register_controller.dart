@@ -49,7 +49,8 @@ class RegisterController extends Controller {
     registerPresenter.registerUserOnComplete = () {
       print('register user on complete');
       Loader.hide();
-      clearTextController();
+      Navigator.pop(getContext());
+
       registerUserSuccess();
       refreshUI();
     };
@@ -67,31 +68,19 @@ class RegisterController extends Controller {
     position = value;
   }
 
-  void clearTextController(){
-    firstNameTextController.clear();
-    lastNameTextController.clear();
-    mobileNumberTextController.clear();
-    position = null;
-    licenseNumberTextController.clear();
-    emailTextController.clear();
-    passwordTextController.clear();
-  }
-
   void register() {
     Loader.show(getContext());
 
-    Future.delayed(Duration(seconds: 1), () {
-      registerPresenter.registerUser(
-        firstNameTextController.text, 
-        lastNameTextController.text, 
-        mobileNumberTextController.text,
-        position,
-        licenseNumberTextController.text,
+    registerPresenter.registerUser(
+      firstNameTextController.text, 
+      lastNameTextController.text, 
+      mobileNumberTextController.text,
+      position,
+      licenseNumberTextController.text,
 
-        emailTextController.text, 
-        passwordTextController.text
-      );
-    });
+      emailTextController.text, 
+      passwordTextController.text
+    );
   }
 
   _statusDialog(bool status, String text){
