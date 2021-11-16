@@ -8,10 +8,15 @@ import 'package:dwellu/app/utils/app_constants.dart';
 class RegisterController extends Controller {
 
   PageController registerPageController;
-  GlobalKey<FormState> registerFormKey;
 
+  GlobalKey<FormState> registerFormKey;
   final TextEditingController firstNameTextController;
   final TextEditingController lastNameTextController;
+  final TextEditingController mobileNumberTextController;
+  final TextEditingController positionTextController;
+  final TextEditingController licenseTextController;
+
+  GlobalKey<FormState> register2FormKey;
   final TextEditingController emailTextController;
   final TextEditingController passwordTextController;
 
@@ -20,12 +25,16 @@ class RegisterController extends Controller {
 
   RegisterController(userRepo)
     : registerPresenter = RegisterPresenter(userRepo),
+      registerPageController = PageController(),
       registerFormKey = GlobalKey<FormState>(),
       firstNameTextController = TextEditingController(),
       lastNameTextController = TextEditingController(),
+      mobileNumberTextController = TextEditingController(),
+      positionTextController = TextEditingController(),
+      licenseTextController = TextEditingController(),
+      register2FormKey = GlobalKey<FormState>(),
       emailTextController = TextEditingController(),
       passwordTextController = TextEditingController(),
-      registerPageController = PageController(),
       super();
   
 
