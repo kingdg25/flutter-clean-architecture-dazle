@@ -8,7 +8,6 @@ class CustomEmailField extends StatelessWidget {
   final double fontSize;
 
   final TextEditingController controller;
-  final bool isRequired;
   
   final Function onSaved;
 
@@ -20,7 +19,6 @@ class CustomEmailField extends StatelessWidget {
     this.hintText,
     this.hintColor = const Color.fromRGBO(154, 160, 166, 1.0),
     this.controller,
-    this.isRequired = false,
     this.fontSize = 16.0,
     this.onSaved,
     this.fillColor = const Color.fromRGBO(255, 255, 255, 0.4),

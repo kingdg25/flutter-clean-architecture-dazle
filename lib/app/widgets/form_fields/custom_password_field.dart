@@ -7,7 +7,6 @@ class CustomPasswordField extends StatefulWidget {
   final Color hintColor;
   
   final TextEditingController controller;
-  final bool isRequired;
   
   final TextInputType keyboardType;
   final double fontSize;
@@ -22,7 +21,6 @@ class CustomPasswordField extends StatefulWidget {
     this.hintText,
     this.hintColor = const Color.fromRGBO(154, 160, 166, 1.0),
     this.controller,
-    this.isRequired = false,
     this.keyboardType = TextInputType.text,
     this.fontSize = 16.0,
     this.onSaved,
