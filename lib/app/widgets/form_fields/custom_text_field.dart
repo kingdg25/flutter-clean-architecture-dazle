@@ -25,6 +25,8 @@ class CustomTextField extends StatelessWidget {
 
   final Color fillColor;
   final bool filled;
+
+  final TextCapitalization textCapitalization;
   
   CustomTextField({
     this.hintText,
@@ -40,7 +42,8 @@ class CustomTextField extends StatelessWidget {
     this.onSaved,
     this.inputFormatters,
     this.fillColor = const Color.fromRGBO(255, 255, 255, 0.4),
-    this.filled = false
+    this.filled = false,
+    this.textCapitalization = TextCapitalization.none
   });
 
   @override
@@ -60,6 +63,7 @@ class CustomTextField extends StatelessWidget {
         } : validator,
         onTap: onTap,
         keyboardType: keyboardType,
+        textCapitalization: textCapitalization,
         style: TextStyle(
           decorationStyle: TextDecorationStyle.dotted,
           color: App.appTextColor,
