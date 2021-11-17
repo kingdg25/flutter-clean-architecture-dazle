@@ -75,6 +75,7 @@ class _RegisterPageState extends ViewState<RegisterPage, RegisterController> {
                               controller: controller.firstNameTextController,
                               hintText: 'First Name',
                               isRequired: true,
+                              textCapitalization: TextCapitalization.sentences,
                             ),
                           ),
                           SizedBox(width: 8.0),
@@ -83,6 +84,7 @@ class _RegisterPageState extends ViewState<RegisterPage, RegisterController> {
                               controller: controller.lastNameTextController,
                               hintText: 'Last Name',
                               isRequired: true,
+                              textCapitalization: TextCapitalization.sentences,
                             ),
                           ),
                         ],
@@ -95,6 +97,7 @@ class _RegisterPageState extends ViewState<RegisterPage, RegisterController> {
                       controller: controller.mobileNumberTextController,
                       hintText: '+63',
                       isRequired: true,
+                      keyboardType: TextInputType.phone,
                     ),
                     TitleField(
                       title: 'I am a'
@@ -113,6 +116,7 @@ class _RegisterPageState extends ViewState<RegisterPage, RegisterController> {
                       controller: controller.licenseNumberTextController,
                       hintText: 'Enter your License #',
                       isRequired: true,
+                      keyboardType: TextInputType.number,
                     ),
                     SizedBox(height: 20.0),
                     CustomIconButton(
