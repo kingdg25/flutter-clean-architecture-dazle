@@ -162,18 +162,35 @@ class _RegisterPageState extends ViewState<RegisterPage, RegisterController> {
                       hintText: 'Password',
                     ),
                     SizedBox(height: 20.0),
-                    CustomButton(
-                      text: 'Submit',
-                      expanded: true,
-                      onPressed: () {
-                        FocusScope.of(context).unfocus();
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        CustomIconButton(
+                          alignment: null,
+                          main: false,
+                          iconData: Icons.keyboard_backspace,
+                          onPressed: () {
+                            FocusScope.of(context).unfocus();
 
-                        if (_formKey2.currentState.validate()) {
-                          _formKey2.currentState.save();
+                            _pageController.previousPage(
+                              duration: Duration(milliseconds: 500),
+                              curve: Curves.ease
+                            );
+                          },
+                        ),
+                        CustomButton(
+                          text: 'Submit',
+                          onPressed: () {
+                            FocusScope.of(context).unfocus();
 
-                          controller.register();
-                        }
-                      },
+                            if (_formKey2.currentState.validate()) {
+                              _formKey2.currentState.save();
+
+                              controller.register();
+                            }
+                          },
+                        )
+                      ],
                     )
                   ],
                 ),
