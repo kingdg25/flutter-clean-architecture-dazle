@@ -1,10 +1,16 @@
 import 'package:dazle/app/widgets/custom_text.dart';
+import 'package:dazle/app/widgets/form_fields/custom_button.dart';
 import 'package:flutter/material.dart';
 
 
 class AppConstant{
   
-  static statusDialog(BuildContext context,bool success, String text){
+  static statusDialog({
+    BuildContext context,
+    bool success = false,
+    String title,
+    String text
+  }){
     return showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -12,21 +18,28 @@ class AppConstant{
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10.0)
           ),
+          actionsPadding: EdgeInsets.all(20.0),
           title: CustomText(
-            text: success ? 'Success!' : 'Failed!',
+            text: title ?? ( success ? 'Success!' : 'Failed!' ),
+            overflow: TextOverflow.clip,
             fontSize: 18.0,
+            textAlign: TextAlign.center,
           ),
           content: CustomText(
             text: text ?? ( success ? 'success' : 'failed' ),
+            overflow: TextOverflow.clip,
             fontSize: 13.0,
+            textAlign: TextAlign.center,
           ),
           actions: <Widget>[
-            TextButton(
-              child: Text('Ok'),
+            CustomButton(
+              text: 'OK',
+              expanded: true,
+              borderRadius: 20.0,
               onPressed: () {
                 Navigator.pop(context);
-              }
-            ),
+              },
+            )
           ],
         );
       },
