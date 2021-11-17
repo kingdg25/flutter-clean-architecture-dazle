@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:dazle/app/pages/register/register_presenter.dart';
 import 'package:flutter_overlay_loader/flutter_overlay_loader.dart';
-import 'package:dazle/app/utils/app_constants.dart';
+import 'package:dazle/app/utils/app_constant.dart';
 
 
 class RegisterController extends Controller {
@@ -84,7 +84,7 @@ class RegisterController extends Controller {
   }
 
   _statusDialog(bool status, String text){
-    statusDialog(getContext(), status, text);
+    AppConstant.statusDialog(getContext(), status, text);
   }
 
   registerUserSuccess(){

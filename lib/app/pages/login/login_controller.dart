@@ -6,7 +6,7 @@ import 'package:dazle/app/pages/home/home_view.dart';
 import 'package:dazle/app/pages/login/login_presenter.dart';
 import 'package:dazle/app/pages/login/login_view.dart';
 import 'package:flutter_overlay_loader/flutter_overlay_loader.dart';
-import 'package:dazle/app/utils/app_constants.dart';
+import 'package:dazle/app/utils/app_constant.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
 
@@ -244,7 +244,7 @@ class LoginController extends Controller {
   }
 
   _statusDialog(bool status, String text){
-    statusDialog(getContext(), status, text);
+    AppConstant.statusDialog(getContext(), status, text);
   }
 
 }
