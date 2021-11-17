@@ -54,7 +54,7 @@ class SocialLogin extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         /** ===============================    LOGIN WITH APPLE           ============================================ */
-        !Platform.isIOS ?
+        Platform.isIOS ?
         brookySocialButton(
           text: 'Sign in with Apple',
           textColor: Colors.white,
@@ -65,7 +65,7 @@ class SocialLogin extends StatelessWidget {
           ),
           onPressed: appleHandleSignIn,
         ) : Container(),
-        SizedBox(width: 20.0),
+        Platform.isIOS ? SizedBox(width: 20.0) : Container(),
         /** ===============================    LOGIN WITH FACEBOOK           ============================================ */
         brookySocialButton(
           text: 'Facebook',
