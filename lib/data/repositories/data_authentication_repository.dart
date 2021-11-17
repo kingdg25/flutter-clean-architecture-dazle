@@ -42,11 +42,17 @@ class DataAuthenticationRepository extends AuthenticationRepository {
         return user['code'];
       }
       else {
-        throw jsonResponse['status'];
+        throw {
+          "error": false,
+          "status": "$jsonResponse"
+        };
       }
     }
     else {
-      throw "$jsonResponse";
+      throw {
+        "error": true,
+        "status": "$jsonResponse"
+      };
     }
   }
 
@@ -75,12 +81,18 @@ class DataAuthenticationRepository extends AuthenticationRepository {
       bool success = jsonResponse['success'];
 
       if(!success){
-        throw jsonResponse['status'];
+        throw {
+          "error": false,
+          "status": "$jsonResponse"
+        };
       }
       
     }
     else {
-      throw "$jsonResponse";
+      throw {
+        "error": true,
+        "status": "$jsonResponse"
+      };
     }
   }
 
@@ -130,11 +142,17 @@ class DataAuthenticationRepository extends AuthenticationRepository {
         return todoUser;
       }
       else {
-        throw jsonResponse['status'];
+        throw {
+          "error": false,
+          "status": jsonResponse['status']
+        };
       }
     }
     else {
-      throw "$jsonResponse";
+      throw {
+        "error": true,
+        "status": "$jsonResponse"
+      };
     }
   }
 
@@ -166,7 +184,10 @@ class DataAuthenticationRepository extends AuthenticationRepository {
       print('login login TODOUSER REGISTER $jsonResponse');
     }
     else {
-      throw "$jsonResponse";
+      throw {
+        "error": true,
+        "status": "$jsonResponse"
+      };
     }
   }
 
@@ -210,11 +231,17 @@ class DataAuthenticationRepository extends AuthenticationRepository {
         return todoUser;
       }
       else {
-        throw jsonResponse['status'];
+        throw {
+          "error": false,
+          "status": jsonResponse['status']
+        };
       }
     }
     else {
-      throw "$jsonResponse";
+      throw {
+        "error": true,
+        "status": "$jsonResponse"
+      };
     }
   }
 
