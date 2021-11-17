@@ -51,15 +51,19 @@ class RegisterController extends Controller {
       Loader.hide();
       Navigator.pop(getContext());
 
-      registerUserSuccess();
-      refreshUI();
+      _statusDialog(true, 'Registration Success!', 'You are successfully registered.');
     };
 
     registerPresenter.registerUserOnError = (e) {
       print('register user on error $e');
       Loader.hide();
-      _statusDialog(false, '${e.toString()}');
-      refreshUI();
+      
+      if ( !e['error'] ) {
+        _statusDialog(false, 'Oops!', '${e['status'].toString()}');
+      }
+      else{
+        _statusDialog(false, 'Something went wrong', '${e.toString()}');
+      } 
     };
   }
 
@@ -83,29 +87,12 @@ class RegisterController extends Controller {
     );
   }
 
-  _statusDialog(bool status, String text){
-    AppConstant.statusDialog(getContext(), status, text);
-  }
-
-  registerUserSuccess(){
-    return showDialog(
+  _statusDialog(bool success, String title, String text){
+    AppConstant.statusDialog(
       context: getContext(),
-      builder: (BuildContext context) {
-        return AlertDialog(
-          shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(20.0)),
-          title: Text('Registration Success!', style: TextStyle(fontSize: 15.0)),
-          content: Text('You are successfully registered.', style: TextStyle(fontSize: 15.0)),
-          actions: <Widget>[
-            TextButton(
-              child: Text('Ok'),
-              onPressed: () {
-                Navigator.pop(context);
-              }
-            ),
-          ],
-        );
-      },
+      success: success ?? false,
+      title: title,
+      text: text,
     );
   }
   

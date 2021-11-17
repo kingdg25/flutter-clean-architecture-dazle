@@ -96,7 +96,13 @@ class LoginController extends Controller {
     loginPresenter.loginUserOnError = (e) {
       print('login user on error $e');
       Loader.hide();
-      _statusDialog(false, '${e.toString()}');
+
+      if ( !e['error'] ) {
+        _statusDialog(false, 'Incorrect Username/Password', 'Please enter a valid username/password to sign in');
+      }
+      else{
+        _statusDialog(false, 'Something went wrong', '${e.toString()}');
+      } 
     };
 
 
@@ -121,7 +127,13 @@ class LoginController extends Controller {
     loginPresenter.forgotPasswordOnError = (e) {
       print('forgot pass on error $e');
       Loader.hide();
-      _statusDialog(false, '${e.toString()}');
+      
+      if ( !e['error'] ) {
+        _statusDialog(false, 'Oops!', "Sorry we can't find an account with this email address.");
+      }
+      else{
+        _statusDialog(false, 'Something went wrong', '${e.toString()}');
+      } 
     };
 
 
@@ -135,13 +147,19 @@ class LoginController extends Controller {
       Loader.hide();
       Navigator.pop(getContext());
 
-      _statusDialog(true, 'Successfully Change Password.');
+      _statusDialog(true, 'Success!', 'You successfully Change the Password.');
     };
 
     loginPresenter.resetPasswordOnError = (e) {
       print('reset pass on error $e');
       Loader.hide();
-      _statusDialog(false, '${e.toString()}');
+      
+      if ( !e['error'] ) {
+        _statusDialog(false, 'Oops!', "Sorry we can't find an account with this email address.");
+      }
+      else{
+        _statusDialog(false, 'Something went wrong', '${e.toString()}');
+      } 
     };
 
 
@@ -164,7 +182,13 @@ class LoginController extends Controller {
     loginPresenter.socialLoginOnError = (e) {
       print('social login on error $e');
       Loader.hide();
-      _statusDialog(false, '${e.toString()}');
+      
+      if ( !e['error'] ) {
+        _statusDialog(false, 'Oops!', '${e['status'].toString()}');
+      }
+      else{
+        _statusDialog(false, 'Something went wrong', '${e.toString()}');
+      } 
     };
   }
 
@@ -243,8 +267,13 @@ class LoginController extends Controller {
     loginPresenter.socialLogin('facebook');
   }
 
-  _statusDialog(bool status, String text){
-    AppConstant.statusDialog(getContext(), status, text);
+  _statusDialog(bool success, String title, String text){
+    AppConstant.statusDialog(
+      context: getContext(),
+      success: success ?? false,
+      title: title,
+      text: text,
+    );
   }
 
 }
