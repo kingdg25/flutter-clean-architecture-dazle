@@ -1,3 +1,4 @@
+import 'package:dazle/app/pages/register/components/register_success.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:dazle/app/pages/register/register_presenter.dart';
@@ -54,7 +55,19 @@ class RegisterController extends Controller {
       Loader.hide();
       Navigator.pop(getContext());
 
-      _statusDialog(true, 'Registration Success!', 'You are successfully registered.');
+      if ( position == 'Broker' ){
+        Navigator.push(
+          getContext(),
+          MaterialPageRoute(
+            builder: (buildContext) => RegisterSuccess(
+              firstName: firstNameTextController.text,
+            )
+          )
+        );
+      }
+      else {
+        
+      }
     };
 
     registerPresenter.registerUserOnError = (e) {
@@ -62,7 +75,7 @@ class RegisterController extends Controller {
       Loader.hide();
       
       if ( !e['error'] ) {
-        _statusDialog(false, 'Oops!', '${e['status'].toString()}');
+        _statusDialog(false, 'Oops!', '${e['status'] ?? ''}');
       }
       else{
         _statusDialog(false, 'Something went wrong', '${e.toString()}');
@@ -74,13 +87,13 @@ class RegisterController extends Controller {
     print('setposition $value');
     position = value;
 
-    if(value == 'Real Estate Salesperson'){
+    if(value == 'Salesperson'){
       licenseNumberTextField = 'Enter your Broker’s License #';
     }
     else {
       licenseNumberTextField = 'Enter your License #';
     }
-    
+
     refreshUI();
   }
 
