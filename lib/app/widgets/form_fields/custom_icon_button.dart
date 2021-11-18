@@ -1,5 +1,6 @@
 import 'package:dazle/app/utils/app.dart';
 import 'package:flutter/material.dart';
+import 'dart:math' as math;
 
 class CustomIconButton extends StatelessWidget {
   final bool main;
@@ -34,10 +35,14 @@ class CustomIconButton extends StatelessWidget {
             width: 1.5
           )
         ),
-        child: Icon(
-          iconData, //Icons.arrow_right_alt,
-          color: main ? Colors.white : backgroudColor,
-          size: 35.0,
+        child: Transform(
+          alignment: Alignment.center,
+          transform: Matrix4.rotationY( main ? 0: math.pi ),
+          child: Icon(
+            iconData, //Icons.arrow_right_alt,
+            color: main ? Colors.white : backgroudColor,
+            size: 35.0,
+          ),
         ),
         onPressed: onPressed
       ),
