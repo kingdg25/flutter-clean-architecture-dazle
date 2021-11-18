@@ -54,9 +54,9 @@ class SocialLoginUseCase extends UseCase<SocialLoginUseCaseResponse, SocialLogin
         
         if(accessToken != null){
           final userData = await FacebookAuth.instance.getUserData();
-          final graphResponse = await http.get('https://graph.facebook.com/v2.12/me?fields=name,first_name,last_name,email&access_token=${accessToken.token}');
-          final profile = await convert.jsonDecode(graphResponse.body);
-          print('facebook data $userData $profile');
+          // final graphResponse = await http.get('https://graph.facebook.com/v2.12/me?fields=name,first_name,last_name,email&access_token=${accessToken.token}');
+          // final profile = await convert.jsonDecode(graphResponse.body);
+          // print('facebook data $userData $profile');
 
           final user = await dataAuthenticationRepository.socialLogin(type: params.type, email: userData['email'], token: accessToken.token);
           controller.add(SocialLoginUseCaseResponse(user));
