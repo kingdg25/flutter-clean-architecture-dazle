@@ -1,4 +1,3 @@
-import 'package:dazle/app/widgets/form_fields/custom_button.dart';
 import 'package:dazle/app/widgets/form_fields/custom_email_field.dart';
 import 'package:dazle/app/widgets/form_fields/custom_field_layout.dart';
 import 'package:dazle/app/widgets/form_fields/custom_icon_button.dart';
@@ -100,13 +99,13 @@ class _RegisterPageState extends ViewState<RegisterPage, RegisterController> {
                       keyboardType: TextInputType.phone,
                     ),
                     TitleField(
-                      title: 'I am a'
+                      title: 'I am a Real Estate ..'
                     ),
                     CustomSelectField(
-                      hintText: 'I am a',
+                      hintText: 'I am a Real Estate ..',
                       isRequired: true, 
                       value: controller.position,
-                      items: ['Real Estate Broker', 'Real Estate Salesperson'],
+                      items: ['Broker', 'Salesperson'],
                       onChanged: controller.setPosition,
                     ),
                     TitleField(
@@ -168,7 +167,6 @@ class _RegisterPageState extends ViewState<RegisterPage, RegisterController> {
                         CustomIconButton(
                           alignment: null,
                           main: false,
-                          iconData: Icons.keyboard_backspace,
                           onPressed: () {
                             FocusScope.of(context).unfocus();
 
@@ -178,8 +176,8 @@ class _RegisterPageState extends ViewState<RegisterPage, RegisterController> {
                             );
                           },
                         ),
-                        CustomButton(
-                          text: 'Submit',
+                        CustomIconButton(
+                          alignment: null,
                           onPressed: () {
                             FocusScope.of(context).unfocus();
 
