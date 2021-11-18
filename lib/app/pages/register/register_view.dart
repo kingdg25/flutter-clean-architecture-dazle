@@ -110,11 +110,11 @@ class _RegisterPageState extends ViewState<RegisterPage, RegisterController> {
                       onChanged: controller.setPosition,
                     ),
                     TitleField(
-                      title: 'Enter your License #'
+                      title: controller.licenseNumberTextField
                     ),
                     CustomTextField(
                       controller: controller.licenseNumberTextController,
-                      hintText: 'Enter your License #',
+                      hintText: controller.licenseNumberTextField,
                       isRequired: true,
                       keyboardType: TextInputType.number,
                     ),

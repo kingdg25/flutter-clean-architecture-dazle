@@ -16,6 +16,8 @@ class RegisterController extends Controller {
   String position;
   final TextEditingController licenseNumberTextController;
 
+  String licenseNumberTextField;
+
   GlobalKey<FormState> registerFormKeyPage2;
   final TextEditingController emailTextController;
   final TextEditingController passwordTextController;
@@ -32,6 +34,7 @@ class RegisterController extends Controller {
       mobileNumberTextController = TextEditingController(),
       position = null,
       licenseNumberTextController = TextEditingController(),
+      licenseNumberTextField = 'Enter your License #',
       registerFormKeyPage2 = GlobalKey<FormState>(),
       emailTextController = TextEditingController(),
       passwordTextController = TextEditingController(),
@@ -70,6 +73,15 @@ class RegisterController extends Controller {
   setPosition(value){
     print('setposition $value');
     position = value;
+
+    if(value == 'Real Estate Salesperson'){
+      licenseNumberTextField = 'Enter your Broker’s License #';
+    }
+    else {
+      licenseNumberTextField = 'Enter your License #';
+    }
+    
+    refreshUI();
   }
 
   void register() {
