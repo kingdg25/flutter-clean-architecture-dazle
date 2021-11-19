@@ -13,9 +13,9 @@ class IsNewUserUseCase extends UseCase<void, IsNewUserUseCaseParams> {
     final controller = StreamController();
     
     try {
-      await todoRepository.newUser(
+      await todoRepository.isNewUser(
         email: params.email,
-        newUser: params.newUser
+        isNewUser: params.isNewUser
       );
       
       logger.finest('New User successful.');
@@ -35,7 +35,7 @@ class IsNewUserUseCase extends UseCase<void, IsNewUserUseCaseParams> {
 
 class IsNewUserUseCaseParams {
   final String email;
-  final bool newUser;
+  final bool isNewUser;
 
-  IsNewUserUseCaseParams(this.email, this.newUser);
+  IsNewUserUseCaseParams(this.email, this.isNewUser);
 }

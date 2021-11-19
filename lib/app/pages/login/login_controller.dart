@@ -68,7 +68,7 @@ class LoginController extends Controller {
 
         TodoUser _user = await App.getUser();
       
-        if ( _user.newUser != null && _user.newUser ) {
+        if ( _user.isNewUser != null && _user.isNewUser ) {
           welcomePage();
         }
         else {
@@ -91,7 +91,7 @@ class LoginController extends Controller {
     loginPresenter.loginUserOnNext = (TodoUser res) {
       print('login user on next $res ${res.toString()}');
       if (res != null){
-        if ( res.newUser ) {
+        if ( res.isNewUser ) {
           welcomePage();
         }
         else {

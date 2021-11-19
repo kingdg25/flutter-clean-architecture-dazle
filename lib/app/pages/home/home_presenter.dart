@@ -78,8 +78,8 @@ class HomePresenter extends Presenter {
     getUserUseCase.execute(_GetUserUseCaseObserver(this), GetUserUseCaseParams());
   }
 
-  void newUser(String email, bool newUser) {
-    newUserUseCase.execute(_IsNewUserUseCaseObserver(this), IsNewUserUseCaseParams(email, newUser));
+  void isNewUser(String email, bool isNewUser) {
+    newUserUseCase.execute(_IsNewUserUseCaseObserver(this), IsNewUserUseCaseParams(email, isNewUser));
   }
 
 

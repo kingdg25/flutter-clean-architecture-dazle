@@ -170,11 +170,11 @@ class HomeController extends Controller {
 
   }
 
-  void newUser() {
-    print('_user _user _user $_user ${_user.displayName} ${_user.newUser}');
+  void isNewUser() {
+    print('_user _user _user $_user ${_user.displayName} ${_user.isNewUser}');
 
     if ( _user != null ) {
-      homePresenter.newUser(_user.email, false);
+      homePresenter.isNewUser(_user.email, false);
     }
   }
 

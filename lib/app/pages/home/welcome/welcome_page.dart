@@ -74,7 +74,7 @@ class _WelcomeScreenState extends ViewState<WelcomePage, HomeController> {
                     CustomFieldLayout(
                       child: CustomIconButton(
                         onPressed: () {
-                          controller.newUser();
+                          controller.isNewUser();
                         }
                       )
                     )

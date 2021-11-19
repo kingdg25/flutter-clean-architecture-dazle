@@ -98,11 +98,11 @@ class DataTodoRepository extends TodoRepository {
   }
 
   @override
-  Future<void> newUser({String email, bool newUser}) async {
+  Future<void> isNewUser({String email, bool isNewUser}) async {
     Map params = {
       "user": {
         "email": email,
-        "new_user": newUser
+        "is_new_user": isNewUser
       }
     };
 
@@ -122,7 +122,7 @@ class DataTodoRepository extends TodoRepository {
       var user = jsonResponse['user'];
 
       if (success) {
-        print('newUser newUser newUser newUser ${user['new_user']} $user');
+        print('isNewUser isNewUser isNewUser isNewUser ${user['is_new_user']} $user');
         SharedPreferences prefs = await SharedPreferences.getInstance();
 
         if(user != null){
