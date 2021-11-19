@@ -1,3 +1,4 @@
+import 'package:dazle/app/pages/register/components/send_request_screen.dart';
 import 'package:dazle/app/pages/register/components/waiting_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
@@ -66,7 +67,12 @@ class RegisterController extends Controller {
         );
       }
       else {
-        
+        Navigator.push(
+          getContext(),
+          MaterialPageRoute(
+            builder: (buildContext) => SendRequestScreen()
+          )
+        );
       }
     };
 
