@@ -54,7 +54,7 @@ class _WelcomeScreenState extends ViewState<WelcomePage, HomeController> {
                       textAlign: TextAlign.center,
                     ),
                     CustomText(
-                      text: "You’re {widget.user.firstName}'s connection!",
+                      text: "You’re ${controller.user.firstName}'s connection!",
                       fontSize: 20.0,
                       textAlign: TextAlign.center,
                     ),
@@ -66,7 +66,7 @@ class _WelcomeScreenState extends ViewState<WelcomePage, HomeController> {
                       ),
                     ),
                     CustomText(
-                      text: 'widget.user.displayName',
+                      text: controller.user.displayName,
                       fontSize: 22.0,
                       textAlign: TextAlign.center,
                     ),
