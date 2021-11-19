@@ -152,18 +152,18 @@ class HomeController extends Controller {
 
 
     //new user or not
-    homePresenter.newUserOnNext = (res) {
+    homePresenter.isNewUserOnNext = (res) {
       print('new user on next $res');
     };
 
-    homePresenter.newUserOnComplete = () {
+    homePresenter.isNewUserOnComplete = () {
       print('new user on complete');
       Loader.hide();
 
       homePage();
     };
 
-    homePresenter.newUserOnError = (e) {
+    homePresenter.isNewUserOnError = (e) {
       print('new user on error $e');
       Loader.hide();
     };

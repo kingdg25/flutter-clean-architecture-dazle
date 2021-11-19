@@ -4,12 +4,12 @@ import 'package:dazle/domain/repositories/todo_repository.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 
 
-class NewUserUseCase extends UseCase<void, NewUserUseCaseParams> {
+class IsNewUserUseCase extends UseCase<void, IsNewUserUseCaseParams> {
   final TodoRepository todoRepository;
-  NewUserUseCase(this.todoRepository);
+  IsNewUserUseCase(this.todoRepository);
 
   @override
-  Future<Stream<void>> buildUseCaseStream(NewUserUseCaseParams params) async {
+  Future<Stream<void>> buildUseCaseStream(IsNewUserUseCaseParams params) async {
     final controller = StreamController();
     
     try {
@@ -33,9 +33,9 @@ class NewUserUseCase extends UseCase<void, NewUserUseCaseParams> {
 }
 
 
-class NewUserUseCaseParams {
+class IsNewUserUseCaseParams {
   final String email;
   final bool newUser;
 
-  NewUserUseCaseParams(this.email, this.newUser);
+  IsNewUserUseCaseParams(this.email, this.newUser);
 }
