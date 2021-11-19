@@ -50,6 +50,7 @@ class HomeController extends Controller {
       print('get all todo on next $todos');
       _menu = ['Update','Delete'];
       _allTodo = todos;
+      refreshUI();
     };
 
     homePresenter.getAllTodoOnComplete = () {
@@ -70,6 +71,7 @@ class HomeController extends Controller {
       print('add todo on complete');
       Loader.hide();
       _todoTextController.clear();
+      refreshUI();
     };
 
     homePresenter.addTodoOnError = (e) {
@@ -86,6 +88,7 @@ class HomeController extends Controller {
     homePresenter.deleteTodoOnComplete = () {
       print('delete todo on complete');
       Loader.hide();
+      refreshUI();
     };
 
     homePresenter.deleteTodoOnError = (e) {
@@ -103,6 +106,7 @@ class HomeController extends Controller {
     homePresenter.updateTodoOnComplete = () {
       print('update todo on complete');
       Loader.hide();
+      refreshUI();
     };
 
     homePresenter.updateTodoOnError = (e) {
@@ -129,12 +133,13 @@ class HomeController extends Controller {
     homePresenter.getUser();
     // get user
     homePresenter.getUserOnNext = (TodoUser res) {
-      print('get user on next $res');
+      print('get user on next $res ${res.displayName}');
       if(res != null) {
         _user = res;
 
         _displayName = res.displayName ?? res.email;
       }
+      refreshUI();
     };
 
     homePresenter.getUserOnComplete = () {
