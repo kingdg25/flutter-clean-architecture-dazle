@@ -1,6 +1,7 @@
 // import 'package:device_preview/device_preview.dart';
 import 'package:dazle/app/pages/home/home_view.dart';
 import 'package:dazle/app/pages/login/login_view.dart';
+import 'package:dazle/app/pages/home/welcome/welcome_page.dart';
 import 'package:dazle/app/pages/register/register_view.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 
@@ -44,7 +45,8 @@ class MyApp extends StatelessWidget {
       routes: {
         LoginPage.id: (context) => LoginPage(),
         RegisterPage.id: (context) => RegisterPage(),
-        HomePage.id: (context) => HomePage()
+        WelcomePage.id: (context) => WelcomePage(),
+        HomePage.id: (context) => HomePage(),
       },
       // locale: DevicePreview.of(context).locale, // <--- /!\ Add the locale
       // builder: DevicePreview.appBuilder, // <--- /!\ Add the builder
