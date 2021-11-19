@@ -21,13 +21,11 @@ class AppConstant{
           actionsPadding: EdgeInsets.all(20.0),
           title: CustomText(
             text: title ?? ( success ? 'Success!' : 'Failed!' ),
-            overflow: TextOverflow.clip,
             fontSize: 18.0,
             textAlign: TextAlign.center,
           ),
           content: CustomText(
             text: text ?? ( success ? 'success' : 'failed' ),
-            overflow: TextOverflow.clip,
             fontSize: 13.0,
             textAlign: TextAlign.center,
           ),

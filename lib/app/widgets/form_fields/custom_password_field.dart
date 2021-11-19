@@ -55,7 +55,7 @@ class _CustomPasswordFieldState extends State<CustomPasswordField> {
         keyboardType: widget.keyboardType,
         style: TextStyle(
           decorationStyle: TextDecorationStyle.dotted,
-          color: App.appTextColor,
+          color: App.fieldTextColor,
           fontFamily: "Poppins",
           fontSize: widget.fontSize
         ),

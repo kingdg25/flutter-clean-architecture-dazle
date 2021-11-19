@@ -66,7 +66,7 @@ class CustomTextField extends StatelessWidget {
         textCapitalization: textCapitalization,
         style: TextStyle(
           decorationStyle: TextDecorationStyle.dotted,
-          color: App.appTextColor,
+          color: App.fieldTextColor,
           fontFamily: "Poppins",
           fontSize: fontSize
         ),

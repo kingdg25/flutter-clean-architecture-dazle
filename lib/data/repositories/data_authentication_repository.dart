@@ -16,7 +16,7 @@ class DataAuthenticationRepository extends AuthenticationRepository {
   factory DataAuthenticationRepository() => _instance;
 
   @override
-  Future<String> forgotPassword(String email) async {
+  Future<String> forgotPassword({String email}) async {
     Map params = {
       "user": {
         "email": email,
@@ -57,7 +57,7 @@ class DataAuthenticationRepository extends AuthenticationRepository {
   }
 
   @override
-  Future<void> resetPassword(String email, String code, String password) async {
+  Future<void> resetPassword({String email, String code, String password}) async {
     Map params = {
       "user": {
         "email": email,

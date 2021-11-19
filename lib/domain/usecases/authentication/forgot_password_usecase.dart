@@ -14,7 +14,7 @@ class ForgotPasswordUseCase extends UseCase<ForgotPasswordUseCaseResponse, Forgo
     final controller = StreamController<ForgotPasswordUseCaseResponse>();
     
     try {
-      final code = await dataAuthenticationRepository.forgotPassword(params.email);
+      final code = await dataAuthenticationRepository.forgotPassword(email: params.email);
       
       if (code != null){
         controller.add(ForgotPasswordUseCaseResponse(code));

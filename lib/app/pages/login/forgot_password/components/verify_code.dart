@@ -41,7 +41,6 @@ class VerifyCode extends StatelessWidget {
                     text: 'Enter Code',
                     fontSize: 30.0,
                     fontWeight: FontWeight.w600,
-                    overflow: TextOverflow.clip,
                     height: 1.2,
                   ),
                 ),
@@ -54,7 +53,6 @@ class VerifyCode extends StatelessWidget {
                   text: '4 digit code has been sent to ${controller.forgotPasswordEmailTextController.text ?? ''}',
                   fontSize: 13.0,
                   color: Color.fromRGBO(154, 160, 166, 1.0),
-                  overflow: TextOverflow.clip,
                 ),
               ),
             ),
@@ -71,7 +69,7 @@ class VerifyCode extends StatelessWidget {
                   fieldHeight: 55,
                   fieldWidth: 55,
                   activeFillColor: Colors.white,
-                  activeColor: App.appMainColor,
+                  activeColor: App.mainColor,
                   inactiveColor: Color.fromRGBO(232, 227, 227, 1.0),
                   inactiveFillColor: Color.fromRGBO(232, 227, 227, 1.0),
                   selectedColor: Color.fromRGBO(232, 227, 227, 1.0),
@@ -97,7 +95,7 @@ class VerifyCode extends StatelessWidget {
                     CustomFlatButton(
                       text: 'Tap here to send', 
                       fontSize: 11.0,
-                      color: App.appMainColor,
+                      color: App.mainColor,
                       padding: EdgeInsets.all(0),
                       onPressed: () {
                         print('Tap here to send');

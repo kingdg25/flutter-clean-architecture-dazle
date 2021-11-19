@@ -14,7 +14,11 @@ class ResetPasswordUseCase extends UseCase<ResetPasswordUseCaseResponse, ResetPa
     final controller = StreamController<ResetPasswordUseCaseResponse>();
     
     try {
-      await dataAuthenticationRepository.resetPassword(params.email, params.code, params.password);
+      await dataAuthenticationRepository.resetPassword(
+        email: params.email,
+        code: params.code,
+        password: params.password
+      );
 
       logger.finest('Reset Password successful.');
       controller.close();

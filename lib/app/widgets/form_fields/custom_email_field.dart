@@ -47,7 +47,7 @@ class CustomEmailField extends StatelessWidget {
         keyboardType: TextInputType.emailAddress,
         style: TextStyle(
           decorationStyle: TextDecorationStyle.dotted,
-          color: App.appTextColor,
+          color: App.fieldTextColor,
           fontFamily: "Poppins",
           fontSize: fontSize
         ),

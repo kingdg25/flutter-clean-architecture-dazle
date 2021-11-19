@@ -31,7 +31,7 @@ class _LoginPageState extends ViewState<LoginPage, LoginController> {
   Widget get view {
     return Scaffold(
       key: globalKey,
-      backgroundColor: App.appMainColor,
+      backgroundColor: App.mainColor,
       body: ControlledWidgetBuilder<LoginController>(
         builder: (context, controller) {
           var _formKey = controller.loginFormKey;

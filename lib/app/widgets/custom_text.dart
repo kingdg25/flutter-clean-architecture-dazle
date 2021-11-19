@@ -1,3 +1,4 @@
+import 'package:dazle/app/utils/app.dart';
 import 'package:flutter/material.dart';
 
 class CustomText extends StatelessWidget {
@@ -14,10 +15,10 @@ class CustomText extends StatelessWidget {
   CustomText({
     @required this.text,
     this.fontSize = 14.0,
-    this.color = Colors.black,
+    this.color = App.textColor,
     this.fontWeight = FontWeight.normal,
     this.textAlign = TextAlign.left,
-    this.overflow = TextOverflow.ellipsis,
+    this.overflow = TextOverflow.clip,
     this.height = 1.5
   });
 

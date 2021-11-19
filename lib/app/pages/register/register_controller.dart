@@ -1,4 +1,4 @@
-import 'package:dazle/app/pages/register/components/register_success.dart';
+import 'package:dazle/app/pages/register/components/waiting_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:dazle/app/pages/register/register_presenter.dart';
@@ -59,7 +59,7 @@ class RegisterController extends Controller {
         Navigator.push(
           getContext(),
           MaterialPageRoute(
-            builder: (buildContext) => RegisterSuccess(
+            builder: (buildContext) => WaitingScreen(
               firstName: firstNameTextController.text,
             )
           )

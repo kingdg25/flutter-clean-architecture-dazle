@@ -37,7 +37,7 @@ class CustomSelectField extends StatelessWidget {
             value: item ?? '',
             child: CustomText(
               text: item ?? '', 
-              color: App.appTextColor
+              color: App.fieldTextColor
             ),
           )
         ).toList();
@@ -60,7 +60,7 @@ class CustomSelectField extends StatelessWidget {
         items: customSelectMenuItems(items),
         style: TextStyle(
           decorationStyle: TextDecorationStyle.dotted,
-          color: App.appTextColor,
+          color: App.fieldTextColor,
           fontFamily: "Poppins",
           fontSize: fontSize
         ),

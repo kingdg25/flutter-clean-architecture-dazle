@@ -13,9 +13,9 @@ abstract class AuthenticationRepository {
 
   Future<TodoUser> login({String email, String password});
 
-  Future<String> forgotPassword(String email);
+  Future<String> forgotPassword({String email});
 
-  Future<void> resetPassword(String email, String code, String password);
+  Future<void> resetPassword({String email, String code, String password});
 
   Future<bool> isAuthenticated();
 

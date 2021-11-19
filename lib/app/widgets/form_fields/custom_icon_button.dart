@@ -13,7 +13,7 @@ class CustomIconButton extends StatelessWidget {
 
   CustomIconButton({
     this.main = true,
-    this.backgroudColor = App.appMainColor,
+    this.backgroudColor = App.mainColor,
     this.borderRadius = 5.0,
     this.iconData = Icons.arrow_right_alt,
     @required this.onPressed,

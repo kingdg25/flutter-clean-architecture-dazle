@@ -32,7 +32,7 @@ class RegisterLayout extends StatelessWidget {
                     gradient: LinearGradient(
                       begin: FractionalOffset.bottomCenter,
                       end: FractionalOffset.topCenter,
-                      colors: [App.appMainColor, Color.fromRGBO(229, 250, 243, 0.9)]
+                      colors: [App.mainColor, Color.fromRGBO(229, 250, 243, 0.9)]
                     ),
                     borderRadius: BorderRadius.only(
                       bottomLeft: Radius.circular(30.0),

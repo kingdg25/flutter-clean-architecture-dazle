@@ -42,7 +42,6 @@ class ResetPassword extends StatelessWidget {
                       text: 'Reset Password',
                       fontSize: 30.0,
                       fontWeight: FontWeight.w600,
-                      overflow: TextOverflow.clip,
                       height: 1.2,
                     ),
                   ),
