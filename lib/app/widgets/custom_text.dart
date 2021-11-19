@@ -8,8 +8,10 @@ class CustomText extends StatelessWidget {
   final Color color;
   final FontWeight fontWeight;
   final TextAlign textAlign;
+  
   final TextOverflow overflow;
   final double height;
+  final FontStyle fontStyle;
 
 
   CustomText({
@@ -19,7 +21,8 @@ class CustomText extends StatelessWidget {
     this.fontWeight = FontWeight.normal,
     this.textAlign = TextAlign.left,
     this.overflow = TextOverflow.clip,
-    this.height = 1.5
+    this.height = 1.5,
+    this.fontStyle = FontStyle.normal
   });
 
 
@@ -32,7 +35,8 @@ class CustomText extends StatelessWidget {
         color: color,
         fontWeight: fontWeight,
         fontFamily: "Poppins",
-        height: height
+        height: height,
+        fontStyle: fontStyle
       ),
       overflow: overflow,
       textAlign: textAlign,
