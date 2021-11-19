@@ -1,5 +1,8 @@
 import 'dart:async';
 
+import 'package:dazle/app/pages/home/welcome/welcome_page.dart';
+import 'package:dazle/app/utils/app.dart';
+import 'package:dazle/domain/entities/todo_user.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:dazle/app/pages/home/home_view.dart';
@@ -59,14 +62,20 @@ class LoginController extends Controller {
     // Initialize presenter listeners here
     // These will be called upon success, failure, or data retrieval after usecase execution
     loginPresenter.isAuthenticated();
-    loginPresenter.isAuthenticatedOnNext = (bool res) {
-      // var data = convert.jsonEncode(res);
+    loginPresenter.isAuthenticatedOnNext = (bool res) async {
       print('current user on next $res ${res.toString()}');
       if (res){
-        print('HOOOOMMMEEE PPAAGE');
-        homePage();
+
+        TodoUser _user = await App.getUser();
+      
+        if ( _user.newUser != null && _user.newUser ) {
+          welcomePage();
+        }
+        else {
+          homePage();
+        }
+      
       }
-      refreshUI();
     };
 
     loginPresenter.isAuthenticatedOnComplete = () {
@@ -79,13 +88,16 @@ class LoginController extends Controller {
 
 
     //login
-    loginPresenter.loginUserOnNext = (res) {
+    loginPresenter.loginUserOnNext = (TodoUser res) {
       print('login user on next $res ${res.toString()}');
       if (res != null){
-        homePage();
-        print('HOOOOMMMEEE PPAAGE');
+        if ( res.newUser ) {
+          welcomePage();
+        }
+        else {
+          homePage();
+        }
       }
-      refreshUI();
     };
 
     loginPresenter.loginUserOnComplete = () {
@@ -129,7 +141,7 @@ class LoginController extends Controller {
       Loader.hide();
       
       if ( !e['error'] ) {
-        _statusDialog(false, 'Oops!', "Sorry we can't find an account with this email address.");
+        _statusDialog(false, 'Oops!', '${e['status'] ?? ''}');
       }
       else{
         _statusDialog(false, 'Something went wrong', '${e.toString()}');
@@ -155,7 +167,7 @@ class LoginController extends Controller {
       Loader.hide();
       
       if ( !e['error'] ) {
-        _statusDialog(false, 'Oops!', "Sorry we can't find an account with this email address.");
+        _statusDialog(false, 'Oops!', '${e['status'] ?? ''}');
       }
       else{
         _statusDialog(false, 'Something went wrong', '${e.toString()}');
@@ -171,7 +183,6 @@ class LoginController extends Controller {
         homePage();
         print('HOOOOMMMEEE PPAAGE');
       }
-      refreshUI();
     };
 
     loginPresenter.socialLoginOnComplete = () {
@@ -184,7 +195,7 @@ class LoginController extends Controller {
       Loader.hide();
       
       if ( !e['error'] ) {
-        _statusDialog(false, 'Oops!', '${e['status'].toString()}');
+        _statusDialog(false, 'Oops!', '${e['status'] ?? ''}');
       }
       else{
         _statusDialog(false, 'Something went wrong', '${e.toString()}');
@@ -203,11 +214,6 @@ class LoginController extends Controller {
     super.onDisposed();
   }
 
-  void clearTextController(){
-    emailTextController.clear();
-    passwordTextController.clear();
-  }
-
   void login() async {
     print('login ${emailTextController.text} ${passwordTextController.text}');
     Loader.show(getContext());
@@ -217,6 +223,10 @@ class LoginController extends Controller {
 
   void homePage() {
     Navigator.popAndPushNamed(getContext(), HomePage.id);
+  }
+
+  void welcomePage() {
+    Navigator.popAndPushNamed(getContext(), WelcomePage.id);
   }
 
   void loginPage() {
