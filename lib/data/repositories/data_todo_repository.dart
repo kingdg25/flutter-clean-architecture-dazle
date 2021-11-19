@@ -107,7 +107,7 @@ class DataTodoRepository extends TodoRepository {
     };
 
     var response = await http.post(
-      "${Constants.siteURL}/api/users/new-user",
+      "${Constants.siteURL}/api/users/is-new-user",
       body: convert.jsonEncode(params),
       headers: {
         'Content-Type': 'application/json',
