@@ -1,6 +1,4 @@
 import 'dart:async';
-import 'dart:convert' as convert;
-import 'package:http/http.dart' as http;
 
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:dazle/data/repositories/data_authentication_repository.dart';
