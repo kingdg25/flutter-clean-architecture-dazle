@@ -1,3 +1,4 @@
+import 'package:dazle/domain/usecases/authentication/new_user_usecase.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:dazle/domain/usecases/add_todo_usecase.dart';
 import 'package:dazle/domain/usecases/authentication/get_user_usecase.dart';
@@ -36,16 +37,22 @@ class HomePresenter extends Presenter {
   final UpdateTodoUseCase updateTodoUseCase;
   final DeleteTodoUseCase deleteTodoUseCase;
 
+  Function newUserOnNext;
+  Function newUserOnComplete;
+  Function newUserOnError;
+
   final LogoutUserUseCase logoutUserUseCase;
   final GetUserUseCase getUserUseCase;
+  final NewUserUseCase newUserUseCase;
 
   HomePresenter(userRepo)
     : addTodoUseCase = AddTodoUseCase(userRepo),
       getAllTodoUseCase = GetAllTodoUseCase(userRepo),
       updateTodoUseCase = UpdateTodoUseCase(userRepo),
       deleteTodoUseCase = DeleteTodoUseCase(userRepo),
-      getUserUseCase = GetUserUseCase(userRepo),
-      logoutUserUseCase = LogoutUserUseCase(userRepo);
+      getUserUseCase = GetUserUseCase(),
+      logoutUserUseCase = LogoutUserUseCase(userRepo),
+      newUserUseCase = NewUserUseCase(userRepo);
   
   void addTodo(String todo) {
     addTodoUseCase.execute(_AddTodoUseCaseObserver(this), AddTodoUseCaseParams(todo));
@@ -69,6 +76,10 @@ class HomePresenter extends Presenter {
 
   void getUser() {
     getUserUseCase.execute(_GetUserUseCaseObserver(this), GetUserUseCaseParams());
+  }
+
+  void newUser(String email, bool newUser) {
+    newUserUseCase.execute(_NewUserUseCaseObserver(this), NewUserUseCaseParams(email, newUser));
   }
 
 
@@ -228,5 +239,28 @@ class _GetUserUseCaseObserver extends Observer<GetUserUseCaseResponse> {
   void onNext(response) {
     assert(presenter.getUserOnNext != null);
     presenter.getUserOnNext(response.user);
+  }
+}
+
+
+
+class _NewUserUseCaseObserver extends Observer<void> {
+  final HomePresenter presenter;
+  _NewUserUseCaseObserver(this.presenter);
+
+  @override
+  void onComplete() {
+    assert(presenter.newUserOnComplete != null);
+    presenter.newUserOnComplete();
+  }
+
+  @override
+  void onError(e) {
+    assert(presenter.newUserOnError != null);
+    presenter.newUserOnError(e);
+  }
+
+  @override
+  void onNext(response) {
   }
 }

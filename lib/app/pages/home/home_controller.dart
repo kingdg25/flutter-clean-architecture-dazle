@@ -1,3 +1,4 @@
+import 'package:dazle/app/pages/home/home_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:dazle/app/pages/home/home_presenter.dart';
@@ -8,6 +9,9 @@ import 'package:flutter_overlay_loader/flutter_overlay_loader.dart';
 
 
 class HomeController extends Controller {
+  TodoUser _user;
+  TodoUser get user => _user;
+
   Todo _todo;
   Todo get todo => _todo;
 
@@ -46,7 +50,6 @@ class HomeController extends Controller {
       print('get all todo on next $todos');
       _menu = ['Update','Delete'];
       _allTodo = todos;
-      refreshUI();
     };
 
     homePresenter.getAllTodoOnComplete = () {
@@ -55,66 +58,56 @@ class HomeController extends Controller {
 
     homePresenter.getAllTodoOnError = (e) {
       print('get all todo on error $e');
-      refreshUI();
     };
 
 
     // add todo
     homePresenter.addTodoOnNext = () {
       print('get all todo on next');
-      refreshUI();
     };
 
     homePresenter.addTodoOnComplete = () {
       print('add todo on complete');
       Loader.hide();
       _todoTextController.clear();
-      refreshUI();
     };
 
     homePresenter.addTodoOnError = (e) {
       print('add todo on error $e');
       Loader.hide();
-      refreshUI();
     };
 
 
     // delete todo
     homePresenter.deleteTodoOnNext = () {
       print('delete todo on next');
-      refreshUI();
     };
 
     homePresenter.deleteTodoOnComplete = () {
       print('delete todo on complete');
       Loader.hide();
-      refreshUI();
     };
 
     homePresenter.deleteTodoOnError = (e) {
       print('delete todo on error ${e.toString()}');
       Loader.hide();
       cannotDeleteDoneTodoDialog(e.toString());
-      refreshUI();
     };
 
 
     // update todo
     homePresenter.updateTodoOnNext = (Todo todo) {
       print('update todo on next $todo');
-      refreshUI();
     };
 
     homePresenter.updateTodoOnComplete = () {
       print('update todo on complete');
       Loader.hide();
-      refreshUI();
     };
 
     homePresenter.updateTodoOnError = (e) {
       print('update todo on error $e');
       Loader.hide();
-      refreshUI();
     };
 
     // logout
@@ -126,7 +119,6 @@ class HomeController extends Controller {
       print('logout on complete');
       Loader.hide();
       loginPage();
-      refreshUI();
     };
 
     homePresenter.logoutUserOnError = (e) {
@@ -139,6 +131,8 @@ class HomeController extends Controller {
     homePresenter.getUserOnNext = (TodoUser res) {
       print('get user on next $res');
       if(res != null) {
+        _user = res;
+
         _displayName = res.displayName ?? res.email;
       }
     };
@@ -150,6 +144,33 @@ class HomeController extends Controller {
     homePresenter.getUserOnError = (e) {
       print('get user on error $e');
     };
+
+
+    //new user or not
+    homePresenter.newUserOnNext = (res) {
+      print('new user on next $res');
+    };
+
+    homePresenter.newUserOnComplete = () {
+      print('new user on complete');
+      Loader.hide();
+
+      homePage();
+    };
+
+    homePresenter.newUserOnError = (e) {
+      print('new user on error $e');
+      Loader.hide();
+    };
+
+  }
+
+  void newUser() {
+    print('_user _user _user $_user ${_user.displayName} ${_user.newUser}');
+
+    if ( _user != null ) {
+      homePresenter.newUser(_user.email, false);
+    }
   }
 
   void addTodo() {
@@ -197,6 +218,10 @@ class HomeController extends Controller {
   void userLogout(){
     print('user logout home controller');
     homePresenter.logoutUser();
+  }
+
+  void homePage() {
+    Navigator.popAndPushNamed(getContext(), HomePage.id);
   }
 
   void loginPage() {

@@ -5,4 +5,6 @@ abstract class TodoRepository {
   Future<List<Todo>> getAllTodo();
   Future<Todo> updateTodo(String id, String todo, bool check);
   Future<void> deleteTodo(String id);
+
+  Future<void> newUser({String email, bool newUser});
 }

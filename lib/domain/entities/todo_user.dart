@@ -1,4 +1,5 @@
 class TodoUser {
+  final bool newUser;
   final String firstName;
   final String lastName;
   final String email;
@@ -9,6 +10,7 @@ class TodoUser {
   }
 
   TodoUser(
+    this.newUser,
     this.firstName, 
     this.lastName, 
     this.email, 
@@ -16,12 +18,14 @@ class TodoUser {
   );
 
   TodoUser.fromJson(Map<String, dynamic> json)
-    : firstName = json['firstname'],
+    : newUser = json['new_user'],
+      firstName = json['firstname'],
       lastName = json['lastname'],
       email = json['email'],
       id = json['id'];
 
   Map<String, dynamic> toJson() => {
+    'new_user': newUser,
     'firstname': firstName,
     'lastname': lastName,
     'email': email,

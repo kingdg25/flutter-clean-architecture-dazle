@@ -6,6 +6,7 @@ import 'package:dazle/domain/entities/todo_user.dart';
 import 'package:dazle/domain/repositories/todo_repository.dart';
 import 'package:dazle/data/constants.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 
 class DataTodoRepository extends TodoRepository {
@@ -94,6 +95,56 @@ class DataTodoRepository extends TodoRepository {
         'Accept': 'application/json'
       }
     );
+  }
+
+  @override
+  Future<void> newUser({String email, bool newUser}) async {
+    Map params = {
+      "user": {
+        "email": email,
+        "new_user": newUser
+      }
+    };
+
+    var response = await http.post(
+      "${Constants.siteURL}/api/users/new-user",
+      body: convert.jsonEncode(params),
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      }
+    );
+
+    var jsonResponse = await convert.jsonDecode(response.body);
+    if (response.statusCode == 200){
+      print('new user json data $jsonResponse');
+      bool success = jsonResponse['success'];
+      var user = jsonResponse['user'];
+
+      if (success) {
+        print('newUser newUser newUser newUser ${user['new_user']} $user');
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+
+        if(user != null){
+          await prefs.setString('user', convert.jsonEncode(user));
+        }
+
+      }
+      else {
+        throw {
+          "error": false,
+          "status": "$jsonResponse"
+        };
+      }
+      
+    }
+    else {
+      throw {
+        "error": true,
+        "status": "$jsonResponse"
+      };
+    }
+  
   }
   
 }
