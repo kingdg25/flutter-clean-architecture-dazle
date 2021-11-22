@@ -110,7 +110,7 @@ class LoginController extends Controller {
       Loader.hide();
 
       if ( !e['error'] ) {
-        _statusDialog(false, 'Incorrect Username/Password', 'Please enter a valid username/password to sign in');
+        _statusDialog(false, 'Oops!', '${e['status'] ?? ''}');
       }
       else{
         _statusDialog(false, 'Something went wrong', '${e.toString()}');

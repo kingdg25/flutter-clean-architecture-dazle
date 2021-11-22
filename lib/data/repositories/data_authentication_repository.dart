@@ -83,7 +83,7 @@ class DataAuthenticationRepository extends AuthenticationRepository {
       if(!success){
         throw {
           "error": false,
-          "status": "$jsonResponse"
+          "status": jsonResponse['status']
         };
       }
       
@@ -182,6 +182,14 @@ class DataAuthenticationRepository extends AuthenticationRepository {
     var jsonResponse = await convert.jsonDecode(response.body);
     if (response.statusCode == 200){
       print('login login TODOUSER REGISTER $jsonResponse');
+      bool success = jsonResponse['success'];
+
+      if(!success){
+        throw {
+          "error": false,
+          "status": jsonResponse['status']
+        };
+      }
     }
     else {
       throw {
