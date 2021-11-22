@@ -48,7 +48,6 @@ class RegisterController extends Controller {
     // register user
     registerPresenter.registerUserOnNext = () {
       print('register user on next');
-      refreshUI();
     };
 
     registerPresenter.registerUserOnComplete = () {
@@ -140,8 +139,12 @@ class RegisterController extends Controller {
   @override
   void onDisposed() {
     registerPresenter.dispose(); // don't forget to dispose of the presenter
+    
     firstNameTextController.dispose();
     lastNameTextController.dispose();
+    mobileNumberTextController.dispose();
+    licenseNumberTextController.dispose();
+
     emailTextController.dispose();
     passwordTextController.dispose();
     Loader.hide();
