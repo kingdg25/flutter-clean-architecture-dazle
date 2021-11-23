@@ -11,11 +11,15 @@ class App{
   static const textColor = Color.fromRGBO(46, 53, 61, 1.0);
 
   static getUser() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
+    try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    var user = prefs.getString('user');
-    var todoUser = convert.jsonDecode(user);
+      var user = prefs.getString('user');
+      var todoUser = convert.jsonDecode(user);
 
-    return TodoUser.fromJson(todoUser);
+      return TodoUser.fromJson(todoUser);
+    } catch (e) {
+      print('getUser error $e');
+    }
   }
 }
