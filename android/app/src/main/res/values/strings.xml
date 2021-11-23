@@ -3,4 +3,6 @@
     <string name="app_name">Brooky AI</string>
     <string name="facebook_app_id">2559523267704447</string>
     <string name="fb_login_protocol_scheme">fb2559523267704447</string>
+
+    <string name="default_web_client_id">857388716055-ue1bu6tjjkajvgvf5fbe8aka945505dr.apps.googleusercontent.com</string>
 </resources>
