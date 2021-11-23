@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:dazle/app/pages/home/welcome/welcome_page.dart';
+import 'package:dazle/app/pages/login/setup_profile/setup_profile_view.dart';
 import 'package:dazle/app/utils/app.dart';
 import 'package:dazle/domain/entities/todo_user.dart';
 import 'package:flutter/material.dart';
@@ -177,11 +178,17 @@ class LoginController extends Controller {
 
 
     //social login
-    loginPresenter.socialLoginOnNext = (res) {
+    loginPresenter.socialLoginOnNext = (TodoUser res) {
       print('social login on next $res ${res.toString()}');
       if (res != null){
-        homePage();
-        print('HOOOOMMMEEE PPAAGE');
+        if ( res.position != null && res.licenseNumber != null ) {
+          print('HOOOOMMMEEE PPAAGE');
+          homePage();
+        }
+        else {
+          print('setup profile page');
+          setupProfilePage();
+        }
       }
     };
 
@@ -227,6 +234,15 @@ class LoginController extends Controller {
 
   void welcomePage() {
     Navigator.popAndPushNamed(getContext(), WelcomePage.id);
+  }
+
+  void setupProfilePage() {
+    Navigator.push(
+      getContext(),
+      MaterialPageRoute(
+        builder: (buildContext) => SetupProfilePage()
+      )
+    );
   }
 
   void loginPage() {
