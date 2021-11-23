@@ -100,7 +100,36 @@ class DataAuthenticationRepository extends AuthenticationRepository {
   Future<bool> isAuthenticated() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    return ( prefs.getString('accessToken') != null ) ? true : false;
+    if ( prefs.getString('accessToken') != null ) {
+
+      Map params = {
+        "token": prefs.getString('accessToken')
+      };
+      
+      var response = await http.post(
+        "${Constants.siteURL}/api/users/is-authenticated",
+        body: convert.jsonEncode(params),
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        }
+      );
+
+      var jsonResponse = await convert.jsonDecode(response.body);
+      if (response.statusCode == 200){
+        bool success = jsonResponse['success'];
+
+        if (!success) {
+          await prefs.remove('accessToken');
+          await prefs.remove('user');
+        }
+        
+        return success;
+      }
+
+    }
+
+    return false;
   }
 
   @override
@@ -233,6 +262,59 @@ class DataAuthenticationRepository extends AuthenticationRepository {
         await prefs.setString('user', convert.jsonEncode(user));
 
         print('social login accessToken ${prefs.getString('accessToken')}');
+
+        todoUser = TodoUser.fromJson(user);
+
+        return todoUser;
+      }
+      else {
+        throw {
+          "error": false,
+          "status": jsonResponse['status']
+        };
+      }
+    }
+    else {
+      throw {
+        "error": true,
+        "status": "$jsonResponse"
+      };
+    }
+  }
+
+  @override
+  Future<TodoUser> update({String firstName, String lastName, String mobileNumber, String position, String licenseNumber}) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    Map params = {
+      "user": {
+        "firstname": firstName,
+        "lastname": lastName,
+        "mobile_number": mobileNumber,
+        "position": position,
+        "license_number": licenseNumber
+      }
+    };
+    
+    var response = await http.put(
+      "${Constants.siteURL}/api/users/update",
+      body: convert.jsonEncode(params),
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      }
+    );
+
+    var jsonResponse = await convert.jsonDecode(response.body);
+    if (response.statusCode == 200){
+
+      bool success = jsonResponse['success'];
+      var user = jsonResponse['user'];
+      print('update user TODOUSER $jsonResponse');
+
+      if(success){
+        await prefs.setString('accessToken', user['token']);
+        await prefs.setString('user', convert.jsonEncode(user));
 
         todoUser = TodoUser.fromJson(user);
 

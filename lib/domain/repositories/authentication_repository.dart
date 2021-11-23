@@ -20,4 +20,12 @@ abstract class AuthenticationRepository {
   Future<bool> isAuthenticated();
 
   Future<TodoUser> socialLogin({String email, String type, String token});
+
+  Future<TodoUser> update({
+    String firstName,
+    String lastName,
+    String mobileNumber,
+    String position,
+    String licenseNumber
+  });
 }
