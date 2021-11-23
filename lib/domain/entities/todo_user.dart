@@ -1,4 +1,7 @@
 class TodoUser {
+  final String position;
+  final String licenseNumber;
+  final String mobileNumber;
   final bool isNewUser;
   final String firstName;
   final String lastName;
@@ -10,6 +13,9 @@ class TodoUser {
   }
 
   TodoUser(
+    this.position,
+    this.licenseNumber,
+    this.mobileNumber,
     this.isNewUser,
     this.firstName, 
     this.lastName, 
@@ -18,13 +24,19 @@ class TodoUser {
   );
 
   TodoUser.fromJson(Map<String, dynamic> json)
-    : isNewUser = json['is_new_user'],
+    : mobileNumber = json['mobile_number'],
+      licenseNumber = json['license_number'],
+      position = json['position'],
+      isNewUser = json['is_new_user'],
       firstName = json['firstname'],
       lastName = json['lastname'],
       email = json['email'],
       id = json['id'];
 
   Map<String, dynamic> toJson() => {
+    'license_number': licenseNumber,
+    'position': position,
+    'mobile_number': mobileNumber,
     'is_new_user': isNewUser,
     'firstname': firstName,
     'lastname': lastName,
