@@ -81,25 +81,32 @@ class SetupProfileController extends Controller {
 
   void updateProfile() {
     Loader.show(getContext());
+    print('updateProfile ${_user.email}');
 
-    setupProfilePresenter.updateUser(
-      firstNameTextController.text, 
-      lastNameTextController.text, 
-      mobileNumberTextController.text,
-      position,
-      licenseNumberTextController.text,
-    );
+    if ( _user.email != null ) {
+      setupProfilePresenter.updateUser(
+        firstNameTextController.text, 
+        lastNameTextController.text, 
+        mobileNumberTextController.text,
+        position,
+        licenseNumberTextController.text,
+        _user.email
+      );
+    }
+
   }
 
   getCurrentUser() async {
-    TodoUser _user = await App.getUser();
+    TodoUser user = await App.getUser();
 
-    if (_user != null){
-      firstNameTextController.text = _user.firstName;
-      lastNameTextController.text = _user.lastName;
-      mobileNumberTextController.text = _user.mobileNumber;
-      position = _user.position;
-      licenseNumberTextController.text = _user.licenseNumber;
+    if (user != null){
+      _user = user;
+
+      firstNameTextController.text = user.firstName;
+      lastNameTextController.text = user.lastName;
+      mobileNumberTextController.text = user.mobileNumber;
+      position = user.position;
+      licenseNumberTextController.text = user.licenseNumber;
 
       refreshUI();
     }

@@ -20,6 +20,7 @@ class UpdateUserUseCase extends UseCase<UpdateUserUseCaseResponse, UpdateUserUse
         mobileNumber: params.mobileNumber,
         position: params.position,
         licenseNumber: params.licenseNumber,
+        email: params.email
       );
       
       controller.add(UpdateUserUseCaseResponse(user));
@@ -44,13 +45,15 @@ class UpdateUserUseCaseParams {
   final String mobileNumber;
   final String position;
   final String licenseNumber;
+  final String email;
 
   UpdateUserUseCaseParams(
     this.firstName,
     this.lastName,
     this.mobileNumber,
     this.position,
-    this.licenseNumber
+    this.licenseNumber,
+    this.email
   );
 }
 

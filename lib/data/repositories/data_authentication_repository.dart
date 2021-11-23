@@ -283,7 +283,7 @@ class DataAuthenticationRepository extends AuthenticationRepository {
   }
 
   @override
-  Future<TodoUser> update({String firstName, String lastName, String mobileNumber, String position, String licenseNumber}) async {
+  Future<TodoUser> update({String firstName, String lastName, String mobileNumber, String position, String licenseNumber, String email}) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
     Map params = {
@@ -292,7 +292,8 @@ class DataAuthenticationRepository extends AuthenticationRepository {
         "lastname": lastName,
         "mobile_number": mobileNumber,
         "position": position,
-        "license_number": licenseNumber
+        "license_number": licenseNumber,
+        "email": email
       }
     };
     

@@ -26,6 +26,7 @@ abstract class AuthenticationRepository {
     String lastName,
     String mobileNumber,
     String position,
-    String licenseNumber
+    String licenseNumber,
+    String email,
   });
 }

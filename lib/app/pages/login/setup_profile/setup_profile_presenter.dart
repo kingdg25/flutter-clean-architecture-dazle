@@ -18,14 +18,16 @@ class SetupProfilePresenter extends Presenter {
     String lastName,
     String mobileNumber,
     String position,
-    String licenseNumber
+    String licenseNumber,
+    String email
   ) {
     updateUserUseCase.execute(_UpdateUserUseCaseObserver(this), UpdateUserUseCaseParams(
       firstName,
       lastName,
       mobileNumber,
       position,
-      licenseNumber
+      licenseNumber,
+      email
     ));
   }
 
