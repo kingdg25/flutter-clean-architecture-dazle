@@ -1,4 +1,6 @@
 import 'package:dazle/app/pages/login/setup_profile/setup_profile_presenter.dart';
+import 'package:dazle/app/pages/register/components/send_request_screen.dart';
+import 'package:dazle/app/pages/register/components/waiting_screen.dart';
 import 'package:dazle/app/utils/app.dart';
 import 'package:dazle/domain/entities/todo_user.dart';
 import 'package:flutter/material.dart';
@@ -50,6 +52,28 @@ class SetupProfileController extends Controller {
     setupProfilePresenter.setupProfileOnComplete = () {
       print('setup profile on complete');
       Loader.hide();
+      Navigator.pop(getContext());
+
+      if ( position == 'Broker' ){
+        Navigator.push(
+          getContext(),
+          MaterialPageRoute(
+            builder: (buildContext) => WaitingScreen(
+              firstName: firstNameTextController.text,
+            )
+          )
+        );
+      }
+      else {
+        Navigator.push(
+          getContext(),
+          MaterialPageRoute(
+            builder: (buildContext) => SendRequestScreen()
+          )
+        );
+      }
+
+      App.logOutUser();
     };
 
     setupProfilePresenter.setupProfileOnError = (e) {
