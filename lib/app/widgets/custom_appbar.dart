@@ -4,12 +4,13 @@ import 'package:flutter/material.dart';
 class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
   final String title;
   final bool centerTitle;
+  final bool automaticallyImplyLeading;
 
   CustomAppBar({
     Key key,
     this.title,
     this.centerTitle = false,
-    
+    this.automaticallyImplyLeading = true
   }) : preferredSize = Size.fromHeight(60.0), super(key: key);
 
   @override
@@ -30,17 +31,18 @@ class _CustomAppBarState extends State<CustomAppBar>{
         fontSize: 18.0,
         fontWeight: FontWeight.w600
       ),
+      automaticallyImplyLeading: widget.automaticallyImplyLeading,
       centerTitle: widget.centerTitle,
       backgroundColor: Colors.white,
       titleSpacing: 0.0,
-      leading: IconButton(
+      leading: widget.automaticallyImplyLeading ? IconButton(
         icon: Icon(
           Icons.arrow_back_ios_rounded, 
           color: Colors.black
         ),
         tooltip: MaterialLocalizations.of(context).backButtonTooltip,
         onPressed: () => Navigator.of(context).pop(),
-      ),
+      ) : null,
     );
   }
 }
