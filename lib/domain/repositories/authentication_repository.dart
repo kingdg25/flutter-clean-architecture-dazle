@@ -21,7 +21,7 @@ abstract class AuthenticationRepository {
 
   Future<TodoUser> socialLogin({String email, String type, String token});
 
-  Future<TodoUser> update({
+  Future<TodoUser> setupProfile({
     String firstName,
     String lastName,
     String mobileNumber,

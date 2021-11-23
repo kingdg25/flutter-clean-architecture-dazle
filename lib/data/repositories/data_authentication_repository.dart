@@ -283,7 +283,7 @@ class DataAuthenticationRepository extends AuthenticationRepository {
   }
 
   @override
-  Future<TodoUser> update({String firstName, String lastName, String mobileNumber, String position, String licenseNumber, String email}) async {
+  Future<TodoUser> setupProfile({String firstName, String lastName, String mobileNumber, String position, String licenseNumber, String email}) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
     Map params = {
@@ -298,7 +298,7 @@ class DataAuthenticationRepository extends AuthenticationRepository {
     };
     
     var response = await http.put(
-      "${Constants.siteURL}/api/users/update",
+      "${Constants.siteURL}/api/users/setup-profile",
       body: convert.jsonEncode(params),
       headers: {
         'Content-Type': 'application/json',
@@ -311,7 +311,7 @@ class DataAuthenticationRepository extends AuthenticationRepository {
 
       bool success = jsonResponse['success'];
       var user = jsonResponse['user'];
-      print('update user TODOUSER $jsonResponse');
+      print('setup profile TODOUSER $jsonResponse');
 
       if(success){
         await prefs.setString('accessToken', user['token']);

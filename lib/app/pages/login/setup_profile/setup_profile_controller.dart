@@ -103,12 +103,12 @@ class SetupProfileController extends Controller {
     super.onDisposed();
   }
 
-  void updateProfile() {
+  void setupProfile() {
     Loader.show(getContext());
-    print('updateProfile ${_user.email}');
+    print('setupProfile ${_user.email}');
 
     if ( _user.email != null ) {
-      setupProfilePresenter.updateUser(
+      setupProfilePresenter.setupProfile(
         firstNameTextController.text, 
         lastNameTextController.text, 
         mobileNumberTextController.text,

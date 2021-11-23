@@ -5,16 +5,16 @@ import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:dazle/data/repositories/data_authentication_repository.dart';
 
 
-class UpdateUserUseCase extends UseCase<UpdateUserUseCaseResponse, UpdateUserUseCaseParams> {
+class SetupProfileUseCase extends UseCase<SetupProfileUseCaseResponse, SetupProfileUseCaseParams> {
   final DataAuthenticationRepository dataAuthenticationRepository;
-  UpdateUserUseCase(this.dataAuthenticationRepository);
+  SetupProfileUseCase(this.dataAuthenticationRepository);
 
   @override
-  Future<Stream<UpdateUserUseCaseResponse>> buildUseCaseStream(UpdateUserUseCaseParams params) async {
-    final controller = StreamController<UpdateUserUseCaseResponse>();
+  Future<Stream<SetupProfileUseCaseResponse>> buildUseCaseStream(SetupProfileUseCaseParams params) async {
+    final controller = StreamController<SetupProfileUseCaseResponse>();
     
     try {
-      TodoUser user = await dataAuthenticationRepository.update(
+      TodoUser user = await dataAuthenticationRepository.setupProfile(
         firstName: params.firstName, 
         lastName: params.lastName,
         mobileNumber: params.mobileNumber,
@@ -23,7 +23,7 @@ class UpdateUserUseCase extends UseCase<UpdateUserUseCaseResponse, UpdateUserUse
         email: params.email
       );
       
-      controller.add(UpdateUserUseCaseResponse(user));
+      controller.add(SetupProfileUseCaseResponse(user));
       logger.finest('Update User successful.');
       controller.close();
 
@@ -39,7 +39,7 @@ class UpdateUserUseCase extends UseCase<UpdateUserUseCaseResponse, UpdateUserUse
 }
 
 
-class UpdateUserUseCaseParams {
+class SetupProfileUseCaseParams {
   final String firstName;
   final String lastName;
   final String mobileNumber;
@@ -47,7 +47,7 @@ class UpdateUserUseCaseParams {
   final String licenseNumber;
   final String email;
 
-  UpdateUserUseCaseParams(
+  SetupProfileUseCaseParams(
     this.firstName,
     this.lastName,
     this.mobileNumber,
@@ -58,7 +58,7 @@ class UpdateUserUseCaseParams {
 }
 
 
-class UpdateUserUseCaseResponse {
+class SetupProfileUseCaseResponse {
   final TodoUser user;
-  UpdateUserUseCaseResponse(this.user);
+  SetupProfileUseCaseResponse(this.user);
 }

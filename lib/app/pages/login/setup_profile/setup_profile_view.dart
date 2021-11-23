@@ -131,7 +131,7 @@ class _SetupProfilePageState extends ViewState<SetupProfilePage, SetupProfileCon
                               if (_formKey.currentState.validate()) {
                                 _formKey.currentState.save();
                                 
-                                controller.updateProfile();
+                                controller.setupProfile();
                               }
                             }
                           )

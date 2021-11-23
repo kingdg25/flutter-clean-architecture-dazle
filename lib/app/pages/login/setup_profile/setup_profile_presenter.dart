@@ -1,4 +1,4 @@
-import 'package:dazle/domain/usecases/authentication/update_user_usecase.dart';
+import 'package:dazle/domain/usecases/authentication/setup_profile_usecase.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 
 
@@ -7,13 +7,13 @@ class SetupProfilePresenter extends Presenter {
   Function setupProfileOnComplete;
   Function setupProfileOnError;
 
-  final UpdateUserUseCase updateUserUseCase;
+  final SetupProfileUseCase setupProfileUseCase;
   
   SetupProfilePresenter(userRepo) 
-    : updateUserUseCase = UpdateUserUseCase(userRepo);
+    : setupProfileUseCase = SetupProfileUseCase(userRepo);
   
 
-  void updateUser(
+  void setupProfile(
     String firstName,
     String lastName,
     String mobileNumber,
@@ -21,7 +21,7 @@ class SetupProfilePresenter extends Presenter {
     String licenseNumber,
     String email
   ) {
-    updateUserUseCase.execute(_UpdateUserUseCaseObserver(this), UpdateUserUseCaseParams(
+    setupProfileUseCase.execute(_SetupProfileUseCaseObserver(this), SetupProfileUseCaseParams(
       firstName,
       lastName,
       mobileNumber,
@@ -33,16 +33,16 @@ class SetupProfilePresenter extends Presenter {
 
   @override
   void dispose() {
-    updateUserUseCase.dispose();
+    setupProfileUseCase.dispose();
   }
 }
 
 
-class _UpdateUserUseCaseObserver extends Observer<UpdateUserUseCaseResponse> {
+class _SetupProfileUseCaseObserver extends Observer<SetupProfileUseCaseResponse> {
   final SetupProfilePresenter presenter;
-  _UpdateUserUseCaseObserver(this.presenter);
+  _SetupProfileUseCaseObserver(this.presenter);
+  
   @override
-
   void onComplete() {
     assert(presenter.setupProfileOnComplete != null);
     presenter.setupProfileOnComplete();
