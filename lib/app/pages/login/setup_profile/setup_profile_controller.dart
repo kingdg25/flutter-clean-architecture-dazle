@@ -2,7 +2,7 @@ import 'package:dazle/app/pages/login/setup_profile/setup_profile_presenter.dart
 import 'package:dazle/app/pages/register/components/send_request_screen.dart';
 import 'package:dazle/app/pages/register/components/waiting_screen.dart';
 import 'package:dazle/app/utils/app.dart';
-import 'package:dazle/domain/entities/todo_user.dart';
+import 'package:dazle/domain/entities/user.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:flutter_overlay_loader/flutter_overlay_loader.dart';
@@ -13,8 +13,8 @@ import 'package:dazle/app/utils/app_constant.dart';
 class SetupProfileController extends Controller {
   final SetupProfilePresenter setupProfilePresenter;
 
-  TodoUser _user;
-  TodoUser get user => _user;
+  User _user;
+  User get user => _user;
 
   // for setup profile
   GlobalKey<FormState> setupProfileFormKey;
@@ -45,7 +45,7 @@ class SetupProfileController extends Controller {
     getCurrentUser();
 
     //setup profile
-    setupProfilePresenter.setupProfileOnNext = (TodoUser res) {
+    setupProfilePresenter.setupProfileOnNext = (User res) {
       print('setup profile on next $res ${res.toString()}');
     };
 
@@ -121,7 +121,7 @@ class SetupProfileController extends Controller {
   }
 
   getCurrentUser() async {
-    TodoUser user = await App.getUser();
+    User user = await App.getUser();
 
     if (user != null){
       _user = user;

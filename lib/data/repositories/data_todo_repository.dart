@@ -2,7 +2,7 @@ import 'dart:math';
 import 'dart:convert' as convert;
 
 import 'package:dazle/domain/entities/todo.dart';
-import 'package:dazle/domain/entities/todo_user.dart';
+import 'package:dazle/domain/entities/user.dart';
 import 'package:dazle/domain/repositories/todo_repository.dart';
 import 'package:dazle/data/constants.dart';
 import 'package:http/http.dart' as http;
@@ -11,7 +11,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class DataTodoRepository extends TodoRepository {
   List<Todo> todos;
-  TodoUser todoUser;
+  User todoUser;
 
   static final DataTodoRepository _instance = DataTodoRepository._internal();
   DataTodoRepository._internal() {

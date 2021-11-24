@@ -2,14 +2,14 @@ import 'dart:convert' as convert;
 import 'package:http/http.dart' as http;
 
 import 'package:dazle/data/constants.dart';
-import 'package:dazle/domain/entities/todo_user.dart';
+import 'package:dazle/domain/entities/user.dart';
 import 'package:dazle/domain/repositories/authentication_repository.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 
 
 class DataAuthenticationRepository extends AuthenticationRepository {
-  TodoUser todoUser;
+  User todoUser;
 
   static DataAuthenticationRepository _instance = DataAuthenticationRepository._internal();
   DataAuthenticationRepository._internal();
@@ -133,7 +133,7 @@ class DataAuthenticationRepository extends AuthenticationRepository {
   }
 
   @override
-  Future<TodoUser> login({String email, String password}) async {
+  Future<User> login({String email, String password}) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
     Map params = {
@@ -166,7 +166,7 @@ class DataAuthenticationRepository extends AuthenticationRepository {
 
         print('accessToken ${prefs.getString('accessToken')}');
 
-        todoUser = TodoUser.fromJson(user);
+        todoUser = User.fromJson(user);
 
         return todoUser;
       }
@@ -229,7 +229,7 @@ class DataAuthenticationRepository extends AuthenticationRepository {
   }
 
   @override
-  Future<TodoUser> socialLogin({String email, String type, String token}) async {
+  Future<User> socialLogin({String email, String type, String token}) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
     Map params = {
@@ -263,7 +263,7 @@ class DataAuthenticationRepository extends AuthenticationRepository {
 
         print('social login accessToken ${prefs.getString('accessToken')}');
 
-        todoUser = TodoUser.fromJson(user);
+        todoUser = User.fromJson(user);
 
         return todoUser;
       }
@@ -283,7 +283,7 @@ class DataAuthenticationRepository extends AuthenticationRepository {
   }
 
   @override
-  Future<TodoUser> setupProfile({String firstName, String lastName, String mobileNumber, String position, String brokerLicenseNumber, String email}) async {
+  Future<User> setupProfile({String firstName, String lastName, String mobileNumber, String position, String brokerLicenseNumber, String email}) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
     Map params = {
@@ -317,7 +317,7 @@ class DataAuthenticationRepository extends AuthenticationRepository {
         await prefs.setString('accessToken', user['token']);
         await prefs.setString('user', convert.jsonEncode(user));
 
-        todoUser = TodoUser.fromJson(user);
+        todoUser = User.fromJson(user);
 
         return todoUser;
       }

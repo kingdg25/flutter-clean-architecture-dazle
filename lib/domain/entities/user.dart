@@ -1,4 +1,4 @@
-class TodoUser {
+class User {
   final String position;
   final String brokerLicenseNumber;
   final String mobileNumber;
@@ -12,7 +12,7 @@ class TodoUser {
     return "$firstName $lastName";
   }
 
-  TodoUser(
+  User(
     this.position,
     this.brokerLicenseNumber,
     this.mobileNumber,
@@ -23,7 +23,7 @@ class TodoUser {
     this.id
   );
 
-  TodoUser.fromJson(Map<String, dynamic> json)
+  User.fromJson(Map<String, dynamic> json)
     : mobileNumber = json['mobile_number'],
       brokerLicenseNumber = json['broker_license_number'],
       position = json['position'],

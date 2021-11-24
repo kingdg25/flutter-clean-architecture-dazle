@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:convert' as convert;
 
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
-import 'package:dazle/domain/entities/todo_user.dart';
+import 'package:dazle/domain/entities/user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 
@@ -21,7 +21,7 @@ class GetUserUseCase extends UseCase<GetUserUseCaseResponse, GetUserUseCaseParam
       print('getCurrentUser getCurrentUser getUser $todoUser ${todoUser.runtimeType}');
 
       if(todoUser != null){
-        controller.add(GetUserUseCaseResponse(TodoUser.fromJson(todoUser)));
+        controller.add(GetUserUseCaseResponse(User.fromJson(todoUser)));
 
         logger.finest('Get User successful.');
       }
@@ -51,6 +51,6 @@ class GetUserUseCaseParams {
 }
 
 class GetUserUseCaseResponse {
-  final TodoUser user;
+  final User user;
   GetUserUseCaseResponse(this.user);
 }

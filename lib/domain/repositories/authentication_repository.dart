@@ -1,4 +1,4 @@
-import 'package:dazle/domain/entities/todo_user.dart';
+import 'package:dazle/domain/entities/user.dart';
 
 abstract class AuthenticationRepository {
   Future<void> register({
@@ -11,7 +11,7 @@ abstract class AuthenticationRepository {
     String password
   });
 
-  Future<TodoUser> login({String email, String password});
+  Future<User> login({String email, String password});
 
   Future<String> forgotPassword({String email});
 
@@ -19,9 +19,9 @@ abstract class AuthenticationRepository {
 
   Future<bool> isAuthenticated();
 
-  Future<TodoUser> socialLogin({String email, String type, String token});
+  Future<User> socialLogin({String email, String type, String token});
 
-  Future<TodoUser> setupProfile({
+  Future<User> setupProfile({
     String firstName,
     String lastName,
     String mobileNumber,

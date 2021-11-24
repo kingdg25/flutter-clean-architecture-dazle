@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:dazle/data/repositories/data_authentication_repository.dart';
-import 'package:dazle/domain/entities/todo_user.dart';
+import 'package:dazle/domain/entities/user.dart';
 
 
 
@@ -43,6 +43,6 @@ class LoginUserUseCaseParams {
 }
 
 class LoginUserUseCaseResponse {
-  final TodoUser user;
+  final User user;
   LoginUserUseCaseResponse(this.user);
 }

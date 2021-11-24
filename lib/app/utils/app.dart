@@ -1,4 +1,4 @@
-import 'package:dazle/domain/entities/todo_user.dart';
+import 'package:dazle/domain/entities/user.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -19,7 +19,7 @@ class App{
       var user = prefs.getString('user');
       var todoUser = convert.jsonDecode(user);
 
-      return TodoUser.fromJson(todoUser);
+      return User.fromJson(todoUser);
     } catch (e) {
       print('getUser error $e');
     }

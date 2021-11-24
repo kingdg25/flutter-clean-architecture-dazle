@@ -4,13 +4,13 @@ import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:dazle/app/pages/home/home_presenter.dart';
 import 'package:dazle/app/pages/login/login_view.dart';
 import 'package:dazle/domain/entities/todo.dart';
-import 'package:dazle/domain/entities/todo_user.dart';
+import 'package:dazle/domain/entities/user.dart';
 import 'package:flutter_overlay_loader/flutter_overlay_loader.dart';
 
 
 class HomeController extends Controller {
-  TodoUser _user;
-  TodoUser get user => _user;
+  User _user;
+  User get user => _user;
 
   Todo _todo;
   Todo get todo => _todo;
@@ -132,7 +132,7 @@ class HomeController extends Controller {
 
     homePresenter.getUser();
     // get user
-    homePresenter.getUserOnNext = (TodoUser res) {
+    homePresenter.getUserOnNext = (User res) {
       print('get user on next $res ${res.displayName}');
       if(res != null) {
         _user = res;

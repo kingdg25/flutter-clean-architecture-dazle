@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:dazle/data/repositories/data_authentication_repository.dart';
-import 'package:dazle/domain/entities/todo_user.dart';
+import 'package:dazle/domain/entities/user.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 // import 'package:flutter_facebook_login/flutter_facebook_login.dart';
@@ -108,6 +108,6 @@ class SocialLoginUseCaseParams {
 }
 
 class SocialLoginUseCaseResponse {
-  final TodoUser user;
+  final User user;
   SocialLoginUseCaseResponse(this.user);
 }

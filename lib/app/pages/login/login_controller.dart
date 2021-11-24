@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:dazle/app/pages/home/welcome/welcome_page.dart';
 import 'package:dazle/app/pages/login/setup_profile/setup_profile_view.dart';
 import 'package:dazle/app/utils/app.dart';
-import 'package:dazle/domain/entities/todo_user.dart';
+import 'package:dazle/domain/entities/user.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:dazle/app/pages/home/home_view.dart';
@@ -67,7 +67,7 @@ class LoginController extends Controller {
       print('current user on next $res ${res.toString()}');
       if (res){
 
-        TodoUser _user = await App.getUser();
+        User _user = await App.getUser();
       
         if ( _user.isNewUser != null && _user.isNewUser ) {
           welcomePage();
@@ -89,7 +89,7 @@ class LoginController extends Controller {
 
 
     //login
-    loginPresenter.loginUserOnNext = (TodoUser res) {
+    loginPresenter.loginUserOnNext = (User res) {
       print('login user on next $res ${res.toString()}');
       if (res != null){
         if ( res.isNewUser ) {
@@ -178,7 +178,7 @@ class LoginController extends Controller {
 
 
     //social login
-    loginPresenter.socialLoginOnNext = (TodoUser res) {
+    loginPresenter.socialLoginOnNext = (User res) {
       print('social login on next $res ${res.toString()}');
       if (res != null){
         if ( res.position != null && res.brokerLicenseNumber != null ) {

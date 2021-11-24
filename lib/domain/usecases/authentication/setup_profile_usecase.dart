@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:dazle/domain/entities/todo_user.dart';
+import 'package:dazle/domain/entities/user.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:dazle/data/repositories/data_authentication_repository.dart';
 
@@ -14,7 +14,7 @@ class SetupProfileUseCase extends UseCase<SetupProfileUseCaseResponse, SetupProf
     final controller = StreamController<SetupProfileUseCaseResponse>();
     
     try {
-      TodoUser user = await dataAuthenticationRepository.setupProfile(
+      User user = await dataAuthenticationRepository.setupProfile(
         firstName: params.firstName, 
         lastName: params.lastName,
         mobileNumber: params.mobileNumber,
@@ -59,6 +59,6 @@ class SetupProfileUseCaseParams {
 
 
 class SetupProfileUseCaseResponse {
-  final TodoUser user;
+  final User user;
   SetupProfileUseCaseResponse(this.user);
 }
