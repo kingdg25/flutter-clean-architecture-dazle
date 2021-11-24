@@ -16,7 +16,7 @@ class RegisterPresenter extends Presenter {
     String lastName,
     String mobileNumber,
     String position,
-    String licenseNumber,
+    String brokerLicenseNumber,
     String email,
     String password
   ) {
@@ -25,7 +25,7 @@ class RegisterPresenter extends Presenter {
       lastName,
       mobileNumber,
       position,
-      licenseNumber,
+      brokerLicenseNumber,
       email,
       password
     ));

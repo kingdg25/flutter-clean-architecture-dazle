@@ -6,7 +6,7 @@ abstract class AuthenticationRepository {
     String lastName,
     String mobileNumber,
     String position,
-    String licenseNumber,
+    String brokerLicenseNumber,
     String email,
     String password
   });
@@ -26,7 +26,7 @@ abstract class AuthenticationRepository {
     String lastName,
     String mobileNumber,
     String position,
-    String licenseNumber,
+    String brokerLicenseNumber,
     String email,
   });
 }

@@ -186,14 +186,14 @@ class DataAuthenticationRepository extends AuthenticationRepository {
   }
 
   @override
-  Future<void> register({String firstName, String lastName, String mobileNumber, String position, String licenseNumber, String email, String password}) async {
+  Future<void> register({String firstName, String lastName, String mobileNumber, String position, String brokerLicenseNumber, String email, String password}) async {
     Map params = {
       "user": {
         "firstname": firstName,
         "lastname": lastName,
         "mobile_number": mobileNumber,
         "position": position,
-        "license_number": licenseNumber,
+        "broker_license_number": brokerLicenseNumber,
         "email": email,
         "password": password
       }
@@ -283,7 +283,7 @@ class DataAuthenticationRepository extends AuthenticationRepository {
   }
 
   @override
-  Future<TodoUser> setupProfile({String firstName, String lastName, String mobileNumber, String position, String licenseNumber, String email}) async {
+  Future<TodoUser> setupProfile({String firstName, String lastName, String mobileNumber, String position, String brokerLicenseNumber, String email}) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
     Map params = {
@@ -292,7 +292,7 @@ class DataAuthenticationRepository extends AuthenticationRepository {
         "lastname": lastName,
         "mobile_number": mobileNumber,
         "position": position,
-        "license_number": licenseNumber,
+        "broker_license_number": brokerLicenseNumber,
         "email": email
       }
     };

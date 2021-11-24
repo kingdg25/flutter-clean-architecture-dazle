@@ -18,7 +18,7 @@ class RegisterUserUseCase extends UseCase<void, RegisterUserUseCaseParams> {
         lastName: params.lastName,
         mobileNumber: params.mobileNumber,
         position: params.position,
-        licenseNumber: params.licenseNumber,
+        brokerLicenseNumber: params.brokerLicenseNumber,
 
         email: params.email, 
         password: params.password
@@ -44,7 +44,7 @@ class RegisterUserUseCaseParams {
   final String lastName;
   final String mobileNumber;
   final String position;
-  final String licenseNumber;
+  final String brokerLicenseNumber;
   final String email;
   final String password;
 
@@ -53,7 +53,7 @@ class RegisterUserUseCaseParams {
     this.lastName,
     this.mobileNumber,
     this.position,
-    this.licenseNumber,
+    this.brokerLicenseNumber,
     this.email,
     this.password
   );

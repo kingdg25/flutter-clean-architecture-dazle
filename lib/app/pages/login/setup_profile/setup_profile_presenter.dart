@@ -18,7 +18,7 @@ class SetupProfilePresenter extends Presenter {
     String lastName,
     String mobileNumber,
     String position,
-    String licenseNumber,
+    String brokerLicenseNumber,
     String email
   ) {
     setupProfileUseCase.execute(_SetupProfileUseCaseObserver(this), SetupProfileUseCaseParams(
@@ -26,7 +26,7 @@ class SetupProfilePresenter extends Presenter {
       lastName,
       mobileNumber,
       position,
-      licenseNumber,
+      brokerLicenseNumber,
       email
     ));
   }

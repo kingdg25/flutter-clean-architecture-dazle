@@ -130,7 +130,7 @@ class SetupProfileController extends Controller {
       lastNameTextController.text = user.lastName;
       mobileNumberTextController.text = user.mobileNumber;
       position = user.position;
-      licenseNumberTextController.text = user.licenseNumber;
+      licenseNumberTextController.text = user.brokerLicenseNumber;
 
       refreshUI();
     }

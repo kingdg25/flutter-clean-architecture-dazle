@@ -19,7 +19,7 @@ class SetupProfileUseCase extends UseCase<SetupProfileUseCaseResponse, SetupProf
         lastName: params.lastName,
         mobileNumber: params.mobileNumber,
         position: params.position,
-        licenseNumber: params.licenseNumber,
+        brokerLicenseNumber: params.brokerLicenseNumber,
         email: params.email
       );
       
@@ -44,7 +44,7 @@ class SetupProfileUseCaseParams {
   final String lastName;
   final String mobileNumber;
   final String position;
-  final String licenseNumber;
+  final String brokerLicenseNumber;
   final String email;
 
   SetupProfileUseCaseParams(
@@ -52,7 +52,7 @@ class SetupProfileUseCaseParams {
     this.lastName,
     this.mobileNumber,
     this.position,
-    this.licenseNumber,
+    this.brokerLicenseNumber,
     this.email
   );
 }

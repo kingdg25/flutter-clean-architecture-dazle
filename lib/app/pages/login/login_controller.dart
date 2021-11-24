@@ -181,7 +181,7 @@ class LoginController extends Controller {
     loginPresenter.socialLoginOnNext = (TodoUser res) {
       print('social login on next $res ${res.toString()}');
       if (res != null){
-        if ( res.position != null && res.licenseNumber != null ) {
+        if ( res.position != null && res.brokerLicenseNumber != null ) {
           print('HOOOOMMMEEE PPAAGE');
           homePage();
         }
