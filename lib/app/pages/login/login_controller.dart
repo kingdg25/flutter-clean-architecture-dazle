@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:dazle/app/pages/home/welcome/welcome_page.dart';
-import 'package:dazle/app/pages/login/setup_profile/setup_profile_view.dart';
+import 'package:dazle/app/pages/welcome/welcome_page.dart';
+import 'package:dazle/app/pages/setup_profile/setup_profile_view.dart';
 import 'package:dazle/app/utils/app.dart';
 import 'package:dazle/domain/entities/user.dart';
 import 'package:flutter/material.dart';

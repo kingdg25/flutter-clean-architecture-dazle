@@ -1,7 +1,7 @@
 // import 'package:device_preview/device_preview.dart';
 import 'package:dazle/app/pages/home/home_view.dart';
 import 'package:dazle/app/pages/login/login_view.dart';
-import 'package:dazle/app/pages/home/welcome/welcome_page.dart';
+import 'package:dazle/app/pages/welcome/welcome_page.dart';
 import 'package:dazle/app/pages/register/register_view.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 

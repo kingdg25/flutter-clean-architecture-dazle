@@ -1,4 +1,4 @@
-import 'package:dazle/app/pages/login/setup_profile/setup_profile_controller.dart';
+import 'package:dazle/app/pages/setup_profile/setup_profile_controller.dart';
 import 'package:dazle/app/widgets/custom_appbar.dart';
 import 'package:dazle/app/widgets/form_fields/custom_button.dart';
 import 'package:dazle/app/widgets/form_fields/custom_field_layout.dart';

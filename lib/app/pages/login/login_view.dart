@@ -1,4 +1,4 @@
-import 'package:dazle/app/pages/login/forgot_password/forgot_password_screen.dart';
+import 'package:dazle/app/pages/forgot_password/forgot_password_view.dart';
 import 'package:dazle/app/utils/app.dart';
 import 'package:dazle/app/widgets/custom_text.dart';
 import 'package:dazle/app/widgets/form_fields/custom_button.dart';
@@ -90,7 +90,7 @@ class _LoginPageState extends ViewState<LoginPage, LoginController> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (buildContext) => ForgotPasswordScreen()
+                              builder: (buildContext) => ForgotPasswordPage()
                             )
                           );
                         }

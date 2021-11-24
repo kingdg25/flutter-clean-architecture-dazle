@@ -1,4 +1,4 @@
-import 'package:dazle/app/pages/login/setup_profile/setup_profile_presenter.dart';
+import 'package:dazle/app/pages/setup_profile/setup_profile_presenter.dart';
 import 'package:dazle/app/pages/register/components/send_request_screen.dart';
 import 'package:dazle/app/pages/register/components/waiting_screen.dart';
 import 'package:dazle/app/utils/app.dart';
