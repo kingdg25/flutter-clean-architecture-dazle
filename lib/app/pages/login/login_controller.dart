@@ -1,10 +1,10 @@
+import 'package:dazle/app/pages/main/main_view.dart';
 import 'package:dazle/app/pages/welcome/welcome_page.dart';
 import 'package:dazle/app/pages/setup_profile/setup_profile_view.dart';
 import 'package:dazle/app/utils/app.dart';
 import 'package:dazle/domain/entities/user.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
-import 'package:dazle/app/pages/home/home_view.dart';
 import 'package:dazle/app/pages/login/login_presenter.dart';
 import 'package:dazle/app/pages/login/login_view.dart';
 import 'package:flutter_overlay_loader/flutter_overlay_loader.dart';
@@ -44,7 +44,7 @@ class LoginController extends Controller {
           welcomePage();
         }
         else {
-          homePage();
+          mainPage();
         }
       
       }
@@ -67,7 +67,7 @@ class LoginController extends Controller {
           welcomePage();
         }
         else {
-          homePage();
+          mainPage();
         }
       }
     };
@@ -96,7 +96,7 @@ class LoginController extends Controller {
       if (res != null){
         if ( res.position != null && res.brokerLicenseNumber != null ) {
           print('HOOOOMMMEEE PPAAGE');
-          homePage();
+          mainPage();
         }
         else {
           print('setup profile page');
@@ -139,8 +139,8 @@ class LoginController extends Controller {
     loginPresenter.loginUser(emailTextController.text, passwordTextController.text);
   }
 
-  void homePage() {
-    Navigator.popAndPushNamed(getContext(), HomePage.id);
+  void mainPage() {
+    Navigator.popAndPushNamed(getContext(), MainPage.id);
   }
 
   void welcomePage() {
