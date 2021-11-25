@@ -1,7 +1,7 @@
-import 'package:dazle/data/repositories/data_todo_repository.dart';
+import 'package:dazle/app/pages/message/message_controller.dart';
+import 'package:dazle/data/repositories/data_message_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
-import 'package:dazle/app/pages/home/home_controller.dart';
 
 
 
@@ -13,8 +13,8 @@ class MessagePage extends View {
 }
 
 
-class _MessagePageState extends ViewState<MessagePage, HomeController> {
-  _MessagePageState() : super(HomeController(DataTodoRepository()));
+class _MessagePageState extends ViewState<MessagePage, MessageController> {
+  _MessagePageState() : super(MessageController(DataMessageRepository()));
 
   @override
   Widget get view {
