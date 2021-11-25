@@ -1,7 +1,7 @@
-import 'package:dazle/data/repositories/data_todo_repository.dart';
+import 'package:dazle/app/pages/connection/connection_controller.dart';
+import 'package:dazle/data/repositories/data_connection_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
-import 'package:dazle/app/pages/home/home_controller.dart';
 
 
 
@@ -13,8 +13,8 @@ class ConnectionPage extends View {
 }
 
 
-class _ConnectionPageState extends ViewState<ConnectionPage, HomeController> {
-  _ConnectionPageState() : super(HomeController(DataTodoRepository()));
+class _ConnectionPageState extends ViewState<ConnectionPage, ConnectionController> {
+  _ConnectionPageState() : super(ConnectionController(DataConnectionRepository()));
 
   @override
   Widget get view {
