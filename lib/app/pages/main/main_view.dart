@@ -5,7 +5,7 @@ import 'package:dazle/app/pages/main/components/triangle_painter.dart';
 import 'package:dazle/app/pages/main/main_controller.dart';
 import 'package:dazle/app/pages/message/message_view.dart';
 import 'package:dazle/app/pages/profile/profile_view.dart';
-import 'package:dazle/data/repositories/data_todo_repository.dart';
+import 'package:dazle/data/repositories/data_home_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 
@@ -22,7 +22,7 @@ class MainPage extends View {
 
 
 class _MainPageState extends ViewState<MainPage, MainController> {
-  _MainPageState() : super(MainController(DataTodoRepository()));
+  _MainPageState() : super(MainController(DataHomeRepository()));
 
   int _currentIndex = 0;
   final List<Widget> _navs = [

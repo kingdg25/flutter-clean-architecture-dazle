@@ -3,7 +3,7 @@ import 'package:dazle/app/utils/app.dart';
 import 'package:dazle/app/widgets/custom_text.dart';
 import 'package:dazle/app/widgets/form_fields/custom_field_layout.dart';
 import 'package:dazle/app/widgets/form_fields/custom_icon_button.dart';
-import 'package:dazle/data/repositories/data_todo_repository.dart';
+import 'package:dazle/data/repositories/data_home_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 
@@ -19,7 +19,7 @@ class WelcomePage extends View {
 }
 
 class _WelcomeScreenState extends ViewState<WelcomePage, HomeController> {
-  _WelcomeScreenState() : super(HomeController(DataTodoRepository()));
+  _WelcomeScreenState() : super(HomeController(DataHomeRepository()));
 
   @override
   Widget get view {

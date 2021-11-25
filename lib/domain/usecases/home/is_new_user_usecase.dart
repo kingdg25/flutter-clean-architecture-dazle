@@ -1,11 +1,11 @@
 import 'dart:async';
 
-import 'package:dazle/domain/repositories/todo_repository.dart';
+import 'package:dazle/domain/repositories/home_repository.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 
 
 class IsNewUserUseCase extends UseCase<void, IsNewUserUseCaseParams> {
-  final TodoRepository todoRepository;
+  final HomeRepository todoRepository;
   IsNewUserUseCase(this.todoRepository);
 
   @override
