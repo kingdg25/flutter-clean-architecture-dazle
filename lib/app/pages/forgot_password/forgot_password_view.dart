@@ -1,7 +1,7 @@
 import 'package:dazle/app/pages/forgot_password/components/forgot_password.dart';
 import 'package:dazle/app/pages/forgot_password/components/reset_password.dart';
 import 'package:dazle/app/pages/forgot_password/components/verify_code.dart';
-import 'package:dazle/app/pages/login/login_controller.dart';
+import 'package:dazle/app/pages/forgot_password/forgot_password_controller.dart';
 import 'package:dazle/app/widgets/custom_appbar.dart';
 import 'package:dazle/data/repositories/data_authentication_repository.dart';
 import 'package:flutter/material.dart';
@@ -16,8 +16,8 @@ class ForgotPasswordPage extends View {
   _ForgotPasswordPageState createState() => _ForgotPasswordPageState();
 }
 
-class _ForgotPasswordPageState extends ViewState<ForgotPasswordPage, LoginController> {
-  _ForgotPasswordPageState() : super(LoginController(DataAuthenticationRepository()));
+class _ForgotPasswordPageState extends ViewState<ForgotPasswordPage, ForgotPasswordController> {
+  _ForgotPasswordPageState() : super(ForgotPasswordController(DataAuthenticationRepository()));
 
   @override
   Widget get view {
@@ -26,7 +26,7 @@ class _ForgotPasswordPageState extends ViewState<ForgotPasswordPage, LoginContro
       key: globalKey,
       appBar: CustomAppBar(),
       backgroundColor: Colors.white,
-      body: ControlledWidgetBuilder<LoginController>(
+      body: ControlledWidgetBuilder<ForgotPasswordController>(
         builder: (context, controller) {
           var _pageController = controller.forgotPasswordPageController;
 

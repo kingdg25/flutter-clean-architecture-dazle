@@ -1,4 +1,4 @@
-import 'package:dazle/app/pages/login/login_controller.dart';
+import 'package:dazle/app/pages/forgot_password/forgot_password_controller.dart';
 import 'package:dazle/app/widgets/custom_text.dart';
 import 'package:dazle/app/widgets/form_fields/custom_button.dart';
 import 'package:dazle/app/widgets/form_fields/custom_field_layout.dart';
@@ -12,7 +12,7 @@ class ResetPassword extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    LoginController controller = FlutterCleanArchitecture.getController<LoginController>(context);
+    ForgotPasswordController controller = FlutterCleanArchitecture.getController<ForgotPasswordController>(context);
     var _formKey = controller.resetPasswordFormKey;
 
     return SingleChildScrollView(

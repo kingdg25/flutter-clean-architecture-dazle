@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:dazle/app/pages/welcome/welcome_page.dart';
 import 'package:dazle/app/pages/setup_profile/setup_profile_view.dart';
 import 'package:dazle/app/utils/app.dart';
@@ -11,7 +9,6 @@ import 'package:dazle/app/pages/login/login_presenter.dart';
 import 'package:dazle/app/pages/login/login_view.dart';
 import 'package:flutter_overlay_loader/flutter_overlay_loader.dart';
 import 'package:dazle/app/utils/app_constant.dart';
-import 'package:pin_code_fields/pin_code_fields.dart';
 
 
 
@@ -24,37 +21,11 @@ class LoginController extends Controller {
   final TextEditingController passwordTextController;
 
 
-  /// forgot password
-  PageController forgotPasswordPageController;
-
-  GlobalKey<FormState> forgotPasswordFormKey;
-  final TextEditingController forgotPasswordEmailTextController;
-  
-  /// verify code
-  String verificationCode;
-  bool resendVerificationCode;
-  TextEditingController verificationCodeTextController;
-  StreamController<ErrorAnimationType> verificationCodeErrorController;
-
-  /// reset password
-  GlobalKey<FormState> resetPasswordFormKey;
-  final TextEditingController resetPasswordTextController;
-
-
   LoginController(userRepo)
     : loginPresenter = LoginPresenter(userRepo),
     loginFormKey = GlobalKey<FormState>(),
     emailTextController = TextEditingController(),
     passwordTextController = TextEditingController(),
-    forgotPasswordPageController = PageController(),
-    forgotPasswordFormKey = GlobalKey<FormState>(),
-    forgotPasswordEmailTextController = TextEditingController(),
-    verificationCode = '',
-    resendVerificationCode = false,
-    verificationCodeTextController = TextEditingController(),
-    verificationCodeErrorController = StreamController<ErrorAnimationType>(),
-    resetPasswordFormKey = GlobalKey<FormState>(),
-    resetPasswordTextController = TextEditingController(),
     super();
   
 
@@ -119,64 +90,6 @@ class LoginController extends Controller {
     };
 
 
-    //forgot password
-    loginPresenter.forgotPasswordOnNext = (res) {
-      print('forgot pass on next $res ${res.toString()}');
-      verificationCode = res;
-      
-      if (res != null && !resendVerificationCode) {
-        forgotPasswordPageController.nextPage(
-          duration: Duration(milliseconds: 500),
-          curve: Curves.ease
-        );
-      }
-    };
-
-    loginPresenter.forgotPasswordOnComplete = () {
-      print('forgot pass on complete');
-      Loader.hide();
-    };
-
-    loginPresenter.forgotPasswordOnError = (e) {
-      print('forgot pass on error $e');
-      Loader.hide();
-      
-      if ( !e['error'] ) {
-        _statusDialog(false, 'Oops!', '${e['status'] ?? ''}');
-      }
-      else{
-        _statusDialog(false, 'Something went wrong', '${e.toString()}');
-      } 
-    };
-
-
-    //reset password
-    loginPresenter.resetPasswordOnNext = (res) {
-      print('reset pass on next $res ${res.toString()}');
-    };
-
-    loginPresenter.resetPasswordOnComplete = () {
-      print('reset pass on complete');
-      Loader.hide();
-      Navigator.pop(getContext());
-
-      _statusDialog(true, 'Success!', 'You successfully Change the Password.');
-    };
-
-    loginPresenter.resetPasswordOnError = (e) {
-      print('reset pass on error $e');
-      Loader.hide();
-      
-      if ( !e['error'] ) {
-        _statusDialog(false, 'Oops!', '${e['status'] ?? ''}');
-      }
-      else{
-        _statusDialog(false, 'Something went wrong', '${e.toString()}');
-      } 
-    };
-
-
-
     //social login
     loginPresenter.socialLoginOnNext = (User res) {
       print('social login on next $res ${res.toString()}');
@@ -213,10 +126,8 @@ class LoginController extends Controller {
   @override
   void onDisposed() {
     loginPresenter.dispose(); // don't forget to dispose of the presenter
-    verificationCodeErrorController.close();
     emailTextController.dispose();
     passwordTextController.dispose();
-    forgotPasswordPageController.dispose();
     Loader.hide();
     super.onDisposed();
   }
@@ -248,38 +159,6 @@ class LoginController extends Controller {
   void loginPage() {
     Navigator.popAndPushNamed(getContext(), LoginPage.id);
   }
-
-  void forgotPassword({bool resend = false}) {
-    print('forgot password ${forgotPasswordEmailTextController.text}');
-    Loader.show(getContext());
-
-    resendVerificationCode = resend;
-
-    loginPresenter.forgotPassword(forgotPasswordEmailTextController.text);
-  }
-
-  void verifyCode() {
-    var userInputCode = verificationCodeTextController.text;
-    print('verify code: $verificationCode, user code input: $userInputCode');
-    
-    if (userInputCode.length != 4 || userInputCode != verificationCode) {
-      verificationCodeErrorController.add(ErrorAnimationType.shake); // Triggering error shake animation
-    }
-    else{
-      forgotPasswordPageController.nextPage(
-        duration: Duration(milliseconds: 500),
-        curve: Curves.ease
-      );
-    }
-  }
-
-  void resetPassword() {
-    print('reset password ${forgotPasswordEmailTextController.text} ${verificationCodeTextController.text} ${resetPasswordTextController.text}');
-    Loader.show(getContext());
-
-    loginPresenter.resetPassword(forgotPasswordEmailTextController.text, verificationCodeTextController.text, resetPasswordTextController.text);
-  }
-
 
   void googleSignIn() {
     Loader.show(getContext());
