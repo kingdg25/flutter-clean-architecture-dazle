@@ -44,6 +44,7 @@ class DataAuthenticationRepository extends AuthenticationRepository {
       else {
         throw {
           "error": false,
+          "error_type": "${jsonResponse['error_type'] ?? ''}",
           "status": "$jsonResponse"
         };
       }
@@ -51,6 +52,7 @@ class DataAuthenticationRepository extends AuthenticationRepository {
     else {
       throw {
         "error": true,
+        "error_type": "dynamic",
         "status": "$jsonResponse"
       };
     }
@@ -83,6 +85,7 @@ class DataAuthenticationRepository extends AuthenticationRepository {
       if(!success){
         throw {
           "error": false,
+          "error_type": "${jsonResponse['error_type'] ?? ''}",
           "status": jsonResponse['status']
         };
       }
@@ -91,6 +94,7 @@ class DataAuthenticationRepository extends AuthenticationRepository {
     else {
       throw {
         "error": true,
+        "error_type": "dynamic",
         "status": "$jsonResponse"
       };
     }
@@ -173,6 +177,7 @@ class DataAuthenticationRepository extends AuthenticationRepository {
       else {
         throw {
           "error": false,
+          "error_type": "${jsonResponse['error_type'] ?? ''}",
           "status": jsonResponse['status']
         };
       }
@@ -180,6 +185,7 @@ class DataAuthenticationRepository extends AuthenticationRepository {
     else {
       throw {
         "error": true,
+        "error_type": "dynamic",
         "status": "$jsonResponse"
       };
     }
@@ -216,6 +222,7 @@ class DataAuthenticationRepository extends AuthenticationRepository {
       if(!success){
         throw {
           "error": false,
+          "error_type": "${jsonResponse['error_type'] ?? ''}",
           "status": jsonResponse['status']
         };
       }
@@ -223,6 +230,7 @@ class DataAuthenticationRepository extends AuthenticationRepository {
     else {
       throw {
         "error": true,
+        "error_type": "dynamic",
         "status": "$jsonResponse"
       };
     }
@@ -270,6 +278,7 @@ class DataAuthenticationRepository extends AuthenticationRepository {
       else {
         throw {
           "error": false,
+          "error_type": "${jsonResponse['error_type'] ?? ''}",
           "status": jsonResponse['status']
         };
       }
@@ -277,6 +286,7 @@ class DataAuthenticationRepository extends AuthenticationRepository {
     else {
       throw {
         "error": true,
+        "error_type": "dynamic",
         "status": "$jsonResponse"
       };
     }
@@ -324,6 +334,7 @@ class DataAuthenticationRepository extends AuthenticationRepository {
       else {
         throw {
           "error": false,
+          "error_type": "${jsonResponse['error_type'] ?? ''}",
           "status": jsonResponse['status']
         };
       }
@@ -331,6 +342,7 @@ class DataAuthenticationRepository extends AuthenticationRepository {
     else {
       throw {
         "error": true,
+        "error_type": "dynamic",
         "status": "$jsonResponse"
       };
     }

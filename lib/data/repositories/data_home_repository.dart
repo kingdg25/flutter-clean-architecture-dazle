@@ -49,6 +49,7 @@ class DataHomeRepository extends HomeRepository {
       else {
         throw {
           "error": false,
+          "error_type": "${jsonResponse['error_type'] ?? ''}",
           "status": "$jsonResponse"
         };
       }
@@ -57,6 +58,7 @@ class DataHomeRepository extends HomeRepository {
     else {
       throw {
         "error": true,
+        "error_type": "dynamic",
         "status": "$jsonResponse"
       };
     }
