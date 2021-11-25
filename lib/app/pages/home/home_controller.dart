@@ -1,4 +1,4 @@
-import 'package:dazle/app/pages/home/home_view.dart';
+import 'package:dazle/app/pages/main/main_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:dazle/app/pages/home/home_presenter.dart';
@@ -160,7 +160,7 @@ class HomeController extends Controller {
       print('new user on complete');
       Loader.hide();
 
-      homePage();
+      mainPage();
     };
 
     homePresenter.isNewUserOnError = (e) {
@@ -225,8 +225,8 @@ class HomeController extends Controller {
     homePresenter.logoutUser();
   }
 
-  void homePage() {
-    Navigator.popAndPushNamed(getContext(), HomePage.id);
+  void mainPage() {
+    Navigator.popAndPushNamed(getContext(), MainPage.id);
   }
 
   void loginPage() {
