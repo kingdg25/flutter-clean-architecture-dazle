@@ -1,7 +1,7 @@
-import 'package:dazle/data/repositories/data_todo_repository.dart';
+import 'package:dazle/app/pages/profile/profile_controller.dart';
+import 'package:dazle/data/repositories/data_profile_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
-import 'package:dazle/app/pages/home/home_controller.dart';
 
 
 
@@ -13,8 +13,8 @@ class ProfilePage extends View {
 }
 
 
-class _ProfilePageState extends ViewState<ProfilePage, HomeController> {
-  _ProfilePageState() : super(HomeController(DataTodoRepository()));
+class _ProfilePageState extends ViewState<ProfilePage, ProfileController> {
+  _ProfilePageState() : super(ProfileController(DataProfileRepository()));
 
   @override
   Widget get view {
