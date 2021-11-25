@@ -2,28 +2,20 @@ import 'package:dazle/app/pages/connection/connection_view.dart';
 import 'package:dazle/app/pages/home/home_view.dart';
 import 'package:dazle/app/pages/listing/listing_view.dart';
 import 'package:dazle/app/pages/main/components/triangle_painter.dart';
-import 'package:dazle/app/pages/main/main_controller.dart';
 import 'package:dazle/app/pages/message/message_view.dart';
 import 'package:dazle/app/pages/profile/profile_view.dart';
-import 'package:dazle/data/repositories/data_home_repository.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 
-
-
-class MainPage extends View {
+class MainPage extends StatefulWidget {
   static const String id = 'main_page';
-
-  MainPage({Key key}) : super(key: key);
+  
+  const MainPage({ Key key }) : super(key: key);
 
   @override
   _MainPageState createState() => _MainPageState();
 }
 
-
-class _MainPageState extends ViewState<MainPage, MainController> {
-  _MainPageState() : super(MainController(DataHomeRepository()));
-
+class _MainPageState extends State<MainPage> {
   int _currentIndex = 0;
   final List<Widget> _navs = [
     HomePage(),
@@ -55,8 +47,9 @@ class _MainPageState extends ViewState<MainPage, MainController> {
     );
   }
 
+
   @override
-  Widget get view {
+  Widget build(BuildContext context) {
     return Scaffold(
       body: _navs[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
