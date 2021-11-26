@@ -276,6 +276,12 @@ class DataAuthenticationRepository extends AuthenticationRepository {
         return todoUser;
       }
       else {
+        
+        // need to set profile when user not yet full registered.
+        if ( jsonResponse['error_type'] == "no_setup_profile" ) {
+          await prefs.setString('user', convert.jsonEncode(user));
+        }
+
         throw {
           "error": false,
           "error_type": "${jsonResponse['error_type'] ?? ''}",

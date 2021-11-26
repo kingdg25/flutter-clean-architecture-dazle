@@ -134,6 +134,9 @@ class LoginController extends Controller {
             }
           );
         }
+        else if (e['error_type'] == "no_setup_profile") {
+          setupProfilePage();
+        }
         else {
           _statusDialog('Oops!', '${e['status'] ?? ''}');
         }
