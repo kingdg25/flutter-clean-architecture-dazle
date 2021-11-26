@@ -348,5 +348,44 @@ class DataAuthenticationRepository extends AuthenticationRepository {
     }
   }
 
+  @override
+  Future<bool> checkLicenseNumber({String brokerLicenseNumber}) async {
+    Map params = {
+      "broker_license_number": brokerLicenseNumber
+    };
+    
+    var response = await http.post(
+      "${Constants.siteURL}/api/users/check-license-number",
+      body: convert.jsonEncode(params),
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      }
+    );
+
+    var jsonResponse = await convert.jsonDecode(response.body);
+    if (response.statusCode == 200){
+      bool success = jsonResponse['success'];
+      
+      if(success){
+        return success;
+      }
+      else {
+        throw {
+          "error": false,
+          "error_type": "${jsonResponse['error_type'] ?? ''}",
+          "status": jsonResponse['status']
+        };
+      }
+    }
+    else {
+      throw {
+        "error": true,
+        "error_type": "dynamic",
+        "status": "$jsonResponse"
+      };
+    }
+  }
+
   
 }

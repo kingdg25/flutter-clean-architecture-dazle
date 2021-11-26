@@ -81,6 +81,36 @@ class RegisterController extends Controller {
       AppConstant.showLoader(getContext(), false);
       
       if ( !e['error'] ) {
+        _statusDialog('Oops!', '${e['status'] ?? ''}');
+      }
+      else{
+        _statusDialog('Something went wrong', '${e.toString()}');
+      } 
+    };
+
+
+
+    // check license number
+    registerPresenter.checkLicenseNumberOnNext = (bool res) {
+      print('check license number on next $res');
+      if( res ) {
+        registerPageController.nextPage(
+          duration: Duration(milliseconds: 500),
+          curve: Curves.ease
+        ); 
+      }
+    };
+
+    registerPresenter.checkLicenseNumberOnComplete = () {
+      print('check license number on complete');
+      AppConstant.showLoader(getContext(), false);
+    };
+
+    registerPresenter.checkLicenseNumberOnError = (e) {
+      print('check license number on error $e');
+      AppConstant.showLoader(getContext(), false);
+      
+      if ( !e['error'] ) {
 
         if (e['error_type'] == "no_broker") {
           _statusDialog(
@@ -122,6 +152,14 @@ class RegisterController extends Controller {
     }
 
     refreshUI();
+  }
+
+  void checkLicenseNumber(){
+    AppConstant.showLoader(getContext(), true);
+
+    registerPresenter.checkLicenseNumber(
+      licenseNumber: brokerLicenseNumberTextController.text
+    );
   }
 
   void register() {

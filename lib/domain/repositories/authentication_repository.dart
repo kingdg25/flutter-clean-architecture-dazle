@@ -29,4 +29,6 @@ abstract class AuthenticationRepository {
     String brokerLicenseNumber,
     String email,
   });
+
+  Future<bool> checkLicenseNumber({String brokerLicenseNumber});
 }
