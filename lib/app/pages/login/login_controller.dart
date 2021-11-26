@@ -136,7 +136,7 @@ class LoginController extends Controller {
     print('login ${emailTextController.text} ${passwordTextController.text}');
     Loader.show(getContext());
 
-    loginPresenter.loginUser(emailTextController.text, passwordTextController.text);
+    loginPresenter.loginUser(email: emailTextController.text, password: passwordTextController.text);
   }
 
   void mainPage() {
@@ -163,13 +163,13 @@ class LoginController extends Controller {
   void googleSignIn() {
     Loader.show(getContext());
 
-    loginPresenter.socialLogin('gmail');
+    loginPresenter.socialLogin(type: 'gmail');
   }
 
   void facebookSignIn() {
     Loader.show(getContext());
 
-    loginPresenter.socialLogin('facebook');
+    loginPresenter.socialLogin(type: 'facebook');
   }
 
   _statusDialog(bool success, String title, String text){

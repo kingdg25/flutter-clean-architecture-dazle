@@ -26,7 +26,7 @@ class LoginPresenter extends Presenter {
       isAuthenticatedUseCase = IsAuthenticatedUseCase(userRepo),
       socialLoginUseCase = SocialLoginUseCase(userRepo);
   
-  void loginUser(String email, String password) {
+  void loginUser({String email, String password}) {
     loginUserUseCase.execute(_LoginUserUseCaseObserver(this), LoginUserUseCaseParams(email, password));
   }
 
@@ -34,7 +34,7 @@ class LoginPresenter extends Presenter {
     isAuthenticatedUseCase.execute(_IsAuthenticatedUseCaseObserver(this), IsAuthenticatedUseCaseParams());
   }
 
-  void socialLogin(String type) {
+  void socialLogin({String type}) {
     socialLoginUseCase.execute(_SocialLoginUseCaseObserver(this), SocialLoginUseCaseParams(type));
   }
 

@@ -11,7 +11,7 @@ class RegisterPresenter extends Presenter {
   RegisterPresenter(userRepo)
     : registerUserUseCase = RegisterUserUseCase(userRepo);
   
-  void registerUser(
+  void registerUser({
     String firstName,
     String lastName,
     String mobileNumber,
@@ -19,7 +19,7 @@ class RegisterPresenter extends Presenter {
     String brokerLicenseNumber,
     String email,
     String password
-  ) {
+  }) {
     registerUserUseCase.execute(_RegisterUserUseCaseObserver(this), RegisterUserUseCaseParams(
       firstName,
       lastName,

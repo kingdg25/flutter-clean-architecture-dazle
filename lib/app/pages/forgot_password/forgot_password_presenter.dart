@@ -18,11 +18,11 @@ class ForgotPasswordPresenter extends Presenter {
     : forgotPasswordUseCase = ForgotPasswordUseCase(userRepo),
       resetPasswordUseCase = ResetPasswordUseCase(userRepo);
   
-  void forgotPassword(String email) {
+  void forgotPassword({String email}) {
     forgotPasswordUseCase.execute(_ForgotPasswordUseCaseObserver(this), ForgotPasswordUseCaseParams(email));
   }
 
-  void resetPassword(String email, String code, String password) {
+  void resetPassword({String email, String code, String password}) {
     resetPasswordUseCase.execute(_ResetPasswordUseCaseObserver(this), ResetPasswordUseCaseParams(email, code, password));
   }
 

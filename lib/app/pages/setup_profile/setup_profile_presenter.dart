@@ -13,14 +13,14 @@ class SetupProfilePresenter extends Presenter {
     : setupProfileUseCase = SetupProfileUseCase(userRepo);
   
 
-  void setupProfile(
+  void setupProfile({
     String firstName,
     String lastName,
     String mobileNumber,
     String position,
     String brokerLicenseNumber,
     String email
-  ) {
+  }) {
     setupProfileUseCase.execute(_SetupProfileUseCaseObserver(this), SetupProfileUseCaseParams(
       firstName,
       lastName,

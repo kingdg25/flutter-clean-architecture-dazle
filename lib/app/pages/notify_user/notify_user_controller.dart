@@ -50,8 +50,8 @@ class NotifyUserController extends Controller {
     Loader.show(getContext());
 
     notifyUserPresenter.notifyUser(
-      emailTextController.text,
-      mobileNumberTextController.text
+      email: emailTextController.text,
+      mobileNumber: mobileNumberTextController.text
     );
   }
 

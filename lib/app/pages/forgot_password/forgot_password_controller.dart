@@ -108,7 +108,7 @@ class ForgotPasswordController extends Controller {
 
     resendVerificationCode = resend;
 
-    forgotPasswordPresenter.forgotPassword(forgotPasswordEmailTextController.text);
+    forgotPasswordPresenter.forgotPassword(email: forgotPasswordEmailTextController.text);
   }
 
   void verifyCode() {
@@ -130,7 +130,11 @@ class ForgotPasswordController extends Controller {
     print('reset password ${forgotPasswordEmailTextController.text} ${verificationCodeTextController.text} ${resetPasswordTextController.text}');
     Loader.show(getContext());
 
-    forgotPasswordPresenter.resetPassword(forgotPasswordEmailTextController.text, verificationCodeTextController.text, resetPasswordTextController.text);
+    forgotPasswordPresenter.resetPassword(
+      email: forgotPasswordEmailTextController.text,
+      code: verificationCodeTextController.text,
+      password: resetPasswordTextController.text
+    );
   }
 
   _statusDialog(bool success, String title, String text){

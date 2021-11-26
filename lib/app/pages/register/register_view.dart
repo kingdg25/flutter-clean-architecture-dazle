@@ -108,11 +108,11 @@ class _RegisterPageState extends ViewState<RegisterPage, RegisterController> {
                     onChanged: controller.setPosition,
                   ),
                   TitleField(
-                    title: controller.licenseNumberTextField
+                    title: controller.brokerLicenseNumberTextField
                   ),
                   CustomTextField(
-                    controller: controller.licenseNumberTextController,
-                    hintText: controller.licenseNumberTextField,
+                    controller: controller.brokerLicenseNumberTextController,
+                    hintText: controller.brokerLicenseNumberTextField,
                     isRequired: true,
                     keyboardType: TextInputType.number,
                   ),

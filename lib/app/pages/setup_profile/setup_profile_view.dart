@@ -101,11 +101,11 @@ class _SetupProfilePageState extends ViewState<SetupProfilePage, SetupProfileCon
                           onChanged: controller.setPosition,
                         ),
                         TitleField(
-                          title: controller.licenseNumberTextField
+                          title: controller.brokerLicenseNumberTextField
                         ),
                         CustomTextField(
-                          controller: controller.licenseNumberTextController,
-                          hintText: controller.licenseNumberTextField,
+                          controller: controller.brokerLicenseNumberTextController,
+                          hintText: controller.brokerLicenseNumberTextField,
                           isRequired: true,
                           keyboardType: TextInputType.number,
                         ),

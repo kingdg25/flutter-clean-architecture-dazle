@@ -84,7 +84,7 @@ class HomeController extends Controller {
     print('_user _user _user $_user ${_user.displayName} ${_user.isNewUser}');
 
     if ( _user != null ) {
-      homePresenter.isNewUser(_user.email, false);
+      homePresenter.isNewUser(email: _user.email, isNewUser: false);
     }
   }
 

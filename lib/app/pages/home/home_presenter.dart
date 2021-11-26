@@ -35,7 +35,7 @@ class HomePresenter extends Presenter {
     getUserUseCase.execute(_GetUserUseCaseObserver(this), GetUserUseCaseParams());
   }
 
-  void isNewUser(String email, bool isNewUser) {
+  void isNewUser({String email, bool isNewUser}) {
     newUserUseCase.execute(_IsNewUserUseCaseObserver(this), IsNewUserUseCaseParams(email, isNewUser));
   }
 

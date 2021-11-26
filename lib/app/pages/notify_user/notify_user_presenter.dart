@@ -11,7 +11,7 @@ class NotifyUserPresenter extends Presenter {
   NotifyUserPresenter(userRepo)
     : notifyUserUseCase = NotifyUserUseCase(userRepo);
 
-  void notifyUser(String email, String mobileNumber){
+  void notifyUser({String email, String mobileNumber}){
     notifyUserUseCase.execute(_NotifyUserUseCaseObserver(this), NotifyUserUseCaseParams(email, mobileNumber));
   }
   

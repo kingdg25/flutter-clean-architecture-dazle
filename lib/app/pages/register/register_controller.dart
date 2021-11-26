@@ -17,9 +17,9 @@ class RegisterController extends Controller {
   final TextEditingController lastNameTextController;
   final TextEditingController mobileNumberTextController;
   String position;
-  final TextEditingController licenseNumberTextController;
+  final TextEditingController brokerLicenseNumberTextController;
 
-  String licenseNumberTextField;
+  String brokerLicenseNumberTextField;
 
   GlobalKey<FormState> registerFormKeyPage2;
   final TextEditingController emailTextController;
@@ -36,8 +36,8 @@ class RegisterController extends Controller {
       lastNameTextController = TextEditingController(),
       mobileNumberTextController = TextEditingController(),
       position = null,
-      licenseNumberTextController = TextEditingController(),
-      licenseNumberTextField = 'Enter your License #',
+      brokerLicenseNumberTextController = TextEditingController(),
+      brokerLicenseNumberTextField = 'Enter your License #',
       registerFormKeyPage2 = GlobalKey<FormState>(),
       emailTextController = TextEditingController(),
       passwordTextController = TextEditingController(),
@@ -115,10 +115,10 @@ class RegisterController extends Controller {
     position = value;
 
     if(value == 'Salesperson'){
-      licenseNumberTextField = 'Enter your Broker’s License #';
+      brokerLicenseNumberTextField = 'Enter your Broker’s License #';
     }
     else {
-      licenseNumberTextField = 'Enter your License #';
+      brokerLicenseNumberTextField = 'Enter your License #';
     }
 
     refreshUI();
@@ -128,14 +128,14 @@ class RegisterController extends Controller {
     Loader.show(getContext());
 
     registerPresenter.registerUser(
-      firstNameTextController.text, 
-      lastNameTextController.text, 
-      mobileNumberTextController.text,
-      position,
-      licenseNumberTextController.text,
+      firstName: firstNameTextController.text, 
+      lastName: lastNameTextController.text, 
+      mobileNumber: mobileNumberTextController.text,
+      position: position,
+      brokerLicenseNumber: brokerLicenseNumberTextController.text,
 
-      emailTextController.text, 
-      passwordTextController.text
+      email: emailTextController.text, 
+      password: passwordTextController.text
     );
   }
 
@@ -166,7 +166,7 @@ class RegisterController extends Controller {
     firstNameTextController.dispose();
     lastNameTextController.dispose();
     mobileNumberTextController.dispose();
-    licenseNumberTextController.dispose();
+    brokerLicenseNumberTextController.dispose();
 
     emailTextController.dispose();
     passwordTextController.dispose();

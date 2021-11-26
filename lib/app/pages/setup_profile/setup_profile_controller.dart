@@ -22,8 +22,8 @@ class SetupProfileController extends Controller {
   final TextEditingController lastNameTextController;
   final TextEditingController mobileNumberTextController;
   String position;
-  final TextEditingController licenseNumberTextController;
-  String licenseNumberTextField;
+  final TextEditingController brokerLicenseNumberTextController;
+  String brokerLicenseNumberTextField;
 
 
   SetupProfileController(userRepo)
@@ -33,8 +33,8 @@ class SetupProfileController extends Controller {
     lastNameTextController = TextEditingController(),
     mobileNumberTextController = TextEditingController(),
     position = null,
-    licenseNumberTextController = TextEditingController(),
-    licenseNumberTextField = 'Enter your License #',
+    brokerLicenseNumberTextController = TextEditingController(),
+    brokerLicenseNumberTextField = 'Enter your License #',
     super();
   
 
@@ -97,7 +97,7 @@ class SetupProfileController extends Controller {
     firstNameTextController.dispose();
     lastNameTextController.dispose();
     mobileNumberTextController.dispose();
-    licenseNumberTextController.dispose();
+    brokerLicenseNumberTextController.dispose();
     
     Loader.hide();
     super.onDisposed();
@@ -109,12 +109,12 @@ class SetupProfileController extends Controller {
 
     if ( _user.email != null ) {
       setupProfilePresenter.setupProfile(
-        firstNameTextController.text, 
-        lastNameTextController.text, 
-        mobileNumberTextController.text,
-        position,
-        licenseNumberTextController.text,
-        _user.email
+        firstName: firstNameTextController.text, 
+        lastName: lastNameTextController.text, 
+        mobileNumber: mobileNumberTextController.text,
+        position: position,
+        brokerLicenseNumber: brokerLicenseNumberTextController.text,
+        email: _user.email
       );
     }
 
@@ -130,7 +130,7 @@ class SetupProfileController extends Controller {
       lastNameTextController.text = user.lastName;
       mobileNumberTextController.text = user.mobileNumber;
       position = user.position;
-      licenseNumberTextController.text = user.brokerLicenseNumber;
+      brokerLicenseNumberTextController.text = user.brokerLicenseNumber;
 
       refreshUI();
     }
@@ -141,10 +141,10 @@ class SetupProfileController extends Controller {
     position = value;
 
     if(value == 'Salesperson'){
-      licenseNumberTextField = 'Enter your Broker’s License #';
+      brokerLicenseNumberTextField = 'Enter your Broker’s License #';
     }
     else {
-      licenseNumberTextField = 'Enter your License #';
+      brokerLicenseNumberTextField = 'Enter your License #';
     }
 
     refreshUI();
