@@ -9,7 +9,8 @@ class AppConstant{
     BuildContext context,
     bool success = false,
     String title,
-    String text
+    String text,
+    Function onPressed
   }){
     return showDialog(
       context: context,
@@ -34,7 +35,7 @@ class AppConstant{
               text: 'OK',
               expanded: true,
               borderRadius: 20.0,
-              onPressed: () {
+              onPressed: (onPressed != null) ? onPressed : () {
                 Navigator.pop(context);
               },
             )
