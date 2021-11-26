@@ -1,3 +1,4 @@
+import 'package:dazle/app/pages/notify_user/notify_user_view.dart';
 import 'package:dazle/app/pages/register/components/send_request_screen.dart';
 import 'package:dazle/app/pages/register/components/waiting_screen.dart';
 import 'package:flutter/material.dart';
@@ -80,10 +81,31 @@ class RegisterController extends Controller {
       Loader.hide();
       
       if ( !e['error'] ) {
-        _statusDialog(false, 'Oops!', '${e['status'] ?? ''}');
+
+        if (e['error_type'] == "no_broker") {
+          _statusDialog(
+            'Oops!',
+            '${e['status'] ?? ''}',
+            onPressed: () {
+              Navigator.pop(getContext()); // pop dialog
+              Navigator.pop(getContext()); // pop registration page
+
+              Navigator.push(
+                getContext(),
+                MaterialPageRoute(
+                  builder: (buildContext) => NotifyUserPage()
+                )
+              );
+            }
+          );
+        }
+        else {
+          _statusDialog('Oops!', '${e['status'] ?? ''}');
+        }
+      
       }
       else{
-        _statusDialog(false, 'Something went wrong', '${e.toString()}');
+        _statusDialog('Something went wrong', '${e.toString()}');
       } 
     };
   }
@@ -117,12 +139,13 @@ class RegisterController extends Controller {
     );
   }
 
-  _statusDialog(bool success, String title, String text){
+  _statusDialog(String title, String text, {bool success, Function onPressed}){
     AppConstant.statusDialog(
       context: getContext(),
       success: success ?? false,
       title: title,
       text: text,
+      onPressed: onPressed
     );
   }
   
@@ -147,6 +170,7 @@ class RegisterController extends Controller {
 
     emailTextController.dispose();
     passwordTextController.dispose();
+    
     Loader.hide();
     super.onDisposed();
   }
