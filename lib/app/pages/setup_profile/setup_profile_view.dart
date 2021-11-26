@@ -1,5 +1,6 @@
 import 'package:dazle/app/pages/setup_profile/setup_profile_controller.dart';
 import 'package:dazle/app/widgets/custom_appbar.dart';
+import 'package:dazle/app/widgets/custom_form_layout.dart';
 import 'package:dazle/app/widgets/form_fields/custom_button.dart';
 import 'package:dazle/app/widgets/form_fields/custom_field_layout.dart';
 import 'package:dazle/app/widgets/form_fields/custom_select_field.dart';
@@ -44,99 +45,85 @@ class _SetupProfilePageState extends ViewState<SetupProfilePage, SetupProfileCon
                 children: [
                   Container(
                     child: Image(
-                      image: AssetImage('assets/profile.png'),
+                      image: AssetImage('assets/user_profile.png'),
                       width: 200,
                       height: 200,
                     ),
                   ),
-                  Container(
+                  CustomFormLayout(
                     margin: EdgeInsets.only(left: 43.0, right: 43.0, bottom: 40.0),
-                    padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 15.0),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.all(Radius.circular(4.0)),
-                      boxShadow: [
-                        BoxShadow(
-                          offset: Offset(0, 4),
-                          blurRadius: 5,
-                          color: Color.fromRGBO(0, 0, 0, 0.25)
-                        )
-                      ]
-                    ),
-                    child: Form(
-                      key: _formKey,
-                      child: Column(
-                        children: [
-                          TitleField(
-                            title: 'Enter Full Name'
-                          ),
-                          CustomFieldLayout(
-                            child: Row(
-                              children: [
-                                Flexible(
-                                  child: CustomTextField(
-                                    controller: controller.firstNameTextController,
-                                    hintText: 'First Name',
-                                    isRequired: true,
-                                    textCapitalization: TextCapitalization.sentences,
-                                  ),
+                    formKey: _formKey,
+                    child: Column(
+                      children: [
+                        TitleField(
+                          title: 'Enter Full Name'
+                        ),
+                        CustomFieldLayout(
+                          child: Row(
+                            children: [
+                              Flexible(
+                                child: CustomTextField(
+                                  controller: controller.firstNameTextController,
+                                  hintText: 'First Name',
+                                  isRequired: true,
+                                  textCapitalization: TextCapitalization.sentences,
                                 ),
-                                SizedBox(width: 8.0),
-                                Flexible(
-                                  child: CustomTextField(
-                                    controller: controller.lastNameTextController,
-                                    hintText: 'Last Name',
-                                    isRequired: true,
-                                    textCapitalization: TextCapitalization.sentences,
-                                  ),
+                              ),
+                              SizedBox(width: 8.0),
+                              Flexible(
+                                child: CustomTextField(
+                                  controller: controller.lastNameTextController,
+                                  hintText: 'Last Name',
+                                  isRequired: true,
+                                  textCapitalization: TextCapitalization.sentences,
                                 ),
-                              ],
-                            )
-                          ),
-                          TitleField(
-                            title: 'Enter Mobile Number'
-                          ),
-                          CustomTextField(
-                            controller: controller.mobileNumberTextController,
-                            hintText: '+63',
-                            isRequired: true,
-                            keyboardType: TextInputType.phone,
-                          ),
-                          TitleField(
-                            title: 'I am a Real Estate ..'
-                          ),
-                          CustomSelectField(
-                            hintText: 'I am a Real Estate ..',
-                            isRequired: true,
-                            value: controller.position,
-                            items: ['Broker', 'Salesperson'],
-                            onChanged: controller.setPosition,
-                          ),
-                          TitleField(
-                            title: controller.licenseNumberTextField
-                          ),
-                          CustomTextField(
-                            controller: controller.licenseNumberTextController,
-                            hintText: controller.licenseNumberTextField,
-                            isRequired: true,
-                            keyboardType: TextInputType.number,
-                          ),
-                          SizedBox(height: 20.0),
-                          CustomButton(
-                            text: 'Confirm',
-                            expanded: true,
-                            onPressed: () {
-                              FocusScope.of(context).unfocus();
-
-                              if (_formKey.currentState.validate()) {
-                                _formKey.currentState.save();
-                                
-                                controller.setupProfile();
-                              }
-                            }
+                              ),
+                            ],
                           )
-                        ],
-                      ),
+                        ),
+                        TitleField(
+                          title: 'Enter Mobile Number'
+                        ),
+                        CustomTextField(
+                          controller: controller.mobileNumberTextController,
+                          hintText: '+63',
+                          isRequired: true,
+                          keyboardType: TextInputType.phone,
+                        ),
+                        TitleField(
+                          title: 'I am a Real Estate ..'
+                        ),
+                        CustomSelectField(
+                          hintText: 'I am a Real Estate ..',
+                          isRequired: true,
+                          value: controller.position,
+                          items: ['Broker', 'Salesperson'],
+                          onChanged: controller.setPosition,
+                        ),
+                        TitleField(
+                          title: controller.licenseNumberTextField
+                        ),
+                        CustomTextField(
+                          controller: controller.licenseNumberTextController,
+                          hintText: controller.licenseNumberTextField,
+                          isRequired: true,
+                          keyboardType: TextInputType.number,
+                        ),
+                        SizedBox(height: 20.0),
+                        CustomButton(
+                          text: 'Confirm',
+                          expanded: true,
+                          onPressed: () {
+                            FocusScope.of(context).unfocus();
+
+                            if (_formKey.currentState.validate()) {
+                              _formKey.currentState.save();
+                              
+                              controller.setupProfile();
+                            }
+                          }
+                        )
+                      ],
                     )
                   )
                 ]

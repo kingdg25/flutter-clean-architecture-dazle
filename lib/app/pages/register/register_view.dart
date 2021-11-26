@@ -46,94 +46,92 @@ class _RegisterPageState extends ViewState<RegisterPage, RegisterController> {
           double page1Height = 0.0;
 
           if (size.height <= 569){
-            page1Height = size.height + 250;
+            page1Height = size.height + 270;
           }
           else if (size.height <= 740){
-            page1Height = size.height + 200;
+            page1Height = size.height + 220;
           }
           else {
-            page1Height = size.height + 120;
+            page1Height = size.height + 140;
           }
 
           var page1 = SingleChildScrollView(
             child: RegisterLayout(
               height: page1Height,
               svgAsset: 'assets/create_account.svg',
-              child: Form(
-                key: _formKey1,
-                child: Column(
-                  children: [
-                    TitleField(
-                      title: 'Enter Full Name'
-                    ),
-                    CustomFieldLayout(
-                      child: Row(
-                        children: [
-                          Flexible(
-                            child: CustomTextField(
-                              controller: controller.firstNameTextController,
-                              hintText: 'First Name',
-                              isRequired: true,
-                              textCapitalization: TextCapitalization.sentences,
-                            ),
+              formKey: _formKey1,
+              child: Column(
+                children: [
+                  TitleField(
+                    title: 'Enter Full Name'
+                  ),
+                  CustomFieldLayout(
+                    child: Row(
+                      children: [
+                        Flexible(
+                          child: CustomTextField(
+                            controller: controller.firstNameTextController,
+                            hintText: 'First Name',
+                            isRequired: true,
+                            textCapitalization: TextCapitalization.sentences,
                           ),
-                          SizedBox(width: 8.0),
-                          Flexible(
-                            child: CustomTextField(
-                              controller: controller.lastNameTextController,
-                              hintText: 'Last Name',
-                              isRequired: true,
-                              textCapitalization: TextCapitalization.sentences,
-                            ),
+                        ),
+                        SizedBox(width: 8.0),
+                        Flexible(
+                          child: CustomTextField(
+                            controller: controller.lastNameTextController,
+                            hintText: 'Last Name',
+                            isRequired: true,
+                            textCapitalization: TextCapitalization.sentences,
                           ),
-                        ],
-                      )
-                    ),
-                    TitleField(
-                      title: 'Enter Mobile Number'
-                    ),
-                    CustomTextField(
-                      controller: controller.mobileNumberTextController,
-                      hintText: '+63',
-                      isRequired: true,
-                      keyboardType: TextInputType.phone,
-                    ),
-                    TitleField(
-                      title: 'I am a Real Estate ..'
-                    ),
-                    CustomSelectField(
-                      hintText: 'I am a Real Estate ..',
-                      isRequired: true, 
-                      value: controller.position,
-                      items: ['Broker', 'Salesperson'],
-                      onChanged: controller.setPosition,
-                    ),
-                    TitleField(
-                      title: controller.licenseNumberTextField
-                    ),
-                    CustomTextField(
-                      controller: controller.licenseNumberTextController,
-                      hintText: controller.licenseNumberTextField,
-                      isRequired: true,
-                      keyboardType: TextInputType.number,
-                    ),
-                    SizedBox(height: 20.0),
-                    CustomIconButton(
-                      onPressed: () {
-                        FocusScope.of(context).unfocus();
-
-                        if (_formKey1.currentState.validate()) {
-                          _formKey1.currentState.save();
-
-                          _pageController.nextPage(
-                            duration: Duration(milliseconds: 500),
-                            curve: Curves.ease
-                          );
-                        }
-                      },
+                        ),
+                      ],
                     )
-                  ],
-                ),
+                  ),
+                  TitleField(
+                    title: 'Enter Mobile Number'
+                  ),
+                  CustomTextField(
+                    controller: controller.mobileNumberTextController,
+                    hintText: '+63',
+                    isRequired: true,
+                    keyboardType: TextInputType.phone,
+                  ),
+                  TitleField(
+                    title: 'I am a Real Estate ..'
+                  ),
+                  CustomSelectField(
+                    hintText: 'I am a Real Estate ..',
+                    isRequired: true, 
+                    value: controller.position,
+                    items: ['Broker', 'Salesperson'],
+                    onChanged: controller.setPosition,
+                  ),
+                  TitleField(
+                    title: controller.licenseNumberTextField
+                  ),
+                  CustomTextField(
+                    controller: controller.licenseNumberTextController,
+                    hintText: controller.licenseNumberTextField,
+                    isRequired: true,
+                    keyboardType: TextInputType.number,
+                  ),
+                  SizedBox(height: 20.0),
+                  CustomIconButton(
+                    onPressed: () {
+                      FocusScope.of(context).unfocus();
+
+                      if (_formKey1.currentState.validate()) {
+                        _formKey1.currentState.save();
+
+                        _pageController.nextPage(
+                          duration: Duration(milliseconds: 500),
+                          curve: Curves.ease
+                        );
+                      }
+                    },
+                  )
+                ],
               ),
             ),
           );
@@ -141,57 +139,55 @@ class _RegisterPageState extends ViewState<RegisterPage, RegisterController> {
           var page2 = SingleChildScrollView(
             child: RegisterLayout(
               height: size.height,
-              svgAsset: 'assets/create_account_2.svg', 
-              child: Form(
-                key: _formKey2,
-                child: Column(
-                  children: [
-                    TitleField(
-                      title: 'Email Address'
-                    ),
-                    CustomEmailField(
-                      controller: controller.emailTextController,
-                      hintText: 'Email Address'
-                    ),
-                    TitleField(
-                      title: 'Password'
-                    ),
-                    CustomPasswordField(
-                      controller: controller.passwordTextController,
-                      hintText: 'Password',
-                    ),
-                    SizedBox(height: 20.0),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        CustomIconButton(
-                          alignment: null,
-                          main: false,
-                          onPressed: () {
-                            FocusScope.of(context).unfocus();
+              svgAsset: 'assets/create_account_2.svg',
+              formKey: _formKey2,
+              child: Column(
+                children: [
+                  TitleField(
+                    title: 'Email Address'
+                  ),
+                  CustomEmailField(
+                    controller: controller.emailTextController,
+                    hintText: 'Email Address'
+                  ),
+                  TitleField(
+                    title: 'Password'
+                  ),
+                  CustomPasswordField(
+                    controller: controller.passwordTextController,
+                    hintText: 'Password',
+                  ),
+                  SizedBox(height: 20.0),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      CustomIconButton(
+                        alignment: null,
+                        main: false,
+                        onPressed: () {
+                          FocusScope.of(context).unfocus();
 
-                            _pageController.previousPage(
-                              duration: Duration(milliseconds: 500),
-                              curve: Curves.ease
-                            );
-                          },
-                        ),
-                        CustomIconButton(
-                          alignment: null,
-                          onPressed: () {
-                            FocusScope.of(context).unfocus();
+                          _pageController.previousPage(
+                            duration: Duration(milliseconds: 500),
+                            curve: Curves.ease
+                          );
+                        },
+                      ),
+                      CustomIconButton(
+                        alignment: null,
+                        onPressed: () {
+                          FocusScope.of(context).unfocus();
 
-                            if (_formKey2.currentState.validate()) {
-                              _formKey2.currentState.save();
+                          if (_formKey2.currentState.validate()) {
+                            _formKey2.currentState.save();
 
-                              controller.register();
-                            }
-                          },
-                        )
-                      ],
-                    )
-                  ],
-                ),
+                            controller.register();
+                          }
+                        },
+                      )
+                    ],
+                  )
+                ],
               )
             )
           );

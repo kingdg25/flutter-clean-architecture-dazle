@@ -1,4 +1,5 @@
 import 'package:dazle/app/utils/app.dart';
+import 'package:dazle/app/widgets/custom_form_layout.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -7,11 +8,13 @@ class RegisterLayout extends StatelessWidget {
   final double height;
   final String svgAsset;
   final Widget child;
+  final Key formKey;
 
   RegisterLayout({
     @required this.height,
     @required this.svgAsset,
-    @required this.child
+    @required this.child,
+    this.formKey
   });
 
   @override
@@ -56,20 +59,9 @@ class RegisterLayout extends StatelessWidget {
             left: 40,
             right: 40,
             bottom: 40,
-            child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.all(Radius.circular(4.0)),
-                boxShadow: [
-                  BoxShadow(
-                    offset: Offset(0, 4),
-                    blurRadius: 5,
-                    color: Color.fromRGBO(0, 0, 0, 0.25)
-                  )
-                ]
-              ),
+            child: CustomFormLayout(
               child: child,
+              formKey: formKey,
             )
           )
         ],
