@@ -51,7 +51,7 @@ class SetupProfileController extends Controller {
 
     setupProfilePresenter.setupProfileOnComplete = () {
       print('setup profile on complete');
-      Loader.hide();
+      AppConstant.showLoader(getContext(), false);
       Navigator.pop(getContext());
 
       if ( position == 'Broker' ){
@@ -78,7 +78,7 @@ class SetupProfileController extends Controller {
 
     setupProfilePresenter.setupProfileOnError = (e) {
       print('setup profile on error $e');
-      Loader.hide();
+      AppConstant.showLoader(getContext(), false);
 
       if ( !e['error'] ) {
         _statusDialog(false, 'Oops!', '${e['status'] ?? ''}');
@@ -104,7 +104,7 @@ class SetupProfileController extends Controller {
   }
 
   void setupProfile() {
-    Loader.show(getContext());
+    AppConstant.showLoader(getContext(), true);
     print('setupProfile ${_user.email}');
 
     if ( _user.email != null ) {

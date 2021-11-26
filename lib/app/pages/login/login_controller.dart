@@ -74,12 +74,12 @@ class LoginController extends Controller {
 
     loginPresenter.loginUserOnComplete = () {
       print('login user on complete');
-      Loader.hide();
+      AppConstant.showLoader(getContext(), false);
     };
 
     loginPresenter.loginUserOnError = (e) {
       print('login user on error $e');
-      Loader.hide();
+      AppConstant.showLoader(getContext(), false);
 
       if ( !e['error'] ) {
         _statusDialog(false, 'Oops!', '${e['status'] ?? ''}');
@@ -107,12 +107,12 @@ class LoginController extends Controller {
 
     loginPresenter.socialLoginOnComplete = () {
       print('social login on complete');
-      Loader.hide();
+      AppConstant.showLoader(getContext(), false);
     };
 
     loginPresenter.socialLoginOnError = (e) {
       print('social login on error $e');
-      Loader.hide();
+      AppConstant.showLoader(getContext(), false);
       
       if ( !e['error'] ) {
         _statusDialog(false, 'Oops!', '${e['status'] ?? ''}');
@@ -134,7 +134,7 @@ class LoginController extends Controller {
 
   void login() async {
     print('login ${emailTextController.text} ${passwordTextController.text}');
-    Loader.show(getContext());
+    AppConstant.showLoader(getContext(), true);
 
     loginPresenter.loginUser(email: emailTextController.text, password: passwordTextController.text);
   }
@@ -161,13 +161,13 @@ class LoginController extends Controller {
   }
 
   void googleSignIn() {
-    Loader.show(getContext());
+    AppConstant.showLoader(getContext(), true);
 
     loginPresenter.socialLogin(type: 'gmail');
   }
 
   void facebookSignIn() {
-    Loader.show(getContext());
+    AppConstant.showLoader(getContext(), true);
 
     loginPresenter.socialLogin(type: 'facebook');
   }

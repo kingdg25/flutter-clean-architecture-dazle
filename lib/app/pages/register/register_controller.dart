@@ -53,7 +53,7 @@ class RegisterController extends Controller {
 
     registerPresenter.registerUserOnComplete = () {
       print('register user on complete');
-      Loader.hide();
+      AppConstant.showLoader(getContext(), false);
       Navigator.pop(getContext());
 
       if ( position == 'Broker' ){
@@ -78,7 +78,7 @@ class RegisterController extends Controller {
 
     registerPresenter.registerUserOnError = (e) {
       print('register user on error $e');
-      Loader.hide();
+      AppConstant.showLoader(getContext(), false);
       
       if ( !e['error'] ) {
 
@@ -125,7 +125,7 @@ class RegisterController extends Controller {
   }
 
   void register() {
-    Loader.show(getContext());
+    AppConstant.showLoader(getContext(), true);
 
     registerPresenter.registerUser(
       firstName: firstNameTextController.text, 

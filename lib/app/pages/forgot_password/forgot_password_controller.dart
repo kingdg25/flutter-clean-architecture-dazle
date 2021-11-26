@@ -60,12 +60,12 @@ class ForgotPasswordController extends Controller {
 
     forgotPasswordPresenter.forgotPasswordOnComplete = () {
       print('forgot pass on complete');
-      Loader.hide();
+      AppConstant.showLoader(getContext(), false);
     };
 
     forgotPasswordPresenter.forgotPasswordOnError = (e) {
       print('forgot pass on error $e');
-      Loader.hide();
+      AppConstant.showLoader(getContext(), false);
       
       if ( !e['error'] ) {
         _statusDialog(false, 'Oops!', '${e['status'] ?? ''}');
@@ -83,7 +83,7 @@ class ForgotPasswordController extends Controller {
 
     forgotPasswordPresenter.resetPasswordOnComplete = () {
       print('reset pass on complete');
-      Loader.hide();
+      AppConstant.showLoader(getContext(), false);
       Navigator.pop(getContext());
 
       _statusDialog(true, 'Success!', 'You successfully Change the Password.');
@@ -91,7 +91,7 @@ class ForgotPasswordController extends Controller {
 
     forgotPasswordPresenter.resetPasswordOnError = (e) {
       print('reset pass on error $e');
-      Loader.hide();
+      AppConstant.showLoader(getContext(), false);
       
       if ( !e['error'] ) {
         _statusDialog(false, 'Oops!', '${e['status'] ?? ''}');
@@ -104,7 +104,7 @@ class ForgotPasswordController extends Controller {
 
   void forgotPassword({bool resend = false}) {
     print('forgot password ${forgotPasswordEmailTextController.text}');
-    Loader.show(getContext());
+    AppConstant.showLoader(getContext(), true);
 
     resendVerificationCode = resend;
 
@@ -128,7 +128,7 @@ class ForgotPasswordController extends Controller {
 
   void resetPassword() {
     print('reset password ${forgotPasswordEmailTextController.text} ${verificationCodeTextController.text} ${resetPasswordTextController.text}');
-    Loader.show(getContext());
+    AppConstant.showLoader(getContext(), true);
 
     forgotPasswordPresenter.resetPassword(
       email: forgotPasswordEmailTextController.text,

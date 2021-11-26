@@ -1,4 +1,5 @@
 import 'package:dazle/app/pages/main/main_view.dart';
+import 'package:dazle/app/utils/app_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:dazle/app/pages/home/home_presenter.dart';
@@ -31,13 +32,13 @@ class HomeController extends Controller {
 
     homePresenter.logoutUserOnComplete = () {
       print('logout on complete');
-      Loader.hide();
+      AppConstant.showLoader(getContext(), false);
       loginPage();
     };
 
     homePresenter.logoutUserOnError = (e) {
       print('logout on error $e');
-      Loader.hide();
+      AppConstant.showLoader(getContext(), false);
     };
 
     homePresenter.getUser();
@@ -68,14 +69,12 @@ class HomeController extends Controller {
 
     homePresenter.isNewUserOnComplete = () {
       print('new user on complete');
-      Loader.hide();
 
       mainPage();
     };
 
     homePresenter.isNewUserOnError = (e) {
       print('new user on error $e');
-      Loader.hide();
     };
 
   }
@@ -90,6 +89,8 @@ class HomeController extends Controller {
 
   void userLogout(){
     print('user logout home controller');
+    AppConstant.showLoader(getContext(), true);
+
     homePresenter.logoutUser();
   }
 
@@ -115,6 +116,7 @@ class HomeController extends Controller {
   @override
   void onDisposed() {
     homePresenter.dispose(); // don't forget to dispose of the presenter
+    Loader.hide();
     super.onDisposed();
   }
   

@@ -29,13 +29,13 @@ class NotifyUserController extends Controller {
 
     notifyUserPresenter.notifyUserOnComplete = () {
       print('notify user on complete');
-      Loader.hide();
+      AppConstant.showLoader(getContext(), false);
       Navigator.pop(getContext());
     };
 
     notifyUserPresenter.notifyUserOnError = (e) {
       print('notify user on error $e');
-      Loader.hide();
+      AppConstant.showLoader(getContext(), false);
       
       if ( !e['error'] ) {
         _statusDialog('Oops!', '${e['status'] ?? ''}');
@@ -47,7 +47,7 @@ class NotifyUserController extends Controller {
   }
 
   void notifyUser(){
-    Loader.show(getContext());
+    AppConstant.showLoader(getContext(), true);
 
     notifyUserPresenter.notifyUser(
       email: emailTextController.text,
@@ -83,6 +83,7 @@ class NotifyUserController extends Controller {
     emailTextController.dispose();
     mobileNumberTextController.dispose();
 
+    Loader.hide();
     super.onDisposed();
   }
   

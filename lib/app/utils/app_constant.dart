@@ -1,9 +1,21 @@
 import 'package:dazle/app/widgets/custom_text.dart';
 import 'package:dazle/app/widgets/form_fields/custom_button.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_overlay_loader/flutter_overlay_loader.dart';
 
 
 class AppConstant{
+
+  static showLoader(BuildContext context, bool show){
+    try {
+      show ? Loader.show(context) : 
+      Future.delayed(Duration(milliseconds: 10), () {
+        Loader.hide();
+      });
+    } catch (e) {
+      print('show loader err $e');
+    }
+  }
   
   static statusDialog({
     BuildContext context,
