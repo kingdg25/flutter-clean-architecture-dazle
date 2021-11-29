@@ -188,13 +188,13 @@ class LoginController extends Controller {
   void googleSignIn() {
     AppConstant.showLoader(getContext(), true);
 
-    loginPresenter.socialLogin(type: 'gmail');
+    loginPresenter.socialLogin(loginType: 'gmail');
   }
 
   void facebookSignIn() {
     AppConstant.showLoader(getContext(), true);
 
-    loginPresenter.socialLogin(type: 'facebook');
+    loginPresenter.socialLogin(loginType: 'facebook');
   }
 
   _statusDialog(String title, String text, {bool success, Function onPressed}){

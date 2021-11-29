@@ -237,13 +237,13 @@ class DataAuthenticationRepository extends AuthenticationRepository {
   }
 
   @override
-  Future<User> socialLogin({String email, String type, String token}) async {
+  Future<User> socialLogin({String email, String loginType, String token}) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
     Map params = {
       "user": {
         "email": email,
-        "type": type,
+        "login_type": loginType,
         "token": token
       }
     };

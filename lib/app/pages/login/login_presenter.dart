@@ -34,8 +34,8 @@ class LoginPresenter extends Presenter {
     isAuthenticatedUseCase.execute(_IsAuthenticatedUseCaseObserver(this), IsAuthenticatedUseCaseParams());
   }
 
-  void socialLogin({String type}) {
-    socialLoginUseCase.execute(_SocialLoginUseCaseObserver(this), SocialLoginUseCaseParams(type));
+  void socialLogin({String loginType}) {
+    socialLoginUseCase.execute(_SocialLoginUseCaseObserver(this), SocialLoginUseCaseParams(loginType));
   }
 
 

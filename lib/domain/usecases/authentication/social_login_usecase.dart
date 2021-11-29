@@ -25,7 +25,7 @@ class SocialLoginUseCase extends UseCase<SocialLoginUseCaseResponse, SocialLogin
     final controller = StreamController<SocialLoginUseCaseResponse>();
     
     try {
-      if( params.type == 'gmail' ){
+      if( params.loginType == 'gmail' ){
         GoogleSignInAccount googleUser = await googleSignIn.signIn();
         
         if(googleUser != null){
@@ -33,19 +33,19 @@ class SocialLoginUseCase extends UseCase<SocialLoginUseCaseResponse, SocialLogin
           // print('$googleUser');
           // logger.shout('${googleAuth.idToken}');
 
-          final user = await dataAuthenticationRepository.socialLogin(type: params.type, email: googleUser.email, token: googleAuth.idToken);
+          final user = await dataAuthenticationRepository.socialLogin(loginType: params.loginType, email: googleUser.email, token: googleAuth.idToken);
           controller.add(SocialLoginUseCaseResponse(user));
           
           logger.finest('Google login successful.');
         }
         else {
           logger.severe('Google login in fail.');
-          controller.addError('${params.type} login fail.');
+          controller.addError('${params.loginType} login fail.');
         }
 
       }
 
-      else if ( params.type == 'facebook' ){
+      else if ( params.loginType == 'facebook' ){
         AccessToken accessToken = await FacebookAuth.instance.login(
           permissions: ['email', 'public_profile']
         );
@@ -56,21 +56,21 @@ class SocialLoginUseCase extends UseCase<SocialLoginUseCaseResponse, SocialLogin
           // final profile = await convert.jsonDecode(graphResponse.body);
           // print('facebook data $userData $profile');
 
-          final user = await dataAuthenticationRepository.socialLogin(type: params.type, email: userData['email'], token: accessToken.token);
+          final user = await dataAuthenticationRepository.socialLogin(loginType: params.loginType, email: userData['email'], token: accessToken.token);
           controller.add(SocialLoginUseCaseResponse(user));
 
           logger.finest('Facebook login successful.');
         }
         else {
           logger.finest('Facebook login fail.');
-          controller.addError('${params.type} login fail.');
+          controller.addError('${params.loginType} login fail.');
         }
         
       }
       
       else {
         logger.severe('Social login in fail.');
-        controller.addError('No ${params.type} login type implemented');
+        controller.addError('No ${params.loginType} login loginType implemented');
       }
 
       controller.close();
@@ -103,8 +103,8 @@ class SocialLoginUseCase extends UseCase<SocialLoginUseCaseResponse, SocialLogin
 
 
 class SocialLoginUseCaseParams {
-  final String type;
-  SocialLoginUseCaseParams(this.type);
+  final String loginType;
+  SocialLoginUseCaseParams(this.loginType);
 }
 
 class SocialLoginUseCaseResponse {

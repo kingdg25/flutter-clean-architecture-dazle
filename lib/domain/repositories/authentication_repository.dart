@@ -19,7 +19,7 @@ abstract class AuthenticationRepository {
 
   Future<bool> isAuthenticated();
 
-  Future<User> socialLogin({String email, String type, String token});
+  Future<User> socialLogin({String email, String loginType, String token});
 
   Future<User> setupProfile({
     String firstName,
