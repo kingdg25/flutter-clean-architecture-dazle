@@ -27,7 +27,7 @@ class _NotifyUserPageState extends ViewState<NotifyUserPage, NotifyUserControlle
     return Scaffold(
       key: globalKey,
       appBar: CustomAppBar(
-        title: 'Notify User',
+        title: 'Notify Agent',
         centerTitle: true,
       ),
       backgroundColor: Colors.white,
@@ -59,7 +59,7 @@ class _NotifyUserPageState extends ViewState<NotifyUserPage, NotifyUserControlle
                     ),
                     SizedBox(height: 20.0),
                     CustomButton(
-                      text: 'Notify User',
+                      text: 'Notify Agent',
                       expanded: true,
                       onPressed: () {
                         FocusScope.of(context).unfocus();
