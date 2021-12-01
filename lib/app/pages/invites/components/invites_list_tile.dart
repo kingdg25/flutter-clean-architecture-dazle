@@ -1,24 +1,21 @@
+import 'package:dazle/app/pages/invites/invites_controller.dart';
 import 'package:dazle/app/utils/app.dart';
 import 'package:dazle/app/widgets/custom_text.dart';
 import 'package:dazle/app/widgets/form_fields/custom_button.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 
 class InvitesListTile extends StatelessWidget {
-  final Function onPressed;
-
-
-  InvitesListTile({
-    this.onPressed
-  });
-
 
   @override
   Widget build(BuildContext context) {
+    InvitesController controller = FlutterCleanArchitecture.getController<InvitesController>(context);
+
     return ListView.builder(
       shrinkWrap: true,
       physics: NeverScrollableScrollPhysics(),
       // padding: EdgeInsets.symmetric(horizontal: 10.0),
-      itemCount: 8,
+      itemCount: controller.invites.length,
       itemBuilder: (BuildContext context, int index){
         return Container(
           decoration: BoxDecoration(
@@ -36,12 +33,12 @@ class InvitesListTile extends StatelessWidget {
               height: 40,
             ),
             title: CustomText(
-              text: 'Juan dela Cruz',
+              text: controller.invites[index].displayName,
               color: Colors.black,
               fontWeight: FontWeight.w600,
             ),
             subtitle: CustomText(
-              text: '100 connections on Brooky',
+              text: '${controller.invites[index].totalConnection} connections on ${App.name}',
               fontSize: 11,
             ),
             trailing: Container(
@@ -51,7 +48,9 @@ class InvitesListTile extends StatelessWidget {
                 fontSize: 12,
                 borderRadius: 20,
                 height: 32,
-                onPressed: onPressed,
+                onPressed: () {
+                  print('on pressed data ${controller.invites[index].displayName}');
+                },
               ),
             ),
           ),
