@@ -1,3 +1,4 @@
+import 'package:dazle/app/utils/app.dart';
 import 'package:dazle/app/widgets/custom_text.dart';
 import 'package:dazle/app/widgets/form_fields/custom_button.dart';
 import 'package:flutter/material.dart';
@@ -56,5 +57,14 @@ class AppConstant{
       },
     );
   }
+
+  static Decoration bottomBorder = BoxDecoration(
+    border: Border(
+      bottom: BorderSide(
+        color: App.hintColor,
+        width: 0.3,
+      )
+    )
+  );
 
 }
