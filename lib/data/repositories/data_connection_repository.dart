@@ -54,13 +54,13 @@ class DataConnectionRepository extends ConnectionRepository {
 
   @override
   Future<List<InviteTile>> readInvites({String email}) async {
-    // Map params = {
-    //   "email": email
-    // };
+    Map params = {
+      "email": email
+    };
 
-    var response = await http.get(
+    var response = await http.post(
       "${Constants.siteURL}/api/connection/read-invite",
-      // body: convert.jsonEncode(params),
+      body: convert.jsonEncode(params),
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json'
