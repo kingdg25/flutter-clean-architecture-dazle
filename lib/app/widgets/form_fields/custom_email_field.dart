@@ -17,7 +17,7 @@ class CustomEmailField extends StatelessWidget {
 
   const CustomEmailField({
     this.hintText,
-    this.hintColor = const Color.fromRGBO(154, 160, 166, 1.0),
+    this.hintColor = App.hintColor,
     this.controller,
     this.fontSize = 16.0,
     this.onSaved,
@@ -61,12 +61,12 @@ class CustomEmailField extends StatelessWidget {
           ),
           enabledBorder: OutlineInputBorder(
             borderSide:  BorderSide(
-              color: filled ? fillColor : Color.fromRGBO(154, 160, 166, 1.0)
+              color: filled ? fillColor : App.hintColor
             ),
           ),
           focusedBorder: OutlineInputBorder(
             borderSide:  BorderSide(
-              color: filled ? fillColor : Color.fromRGBO(154, 160, 166, 1.0)
+              color: filled ? fillColor : App.hintColor
             ),
           ),
           hintText: hintText,

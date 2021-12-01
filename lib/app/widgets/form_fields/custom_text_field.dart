@@ -30,7 +30,7 @@ class CustomTextField extends StatelessWidget {
   
   CustomTextField({
     this.hintText,
-    this.hintColor = const Color.fromRGBO(154, 160, 166, 1.0),
+    this.hintColor = App.hintColor,
     this.controller,
     this.initialValue,
     this.readOnly = false,
@@ -80,12 +80,12 @@ class CustomTextField extends StatelessWidget {
           ),
           enabledBorder: OutlineInputBorder(
             borderSide:  BorderSide(
-              color: filled ? fillColor : Color.fromRGBO(154, 160, 166, 1.0)
+              color: filled ? fillColor : App.hintColor
             ),
           ),
           focusedBorder: OutlineInputBorder(
             borderSide:  BorderSide(
-              color: filled ? fillColor : Color.fromRGBO(154, 160, 166, 1.0)
+              color: filled ? fillColor : App.hintColor
             ),
           ),
           hintText: hintText,

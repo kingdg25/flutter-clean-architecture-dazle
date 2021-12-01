@@ -19,7 +19,7 @@ class CustomPasswordField extends StatefulWidget {
 
   const CustomPasswordField({
     this.hintText,
-    this.hintColor = const Color.fromRGBO(154, 160, 166, 1.0),
+    this.hintColor = App.hintColor,
     this.controller,
     this.keyboardType = TextInputType.text,
     this.fontSize = 16.0,
@@ -69,12 +69,12 @@ class _CustomPasswordFieldState extends State<CustomPasswordField> {
           ),
           enabledBorder: OutlineInputBorder(
             borderSide:  BorderSide(
-              color: widget.filled ? widget.fillColor : Color.fromRGBO(154, 160, 166, 1.0)
+              color: widget.filled ? widget.fillColor : App.hintColor
             ),
           ),
           focusedBorder: OutlineInputBorder(
             borderSide:  BorderSide(
-              color: widget.filled ? widget.fillColor : Color.fromRGBO(154, 160, 166, 1.0)
+              color: widget.filled ? widget.fillColor : App.hintColor
             ),
           ),
           hintText: widget.hintText,

@@ -11,6 +11,7 @@ class App{
   static const mainColor = Color.fromRGBO(51, 212, 157, 1.0);
   static const fieldTextColor = Color.fromRGBO(75, 70, 70, 1.0);
   static const textColor = Color.fromRGBO(46, 53, 61, 1.0);
+  static const hintColor = Color.fromRGBO(154, 160, 166, 1.0);
 
   static getUser() async {
     try {

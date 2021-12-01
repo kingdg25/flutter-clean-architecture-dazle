@@ -1,4 +1,5 @@
 import 'package:dazle/app/pages/forgot_password/forgot_password_controller.dart';
+import 'package:dazle/app/utils/app.dart';
 import 'package:dazle/app/widgets/custom_text.dart';
 import 'package:dazle/app/widgets/form_fields/custom_email_field.dart';
 import 'package:dazle/app/widgets/form_fields/custom_field_layout.dart';
@@ -53,7 +54,7 @@ class ForgotPassword extends StatelessWidget {
                   child: CustomText(
                     text: 'Please enter your email address that is associated with your account',
                     fontSize: 13.0,
-                    color: Color.fromRGBO(154, 160, 166, 1.0),
+                    color: App.hintColor,
                   ),
                 ),
               ),

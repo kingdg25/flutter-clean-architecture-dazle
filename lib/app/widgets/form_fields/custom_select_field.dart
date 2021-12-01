@@ -69,14 +69,14 @@ class CustomSelectField extends StatelessWidget {
           contentPadding: EdgeInsets.all(14.0),
           border: OutlineInputBorder(),
           enabledBorder: OutlineInputBorder(
-            borderSide:  BorderSide(color: Color.fromRGBO(154, 160, 166, 1.0)),
+            borderSide:  BorderSide(color: App.hintColor),
           ),
           focusedBorder: OutlineInputBorder(
-            borderSide:  BorderSide(color: Color.fromRGBO(154, 160, 166, 1.0)),
+            borderSide:  BorderSide(color: App.hintColor),
           ),
           hintText: hintText,
           hintStyle: TextStyle(
-            color: Color.fromRGBO(154, 160, 166, 1.0)
+            color: App.hintColor
           )
         ),
         validator: (isRequired && validator == null) ? (val) {
