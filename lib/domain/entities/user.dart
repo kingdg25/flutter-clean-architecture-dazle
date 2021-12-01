@@ -31,7 +31,7 @@ class User {
       firstName = json['firstname'],
       lastName = json['lastname'],
       email = json['email'],
-      id = json['id'];
+      id = json['_id'];
 
   Map<String, dynamic> toJson() => {
     'broker_license_number': brokerLicenseNumber,
@@ -41,6 +41,6 @@ class User {
     'firstname': firstName,
     'lastname': lastName,
     'email': email,
-    'id': id
+    '_id': id
   };
 }
