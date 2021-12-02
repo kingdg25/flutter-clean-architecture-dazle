@@ -1,6 +1,8 @@
 import 'dart:async';
+import 'package:dazle/app/utils/app.dart';
 import 'package:dazle/data/repositories/data_connection_repository.dart';
 import 'package:dazle/domain/entities/invite_tile.dart';
+import 'package:dazle/domain/entities/user.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 
 class ReadInvitesUseCase extends UseCase<ReadInvitesUseCaseResponse, ReadInvitesUseCaseParams> {
@@ -13,10 +15,17 @@ class ReadInvitesUseCase extends UseCase<ReadInvitesUseCaseResponse, ReadInvites
     
     try {
       // read invites
-      final invites = await dataConnectionRepository.readInvites(email: params.email);
-
-      controller.add(ReadInvitesUseCaseResponse(invites));
-      logger.finest('Read Invites successful.');
+      User user = await App.getUser();
+      if (user != null) {
+        final invites = await dataConnectionRepository.readInvites(email: user.email);
+        controller.add(ReadInvitesUseCaseResponse(invites));
+        logger.finest('Read Invites successful.');
+      }
+      else {
+        logger.severe('Read Invites fail.');
+        controller.addError('user data is null');
+      }
+      
       controller.close();
     } catch (e) {
       logger.severe('Read Invites fail.');
@@ -31,8 +40,7 @@ class ReadInvitesUseCase extends UseCase<ReadInvitesUseCaseResponse, ReadInvites
 
 
 class ReadInvitesUseCaseParams {
-  final String email;
-  ReadInvitesUseCaseParams(this.email);
+  ReadInvitesUseCaseParams();
 }
 
 class ReadInvitesUseCaseResponse {

@@ -42,13 +42,8 @@ class InvitesController extends Controller {
     };
   }
 
-  getInvites() async {
-    User user = await App.getUser();
-
-    if (user != null){
-      // print('getInvites getInvites getInvites ${user.id}');
-      invitesPresenter.readInvites(email: user.email);
-    }
+  getInvites() {
+    invitesPresenter.readInvites();
   }
 
 

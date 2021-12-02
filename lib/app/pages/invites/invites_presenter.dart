@@ -11,8 +11,8 @@ class InvitesPresenter extends Presenter {
   InvitesPresenter(userRepo)
     : readInvitesUseCase = ReadInvitesUseCase(userRepo);
 
-  void readInvites({String email}){
-    readInvitesUseCase.execute(_ReadInvitesUseCaseObserver(this), ReadInvitesUseCaseParams(email));
+  void readInvites(){
+    readInvitesUseCase.execute(_ReadInvitesUseCaseObserver(this), ReadInvitesUseCaseParams());
   }
   
   @override
