@@ -8,8 +8,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 
 class LogoutUserUseCase extends UseCase<LogoutUserUseCaseResponse, LogoutUserUseCaseParams> {
-  final HomeRepository todoRepository;
-  LogoutUserUseCase(this.todoRepository);
+  final HomeRepository homeRepository;
+  LogoutUserUseCase(this.homeRepository);
   final GoogleSignIn googleSignIn = GoogleSignIn();
 
 

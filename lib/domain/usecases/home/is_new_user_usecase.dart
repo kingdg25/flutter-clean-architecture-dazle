@@ -5,15 +5,15 @@ import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 
 
 class IsNewUserUseCase extends UseCase<void, IsNewUserUseCaseParams> {
-  final HomeRepository todoRepository;
-  IsNewUserUseCase(this.todoRepository);
+  final HomeRepository homeRepository;
+  IsNewUserUseCase(this.homeRepository);
 
   @override
   Future<Stream<void>> buildUseCaseStream(IsNewUserUseCaseParams params) async {
     final controller = StreamController();
     
     try {
-      await todoRepository.isNewUser(
+      await homeRepository.isNewUser(
         email: params.email,
         isNewUser: params.isNewUser
       );

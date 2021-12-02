@@ -5,15 +5,15 @@ import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 
 
 class NotifyUserUseCase extends UseCase<void, NotifyUserUseCaseParams> {
-  final DataConnectionRepository dataAuthenticationRepository;
-  NotifyUserUseCase(this.dataAuthenticationRepository);
+  final DataConnectionRepository dataConnectionRepository;
+  NotifyUserUseCase(this.dataConnectionRepository);
 
   @override
   Future<Stream<void>> buildUseCaseStream(NotifyUserUseCaseParams params) async {
     final controller = StreamController();
     
     try {
-      await dataAuthenticationRepository.notifyUser(
+      await dataConnectionRepository.notifyUser(
         email: params.email,
         mobileNumber: params.mobileNumber,
       );

@@ -4,8 +4,8 @@ import 'package:dazle/domain/entities/invite_tile.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 
 class ReadInvitesUseCase extends UseCase<ReadInvitesUseCaseResponse, ReadInvitesUseCaseParams> {
-  final DataConnectionRepository dataAuthenticationRepository;
-  ReadInvitesUseCase(this.dataAuthenticationRepository);
+  final DataConnectionRepository dataConnectionRepository;
+  ReadInvitesUseCase(this.dataConnectionRepository);
 
   @override
   Future<Stream<ReadInvitesUseCaseResponse>> buildUseCaseStream(ReadInvitesUseCaseParams params) async {
@@ -13,7 +13,7 @@ class ReadInvitesUseCase extends UseCase<ReadInvitesUseCaseResponse, ReadInvites
     
     try {
       // read invites
-      final invites = await dataAuthenticationRepository.readInvites(email: params.email);
+      final invites = await dataConnectionRepository.readInvites(email: params.email);
 
       controller.add(ReadInvitesUseCaseResponse(invites));
       logger.finest('Read Invites successful.');
