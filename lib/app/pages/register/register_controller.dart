@@ -155,11 +155,19 @@ class RegisterController extends Controller {
   }
 
   void checkLicenseNumber(){
-    AppConstant.showLoader(getContext(), true);
-
-    registerPresenter.checkLicenseNumber(
-      licenseNumber: brokerLicenseNumberTextController.text
-    );
+    if ( position == 'Salesperson' ) {
+      AppConstant.showLoader(getContext(), true);
+      
+      registerPresenter.checkLicenseNumber(
+        licenseNumber: brokerLicenseNumberTextController.text
+      );
+    }
+    else {
+      registerPageController.nextPage(
+        duration: Duration(milliseconds: 500),
+        curve: Curves.ease
+      ); 
+    }
   }
 
   void register() {
