@@ -49,7 +49,7 @@ class InvitesListTile extends StatelessWidget {
                 borderRadius: 20,
                 height: 32,
                 onPressed: () {
-                  print('on pressed data ${controller.invites[index].displayName}');
+                  controller.addConnection(controller.invites[index]);
                 },
               ),
             ),

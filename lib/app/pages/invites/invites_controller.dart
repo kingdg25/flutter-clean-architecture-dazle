@@ -38,10 +38,32 @@ class InvitesController extends Controller {
       print('read invites on error $e');
       AppConstant.showLoader(getContext(), false);
     };
+
+
+    // add connection
+    invitesPresenter.addConnectionOnNext = (res) {
+      print('add connection on next $res');
+    };
+
+    invitesPresenter.addConnectionOnComplete = () {
+      print('add connection on complete');
+      AppConstant.showLoader(getContext(), false);
+      refreshUI();
+    };
+
+    invitesPresenter.addConnectionOnError = (e) {
+      print('add connection on error $e');
+      AppConstant.showLoader(getContext(), false);
+    };
   }
 
-  getInvites() {
+  void getInvites() {
     invitesPresenter.readInvites();
+  }
+
+  void addConnection(InviteTile res){
+    print(res.displayName);
+    invitesPresenter.addConnection(invitedId: res.id);
   }
 
 

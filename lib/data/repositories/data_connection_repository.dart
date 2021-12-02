@@ -79,7 +79,21 @@ class DataConnectionRepository extends ConnectionRepository {
         print('readInvites readInvites readInvites $jsonResponse');
         invites = List<InviteTile>.from(invitesData.map((i) => InviteTile.fromJson(i)));
       }
+      else{
+        throw {
+          "error": false,
+          "error_type": "${jsonResponse['error_type'] ?? ''}",
+          "status": jsonResponse['status']
+        };
+      }
       
+    }
+    else {
+      throw {
+        "error": true,
+        "error_type": "dynamic",
+        "status": "$jsonResponse"
+      };
     }
 
     return invites;
@@ -109,10 +123,64 @@ class DataConnectionRepository extends ConnectionRepository {
         print('readMyConnection readMyConnection readMyConnection $jsonResponse');
         myConnection = List<MyConnectionTile>.from(myConnectionData.map((i) => MyConnectionTile.fromJson(i)));
       }
+      else{
+        throw {
+          "error": false,
+          "error_type": "${jsonResponse['error_type'] ?? ''}",
+          "status": jsonResponse['status']
+        };
+      }
       
+    }
+    else {
+      throw {
+        "error": true,
+        "error_type": "dynamic",
+        "status": "$jsonResponse"
+      };
     }
 
     return myConnection;
+  }
+
+  @override
+  Future<void> addConnection({String userId, String invitedId}) async {
+    Map params = {
+      "user_id": userId,
+      "invited_id": invitedId
+    };
+
+    var response = await http.post(
+      "${Constants.siteURL}/api/connection/add-connection",
+      body: convert.jsonEncode(params),
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      }
+    );
+
+    var jsonResponse = await convert.jsonDecode(response.body);
+    if (response.statusCode == 200){
+      bool success = jsonResponse['success'];
+
+      if (success) {
+        invites.removeWhere((element) => element.id == invitedId); // remove in UI
+      }
+      else {
+        throw {
+          "error": false,
+          "error_type": "${jsonResponse['error_type'] ?? ''}",
+          "status": jsonResponse['status']
+        };
+      }
+    }
+    else {
+      throw {
+        "error": true,
+        "error_type": "dynamic",
+        "status": "$jsonResponse"
+      };
+    }
   }
   
 }
