@@ -41,7 +41,7 @@ class MyConnectionController extends Controller {
   }
 
 
-  getMyConnection() {
+  void getMyConnection() {
     myConnectionPresenter.readMyConnection();
   }
 
