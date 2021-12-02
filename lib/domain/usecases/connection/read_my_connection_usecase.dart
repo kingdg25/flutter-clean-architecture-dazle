@@ -21,16 +21,16 @@ class ReadMyConnectionUseCase extends UseCase<ReadMyConnectionUseCaseResponse, R
       if (user != null) {
         final myConnection = await dataConnectionRepository.readMyConnection(email: user.email);
         controller.add(ReadMyConnectionUseCaseResponse(myConnection));
-        logger.finest('Read Invites successful.');
+        logger.finest('Read My Connection successful.');
       }
       else {
-        logger.severe('Read Invites fail.');
+        logger.severe('Read My Connection fail.');
         controller.addError('user data is null');
       }
-      
+
       controller.close();
     } catch (e) {
-      logger.severe('Read Invites fail.');
+      logger.severe('Read My Connection fail.');
       // Trigger .onError
       controller.addError(e);
     }
