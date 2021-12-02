@@ -1,23 +1,20 @@
+import 'package:dazle/app/pages/my_connection/my_connection_controller.dart';
 import 'package:dazle/app/utils/app.dart';
 import 'package:dazle/app/widgets/custom_text.dart';
 import 'package:dazle/app/widgets/form_fields/custom_button.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 
 class MyConnectionListTile extends StatelessWidget {
-  final Function onPressed;
-
-
-  MyConnectionListTile({
-    this.onPressed
-  });
-
 
   @override
   Widget build(BuildContext context) {
+    MyConnectionController controller = FlutterCleanArchitecture.getController<MyConnectionController>(context);
+
     return ListView.builder(
       shrinkWrap: true,
       physics: NeverScrollableScrollPhysics(),
-      itemCount: 8,
+      itemCount: controller.myConnection.length,
       itemBuilder: (BuildContext context, int index){
         return Container(
           decoration: BoxDecoration(
@@ -35,7 +32,7 @@ class MyConnectionListTile extends StatelessWidget {
               height: 40,
             ),
             title: CustomText(
-              text: 'Juan dela Cruz',
+              text: controller.myConnection[index].displayName,
               color: Colors.black,
               fontWeight: FontWeight.w600,
             ),
@@ -43,11 +40,11 @@ class MyConnectionListTile extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 CustomText(
-                  text: 'Licensed Real Estate Broker',
+                  text: controller.myConnection[index].position,
                   fontSize: 11,
                 ),
                 CustomText(
-                  text: 'Connected yesterday',
+                  text: controller.myConnection[index].dateConnected,
                   fontSize: 11,
                   color: App.hintColor,
                 )
@@ -65,7 +62,7 @@ class MyConnectionListTile extends StatelessWidget {
                     borderRadius: 20,
                     height: 32,
                     onPressed: () {
-                      onPressed();
+                      print('on pressed data ${controller.myConnection[index].displayName}');
                     },
                   ),
                 ),
