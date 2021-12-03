@@ -44,6 +44,10 @@ class _MyConnectionPageState extends ViewState<MyConnectionPage, MyConnectionCon
                   suggestionsCallback: (pattern) async {
                     return controller.suggestionsCallback;
                   },
+                  onSuggestionSelected: (suggestion) {
+                    controller.searchTextController.text = suggestion;
+                    controller.getMyConnection(filterByName: suggestion);
+                  },
                   onPressedButton: () {
                   },
                 ),

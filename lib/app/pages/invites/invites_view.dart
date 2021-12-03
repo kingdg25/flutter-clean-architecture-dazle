@@ -48,6 +48,10 @@ class _InvitesPageState extends ViewState<InvitesPage, InvitesController> {
 
                     return controller.suggestionsCallback;
                   },
+                  onSuggestionSelected: (suggestion) {
+                    controller.searchTextController.text = suggestion;
+                    controller.getInvites(filterByName: suggestion);
+                  },
                   onPressedButton: () {
                   },
                 ),

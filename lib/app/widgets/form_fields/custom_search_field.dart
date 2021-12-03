@@ -11,6 +11,7 @@ class CustomSearchField extends StatelessWidget {
   final Function onChanged;
   final Function onTap;
   final Function suggestionsCallback;
+  final Function onSuggestionSelected;
 
   final Function onPressedButton;
   final IconData iconData;
@@ -23,7 +24,8 @@ class CustomSearchField extends StatelessWidget {
     this.iconData,
     this.onChanged,
     this.onTap,
-    this.suggestionsCallback
+    this.suggestionsCallback,
+    this.onSuggestionSelected
   });
 
   @override
@@ -83,9 +85,7 @@ class CustomSearchField extends StatelessWidget {
                     ),
                   );
                 },
-                onSuggestionSelected: (suggestion) {
-                  print('suggestion $suggestion');
-                },
+                onSuggestionSelected: onSuggestionSelected,
                 validator: (value) {
                   return null;
                 },
