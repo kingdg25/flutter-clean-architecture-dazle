@@ -67,18 +67,27 @@ class MyConnectionListTile extends StatelessWidget {
                   ),
                 ),
                 SizedBox(width: 4),
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(50),
-                  child : Material(
-                    child : InkWell(
-                      child : Padding(
-                        padding : const EdgeInsets.all(5),
-                        child : Icon(
-                          Icons.more_horiz,
-                        ),
-                      ),
-                      onTap : () {},
+                Container(
+                  padding: const EdgeInsets.all(0.0),
+                  width: 30,
+                  child: PopupMenuButton<String>(
+                    itemBuilder: (context){
+                      return controller.popupMenuList.map((item){
+                        return PopupMenuItem(
+                          value: item,
+                          child: Text(item),
+                        );
+                      }).toList();
+                    },
+                    icon: Icon(
+                      Icons.more_horiz,
+                      size: 24.0,
                     ),
+                    onSelected: (String selected) {
+                      if (selected == "Remove") {
+                        controller.removeConnection(controller.myConnection[index]);
+                      }
+                    },
                   ),
                 )
               ],
