@@ -182,5 +182,45 @@ class DataConnectionRepository extends ConnectionRepository {
       };
     }
   }
+
+  @override
+  Future<void> removeConnection({String userId, String invitedId}) async {
+    print(myConnection);
+    myConnection.removeWhere((element) => element.id == invitedId); // remove in UI
+
+    Map params = {
+      "user_id": userId,
+      "invited_id": invitedId
+    };
+
+    var response = await http.post(
+      "${Constants.siteURL}/api/connection/remove-connection",
+      body: convert.jsonEncode(params),
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      }
+    );
+
+    var jsonResponse = await convert.jsonDecode(response.body);
+    if (response.statusCode == 200){
+      bool success = jsonResponse['success'];
+
+      if (!success){
+        throw {
+          "error": false,
+          "error_type": "${jsonResponse['error_type'] ?? ''}",
+          "status": jsonResponse['status']
+        };
+      }
+    }
+    else {
+      throw {
+        "error": true,
+        "error_type": "dynamic",
+        "status": "$jsonResponse"
+      };
+    }
+  }
   
 }

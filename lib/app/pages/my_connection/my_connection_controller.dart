@@ -10,9 +10,12 @@ class MyConnectionController extends Controller {
   List<MyConnectionTile> _myConnection;
   List<MyConnectionTile> get myConnection => _myConnection;
 
+  List<String> popupMenuList;
+
   MyConnectionController(userRepo)
     : myConnectionPresenter = MyConnectionPresenter(userRepo),
       _myConnection = <MyConnectionTile>[],
+      popupMenuList = ['Remove'],
       super();
 
 
@@ -38,11 +41,32 @@ class MyConnectionController extends Controller {
       print('read my connection on error $e');
       AppConstant.showLoader(getContext(), false);
     };
+
+
+    // remove my connection
+    myConnectionPresenter.removeConnectionOnNext = (res) {
+      print('remove my connection on next $res');
+    };
+
+    myConnectionPresenter.removeConnectionOnComplete = () {
+      print('remove my connection on complete');
+      AppConstant.showLoader(getContext(), false);
+      refreshUI();
+    };
+
+    myConnectionPresenter.removeConnectionOnError = (e) {
+      print('remove my connection on error $e');
+      AppConstant.showLoader(getContext(), false);
+    };
   }
 
 
   void getMyConnection() {
     myConnectionPresenter.readMyConnection();
+  }
+
+  void removeConnection(MyConnectionTile res) {
+    myConnectionPresenter.removeConnection(invitedId: res.id);
   }
 
 

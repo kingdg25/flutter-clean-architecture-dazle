@@ -9,4 +9,6 @@ abstract class ConnectionRepository {
   Future<List<MyConnectionTile>> readMyConnection({String email});
 
   Future<void> addConnection({String userId, String invitedId});
+
+  Future<void> removeConnection({String userId, String invitedId});
 }
