@@ -17,6 +17,7 @@ class ConnectionPresenter extends Presenter {
 
   @override
   void dispose() {
+    getUserUseCase.dispose();
   }
 }
 
