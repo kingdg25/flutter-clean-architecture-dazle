@@ -79,8 +79,8 @@ class InvitesController extends Controller {
     };
   }
 
-  void getInvites() {
-    invitesPresenter.readInvites();
+  void getInvites({String filterByName}) {
+    invitesPresenter.readInvites(filterByName: filterByName);
   }
 
   void addConnection(InviteTile res){
@@ -89,8 +89,15 @@ class InvitesController extends Controller {
   }
 
   void searchUser(){
-    print('searchTextController ${searchTextController.text}');
-    invitesPresenter.searchUser(pattern: searchTextController.text);
+    String text = searchTextController.text;
+    print('searchTextController $text');
+    
+    if ( text == "" || text == null || text.isEmpty ) {
+      getInvites();
+    }
+    else {
+      invitesPresenter.searchUser(pattern: searchTextController.text);
+    }
   }
 
 

@@ -26,8 +26,8 @@ class InvitesPresenter extends Presenter {
       searchUserUseCase = SearchUserUseCase(userRepo);
 
   
-  void readInvites(){
-    readInvitesUseCase.execute(_ReadInvitesUseCaseObserver(this), ReadInvitesUseCaseParams());
+  void readInvites({String filterByName}){
+    readInvitesUseCase.execute(_ReadInvitesUseCaseObserver(this), ReadInvitesUseCaseParams(filterByName));
   }
 
   void addConnection({String invitedId}){

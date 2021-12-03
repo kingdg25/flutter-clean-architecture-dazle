@@ -58,9 +58,10 @@ class DataConnectionRepository extends ConnectionRepository {
   }
 
   @override
-  Future<List<InviteTile>> readInvites({String email}) async {
+  Future<List<InviteTile>> readInvites({String email, String filterByName}) async {
     Map params = {
-      "email": email
+      "email": email,
+      "filter_by_name": filterByName
     };
 
     var response = await http.post(
@@ -102,9 +103,10 @@ class DataConnectionRepository extends ConnectionRepository {
   }
 
   @override
-  Future<List<MyConnectionTile>> readMyConnection({String email}) async {
+  Future<List<MyConnectionTile>> readMyConnection({String email, String filterByName}) async {
     Map params = {
-      "email": email
+      "email": email,
+      "filter_by_name": filterByName
     };
 
     var response = await http.post(

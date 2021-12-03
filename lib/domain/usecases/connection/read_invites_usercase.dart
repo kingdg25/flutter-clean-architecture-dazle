@@ -17,7 +17,7 @@ class ReadInvitesUseCase extends UseCase<ReadInvitesUseCaseResponse, ReadInvites
       // read invites
       User user = await App.getUser();
       if (user != null) {
-        final invites = await dataConnectionRepository.readInvites(email: user.email);
+        final invites = await dataConnectionRepository.readInvites(email: user.email, filterByName: params.filterByName);
         controller.add(ReadInvitesUseCaseResponse(invites));
         logger.finest('Read Invites successful.');
       }
@@ -40,7 +40,8 @@ class ReadInvitesUseCase extends UseCase<ReadInvitesUseCaseResponse, ReadInvites
 
 
 class ReadInvitesUseCaseParams {
-  ReadInvitesUseCaseParams();
+  final String filterByName;
+  ReadInvitesUseCaseParams(this.filterByName);
 }
 
 class ReadInvitesUseCaseResponse {

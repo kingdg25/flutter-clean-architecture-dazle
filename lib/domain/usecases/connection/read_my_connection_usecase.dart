@@ -19,7 +19,7 @@ class ReadMyConnectionUseCase extends UseCase<ReadMyConnectionUseCaseResponse, R
       // read my connection
       User user = await App.getUser();
       if (user != null) {
-        final myConnection = await dataConnectionRepository.readMyConnection(email: user.email);
+        final myConnection = await dataConnectionRepository.readMyConnection(email: user.email, filterByName: params.filterByName);
         controller.add(ReadMyConnectionUseCaseResponse(myConnection));
         logger.finest('Read My Connection successful.');
       }
@@ -42,7 +42,8 @@ class ReadMyConnectionUseCase extends UseCase<ReadMyConnectionUseCaseResponse, R
 
 
 class ReadMyConnectionUseCaseParams {
-  ReadMyConnectionUseCaseParams();
+  final String filterByName;
+  ReadMyConnectionUseCaseParams(this.filterByName);
 }
 
 class ReadMyConnectionUseCaseResponse {

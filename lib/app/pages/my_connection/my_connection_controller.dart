@@ -84,8 +84,8 @@ class MyConnectionController extends Controller {
   }
 
 
-  void getMyConnection() {
-    myConnectionPresenter.readMyConnection();
+  void getMyConnection({String filterByName}) {
+    myConnectionPresenter.readMyConnection(filterByName: filterByName);
   }
 
   void removeConnection(MyConnectionTile res) {
@@ -94,8 +94,15 @@ class MyConnectionController extends Controller {
 
   void searchUser(){
     String text = searchTextController.text;
-    
-    ( text == "" ) ? myConnectionPresenter.searchUser(pattern: "") : myConnectionPresenter.searchUser(pattern: searchTextController.text);
+
+    if ( text == "" || text == null || text.isEmpty ) {
+      myConnectionPresenter.searchUser(pattern: "");
+      getMyConnection();
+    }
+    else {
+      myConnectionPresenter.searchUser(pattern: searchTextController.text);
+    }
+
   }
 
 

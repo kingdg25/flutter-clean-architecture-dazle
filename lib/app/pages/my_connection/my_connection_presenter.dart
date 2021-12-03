@@ -25,8 +25,8 @@ class MyConnectionPresenter extends Presenter {
       removeConnectionUseCase = RemoveConnectionUseCase(userRepo),
       searchUserUseCase = SearchUserUseCase(userRepo);
 
-  void readMyConnection(){
-    readMyConnectionUseCase.execute(_ReadMyConnectionUseCaseObserver(this), ReadMyConnectionUseCaseParams());
+  void readMyConnection({String filterByName}){
+    readMyConnectionUseCase.execute(_ReadMyConnectionUseCaseObserver(this), ReadMyConnectionUseCaseParams(filterByName));
   }
 
   void removeConnection({String invitedId}){
