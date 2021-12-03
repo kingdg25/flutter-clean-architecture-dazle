@@ -1,5 +1,6 @@
 import 'package:dazle/domain/usecases/connection/add_connection_usecase.dart';
 import 'package:dazle/domain/usecases/connection/read_invites_usercase.dart';
+import 'package:dazle/domain/usecases/connection/search_user_usecase.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 
 class InvitesPresenter extends Presenter {
@@ -11,12 +12,18 @@ class InvitesPresenter extends Presenter {
   Function addConnectionOnComplete;
   Function addConnectionOnError;
 
+  Function searchUserOnNext;
+  Function searchUserOnComplete;
+  Function searchUserOnError;
+
   final ReadInvitesUseCase readInvitesUseCase;
   final AddConnectionUseCase addConnectionUseCase;
+  final SearchUserUseCase searchUserUseCase;
 
   InvitesPresenter(userRepo)
     : readInvitesUseCase = ReadInvitesUseCase(userRepo),
-      addConnectionUseCase = AddConnectionUseCase(userRepo);
+      addConnectionUseCase = AddConnectionUseCase(userRepo),
+      searchUserUseCase = SearchUserUseCase(userRepo);
 
   
   void readInvites(){
@@ -27,11 +34,16 @@ class InvitesPresenter extends Presenter {
     addConnectionUseCase.execute(_AddConnectionUseCaseObserver(this), AddConnectionUseCaseParams(invitedId));
   }
 
+  void searchUser({String pattern}){
+    searchUserUseCase.execute(_SearchUserUseCaseObserver(this), SearchUserUseCaseParams(pattern, false));
+  }
+
   
   @override
   void dispose() {
     readInvitesUseCase.dispose();
     addConnectionUseCase.dispose();
+    searchUserUseCase.dispose();
   }
 }
 
@@ -79,5 +91,29 @@ class _AddConnectionUseCaseObserver extends Observer<AddConnectionUseCaseRespons
   void onNext(response) {
     assert(presenter.addConnectionOnNext != null);
     presenter.addConnectionOnNext(response);
+  }
+}
+
+
+
+class _SearchUserUseCaseObserver extends Observer<SearchUserUseCaseResponse> {
+  final InvitesPresenter presenter;
+  _SearchUserUseCaseObserver(this.presenter);
+  @override
+  void onComplete() {
+    assert(presenter.searchUserOnComplete != null);
+    presenter.searchUserOnComplete();
+  }
+
+  @override
+  void onError(e) {
+    assert(presenter.searchUserOnError != null);
+    presenter.searchUserOnError(e);
+  }
+
+  @override
+  void onNext(response) {
+    assert(presenter.searchUserOnNext != null);
+    presenter.searchUserOnNext(response.data);
   }
 }

@@ -1,6 +1,7 @@
 import 'package:dazle/app/pages/my_connection/my_connection_presenter.dart';
 import 'package:dazle/app/utils/app_constant.dart';
 import 'package:dazle/domain/entities/my_connection_tile.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 
 
@@ -12,10 +13,15 @@ class MyConnectionController extends Controller {
 
   List<String> popupMenuList;
 
+  final TextEditingController searchTextController;
+  List<String> suggestionsCallback;
+
   MyConnectionController(userRepo)
     : myConnectionPresenter = MyConnectionPresenter(userRepo),
       _myConnection = <MyConnectionTile>[],
       popupMenuList = ['Remove'],
+      searchTextController = TextEditingController(),
+      suggestionsCallback = <String>[],
       super();
 
 
@@ -58,6 +64,23 @@ class MyConnectionController extends Controller {
       print('remove my connection on error $e');
       AppConstant.showLoader(getContext(), false);
     };
+
+
+    // search invite
+    myConnectionPresenter.searchUserOnNext = (res) {
+      print('search invite on next $res');
+      suggestionsCallback = res;
+      // refreshUI();
+    };
+
+    myConnectionPresenter.searchUserOnComplete = () {
+      print('search invite on complete');
+      refreshUI();
+    };
+
+    myConnectionPresenter.searchUserOnError = (e) {
+      print('search invite on error $e');
+    };
   }
 
 
@@ -67,6 +90,12 @@ class MyConnectionController extends Controller {
 
   void removeConnection(MyConnectionTile res) {
     myConnectionPresenter.removeConnection(invitedId: res.id);
+  }
+
+  void searchUser(){
+    String text = searchTextController.text;
+    
+    ( text == "" ) ? myConnectionPresenter.searchUser(pattern: "") : myConnectionPresenter.searchUser(pattern: searchTextController.text);
   }
 
 
@@ -83,6 +112,7 @@ class MyConnectionController extends Controller {
   @override
   void onDisposed() {
     myConnectionPresenter.dispose(); // don't forget to dispose of the presenter
+    searchTextController.dispose();
     super.onDisposed();
   }
   

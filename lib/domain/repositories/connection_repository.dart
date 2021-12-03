@@ -11,4 +11,6 @@ abstract class ConnectionRepository {
   Future<void> addConnection({String userId, String invitedId});
 
   Future<void> removeConnection({String userId, String invitedId});
+
+  Future<List<String>> searchUser({String userId, String pattern, bool invited});
 }

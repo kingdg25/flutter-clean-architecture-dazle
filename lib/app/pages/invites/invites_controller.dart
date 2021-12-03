@@ -1,6 +1,7 @@
 import 'package:dazle/app/pages/invites/invites_presenter.dart';
 import 'package:dazle/app/utils/app_constant.dart';
 import 'package:dazle/domain/entities/invite_tile.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 
 
@@ -10,9 +11,14 @@ class InvitesController extends Controller {
   List<InviteTile> _invites;
   List<InviteTile> get invites => _invites;
 
+  final TextEditingController searchTextController;
+  List<String> suggestionsCallback;
+
   InvitesController(userRepo)
     : invitesPresenter = InvitesPresenter(userRepo),
       _invites = <InviteTile>[],
+      searchTextController = TextEditingController(),
+      suggestionsCallback = <String>[],
       super();
 
 
@@ -55,6 +61,22 @@ class InvitesController extends Controller {
       print('add connection on error $e');
       AppConstant.showLoader(getContext(), false);
     };
+
+    // search invite
+    invitesPresenter.searchUserOnNext = (res) {
+      print('search invite on next $res');
+      suggestionsCallback = res;
+      refreshUI();
+    };
+
+    invitesPresenter.searchUserOnComplete = () {
+      print('search invite on complete');
+      refreshUI();
+    };
+
+    invitesPresenter.searchUserOnError = (e) {
+      print('search invite on error $e');
+    };
   }
 
   void getInvites() {
@@ -64,6 +86,11 @@ class InvitesController extends Controller {
   void addConnection(InviteTile res){
     print(res.displayName);
     invitesPresenter.addConnection(invitedId: res.id);
+  }
+
+  void searchUser(){
+    print('searchTextController ${searchTextController.text}');
+    invitesPresenter.searchUser(pattern: searchTextController.text);
   }
 
 
@@ -79,6 +106,7 @@ class InvitesController extends Controller {
   @override
   void onDisposed() {
     invitesPresenter.dispose(); // don't forget to dispose of the presenter
+    searchTextController.dispose();
     super.onDisposed();
   }
   
