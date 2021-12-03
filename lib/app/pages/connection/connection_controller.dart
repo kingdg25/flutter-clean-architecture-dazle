@@ -1,18 +1,38 @@
 import 'package:dazle/app/pages/connection/connection_presenter.dart';
+import 'package:dazle/domain/entities/user.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 
 
 class ConnectionController extends Controller {
   final ConnectionPresenter connectionPresenter;
 
+  User _user;
+  User get user => _user;
+
   ConnectionController(userRepo)
-    : connectionPresenter = ConnectionPresenter(),
+    : connectionPresenter = ConnectionPresenter(userRepo),
       super();
 
 
   @override
   void initListeners() {
+    // get user
+    connectionPresenter.getUser();
+    connectionPresenter.getUserOnNext = (User res) {
+      print('get user on next $res ${res.displayName}');
+      if(res != null) {
+        _user = res;
+      }
+    };
 
+    connectionPresenter.getUserOnComplete = () {
+      print('get user on complete');
+      refreshUI();
+    };
+
+    connectionPresenter.getUserOnError = (e) {
+      print('get user on error $e');
+    };
   }
 
 
