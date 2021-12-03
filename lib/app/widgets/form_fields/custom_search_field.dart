@@ -8,6 +8,10 @@ class CustomSearchField extends StatelessWidget {
   final Color hintColor;
   final TextEditingController controller;
 
+  final Function onChanged;
+  final Function onTap;
+  final Function suggestionsCallback;
+
   final Function onPressedButton;
   final IconData iconData;
   
@@ -16,7 +20,10 @@ class CustomSearchField extends StatelessWidget {
     this.hintColor = App.hintColor,
     this.controller,
     this.onPressedButton,
-    this.iconData
+    this.iconData,
+    this.onChanged,
+    this.onTap,
+    this.suggestionsCallback
   });
 
   @override
@@ -30,15 +37,14 @@ class CustomSearchField extends StatelessWidget {
               child: TypeAheadFormField(
                 textFieldConfiguration: TextFieldConfiguration(
                   controller: controller,
-                  onChanged: (value) {
-                    print('onchange $value');
-                  },
+                  onChanged: onChanged,
                   onSubmitted: (value) {
                     print('onSubmitted $value');
                   },
                   onEditingComplete: () {
                     print('onEditingComplete 12312');
                   },
+                  onTap: onTap,
                   decoration: InputDecoration(
                     prefixIcon: Icon(Icons.search),
                     border: OutlineInputBorder(
@@ -52,25 +58,17 @@ class CustomSearchField extends StatelessWidget {
                     contentPadding: EdgeInsets.all(0.0)
                   ),
                 ),
-                suggestionsCallback: (pattern) async {
-                  print('pattern $pattern');
-                  // var realtyData = await Brooky.getRealtyFirmData(pattern);
-                  // if(realtyData.isEmpty){
-                  //   _selectedRealty = null;
-                  // }
-                  // return realtyData;
-                  return null;
-                },
+                suggestionsCallback: suggestionsCallback,
                 itemBuilder: (context, suggestion) {
                   return ListTile(
-                    title: Text(suggestion['name']),
+                    title: Text(suggestion),
                   );
                 },
                 noItemsFoundBuilder: (BuildContext context) {
                   return Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
-                      'No Found!',
+                      'Not Found!',
                       textAlign: TextAlign.center,
                       style: TextStyle(color: Theme.of(context).disabledColor, fontSize: 18.0)
                     ),
@@ -87,24 +85,12 @@ class CustomSearchField extends StatelessWidget {
                 },
                 onSuggestionSelected: (suggestion) {
                   print('suggestion $suggestion');
-                  // _realtyController.text = suggestion['name'];
-                  // _selectedRealty = suggestion['name'];
                 },
                 validator: (value) {
-                  // print('validator $value $_selectedRealty ${_realtyController.text}');
-                  // if (value.isEmpty) {
-                  //   return 'Select your Realty';
-                  // }
-                  // else {
-                  //   if (_selectedRealty == null){
-                  //     return 'Select your Realty';
-                  //   }
-                  // }
                   return null;
                 },
                 onSaved: (value) {
                   print('onSaved $value');
-                  // _selectedRealty = value;
                 },
               ),
             ),

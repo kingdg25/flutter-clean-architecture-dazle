@@ -31,14 +31,28 @@ class _InvitesPageState extends ViewState<InvitesPage, InvitesController> {
       body: ListView(
         physics: ScrollPhysics(),
         children: [
-          Container(
-            decoration: AppConstant.bottomBorder,
-            child: CustomSearchField(
-              hintText: 'Search, invite or notify agent',
-              iconData: Icons.contacts_outlined,
-              onPressedButton: () {
-              },
-            ),
+          ControlledWidgetBuilder<InvitesController>(
+            builder: (context, controller) {
+              return Container(
+                decoration: AppConstant.bottomBorder,
+                child: CustomSearchField(
+                  controller: controller.searchTextController,
+                  hintText: 'Search, invite or notify agent',
+                  iconData: Icons.contacts_outlined,
+                  onChanged: (value) {
+                    print('onChanged onChanged $value');
+                    controller.searchUser();
+                  },
+                  suggestionsCallback: (pattern) async {
+                    print('suggestionsCallback $pattern');
+
+                    return controller.suggestionsCallback;
+                  },
+                  onPressedButton: () {
+                  },
+                ),
+              );
+            }
           ),
           InvitesListTile()
         ],

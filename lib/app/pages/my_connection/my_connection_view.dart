@@ -30,14 +30,25 @@ class _MyConnectionPageState extends ViewState<MyConnectionPage, MyConnectionCon
       backgroundColor: Colors.white,
       body: ListView(
         children: [
-          Container(
-            decoration: AppConstant.bottomBorder,
-            child: CustomSearchField(
-              hintText: 'Search by name',
-              iconData: Icons.menu,
-              onPressedButton: () {
-              },
-            ),
+          ControlledWidgetBuilder<MyConnectionController>(
+            builder: (context, controller) {
+              return Container(
+                decoration: AppConstant.bottomBorder,
+                child: CustomSearchField(
+                  controller: controller.searchTextController,
+                  hintText: 'Search by name',
+                  iconData: Icons.contacts_outlined,
+                  onChanged: (value) {
+                    controller.searchUser();
+                  },
+                  suggestionsCallback: (pattern) async {
+                    return controller.suggestionsCallback;
+                  },
+                  onPressedButton: () {
+                  },
+                ),
+              );
+            }
           ),
           MyConnectionListTile()
         ],
