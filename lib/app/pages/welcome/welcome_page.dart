@@ -60,7 +60,7 @@ class _WelcomeScreenState extends ViewState<WelcomePage, HomeController> {
                     ),
                     Container(
                       child: Image(
-                        image: AssetImage('assets/profile.png'),
+                        image: AssetImage('assets/user_profile.png'),
                         width: 180,
                         height: 180,
                       ),
