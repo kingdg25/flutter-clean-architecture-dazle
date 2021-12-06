@@ -42,11 +42,16 @@ class _MyConnectionPageState extends ViewState<MyConnectionPage, MyConnectionCon
                     controller.searchUser();
                   },
                   suggestionsCallback: (pattern) async {
-                    return controller.suggestionsCallback;
+                    return null;
                   },
                   onSuggestionSelected: (suggestion) {
                     controller.searchTextController.text = suggestion;
                     controller.getMyConnection(filterByName: suggestion);
+                  },
+                  onSubmitted: (value) {
+                    FocusScope.of(context).unfocus();
+
+                    controller.getMyConnection(filterByName: value);
                   },
                   onPressedButton: () {
                   },

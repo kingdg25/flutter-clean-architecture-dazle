@@ -46,11 +46,16 @@ class _InvitesPageState extends ViewState<InvitesPage, InvitesController> {
                   suggestionsCallback: (pattern) async {
                     print('suggestionsCallback $pattern');
 
-                    return controller.suggestionsCallback;
+                    return null;
                   },
                   onSuggestionSelected: (suggestion) {
                     controller.searchTextController.text = suggestion;
                     controller.getInvites(filterByName: suggestion);
+                  },
+                  onSubmitted: (value) {
+                    FocusScope.of(context).unfocus();
+
+                    controller.getInvites(filterByName: value);
                   },
                   onPressedButton: () {
                   },
