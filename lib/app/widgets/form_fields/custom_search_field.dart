@@ -12,6 +12,7 @@ class CustomSearchField extends StatelessWidget {
   final Function onTap;
   final Function suggestionsCallback;
   final Function onSuggestionSelected;
+  final Function onSubmitted;
 
   final Function onPressedButton;
   final IconData iconData;
@@ -25,7 +26,8 @@ class CustomSearchField extends StatelessWidget {
     this.onChanged,
     this.onTap,
     this.suggestionsCallback,
-    this.onSuggestionSelected
+    this.onSuggestionSelected,
+    this.onSubmitted
   });
 
   @override
@@ -40,9 +42,7 @@ class CustomSearchField extends StatelessWidget {
                 textFieldConfiguration: TextFieldConfiguration(
                   controller: controller,
                   onChanged: onChanged,
-                  onSubmitted: (value) {
-                    print('onSubmitted $value');
-                  },
+                  onSubmitted: onSubmitted,
                   onEditingComplete: () {
                     print('onEditingComplete 12312');
                   },
