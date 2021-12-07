@@ -124,7 +124,10 @@ class _RegisterPageState extends ViewState<RegisterPage, RegisterController> {
                       if (_formKey1.currentState.validate()) {
                         _formKey1.currentState.save();
 
-                        controller.checkLicenseNumber();
+                        _pageController.nextPage(
+                          duration: Duration(milliseconds: 500),
+                          curve: Curves.ease
+                        );
                       }
                     },
                   )
