@@ -44,7 +44,7 @@ class MyConnectionListTile extends StatelessWidget {
                   fontSize: 11,
                 ),
                 CustomText(
-                  text: controller.myConnection[index].dateConnected,
+                  text: controller.myConnection[index].dateModified,
                   fontSize: 11,
                   color: App.hintColor,
                 )

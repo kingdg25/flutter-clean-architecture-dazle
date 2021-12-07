@@ -4,7 +4,7 @@ class MyConnectionTile {
   final String firstName;
   final String lastName;
   final String position;
-  final String dateConnected;
+  final String dateModified;
 
   String get displayName{
     return "$firstName $lastName";
@@ -16,7 +16,7 @@ class MyConnectionTile {
     this.firstName, 
     this.lastName, 
     this.position,
-    this.dateConnected
+    this.dateModified
   );
 
   MyConnectionTile.fromJson(Map<String, dynamic> json)
@@ -25,7 +25,7 @@ class MyConnectionTile {
       firstName = json['firstname'],
       lastName = json['lastname'],
       position = json['position'],
-      dateConnected = json['date_connected'] ?? 'asd';
+      dateModified = json['date_modified'] ?? '';
 
   Map<String, dynamic> toJson() => {
     '_id': id,
@@ -33,6 +33,6 @@ class MyConnectionTile {
     'firstname': firstName,
     'lastname': lastName,
     'position': position,
-    'date_connected': dateConnected
+    'date_modified': dateModified
   };
 }
