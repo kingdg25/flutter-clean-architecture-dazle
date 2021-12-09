@@ -53,8 +53,6 @@ class _InvitesPageState extends ViewState<InvitesPage, InvitesController> {
                     controller.getInvites(filterByName: suggestion);
                   },
                   onSubmitted: (value) {
-                    FocusScope.of(context).unfocus();
-
                     controller.getInvites(filterByName: value);
                   },
                   onPressedButton: () {

@@ -49,8 +49,6 @@ class _MyConnectionPageState extends ViewState<MyConnectionPage, MyConnectionCon
                     controller.getMyConnection(filterByName: suggestion);
                   },
                   onSubmitted: (value) {
-                    FocusScope.of(context).unfocus();
-
                     controller.getMyConnection(filterByName: value);
                   },
                   onPressedButton: () {
