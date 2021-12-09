@@ -1,4 +1,5 @@
 import 'package:dazle/app/pages/notify_user/notify_user_presenter.dart';
+import 'package:dazle/app/pages/register/components/send_request_screen.dart';
 import 'package:dazle/app/utils/app_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
@@ -31,6 +32,13 @@ class NotifyUserController extends Controller {
       print('notify user on complete');
       AppConstant.showLoader(getContext(), false);
       Navigator.pop(getContext());
+
+      Navigator.push(
+        getContext(),
+        MaterialPageRoute(
+          builder: (buildContext) => SendRequestScreen()
+        )
+      );
     };
 
     notifyUserPresenter.notifyUserOnError = (e) {
