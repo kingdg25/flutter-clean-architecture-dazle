@@ -1,4 +1,6 @@
 import 'package:dazle/app/pages/profile/profile_controller.dart';
+import 'package:dazle/app/utils/app.dart';
+import 'package:dazle/app/widgets/custom_text.dart';
 import 'package:dazle/data/repositories/data_profile_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
@@ -20,6 +22,32 @@ class _ProfilePageState extends ViewState<ProfilePage, ProfileController> {
   Widget get view {
     return Scaffold(
       key: globalKey,
+      appBar: AppBar(
+        title: CustomText(
+          text: 'Profile',
+          fontSize: 18,
+          fontWeight: FontWeight.w600,
+        ),
+        automaticallyImplyLeading: false,
+        backgroundColor: Colors.white,
+        centerTitle: true,
+        actions: [
+          Container(
+            padding: EdgeInsets.only(right: 10.0),
+            child: IconButton(
+              icon: Icon(
+                Icons.more_horiz_sharp,
+                color: App.textColor,
+              ),
+              iconSize: 30,
+              onPressed: () {
+                print("Hello");
+              }
+            ),
+          ),
+        ],
+      ),
+      backgroundColor: Colors.white,
       body: Center(
         child: Text('profile page'),
       ),
