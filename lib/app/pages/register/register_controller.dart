@@ -25,6 +25,8 @@ class RegisterController extends Controller {
   final TextEditingController emailTextController;
   final TextEditingController passwordTextController;
 
+  bool isBroker;
+
 
   final RegisterPresenter registerPresenter;
 
@@ -41,6 +43,7 @@ class RegisterController extends Controller {
       registerFormKeyPage2 = GlobalKey<FormState>(),
       emailTextController = TextEditingController(),
       passwordTextController = TextEditingController(),
+      isBroker = false,
       super();
   
 
@@ -66,13 +69,25 @@ class RegisterController extends Controller {
           )
         );
       }
-      else {
-        Navigator.push(
-          getContext(),
-          MaterialPageRoute(
-            builder: (buildContext) => SendRequestScreen()
-          )
-        );
+      else if ( position == 'Salesperson' ){
+
+        if ( isBroker ) {
+          Navigator.push(
+            getContext(),
+            MaterialPageRoute(
+              builder: (buildContext) => SendRequestScreen()
+            )
+          );
+        }
+        else {
+          Navigator.push(
+            getContext(),
+            MaterialPageRoute(
+              builder: (buildContext) => NotifyUserPage()
+            )
+          );
+        }
+
       }
     };
 
@@ -93,12 +108,12 @@ class RegisterController extends Controller {
     // check license number
     registerPresenter.checkLicenseNumberOnNext = (bool res) {
       print('check license number on next $res');
-      if( res ) {
-        registerPageController.nextPage(
-          duration: Duration(milliseconds: 500),
-          curve: Curves.ease
-        ); 
-      }
+      isBroker = res;
+
+      registerPageController.nextPage(
+        duration: Duration(milliseconds: 500),
+        curve: Curves.ease
+      );
     };
 
     registerPresenter.checkLicenseNumberOnComplete = () {
@@ -111,28 +126,7 @@ class RegisterController extends Controller {
       AppConstant.showLoader(getContext(), false);
       
       if ( !e['error'] ) {
-
-        if (e['error_type'] == "no_broker") {
-          _statusDialog(
-            'Oops!',
-            '${e['status'] ?? ''}',
-            onPressed: () {
-              Navigator.pop(getContext()); // pop dialog
-              Navigator.pop(getContext()); // pop registration page
-
-              Navigator.push(
-                getContext(),
-                MaterialPageRoute(
-                  builder: (buildContext) => NotifyUserPage()
-                )
-              );
-            }
-          );
-        }
-        else {
-          _statusDialog('Oops!', '${e['status'] ?? ''}');
-        }
-      
+        _statusDialog('Oops!', '${e['status'] ?? ''}');
       }
       else{
         _statusDialog('Something went wrong', '${e.toString()}');
