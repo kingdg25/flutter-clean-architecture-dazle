@@ -1,3 +1,4 @@
+import 'package:dazle/app/utils/app.dart';
 import 'package:dazle/app/widgets/custom_text.dart';
 import 'package:dazle/app/widgets/form_fields/custom_button.dart';
 import 'package:dazle/app/widgets/form_fields/custom_field_layout.dart';
@@ -33,7 +34,7 @@ class SendRequestScreen extends StatelessWidget {
                 SizedBox(height: 30.0),
                 CustomFieldLayout(
                   child: CustomText(
-                    text: "An invite has been sent to your Broker. Your account status is currently pending.\n\nMake sure your Broker logs on to Brooky to change your status to Verified.\n\nIn the meantime, enjoy using the Brooky app!",
+                    text: "An invite has been sent to your Broker. Your account status is currently pending.\n\nMake sure your Broker logs on to ${App.name} to change your status to Verified.\n\nIn the meantime, enjoy using the ${App.name} app!",
                     fontSize: 14.0,
                     fontWeight: FontWeight.w300,
                     textAlign: TextAlign.justify,

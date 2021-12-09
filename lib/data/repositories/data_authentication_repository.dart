@@ -373,16 +373,7 @@ class DataAuthenticationRepository extends AuthenticationRepository {
     if (response.statusCode == 200){
       bool success = jsonResponse['success'];
       
-      if(success){
-        return success;
-      }
-      else {
-        throw {
-          "error": false,
-          "error_type": "${jsonResponse['error_type'] ?? ''}",
-          "status": jsonResponse['status']
-        };
-      }
+      return success;
     }
     else {
       throw {
