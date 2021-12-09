@@ -16,6 +16,15 @@ class CustomSearchField extends StatelessWidget {
 
   final Function onPressedButton;
   final IconData iconData;
+  final double borderRadius;
+
+  final bool filled;
+  final Color fillColor;
+  final InputBorder enabledBorder;
+  final InputBorder focusedBorder;
+
+  final bool isAssetIcon;
+  final String asset;
   
   CustomSearchField({
     this.hintText,
@@ -27,7 +36,14 @@ class CustomSearchField extends StatelessWidget {
     this.onTap,
     this.suggestionsCallback,
     this.onSuggestionSelected,
-    this.onSubmitted
+    this.onSubmitted,
+    this.borderRadius = 20.0,
+    this.filled = false,
+    this.fillColor,
+    this.enabledBorder,
+    this.focusedBorder,
+    this.isAssetIcon = false,
+    this.asset
   });
 
   @override
@@ -42,7 +58,11 @@ class CustomSearchField extends StatelessWidget {
                 textFieldConfiguration: TextFieldConfiguration(
                   controller: controller,
                   onChanged: onChanged,
-                  onSubmitted: onSubmitted,
+                  onSubmitted: (value) {
+                    FocusScope.of(context).unfocus();
+
+                    onSubmitted(value);
+                  },
                   onEditingComplete: () {
                     print('onEditingComplete 12312');
                   },
@@ -50,14 +70,18 @@ class CustomSearchField extends StatelessWidget {
                   decoration: InputDecoration(
                     prefixIcon: Icon(Icons.search),
                     border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(20),
+                      borderRadius: BorderRadius.circular(borderRadius),
                     ),
                     hintText: hintText,
                     hintStyle: TextStyle(
                       color: hintColor
                     ),
                     isDense: true,
-                    contentPadding: EdgeInsets.all(0.0)
+                    contentPadding: EdgeInsets.all(0.0),
+                    filled: filled,
+                    fillColor: fillColor,
+                    enabledBorder: enabledBorder,
+                    focusedBorder: focusedBorder,
                   ),
                 ),
                 suggestionsCallback: suggestionsCallback,
@@ -94,7 +118,7 @@ class CustomSearchField extends StatelessWidget {
                 },
               ),
             ),
-            SizedBox(width: 4.0),
+            isAssetIcon ? Container() : SizedBox(width: 4.0),
             ClipRRect(
               borderRadius: BorderRadius.circular(20),
               child: MaterialButton(
@@ -103,7 +127,12 @@ class CustomSearchField extends StatelessWidget {
                 height: 0,
                 padding: EdgeInsets.zero,
                 materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                child: Container(
+                child: isAssetIcon ? Image.asset(
+                  asset,
+                  width: 70,
+                  height: 70,
+                  
+                ) : Container(
                   padding: EdgeInsets.all(5),
                   child: Icon(
                     iconData,
