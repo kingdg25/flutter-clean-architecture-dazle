@@ -13,6 +13,21 @@ class App{
   static const textColor = Color.fromRGBO(46, 53, 61, 1.0);
   static const hintColor = Color.fromRGBO(154, 160, 166, 1.0);
 
+  static textStyle({
+    double fontSize = 14.0,
+    Color color = textColor,
+    FontWeight fontWeight = FontWeight.normal,
+    FontStyle fontStyle = FontStyle.normal
+  }) {
+    return TextStyle(
+      fontSize: fontSize,
+      color: color,
+      fontWeight: fontWeight,
+      fontFamily: "Poppins",
+      fontStyle: fontStyle
+    );
+  }
+
   static getUser() async {
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
