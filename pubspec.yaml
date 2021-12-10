@@ -21,6 +21,7 @@ dependencies:
   flutter_svg: ^0.19.1
   pin_code_fields: ^6.1.0
   flutter_typeahead: ^1.9.3
+  cached_network_image: ^2.5.1
 
 dev_dependencies:
   flutter_test:
