@@ -1,4 +1,4 @@
-import 'package:dazle/app/pages/connection/components/header_list_tile.dart';
+import 'package:dazle/app/pages/connection/components/header_connection_tile.dart';
 import 'package:dazle/app/pages/connection/connection_controller.dart';
 import 'package:dazle/app/pages/invites/invites_view.dart';
 import 'package:dazle/app/pages/my_connection/my_connection_view.dart';
@@ -43,7 +43,7 @@ class _ConnectionPageState extends ViewState<ConnectionPage, ConnectionControlle
           return (user != null && user.position == "Broker") ?
           ListView(
             children: [
-              HeaderListTile(
+              HeaderConnectionTile(
                 text: 'View all Connections',
                 onTap: () {
                   Navigator.push(
@@ -54,7 +54,7 @@ class _ConnectionPageState extends ViewState<ConnectionPage, ConnectionControlle
                   );
                 },
               ),
-              HeaderListTile(
+              HeaderConnectionTile(
                 text: 'Invites',
                 onTap: () {
                   Navigator.push(
@@ -69,7 +69,7 @@ class _ConnectionPageState extends ViewState<ConnectionPage, ConnectionControlle
           ) :
           ListView(
             children: [
-              HeaderListTile(
+              HeaderConnectionTile(
                 text: 'Notify Agent',
                 onTap: () {
                   Navigator.push(

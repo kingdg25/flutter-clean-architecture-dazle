@@ -15,7 +15,7 @@ class InvitesListTile extends StatelessWidget {
       shrinkWrap: true,
       physics: NeverScrollableScrollPhysics(),
       // padding: EdgeInsets.symmetric(horizontal: 10.0),
-      itemCount: controller.invites.length,
+      itemCount: controller.invites?.length ?? 0,
       itemBuilder: (BuildContext context, int index){
         return Container(
           decoration: BoxDecoration(

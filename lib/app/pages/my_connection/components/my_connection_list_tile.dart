@@ -14,7 +14,7 @@ class MyConnectionListTile extends StatelessWidget {
     return ListView.builder(
       shrinkWrap: true,
       physics: NeverScrollableScrollPhysics(),
-      itemCount: controller.myConnection.length,
+      itemCount: controller.myConnection?.length ?? 0,
       itemBuilder: (BuildContext context, int index){
         return Container(
           decoration: BoxDecoration(

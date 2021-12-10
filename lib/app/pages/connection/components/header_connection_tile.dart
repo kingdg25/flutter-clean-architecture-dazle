@@ -2,12 +2,12 @@ import 'package:dazle/app/utils/app.dart';
 import 'package:dazle/app/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 
-class HeaderListTile extends StatelessWidget {
+class HeaderConnectionTile extends StatelessWidget {
   final String text;
   final Function onTap;
 
 
-  HeaderListTile({
+  HeaderConnectionTile({
     @required this.text,
     this.onTap
   });
