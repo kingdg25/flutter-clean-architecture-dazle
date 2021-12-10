@@ -67,4 +67,10 @@ class AppConstant{
     )
   );
 
+  static BoxShadow boxShadow = BoxShadow(
+    color: Color.fromRGBO(0, 0, 0, 0.25),
+    blurRadius: 4,
+    offset: Offset(0, 4), // changes position of shadow
+  );
+
 }

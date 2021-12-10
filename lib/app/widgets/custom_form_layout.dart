@@ -1,3 +1,4 @@
+import 'package:dazle/app/utils/app_constant.dart';
 import 'package:flutter/material.dart';
 
 class CustomFormLayout extends StatelessWidget {
@@ -20,11 +21,7 @@ class CustomFormLayout extends StatelessWidget {
         color: Colors.white,
         borderRadius: BorderRadius.all(Radius.circular(4.0)),
         boxShadow: [
-          BoxShadow(
-            offset: Offset(0, 4),
-            blurRadius: 5,
-            color: Color.fromRGBO(0, 0, 0, 0.25)
-          )
+          AppConstant.boxShadow
         ]
       ),
       child: Form(
