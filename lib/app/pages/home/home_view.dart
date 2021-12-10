@@ -1,6 +1,8 @@
-import 'package:dazle/app/pages/home/components/property_details_list_tile.dart';
+import 'package:dazle/app/pages/home/components/header_home_tile.dart';
 import 'package:dazle/app/pages/home/components/property_list_tile.dart';
+import 'package:dazle/app/pages/home/components/photo_list_tile.dart';
 import 'package:dazle/app/utils/app.dart';
+import 'package:dazle/app/utils/app_constant.dart';
 import 'package:dazle/app/widgets/form_fields/custom_search_field.dart';
 import 'package:dazle/data/repositories/data_home_repository.dart';
 import 'package:flutter/material.dart';
@@ -83,11 +85,7 @@ class _HomePageState extends ViewState<HomePage, HomeController> {
                     height: (screenWidth < 375) ? screenHeight/3 : screenHeight/2,
                     decoration: BoxDecoration(
                       boxShadow: [
-                        BoxShadow(
-                          color: Color.fromRGBO(0, 0, 0, 0.25),
-                          blurRadius: 4,
-                          offset: Offset(0, 4), // changes position of shadow
-                        ),
+                        AppConstant.boxShadow
                       ],
                     ),
                   ),
@@ -162,21 +160,45 @@ class _HomePageState extends ViewState<HomePage, HomeController> {
                   )
                 ],
               ),
-              PropertyListTile(
+              HeaderHomeTile(
                 title: 'Spotlight',
                 subTitle: 'Most unique and exclusive properties',
+                child: PhotoListTile(
+                  items: controller.spotLight
+                ),
+                viewAllOnTap: () {
+                  print('view all spot light');
+                },
               ),
-              PropertyDetailsListTile(
+              HeaderHomeTile(
                 title: 'Matched Properties',
                 subTitle: 'Just listed in the app',
+                child: PropertyListTile(
+                  items: controller.matchedProperties,
+                ),
+                viewAllOnTap: () {
+                  print('view all matched properties');
+                },
               ),
-              PropertyListTile(
+              HeaderHomeTile(
                 title: 'Why Brooky?',
                 subTitle: 'Take control of the deal, Here’s how',
+                child: PhotoListTile(
+                  items: controller.whyBrooky
+                ),
+                viewAllOnTap: () {
+                  print('view all why brooky');
+                },
               ),
-              PropertyDetailsListTile(
+              HeaderHomeTile(
                 title: 'New Homes',
                 subTitle: 'Just listed in the app',
+                child: PropertyListTile(
+                  items: controller.newHomes,
+                ),
+                viewAllOnTap: () {
+                  print('view all new homes');
+                },
               ),
             ],
           );

@@ -1,5 +1,7 @@
 import 'package:dazle/app/pages/main/main_view.dart';
 import 'package:dazle/app/utils/app_constant.dart';
+import 'package:dazle/domain/entities/photo_tile.dart';
+import 'package:dazle/domain/entities/property.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:dazle/app/pages/home/home_presenter.dart';
@@ -9,16 +11,33 @@ import 'package:flutter_overlay_loader/flutter_overlay_loader.dart';
 
 
 class HomeController extends Controller {
+  final HomePresenter homePresenter;
+
   User _user;
   User get user => _user;
 
   String _displayName;
   String get displayName => _displayName;
 
-  final HomePresenter homePresenter;
+  List<PhotoTile> _spotLight;
+  List<PhotoTile> get spotLight => _spotLight;
+
+  List<Property> _matchedProperties;
+  List<Property> get matchedProperties => _matchedProperties;
+
+  List<PhotoTile> _whyBrooky;
+  List<PhotoTile> get whyBrooky => _whyBrooky;
+
+  List<Property> _newHomes;
+  List<Property> get newHomes => _newHomes;
+
 
   HomeController(userRepo)
     : _displayName = '',
+      _spotLight = <PhotoTile>[],
+      _matchedProperties = <Property>[],
+      _whyBrooky = <PhotoTile>[],
+      _newHomes = <Property>[],
       homePresenter = HomePresenter(userRepo),
       super();
 
@@ -77,6 +96,85 @@ class HomeController extends Controller {
       print('new user on error $e');
     };
 
+    
+    getData();
+
+    // get spot light
+    homePresenter.getSpotLightOnNext = (List<PhotoTile> res) {
+      print('get spot light on next $res');
+      if (res != null){
+        _spotLight = res;
+      }
+    };
+
+    homePresenter.getSpotLightOnComplete = () {
+      print('get spot light on complete');
+      refreshUI();
+    };
+
+    homePresenter.getSpotLightOnError = (e) {
+      print('get spot light on error $e');
+    };
+
+    // get matched properties
+    homePresenter.getMatchedPropertiesOnNext = (List<Property> res) {
+      print('get matched properties on next $res');
+      if (res != null){
+        _matchedProperties = res;
+      }
+    };
+
+    homePresenter.getMatchedPropertiesOnComplete = () {
+      print('get matched properties on complete');
+      refreshUI();
+    };
+
+    homePresenter.getMatchedPropertiesOnError = (e) {
+      print('get matched properties on error $e');
+    };
+
+    // get why brooky
+    homePresenter.getWhyBrookyOnNext = (List<PhotoTile> res) {
+      print('get why brooky on next $res');
+      if (res != null){
+        _whyBrooky = res;
+      }
+    };
+
+    homePresenter.getWhyBrookyOnComplete = () {
+      print('get why brooky on complete');
+      refreshUI();
+    };
+
+    homePresenter.getWhyBrookyOnError = (e) {
+      print('get why brooky on error $e');
+    };
+
+    // get new homes
+    homePresenter.getNewHomesOnNext = (List<Property> res) {
+      print('get new homes on next $res');
+      if (res != null){
+        _newHomes = res;
+      }
+    };
+
+    homePresenter.getNewHomesOnComplete = () {
+      print('get new homes on complete');
+      refreshUI();
+    };
+
+    homePresenter.getNewHomesOnError = (e) {
+      print('get new homes on error $e');
+    };
+
+  }
+
+  void getData() {
+    homePresenter.getSpotLight();
+    homePresenter.getMatchedProperties();
+
+    homePresenter.getWhyBrooky();
+    homePresenter.getNewHomes();
   }
 
   void isNewUser() {

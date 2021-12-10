@@ -1,3 +1,7 @@
+import 'package:dazle/domain/usecases/home/get_matched_properties_usecase.dart';
+import 'package:dazle/domain/usecases/home/get_new_homes_usecase.dart';
+import 'package:dazle/domain/usecases/home/get_spot_light_usecase.dart';
+import 'package:dazle/domain/usecases/home/get_why_brooky_usecase.dart';
 import 'package:dazle/domain/usecases/home/is_new_user_usecase.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:dazle/domain/usecases/authentication/get_user_usecase.dart';
@@ -17,14 +21,39 @@ class HomePresenter extends Presenter {
   Function isNewUserOnComplete;
   Function isNewUserOnError;
 
+  Function getSpotLightOnNext;
+  Function getSpotLightOnComplete;
+  Function getSpotLightOnError;
+
+  Function getMatchedPropertiesOnNext;
+  Function getMatchedPropertiesOnComplete;
+  Function getMatchedPropertiesOnError;
+
+  Function getWhyBrookyOnNext;
+  Function getWhyBrookyOnComplete;
+  Function getWhyBrookyOnError;
+
+  Function getNewHomesOnNext;
+  Function getNewHomesOnComplete;
+  Function getNewHomesOnError;
+
   final LogoutUserUseCase logoutUserUseCase;
   final GetUserUseCase getUserUseCase;
-  final IsNewUserUseCase newUserUseCase;
+  final IsNewUserUseCase isNewUserUseCase;
+
+  final GetSpotLightUseCase getSpotLightUseCase;
+  final GetMatchedPropertiesUseCase getMatchedPropertiesUseCase;
+  final GetWhyBrookyUseCase getWhyBrookyUseCase;
+  final GetNewHomesUseCase getNewHomesUseCase;
 
   HomePresenter(userRepo)
     : getUserUseCase = GetUserUseCase(),
       logoutUserUseCase = LogoutUserUseCase(userRepo),
-      newUserUseCase = IsNewUserUseCase(userRepo);
+      isNewUserUseCase = IsNewUserUseCase(userRepo),
+      getSpotLightUseCase = GetSpotLightUseCase(userRepo),
+      getMatchedPropertiesUseCase = GetMatchedPropertiesUseCase(userRepo),
+      getWhyBrookyUseCase = GetWhyBrookyUseCase(userRepo),
+      getNewHomesUseCase = GetNewHomesUseCase(userRepo);
   
 
   void logoutUser(){
@@ -36,13 +65,36 @@ class HomePresenter extends Presenter {
   }
 
   void isNewUser({String email, bool isNewUser}) {
-    newUserUseCase.execute(_IsNewUserUseCaseObserver(this), IsNewUserUseCaseParams(email, isNewUser));
+    isNewUserUseCase.execute(_IsNewUserUseCaseObserver(this), IsNewUserUseCaseParams(email, isNewUser));
+  }
+
+  void getSpotLight() {
+    getSpotLightUseCase.execute(_GetSpotLightUseCaseObserver(this), GetSpotLightUseCaseParams());
+  }
+
+  void getMatchedProperties() {
+    getMatchedPropertiesUseCase.execute(_GetMatchedPropertiesUseCaseObserver(this), GetMatchedPropertiesUseCaseParams());
+  }
+
+  void getWhyBrooky() {
+    getWhyBrookyUseCase.execute(_GetWhyBrookyUseCaseObserver(this), GetWhyBrookyUseCaseParams());
+  }
+
+  void getNewHomes() {
+    getNewHomesUseCase.execute(_GetNewHomesUseCaseObserver(this), GetNewHomesUseCaseParams());
   }
 
 
   @override
   void dispose() {
     logoutUserUseCase.dispose();
+    getUserUseCase.dispose();
+    isNewUserUseCase.dispose();
+
+    getSpotLightUseCase.dispose();
+    getMatchedPropertiesUseCase.dispose();
+    getWhyBrookyUseCase.dispose();
+    getNewHomesUseCase.dispose();
   }
 }
 
@@ -112,5 +164,101 @@ class _IsNewUserUseCaseObserver extends Observer<void> {
 
   @override
   void onNext(response) {
+  }
+}
+
+
+
+class _GetSpotLightUseCaseObserver extends Observer<GetSpotLightUseCaseResponse> {
+  final HomePresenter presenter;
+  _GetSpotLightUseCaseObserver(this.presenter);
+  @override
+  void onComplete() {
+    assert(presenter.getSpotLightOnComplete != null);
+    presenter.getSpotLightOnComplete();
+  }
+
+  @override
+  void onError(e) {
+    assert(presenter.getSpotLightOnError != null);
+    presenter.getSpotLightOnError(e);
+  }
+
+  @override
+  void onNext(response) {
+    assert(presenter.getSpotLightOnNext != null);
+    presenter.getSpotLightOnNext(response.spotLight);
+  }
+}
+
+
+
+class _GetMatchedPropertiesUseCaseObserver extends Observer<GetMatchedPropertiesUseCaseResponse> {
+  final HomePresenter presenter;
+  _GetMatchedPropertiesUseCaseObserver(this.presenter);
+  @override
+  void onComplete() {
+    assert(presenter.getMatchedPropertiesOnComplete != null);
+    presenter.getMatchedPropertiesOnComplete();
+  }
+
+  @override
+  void onError(e) {
+    assert(presenter.getMatchedPropertiesOnError != null);
+    presenter.getMatchedPropertiesOnError(e);
+  }
+
+  @override
+  void onNext(response) {
+    assert(presenter.getMatchedPropertiesOnNext != null);
+    presenter.getMatchedPropertiesOnNext(response.matchedProperties);
+  }
+}
+
+
+
+class _GetWhyBrookyUseCaseObserver extends Observer<GetWhyBrookyUseCaseResponse> {
+  final HomePresenter presenter;
+  _GetWhyBrookyUseCaseObserver(this.presenter);
+  @override
+  void onComplete() {
+    assert(presenter.getWhyBrookyOnComplete != null);
+    presenter.getWhyBrookyOnComplete();
+  }
+
+  @override
+  void onError(e) {
+    assert(presenter.getWhyBrookyOnError != null);
+    presenter.getWhyBrookyOnError(e);
+  }
+
+  @override
+  void onNext(response) {
+    assert(presenter.getWhyBrookyOnNext != null);
+    presenter.getWhyBrookyOnNext(response.whyBrooky);
+  }
+}
+
+
+
+class _GetNewHomesUseCaseObserver extends Observer<GetNewHomesUseCaseResponse> {
+  final HomePresenter presenter;
+  _GetNewHomesUseCaseObserver(this.presenter);
+  @override
+  void onComplete() {
+    assert(presenter.getNewHomesOnComplete != null);
+    presenter.getNewHomesOnComplete();
+  }
+
+  @override
+  void onError(e) {
+    assert(presenter.getNewHomesOnError != null);
+    presenter.getNewHomesOnError(e);
+  }
+
+  @override
+  void onNext(response) {
+    assert(presenter.getNewHomesOnNext != null);
+    presenter.getNewHomesOnNext(response.newHomes);
   }
 }
