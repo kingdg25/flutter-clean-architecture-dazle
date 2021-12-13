@@ -137,7 +137,7 @@ class _HomePageState extends ViewState<HomePage, HomeController> {
                       TextSpan(
                         children: [
                           TextSpan(
-                            text: "PropMatch\n",
+                            text: "Dazle\n",
                             style: TextStyle(
                               fontSize: 30.0,
                               fontWeight: FontWeight.bold

@@ -72,7 +72,7 @@ class PropertyListTile extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           CustomText(
-                            text: 'Villa o Unfernished',
+                            text: items[index].keywordsToString ?? '',
                             fontSize: 9,
                             color: App.hintColor,
                             fontWeight: FontWeight.w500,
