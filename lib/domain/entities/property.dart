@@ -9,6 +9,10 @@ class Property {
   final String district;
   final String city;
 
+  String get keywordsToString{
+    return keywords.join(" • ");
+  }
+
 
   Property(
     this.photoURL,
