@@ -43,20 +43,6 @@ class _HomePageState extends ViewState<HomePage, HomeController> {
                 print("Hello");
               }
             ),
-          ),
-          ControlledWidgetBuilder<HomeController>(
-            builder: (context, controller) {
-              return Container(
-                padding: EdgeInsets.only(right: 10.0),
-                child: IconButton(
-                  icon: Icon(Icons.logout, color: Colors.black),
-                  onPressed: () {
-                    print("Logout");
-                    controller.userLogout();
-                  }
-                ),
-              );
-            }
           )
         ],
       ),

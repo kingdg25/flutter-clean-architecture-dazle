@@ -5,14 +5,10 @@ import 'package:dazle/domain/usecases/home/get_why_brooky_usecase.dart';
 import 'package:dazle/domain/usecases/home/is_new_user_usecase.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:dazle/domain/usecases/authentication/get_user_usecase.dart';
-import 'package:dazle/domain/usecases/home/logout_user_usecase.dart';
+import 'package:dazle/domain/usecases/profile/logout_user_usecase.dart';
 
 
 class HomePresenter extends Presenter {
-  Function logoutUserOnNext;
-  Function logoutUserOnComplete;
-  Function logoutUserOnError;
-
   Function getUserOnNext;
   Function getUserOnComplete;
   Function getUserOnError;
@@ -37,7 +33,6 @@ class HomePresenter extends Presenter {
   Function getNewHomesOnComplete;
   Function getNewHomesOnError;
 
-  final LogoutUserUseCase logoutUserUseCase;
   final GetUserUseCase getUserUseCase;
   final IsNewUserUseCase isNewUserUseCase;
 
@@ -48,17 +43,12 @@ class HomePresenter extends Presenter {
 
   HomePresenter(userRepo)
     : getUserUseCase = GetUserUseCase(),
-      logoutUserUseCase = LogoutUserUseCase(userRepo),
       isNewUserUseCase = IsNewUserUseCase(userRepo),
       getSpotLightUseCase = GetSpotLightUseCase(userRepo),
       getMatchedPropertiesUseCase = GetMatchedPropertiesUseCase(userRepo),
       getWhyBrookyUseCase = GetWhyBrookyUseCase(userRepo),
       getNewHomesUseCase = GetNewHomesUseCase(userRepo);
   
-
-  void logoutUser(){
-    logoutUserUseCase.execute(_LogoutUserUseCaseObserver(this), LogoutUserUseCaseParams());
-  }
 
   void getUser() {
     getUserUseCase.execute(_GetUserUseCaseObserver(this), GetUserUseCaseParams());
@@ -87,7 +77,6 @@ class HomePresenter extends Presenter {
 
   @override
   void dispose() {
-    logoutUserUseCase.dispose();
     getUserUseCase.dispose();
     isNewUserUseCase.dispose();
 
@@ -98,28 +87,6 @@ class HomePresenter extends Presenter {
   }
 }
 
-
-class _LogoutUserUseCaseObserver extends Observer<LogoutUserUseCaseResponse> {
-  final HomePresenter presenter;
-  _LogoutUserUseCaseObserver(this.presenter);
-  @override
-  void onComplete() {
-    assert(presenter.logoutUserOnComplete != null);
-    presenter.logoutUserOnComplete();
-  }
-
-  @override
-  void onError(e) {
-    assert(presenter.logoutUserOnError != null);
-    presenter.logoutUserOnError(e);
-  }
-
-  @override
-  void onNext(response) {
-    // assert(presenter.logoutUserOnNext != null);
-    // presenter.logoutUserOnNext(response);
-  }
-}
 
 
 class _GetUserUseCaseObserver extends Observer<GetUserUseCaseResponse> {

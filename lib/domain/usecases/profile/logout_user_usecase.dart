@@ -1,6 +1,5 @@
 import 'dart:async';
-
-import 'package:dazle/domain/repositories/home_repository.dart';
+import 'package:dazle/domain/repositories/profile_repository.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -8,8 +7,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 
 class LogoutUserUseCase extends UseCase<LogoutUserUseCaseResponse, LogoutUserUseCaseParams> {
-  final HomeRepository homeRepository;
-  LogoutUserUseCase(this.homeRepository);
+  final ProfileRepository profileRepository;
+  LogoutUserUseCase(this.profileRepository);
   final GoogleSignIn googleSignIn = GoogleSignIn();
 
 

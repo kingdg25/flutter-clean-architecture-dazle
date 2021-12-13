@@ -45,6 +45,20 @@ class _ProfilePageState extends ViewState<ProfilePage, ProfileController> {
               }
             ),
           ),
+          ControlledWidgetBuilder<ProfileController>(
+            builder: (context, controller) {
+              return Container(
+                padding: EdgeInsets.only(right: 10.0),
+                child: IconButton(
+                  icon: Icon(Icons.logout, color: Colors.black),
+                  onPressed: () {
+                    print("Logout");
+                    controller.userLogout();
+                  }
+                ),
+              );
+            }
+          )
         ],
       ),
       backgroundColor: Colors.white,

@@ -1,5 +1,4 @@
 import 'package:dazle/app/pages/main/main_view.dart';
-import 'package:dazle/app/utils/app_constant.dart';
 import 'package:dazle/domain/entities/photo_tile.dart';
 import 'package:dazle/domain/entities/property.dart';
 import 'package:flutter/material.dart';
@@ -44,22 +43,6 @@ class HomeController extends Controller {
 
   @override
   void initListeners() {
-    // logout
-    homePresenter.logoutUserOnNext = () {
-      print('logout on next');
-    };
-
-    homePresenter.logoutUserOnComplete = () {
-      print('logout on complete');
-      AppConstant.showLoader(getContext(), false);
-      loginPage();
-    };
-
-    homePresenter.logoutUserOnError = (e) {
-      print('logout on error $e');
-      AppConstant.showLoader(getContext(), false);
-    };
-
     homePresenter.getUser();
     // get user
     homePresenter.getUserOnNext = (User res) {
@@ -185,19 +168,8 @@ class HomeController extends Controller {
     }
   }
 
-  void userLogout(){
-    print('user logout home controller');
-    AppConstant.showLoader(getContext(), true);
-
-    homePresenter.logoutUser();
-  }
-
   void mainPage() {
     Navigator.popAndPushNamed(getContext(), MainPage.id);
-  }
-
-  void loginPage() {
-    Navigator.popAndPushNamed(getContext(), LoginPage.id);
   }
 
 
