@@ -71,7 +71,7 @@ class _HomePageState extends ViewState<HomePage, HomeController> {
                 children: [
                   Container(
                     width: screenWidth,
-                    height: (screenWidth < 375) ? screenHeight/3 : screenHeight/2,
+                    height: screenHeight/2,
                     decoration: BoxDecoration(
                       image: DecorationImage(
                         fit: BoxFit.cover,
