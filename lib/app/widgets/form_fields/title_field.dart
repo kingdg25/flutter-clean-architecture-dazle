@@ -1,3 +1,4 @@
+import 'package:dazle/app/utils/app.dart';
 import 'package:dazle/app/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 
@@ -7,6 +8,8 @@ class TitleField extends StatelessWidget {
   final Alignment alignment;
   final bool optional;
   final optionalText;
+  final Color color;
+  final FontWeight fontWeight;
 
 
   TitleField({
@@ -14,15 +17,17 @@ class TitleField extends StatelessWidget {
     this.fontSize = 17.0,
     this.alignment = Alignment.centerLeft,
     this.optional = false,
-    this.optionalText = 'Optional'
+    this.optionalText = 'Optional',
+    this.color = App.textColor,
+    this.fontWeight = FontWeight.w500,
   });
 
   Widget mainText() {
     return CustomText(
       text: title,
-      color: Color.fromRGBO(46, 53, 61, 1.0),
+      color: color,
       fontSize: fontSize, 
-      fontWeight: FontWeight.w500,
+      fontWeight: fontWeight,
     );
   }
 
@@ -43,9 +48,9 @@ class TitleField extends StatelessWidget {
         ]
       ),
       style: TextStyle(
-        color: Color.fromRGBO(46, 53, 61, 1.0),
+        color: color,
         fontSize: fontSize, 
-        fontWeight: FontWeight.w500,
+        fontWeight: fontWeight,
         fontFamily: 'Poppins',
       )
     );
