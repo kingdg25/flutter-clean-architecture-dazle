@@ -1,5 +1,6 @@
 import 'package:dazle/app/pages/filter/filter_controller.dart';
 import 'package:dazle/app/utils/app.dart';
+import 'package:dazle/app/utils/app_constant.dart';
 import 'package:dazle/app/widgets/custom_appbar.dart';
 import 'package:dazle/app/widgets/form_fields/custom_button.dart';
 import 'package:dazle/app/widgets/form_fields/custom_check_box_group_button.dart';
@@ -7,7 +8,6 @@ import 'package:dazle/app/widgets/form_fields/custom_flat_button.dart';
 import 'package:dazle/app/widgets/form_fields/custom_range_slider.dart';
 import 'package:dazle/app/widgets/form_fields/custom_search_field.dart';
 import 'package:dazle/app/widgets/form_fields/keywords_field.dart';
-import 'package:dazle/app/widgets/form_fields/title_field.dart';
 import 'package:dazle/data/repositories/data_home_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
@@ -24,20 +24,6 @@ class FilterPage extends View {
 
 class _FilterPageState extends ViewState<FilterPage, FilterController> {
   _FilterPageState() : super(FilterController(DataHomeRepository()));
-
-  customTitleField({
-    @required String title,
-    EdgeInsets padding = const EdgeInsets.only(left: 18, top: 12)
-  }) {
-    return Container(
-      padding: EdgeInsets.only(left: 18, top: 12),
-      child: TitleField(
-        title: title,
-        fontSize: 16,
-        fontWeight: FontWeight.w600,
-      ),
-    );
-  }
 
   @override
   Widget get view {
@@ -96,7 +82,7 @@ class _FilterPageState extends ViewState<FilterPage, FilterController> {
                   print(values);
                 }
               ),
-              customTitleField(
+              AppConstant.customTitleField(
                 title: 'Home Type'
               ),
               CustomCheckBoxGroupButton(
@@ -116,7 +102,7 @@ class _FilterPageState extends ViewState<FilterPage, FilterController> {
                   print(values);
                 }
               ),
-              customTitleField(
+              AppConstant.customTitleField(
                 title: 'Price'
               ),
               CustomRangeSlider(
@@ -124,7 +110,7 @@ class _FilterPageState extends ViewState<FilterPage, FilterController> {
                   print('onChange RangeValues $values');
                 },
               ),
-              customTitleField(
+              AppConstant.customTitleField(
                 padding: EdgeInsets.only(left: 18),
                 title: 'Number of Bedrooms'
               ),
@@ -141,7 +127,7 @@ class _FilterPageState extends ViewState<FilterPage, FilterController> {
                   print(values);
                 }
               ),
-              customTitleField(
+              AppConstant.customTitleField(
                 title: 'Number of Bathrooms'
               ),
               CustomCheckBoxGroupButton(
@@ -160,7 +146,7 @@ class _FilterPageState extends ViewState<FilterPage, FilterController> {
                   print(values);
                 }
               ),
-              customTitleField(
+              AppConstant.customTitleField(
                 title: 'Keywords'
               ),
               KeywordsField(

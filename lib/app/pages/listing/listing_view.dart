@@ -1,4 +1,6 @@
+import 'package:dazle/app/pages/create_listing/create_listing_view.dart';
 import 'package:dazle/app/pages/listing/listing_controller.dart';
+import 'package:dazle/app/utils/app.dart';
 import 'package:dazle/app/widgets/custom_text.dart';
 import 'package:dazle/data/repositories/data_listing_repository.dart';
 import 'package:flutter/material.dart';
@@ -29,6 +31,26 @@ class _ListingPageState extends ViewState<ListingPage, ListingController> {
         ),
         automaticallyImplyLeading: false,
         backgroundColor: Colors.white,
+        actions: [
+          Container(
+            padding: EdgeInsets.only(right: 10.0),
+            child: IconButton(
+              icon: Icon(
+                Icons.add_circle_outline,
+                color: App.textColor,
+              ),
+              iconSize: 26,
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (buildContext) => CreateListingPage()
+                  )
+                );
+              }
+            ),
+          )
+        ],
       ),
       backgroundColor: Colors.white,
       body: Center(

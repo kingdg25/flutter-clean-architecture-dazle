@@ -34,11 +34,13 @@ class _KeywordsFieldState extends State<KeywordsField> {
             child: TextFormField(
               controller: keywordTextController,
               onFieldSubmitted: (value) {
-                setState(() {
-                  keywords.add(keywordTextController.text);
-                });
-
-                keywordTextController.clear();
+                if ( keywordTextController.text.isNotEmpty ) {
+                  setState(() {
+                    keywords.add(keywordTextController.text);
+                  });
+                  
+                  keywordTextController.clear();
+                }
               },
               keyboardType: TextInputType.text,
               style: TextStyle(
@@ -75,11 +77,13 @@ class _KeywordsFieldState extends State<KeywordsField> {
                     color: widget.hintColor,
                   ), 
                   onPressed: () {
-                    setState(() {
-                      keywords.add(keywordTextController.text);
-                    });
-
-                    keywordTextController.clear();
+                    if ( keywordTextController.text.isNotEmpty ) {
+                      setState(() {
+                        keywords.add(keywordTextController.text);
+                      });
+                      
+                      keywordTextController.clear();
+                    }
                   }
                 )
               ),
