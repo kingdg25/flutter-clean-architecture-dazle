@@ -1,6 +1,7 @@
 import 'package:dazle/app/utils/app.dart';
 import 'package:dazle/app/widgets/custom_text.dart';
 import 'package:dazle/app/widgets/form_fields/custom_button.dart';
+import 'package:dazle/app/widgets/form_fields/title_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_overlay_loader/flutter_overlay_loader.dart';
 
@@ -72,5 +73,19 @@ class AppConstant{
     blurRadius: 4,
     offset: Offset(0, 4), // changes position of shadow
   );
+
+  static customTitleField({
+    @required String title,
+    EdgeInsets padding = const EdgeInsets.only(left: 18, top: 12)
+  }) {
+    return Container(
+      padding: EdgeInsets.only(left: 18, top: 12),
+      child: TitleField(
+        title: title,
+        fontSize: 16,
+        fontWeight: FontWeight.w600,
+      ),
+    );
+  }
 
 }
