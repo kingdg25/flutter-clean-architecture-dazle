@@ -23,8 +23,11 @@ class CustomSearchField extends StatelessWidget {
   final InputBorder enabledBorder;
   final InputBorder focusedBorder;
 
+  final bool withIcon;
   final bool isAssetIcon;
   final String asset;
+
+  final EdgeInsets padding;
   
   CustomSearchField({
     this.hintText,
@@ -43,14 +46,16 @@ class CustomSearchField extends StatelessWidget {
     this.enabledBorder,
     this.focusedBorder,
     this.isAssetIcon = false,
-    this.asset
+    this.asset,
+    this.withIcon = false,
+    this.padding = const EdgeInsets.all(20)
   });
 
   @override
   Widget build(BuildContext context) {
     return CustomFieldLayout(
       child: Container(
-        padding: EdgeInsets.all(20),
+        padding: padding,
         child: Row(
           children: [
             Flexible(
@@ -118,8 +123,8 @@ class CustomSearchField extends StatelessWidget {
                 },
               ),
             ),
-            isAssetIcon ? Container() : SizedBox(width: 4.0),
-            ClipRRect(
+            withIcon ? ( isAssetIcon ? Container() : SizedBox(width: 4.0) ) : Container(),
+            withIcon ? ClipRRect(
               borderRadius: BorderRadius.circular(20),
               child: MaterialButton(
                 onPressed: onPressedButton,
@@ -140,7 +145,7 @@ class CustomSearchField extends StatelessWidget {
                   ),
                 )
               ),
-            ),
+            ) : Container(),
           ],
         )
       ),
