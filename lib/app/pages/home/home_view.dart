@@ -1,3 +1,5 @@
+import 'package:dazle/app/pages/filter/filter_view.dart';
+import 'package:dazle/app/pages/find_match/find_match_view.dart';
 import 'package:dazle/app/pages/home/components/header_home_tile.dart';
 import 'package:dazle/app/pages/home/components/property_list_tile.dart';
 import 'package:dazle/app/pages/home/components/photo_list_tile.dart';
@@ -40,7 +42,12 @@ class _HomePageState extends ViewState<HomePage, HomeController> {
               icon: Image.asset('assets/icons/find.png'),
               iconSize: 30,
               onPressed: () {
-                print("Hello");
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (buildContext) => FindMatchPage()
+                  )
+                );
               }
             ),
           )
@@ -96,6 +103,7 @@ class _HomePageState extends ViewState<HomePage, HomeController> {
                           color: Colors.white
                         ),
                       ),
+                      withIcon: true,
                       isAssetIcon: true,
                       asset: 'assets/icons/filter.png',
                       onChanged: (value) {
@@ -112,6 +120,12 @@ class _HomePageState extends ViewState<HomePage, HomeController> {
                         // controller.getMyConnection(filterByName: value);
                       },
                       onPressedButton: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (buildContext) => FilterPage()
+                          )
+                        );
                       },
                     ),
                   ),

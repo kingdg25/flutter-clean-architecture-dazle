@@ -37,6 +37,7 @@ class _MyConnectionPageState extends ViewState<MyConnectionPage, MyConnectionCon
                 child: CustomSearchField(
                   controller: controller.searchTextController,
                   hintText: 'Search by name',
+                  withIcon: true,
                   iconData: Icons.contacts_outlined,
                   onChanged: (value) {
                     controller.searchUser();

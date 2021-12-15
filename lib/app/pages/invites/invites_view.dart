@@ -38,6 +38,7 @@ class _InvitesPageState extends ViewState<InvitesPage, InvitesController> {
                 child: CustomSearchField(
                   controller: controller.searchTextController,
                   hintText: 'Search, invite or notify agent',
+                  withIcon: true,
                   iconData: Icons.contacts_outlined,
                   onChanged: (value) {
                     print('onChanged onChanged $value');
