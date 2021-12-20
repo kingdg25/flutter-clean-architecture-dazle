@@ -86,12 +86,15 @@ class _CustomUploadFieldState extends State<CustomUploadField> {
                               child: InkWell(
                                 child: Container(
                                   decoration: BoxDecoration(
-                                    color: Colors.red,
+                                    color: App.hintColor,
                                     shape: BoxShape.circle,
+                                    boxShadow: [
+                                      AppConstant.boxShadow
+                                    ]
                                   ),
                                   child: Icon(
                                     Icons.cancel,
-                                    color: Colors.red[100],
+                                    color: Colors.white,
                                     size: 20,
                                   ),
                                 ),
