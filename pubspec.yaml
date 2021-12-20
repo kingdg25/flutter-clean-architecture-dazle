@@ -23,6 +23,7 @@ dependencies:
   flutter_typeahead: ^1.9.3
   cached_network_image: ^2.5.1
   custom_radio_grouped_button: ^1.0.6+1
+  wechat_assets_picker: ^4.2.2
 
 dev_dependencies:
   flutter_test:
