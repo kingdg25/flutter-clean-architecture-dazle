@@ -4,6 +4,7 @@ import 'package:dazle/app/widgets/form_fields/custom_button.dart';
 import 'package:dazle/app/widgets/form_fields/title_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_overlay_loader/flutter_overlay_loader.dart';
+import 'package:wechat_assets_picker/wechat_assets_picker.dart';
 
 
 class AppConstant{
@@ -86,6 +87,34 @@ class AppConstant{
         fontWeight: FontWeight.w600,
       ),
     );
+  }
+
+  static loadAssets({
+    @required BuildContext context
+  }) async {
+    List<AssetEntity> assets = List<AssetEntity>();
+
+    var result = await PhotoManager.requestPermission();
+
+    if (result) {
+      final List<AssetEntity> pickAssets = await AssetPicker.pickAssets(
+        context,
+        maxAssets: 5,
+        requestType: RequestType.image,
+        textDelegate: EnglishTextDelegate()
+      );
+      print(pickAssets);
+
+      if( pickAssets != null ) {
+        assets = pickAssets;
+      }
+
+    } else {
+      // fail
+      /// if result is fail, you can call `PhotoManager.openSetting();`  to open android/ios applicaton's setting to get permission
+    }
+
+    return assets;
   }
 
 }
