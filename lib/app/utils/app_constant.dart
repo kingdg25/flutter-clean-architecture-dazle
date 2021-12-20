@@ -1,3 +1,6 @@
+import 'dart:typed_data';
+import 'dart:convert' as convert;
+
 import 'package:dazle/app/utils/app.dart';
 import 'package:dazle/app/widgets/custom_text.dart';
 import 'package:dazle/app/widgets/form_fields/custom_button.dart';
@@ -121,6 +124,25 @@ class AppConstant{
     }
 
     return assets;
+  }
+
+  static initializeAssetImages({
+    @required List<AssetEntity> images
+  }) async {
+    List files = [];
+
+    await Future.forEach(images, (AssetEntity data) async {
+      Uint8List bytes = await data.originBytes;
+      String fileName = await data.titleAsync;
+      String base64Image = convert.base64Encode(bytes);
+
+      files.add({
+        "name": fileName,
+        "image": base64Image,
+      });
+    });
+
+    return files;
   }
 
 }
