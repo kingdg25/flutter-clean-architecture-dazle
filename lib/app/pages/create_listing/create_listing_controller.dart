@@ -142,10 +142,33 @@ class CreateListingController extends Controller {
   }
 
 
-  void createListing() {
-    // AppConstant.showLoader(getContext(), true);
+  void createListing() async {
+    AppConstant.showLoader(getContext(), true);
 
-    // createListingPresenter.createListing(listing: );
+    final assetsBased64 = await AppConstant.initializeAssetImages(images: assets);
+
+    var listing = {
+      "property_type": propertyType,
+      "property_for": propertyFor,
+      "time_period": timePeriod,
+      "price": priceTextController.text,
+
+      "number_of_bedrooms": numberOfBedRooms,
+      "number_of_bathrooms": numberOfBathRooms,
+      "number_of_parking": numberOfParking,
+      "area": areaTextController.text,
+      "is_your_property": isYourProperty,
+
+      "street": streetTextController.text,
+      "landmark": landmarkTextController.text,
+      "city": cityTextController.text,
+
+      "amenities": amenities,
+
+      "assets": assetsBased64
+    };
+
+    createListingPresenter.createListing(listing: listing);
   }
 
 

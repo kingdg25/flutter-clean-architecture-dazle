@@ -468,10 +468,7 @@ class _CreateListingPageState extends ViewState<CreateListingPage, CreateListing
                           FocusScope.of(context).unfocus();
 
                           if ( controller.validatePage5() ) {
-                            _pageController.nextPage(
-                              duration: Duration(milliseconds: 500),
-                              curve: Curves.ease
-                            );
+                            controller.createListing();
                           }
                         },
                       )
@@ -486,7 +483,7 @@ class _CreateListingPageState extends ViewState<CreateListingPage, CreateListing
           totalPage = createListingList.length;
 
           return PageView(
-            // physics: NeverScrollableScrollPhysics(),
+            physics: NeverScrollableScrollPhysics(),
             controller: _pageController,
             onPageChanged: (i) {
               setState(() {
