@@ -8,6 +8,9 @@ import 'package:wechat_assets_picker/wechat_assets_picker.dart';
 class CustomUploadField extends StatefulWidget {
   final String text;
 
+  /// default selected list of assets
+  final List<AssetEntity> defaultSelected;
+
   /// on change value for asset image.
   final ValueChanged onAssetValue;
 
@@ -15,6 +18,7 @@ class CustomUploadField extends StatefulWidget {
     Key key,
     this.text,
     @required this.onAssetValue,
+    @required this.defaultSelected
   }) : super(key: key);
 
   @override
@@ -22,7 +26,15 @@ class CustomUploadField extends StatefulWidget {
 }
 
 class _CustomUploadFieldState extends State<CustomUploadField> {
-  List<AssetEntity> allAssets =[];
+  List<AssetEntity> selectedAssets =[];
+
+  @override
+  void initState() {
+    super.initState();
+    widget.defaultSelected?.forEach((e) {
+      selectedAssets.add(e);
+    });
+  }
   
   @override
   Widget build(BuildContext context) {
@@ -38,13 +50,13 @@ class _CustomUploadFieldState extends State<CustomUploadField> {
               backgroudColor: App.hintColor,
               main: false,
               onPressed: () async {
-                var resultAsset = await AppConstant.loadAssets(context: context);
-
-                setState(() {
-                  allAssets = resultAsset;
-                });
+                var result = await AppConstant.loadAssets(context: context, selectedAssets: selectedAssets);
                 
-                widget.onAssetValue(allAssets);
+                setState(() {
+                  selectedAssets = result;
+                });
+
+                widget.onAssetValue(selectedAssets);
               }
             ),
           ),
@@ -58,7 +70,7 @@ class _CustomUploadFieldState extends State<CustomUploadField> {
             child: GridView.builder(
               physics: NeverScrollableScrollPhysics(),
               shrinkWrap: true,
-              itemCount: allAssets.length,
+              itemCount: selectedAssets.length,
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: MediaQuery.of(context).orientation == Orientation.landscape ? 5 : 4,
                 crossAxisSpacing: 8,
@@ -68,9 +80,9 @@ class _CustomUploadFieldState extends State<CustomUploadField> {
                 return ClipRRect(
                   borderRadius: BorderRadius.circular(5),
                   child: FutureBuilder(
-                    future: allAssets[index].thumbDataWithSize(200, 200, format: ThumbFormat.png),
+                    future: selectedAssets[index].thumbDataWithSize(200, 200, format: ThumbFormat.png),
                     builder: (BuildContext context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.done)
+                      if (snapshot.connectionState == ConnectionState.done){
                         return Stack(
                           overflow: Overflow.visible,
                           children: [
@@ -99,9 +111,9 @@ class _CustomUploadFieldState extends State<CustomUploadField> {
                                   ),
                                 ),
                                 onTap: () {
-                                  allAssets.removeAt(index);
+                                  selectedAssets.removeAt(index);
 
-                                  widget.onAssetValue(allAssets);
+                                  widget.onAssetValue(selectedAssets);
                                   // update photo container data
                                   setState(() { });
                                 },
@@ -109,7 +121,11 @@ class _CustomUploadFieldState extends State<CustomUploadField> {
                             )
                           ],
                         );
-                      return Container();
+                      }
+                        
+                      return Center(
+                        child: CircularProgressIndicator(),
+                      );
                     },
                   )
                 );

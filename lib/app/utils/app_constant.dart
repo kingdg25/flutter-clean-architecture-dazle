@@ -90,28 +90,34 @@ class AppConstant{
   }
 
   static loadAssets({
-    @required BuildContext context
+    @required BuildContext context,
+    List<AssetEntity> selectedAssets
   }) async {
     List<AssetEntity> assets = List<AssetEntity>();
 
-    var result = await PhotoManager.requestPermission();
+    try {
+      var result = await PhotoManager.requestPermission();
 
-    if (result) {
-      final List<AssetEntity> pickAssets = await AssetPicker.pickAssets(
-        context,
-        maxAssets: 5,
-        requestType: RequestType.image,
-        textDelegate: EnglishTextDelegate()
-      );
-      print(pickAssets);
+      if (result) {
+        final List<AssetEntity> pickAssets = await AssetPicker.pickAssets(
+          context,
+          maxAssets: 5,
+          requestType: RequestType.image,
+          textDelegate: EnglishTextDelegate(),
+          selectedAssets: selectedAssets
+        );
 
-      if( pickAssets != null ) {
-        assets = pickAssets;
+        if( pickAssets != null ) {
+          assets = pickAssets;
+        }
+
+      } else {
+        // fail
+        /// if result is fail, you can call `PhotoManager.openSetting();`  to open android/ios applicaton's setting to get permission
       }
-
-    } else {
-      // fail
-      /// if result is fail, you can call `PhotoManager.openSetting();`  to open android/ios applicaton's setting to get permission
+    
+    } catch (e) {
+      print('loadAssets error $e');
     }
 
     return assets;

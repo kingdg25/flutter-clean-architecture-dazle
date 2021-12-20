@@ -440,10 +440,9 @@ class _CreateListingPageState extends ViewState<CreateListingPage, CreateListing
                 CustomUploadField(
                   text: 'Upload Image',
                   onAssetValue: (result) {
-                    print('onAssetValue $result');
-                    
                     controller.assets = result;
-                  }
+                  },
+                  defaultSelected: controller.assets,
                 ),
                 SizedBox(height: 20.0),
                 Container(
