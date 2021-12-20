@@ -5,16 +5,22 @@ import 'package:dazle/domain/entities/amenity.dart';
 import 'package:flutter/material.dart';
 
 
-class AmenitiesField extends StatefulWidget {
+class AmenitiesField<T> extends StatefulWidget {
   final String hintText;
   final Color hintColor;
   final double fontSize;
+  final ValueChanged onChanged;
+  
+  ///Default Selected button
+  final T defaultSelected;
   
   const AmenitiesField({
     Key key,
     this.hintText,
     this.hintColor = App.hintColor,
     this.fontSize = 16.0,
+    @required this.onChanged,
+    @required this.defaultSelected
   }) : super(key: key);
 
   @override
@@ -22,9 +28,11 @@ class AmenitiesField extends StatefulWidget {
 }
 
 class _AmenitiesFieldState extends State<AmenitiesField> {
+  List<dynamic> selectedLables = [];
+
   final TextEditingController amenityTextController = TextEditingController();
   List<Amenity> amenities = [
-    Amenity(text: "Kitchen", added: true),
+    Amenity(text: "Kitchen"),
     Amenity(text: "Wifi"),
     Amenity(text: "Eco Friendly"),
     Amenity(text: "Sharing Gym"),
@@ -36,6 +44,37 @@ class _AmenitiesFieldState extends State<AmenitiesField> {
     Amenity(text: "Tile Flooring"),
   ];
 
+  addAmenity(value) {
+    if ( value.isNotEmpty ) {
+      setState(() {
+        amenities.add(
+          Amenity(text: value, added: true)
+        );
+      });
+      
+      amenityTextController.clear();
+
+      amenitiesOnChanged();
+    }
+  }
+
+  amenitiesOnChanged() {
+    // filter amenities, get only where added is true
+    selectedLables = amenities.where( (amenity) => amenity.added == true ).toList();
+
+    widget.onChanged(selectedLables);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    widget.defaultSelected?.where((e) {
+      return amenities.contains(e);
+    })?.forEach((e) {
+      selectedLables.add(e);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return CustomFieldLayout(
@@ -46,15 +85,7 @@ class _AmenitiesFieldState extends State<AmenitiesField> {
             child: TextFormField(
               controller: amenityTextController,
               onFieldSubmitted: (value) {
-                if ( amenityTextController.text.isNotEmpty ) {
-                  setState(() {
-                    amenities.add(
-                      Amenity(text: amenityTextController.text, added: true)
-                    );
-                  });
-                  
-                  amenityTextController.clear();
-                }
+                addAmenity(amenityTextController.text);
               },
               keyboardType: TextInputType.text,
               style: TextStyle(
@@ -91,15 +122,7 @@ class _AmenitiesFieldState extends State<AmenitiesField> {
                     color: widget.hintColor,
                   ), 
                   onPressed: () {
-                    if ( amenityTextController.text.isNotEmpty ) {
-                      setState(() {
-                        amenities.add(
-                          Amenity(text: amenityTextController.text, added: true)
-                        );
-                      });
-                      
-                      amenityTextController.clear();
-                    }
+                    addAmenity(amenityTextController.text);
                   }
                 )
               ),
@@ -115,41 +138,38 @@ class _AmenitiesFieldState extends State<AmenitiesField> {
 
               children: List.generate(amenities.length, (index) {
 
-                return Container(
-                  padding: EdgeInsets.symmetric(vertical: 10),
-                  decoration: BoxDecoration(
-                    border: Border(
-                      bottom: BorderSide(
-                        color: App.hintColor
-                      )
-                    ),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      CustomText(
-                        text: amenities[index].text,
-                        fontSize: 13,
-                        fontWeight: FontWeight.w600,
+                return InkWell(
+                  onTap: () {
+                    setState(() {
+                      amenities[index].added =  !( amenities[index].added );
+                    });
+
+                    amenitiesOnChanged();
+                  },
+                  child: Container(
+                    padding: EdgeInsets.symmetric(vertical: 10),
+                    decoration: BoxDecoration(
+                      border: Border(
+                        bottom: BorderSide(
+                          color: App.hintColor
+                        )
                       ),
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(50),
-                        child: Material(
-                          child: InkWell(
-                            onTap: () {
-                              setState(() {
-                                amenities[index].added =  !( amenities[index].added );
-                              });
-                            },
-                            child: Icon(
-                              amenities[index].added ? Icons.check_circle : Icons.add_circle_outline_rounded,
-                              color: amenities[index].added ? App.mainColor : App.hintColor,
-                            )
-                          ),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        CustomText(
+                          text: amenities[index].text,
+                          fontSize: 13,
+                          fontWeight: FontWeight.w600,
                         ),
-                      )
-                    ],
-                  ),
+                        Icon(
+                          amenities[index].added ? Icons.check_circle : Icons.add_circle_outline_rounded,
+                          color: amenities[index].added ? App.mainColor : App.hintColor,
+                        )
+                      ],
+                    )
+                  )
                 );
                 
               }),
