@@ -151,6 +151,9 @@ class _FilterPageState extends ViewState<FilterPage, FilterController> {
               ),
               KeywordsField(
                 hintText: 'Enter relevant keywords',
+                onChanged: (values) {
+                  print('keyword on change $values');
+                },
               ),
               SizedBox(height: 30),
               Container(

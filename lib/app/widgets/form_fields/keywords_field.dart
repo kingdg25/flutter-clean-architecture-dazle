@@ -8,12 +8,14 @@ class KeywordsField extends StatefulWidget {
   final String hintText;
   final Color hintColor;
   final double fontSize;
+  final ValueChanged onChanged;
   
   const KeywordsField({
     Key key,
     this.hintText,
     this.hintColor = App.hintColor,
     this.fontSize = 16.0,
+    @required this.onChanged
   }) : super(key: key);
 
   @override
@@ -23,6 +25,22 @@ class KeywordsField extends StatefulWidget {
 class _KeywordsFieldState extends State<KeywordsField> {
   final TextEditingController keywordTextController = TextEditingController();
   List<String> keywords = [];
+
+  addKeyword(value) {
+    if ( value.isNotEmpty ) {
+      setState(() {
+        keywords.add(value);
+      });
+      
+      keywordTextController.clear();
+
+      keywordsOnChanged();
+    }
+  }
+
+  keywordsOnChanged() {
+    widget.onChanged(keywords);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,13 +52,7 @@ class _KeywordsFieldState extends State<KeywordsField> {
             child: TextFormField(
               controller: keywordTextController,
               onFieldSubmitted: (value) {
-                if ( keywordTextController.text.isNotEmpty ) {
-                  setState(() {
-                    keywords.add(keywordTextController.text);
-                  });
-                  
-                  keywordTextController.clear();
-                }
+                addKeyword(keywordTextController.text);
               },
               keyboardType: TextInputType.text,
               style: TextStyle(
@@ -77,13 +89,7 @@ class _KeywordsFieldState extends State<KeywordsField> {
                     color: widget.hintColor,
                   ), 
                   onPressed: () {
-                    if ( keywordTextController.text.isNotEmpty ) {
-                      setState(() {
-                        keywords.add(keywordTextController.text);
-                      });
-                      
-                      keywordTextController.clear();
-                    }
+                    addKeyword(keywordTextController.text);
                   }
                 )
               ),
@@ -104,6 +110,8 @@ class _KeywordsFieldState extends State<KeywordsField> {
                     setState(() {
                       keywords.removeAt(index);
                     });
+
+                    keywordsOnChanged();
                   },
                 );
               }),
