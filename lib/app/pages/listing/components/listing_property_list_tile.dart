@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:dazle/app/pages/listing_details/listing_details_view.dart';
 import 'package:dazle/app/utils/app.dart';
 import 'package:dazle/app/utils/app_constant.dart';
 import 'package:dazle/app/widgets/custom_text.dart';
@@ -42,7 +43,14 @@ class ListingPropertyListTile extends StatelessWidget {
                 children: [
                   GestureDetector(
                     onTap: () {
-                      print('click property $index');
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (buildContext) => ListingDetailsPage(
+                            property: items[index],
+                          )
+                        )
+                      );
                     },
                     child: CachedNetworkImage(
                       height: height*0.51,
