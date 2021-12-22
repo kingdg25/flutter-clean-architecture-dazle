@@ -6,14 +6,18 @@ import 'package:flutter/material.dart';
 class CustomCheckBoxGroupButton extends StatelessWidget {
   final double checkBoxPadding;
   final double checkBoxWidth;
+  final List<String> buttonLables;
   final List<String> buttonValuesList;
   final Function checkBoxButtonValues;
+  final dynamic defaultSelected;
 
   CustomCheckBoxGroupButton({
     this.checkBoxPadding = 6.0,
     this.checkBoxWidth = 100.0,
+    @required this.buttonLables,
     @required this.buttonValuesList,
-    @required this.checkBoxButtonValues
+    @required this.checkBoxButtonValues,
+    this.defaultSelected
   });
 
   @override
@@ -35,9 +39,10 @@ class CustomCheckBoxGroupButton extends StatelessWidget {
         ),
         padding: checkBoxPadding,
         width: checkBoxWidth,
-        buttonLables: buttonValuesList,
+        buttonLables: buttonLables,
         buttonValuesList: buttonValuesList,
-        checkBoxButtonValues: checkBoxButtonValues
+        checkBoxButtonValues: checkBoxButtonValues,
+        defaultSelected: defaultSelected,
       ),
     );
   }

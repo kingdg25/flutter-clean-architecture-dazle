@@ -6,16 +6,18 @@ import 'package:flutter/material.dart';
 class CustomRadioGroupButton extends StatelessWidget {
   final double radioPadding;
   final double radioWidth;
-  final List<String> radioList;
+  final List<String> buttonLables;
+  final List<String> buttonValues;
   final Function radioButtonValue;
   final String defaultSelected;
 
   CustomRadioGroupButton({
     this.radioPadding = 6.0,
     this.radioWidth = 100.0,
-    @required this.radioList,
+    @required this.buttonLables,
+    @required this.buttonValues,
     @required this.radioButtonValue,
-    @required this.defaultSelected
+    this.defaultSelected
   });
 
   @override
@@ -38,8 +40,8 @@ class CustomRadioGroupButton extends StatelessWidget {
         ),
         padding: radioPadding,
         width: radioWidth,
-        buttonLables: radioList,
-        buttonValues: radioList,
+        buttonLables: buttonLables,
+        buttonValues: buttonValues,
         radioButtonValue: radioButtonValue,
         defaultSelected: defaultSelected,
       ),

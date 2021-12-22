@@ -82,7 +82,18 @@ class _CreateListingPageState extends ViewState<CreateListingPage, CreateListing
                 ),
                 CustomRadioGroupButton(
                   radioWidth: 120,
-                  radioList: [
+                  buttonLables: [
+                    "Apartment",
+                    "Villa",
+                    "Townhouse",
+                    "Commercial",
+                    "Warehouse",
+                    "Lot",
+                    "Farm Lot",
+                    "Residential House",
+                    "Beach",
+                  ],
+                  buttonValues: [
                     "Apartment",
                     "Villa",
                     "Townhouse",
@@ -103,7 +114,11 @@ class _CreateListingPageState extends ViewState<CreateListingPage, CreateListing
                 ),
                 CustomRadioGroupButton(
                   radioPadding: 15,
-                  radioList: [
+                  buttonLables: [
+                    "Sell",
+                    "Rent",
+                  ],
+                  buttonValues: [
                     "Sell",
                     "Rent",
                   ],
@@ -117,9 +132,13 @@ class _CreateListingPageState extends ViewState<CreateListingPage, CreateListing
                 ),
                 CustomRadioGroupButton(
                   radioPadding: 15,
-                  radioList: [
+                  buttonLables: [
                     "Yearly",
                     "Monthly"
+                  ],
+                  buttonValues: [
+                    "Year",
+                    "Month"
                   ],
                   radioButtonValue: (value) {
                     controller.timePeriod = value;
@@ -165,7 +184,14 @@ class _CreateListingPageState extends ViewState<CreateListingPage, CreateListing
                 ),
                 CustomRadioGroupButton(
                   radioWidth: 70,
-                  radioList: [
+                  buttonLables: [
+                    "Any",
+                    "Studio",
+                    "1BR",
+                    "2BR",
+                    "3BR",
+                  ],
+                  buttonValues: [
                     "Any",
                     "Studio",
                     "1BR",
@@ -182,18 +208,8 @@ class _CreateListingPageState extends ViewState<CreateListingPage, CreateListing
                 ),
                 CustomRadioGroupButton(
                   radioWidth: 55,
-                  radioList: [
-                    "1",
-                    "2",
-                    "3",
-                    "4",
-                    "5",
-                    "6",
-                    "7",
-                    "8",
-                    "9",
-                    "10",
-                  ],
+                  buttonLables: ["1","2","3","4","5","6","7","8","9","10"],
+                  buttonValues: ["1","2","3","4","5","6","7","8","9","10"],
                   radioButtonValue: (value) {
                     controller.numberOfBathRooms = value;
                   },
@@ -204,18 +220,8 @@ class _CreateListingPageState extends ViewState<CreateListingPage, CreateListing
                 ),
                 CustomRadioGroupButton(
                   radioWidth: 55,
-                  radioList: [
-                    "1",
-                    "2",
-                    "3",
-                    "4",
-                    "5",
-                    "6",
-                    "7",
-                    "8",
-                    "9",
-                    "10",
-                  ],
+                  buttonLables: ["1","2","3","4","5","6","7","8","9","10"],
+                  buttonValues: ["1","2","3","4","5","6","7","8","9","10"],
                   radioButtonValue: (value) {
                     controller.numberOfParking = value;
                   },
@@ -238,7 +244,11 @@ class _CreateListingPageState extends ViewState<CreateListingPage, CreateListing
                 ),
                 CustomRadioGroupButton(
                   radioWidth: 120,
-                  radioList: [
+                  buttonLables: [
+                    "Furnished",
+                    "Unfurnished",
+                  ],
+                  buttonValues: [
                     "Furnished",
                     "Unfurnished",
                   ],
