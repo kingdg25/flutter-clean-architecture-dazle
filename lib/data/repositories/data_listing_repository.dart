@@ -21,7 +21,7 @@ class DataListingRepository extends ListingRepository {
   Future<List<Property>> getMyListing() async {
     return [
       Property(
-        photoURL: 'https://picsum.photos/id/73/200/300',
+        coverPhoto: 'https://picsum.photos/id/73/200/300',
         keywords: ['aa', 'ss'],
         amount: '540,735.12',
         totalBedRoom: '213',
@@ -42,7 +42,7 @@ class DataListingRepository extends ListingRepository {
   Future<List<Property>> getMyCollection() async {
     return [
       Property(
-        photoURL: 'https://picsum.photos/id/76/200/300',
+        coverPhoto: 'https://picsum.photos/id/76/200/300',
         keywords: ['qq', 'ww'],
         amount: '664,321.12',
         totalBedRoom: '11',

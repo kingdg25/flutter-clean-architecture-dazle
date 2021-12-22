@@ -45,7 +45,7 @@ class PropertyListTile extends StatelessWidget {
                   children: [
                     CachedNetworkImage(
                       height: height*0.56,
-                      imageUrl: items[index].photoURL.toString(),
+                      imageUrl: items[index].coverPhoto.toString(),
                       imageBuilder: (context, imageProvider) => Container(
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10)),

@@ -1,5 +1,6 @@
 class Property {
-  final String photoURL;
+  final String coverPhoto;
+  final List photos;
   final List amenities;
   final List keywords;
   final String amount;
@@ -20,7 +21,8 @@ class Property {
 
 
   Property({
-    this.photoURL,
+    this.coverPhoto,
+    this.photos,
     this.amenities,
     this.keywords,
     this.amount,
@@ -36,7 +38,8 @@ class Property {
   });
 
   Property.fromJson(Map<String, dynamic> json)
-    : photoURL = json['photo_url'],
+    : coverPhoto = json['cover_photo'],
+      photos = json['photos'],
       amenities = json['amenities'],
       keywords = json['keywords'],
       amount = json['amount'],
@@ -51,7 +54,8 @@ class Property {
       description = json['description'];
 
   Map<String, dynamic> toJson() => {
-    'photo_url': photoURL,
+    'cover_photo': coverPhoto,
+    'photos': photos,
     'amenities': amenities,
     'keywords': keywords,
     'amount': amount,
