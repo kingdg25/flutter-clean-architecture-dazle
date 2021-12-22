@@ -3,10 +3,10 @@ class PhotoTile {
   final String text;
 
 
-  PhotoTile(
+  PhotoTile({
     this.photoURL,
     this.text,
-  );
+  });
 
   PhotoTile.fromJson(Map<String, dynamic> json)
     : photoURL = json['photo_url'],

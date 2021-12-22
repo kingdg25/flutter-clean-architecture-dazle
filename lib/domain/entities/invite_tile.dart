@@ -9,13 +9,13 @@ class InviteTile {
     return "$firstName $lastName";
   }
 
-  InviteTile(
+  InviteTile({
     this.id,
     this.photoURL,
     this.firstName, 
     this.lastName, 
     this.totalConnection
-  );
+  });
 
   InviteTile.fromJson(Map<String, dynamic> json)
     : id = json['_id'],

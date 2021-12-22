@@ -10,14 +10,14 @@ class MyConnectionTile {
     return "$firstName $lastName";
   }
 
-  MyConnectionTile(
+  MyConnectionTile({
     this.id,
     this.photoURL,
     this.firstName, 
     this.lastName, 
     this.position,
     this.dateModified
-  );
+  });
 
   MyConnectionTile.fromJson(Map<String, dynamic> json)
     : id = json['_id'],

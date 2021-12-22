@@ -12,7 +12,7 @@ class User {
     return "$firstName $lastName";
   }
 
-  User(
+  User({
     this.position,
     this.brokerLicenseNumber,
     this.mobileNumber,
@@ -21,7 +21,7 @@ class User {
     this.lastName, 
     this.email, 
     this.id
-  );
+  });
 
   User.fromJson(Map<String, dynamic> json)
     : mobileNumber = json['mobile_number'],
