@@ -60,8 +60,6 @@ class _ListingDetailsPageState extends ViewState<ListingDetailsPage, ListingDeta
             leadingWidth: 51,
             backgroundColor: App.mainColor,  
             expandedHeight: 271,
-            floating: true,  
-            pinned: true  
           ),
           SliverList(
             delegate: SliverChildListDelegate([
