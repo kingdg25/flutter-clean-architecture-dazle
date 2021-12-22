@@ -1,3 +1,5 @@
+import 'package:dazle/app/pages/listing_details/components/listing_details_container_box.dart';
+import 'package:dazle/app/pages/listing_details/components/listing_details_icon_button.dart';
 import 'package:dazle/app/pages/listing_details/listing_details_controller.dart';
 import 'package:dazle/app/utils/app.dart';
 import 'package:dazle/app/widgets/custom_text.dart';
@@ -32,40 +34,30 @@ class _ListingDetailsPageState extends ViewState<ListingDetailsPage, ListingDeta
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
-            actions: <Widget>[  
-              Icon(Icons.file_download),
-              Icon(Icons.open_in_new_outlined),
-              Icon(Icons.bookmark_border)
-            ],
-            // leading: ClipRRect(
-            //   borderRadius: BorderRadius.circular(50),
-            //   child: Material(
-            //     child: InkWell(
-            //       borderRadius: BorderRadius.circular(50),
-            //       child: Container(
-            //         decoration: BoxDecoration(
-            //           color: Colors.white,
-            //           shape: BoxShape.circle,
-            //         ),
-            //         child: Icon(
-            //           Icons.arrow_back_ios_rounded,
-            //           color: Colors.black,
-            //         ),
-            //       ),
-            //       onTap: () => Navigator.of(context).pop(),
-            //     ),
-            //   ),
-            // ),
-            leading: IconButton(
-              padding: EdgeInsets.zero,
-              constraints: BoxConstraints(),
-              icon: Icon(
-                Icons.arrow_back_ios_rounded, 
-                color: Colors.black
+            actions: <Widget>[
+              ListingDetailsIconButton(
+                iconData: Icons.file_download,
+                tooltip: "download",
+                onPressed: () {},
               ),
+              ListingDetailsIconButton(
+                iconData: Icons.bookmark_border,
+                tooltip: "preview",
+                onPressed: () {},
+              ),
+              ListingDetailsIconButton(
+                iconData: Icons.open_in_new_outlined,
+                tooltip: "bookmark",
+                onPressed: () {},
+              )
+            ],
+            leading: ListingDetailsIconButton(
+              margin: EdgeInsets.only(left: 8),
+              iconData: Icons.arrow_back_ios_rounded,
               tooltip: MaterialLocalizations.of(context).backButtonTooltip,
               onPressed: () => Navigator.of(context).pop(),
             ),
+            leadingWidth: 51,
             backgroundColor: App.mainColor,  
             expandedHeight: 271,
             floating: true,  
@@ -105,75 +97,24 @@ class _ListingDetailsPageState extends ViewState<ListingDetailsPage, ListingDeta
                     fontWeight: FontWeight.w600,
                   ),
                   SizedBox(height: 20),
-                  Container(
-                    height: 40,
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: App.hintColor
-                      ),
-                      borderRadius: BorderRadius.circular(5),
-                    ),
-                    child: Row(
-                      children: [
-                        Image.asset(
-                          'assets/icons/bed.png'
-                        ),
-                        CustomText(
-                          text: '${widget.property.totalBedRoom} Bedroom(s)',
-                          fontSize: 12,
-                          fontWeight: FontWeight.w600,
-                        )
-                      ],
-                    ),
+                  ListingDetailsContainerBox(
+                    asset: 'assets/icons/bed.png',
+                    text: '${widget.property.totalBedRoom} Bedroom(s)',
                   ),
                   SizedBox(height: 8),
                   Row(
                     children: [
                       Flexible(
-                        child: Container(
-                          height: 40,
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                              color: App.hintColor
-                            ),
-                            borderRadius: BorderRadius.circular(5),
-                          ),
-                          child: Row(
-                            children: [
-                              Image.asset(
-                                'assets/icons/bath.png'
-                              ),
-                              CustomText(
-                                text: '${widget.property.totalBathRoom} Bathroom(s)',
-                                fontSize: 12,
-                                fontWeight: FontWeight.w600,
-                              )
-                            ],
-                          ),
+                        child: ListingDetailsContainerBox(
+                          asset: 'assets/icons/bath.png',
+                          text: '${widget.property.totalBathRoom} Bathroom(s)',
                         ),
                       ),
                       SizedBox(width: 8),
                       Flexible(
-                        child: Container(
-                          height: 40,
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                              color: App.hintColor
-                            ),
-                            borderRadius: BorderRadius.circular(5),
-                          ),
-                          child: Row(
-                            children: [
-                              Image.asset(
-                                'assets/icons/area.png'
-                              ),
-                              CustomText(
-                                text: '${widget.property.totalArea} sqft',
-                                fontSize: 12,
-                                fontWeight: FontWeight.w600,
-                              )
-                            ],
-                          ),
+                        child: ListingDetailsContainerBox(
+                          asset: 'assets/icons/area.png',
+                          text: '${widget.property.totalArea} sqft',
                         ),
                       )
                     ],
@@ -182,50 +123,16 @@ class _ListingDetailsPageState extends ViewState<ListingDetailsPage, ListingDeta
                   Row(
                     children: [
                       Flexible(
-                        child: Container(
-                          height: 40,
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                              color: App.hintColor
-                            ),
-                            borderRadius: BorderRadius.circular(5),
-                          ),
-                          child: Row(
-                            children: [
-                              Image.asset(
-                                'assets/icons/car.png'
-                              ),
-                              CustomText(
-                                text: '${widget.property.totalParkingSpace} Bathroom(s)',
-                                fontSize: 12,
-                                fontWeight: FontWeight.w600,
-                              )
-                            ],
-                          ),
+                        child: ListingDetailsContainerBox(
+                          asset: 'assets/icons/car.png',
+                          text: '${widget.property.totalParkingSpace} parking spot(s)',
                         ),
                       ),
                       SizedBox(width: 8),
                       Flexible(
-                        child: Container(
-                          height: 40,
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                              color: App.hintColor
-                            ),
-                            borderRadius: BorderRadius.circular(5),
-                          ),
-                          child: Row(
-                            children: [
-                              Image.asset(
-                                'assets/icons/furnished.png'
-                              ),
-                              CustomText(
-                                text: '${widget.property.isYourProperty}',
-                                fontSize: 12,
-                                fontWeight: FontWeight.w600,
-                              )
-                            ],
-                          ),
+                        child: ListingDetailsContainerBox(
+                          asset: 'assets/icons/furnished.png',
+                          text: '${widget.property.isYourProperty}',
                         ),
                       )
                     ],
