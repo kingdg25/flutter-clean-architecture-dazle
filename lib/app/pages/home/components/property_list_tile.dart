@@ -106,7 +106,7 @@ class PropertyListTile extends StatelessWidget {
                                 SizedBox(width: 4),
                                 PropertyTextInfo(
                                   asset: '',
-                                  text: items[index].totalArea,
+                                  text: '${items[index].totalArea} sqft',
                                 ),
                               ],
                             ),

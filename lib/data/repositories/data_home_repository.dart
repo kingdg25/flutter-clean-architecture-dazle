@@ -98,7 +98,7 @@ class DataHomeRepository extends HomeRepository {
         totalBedRoom: '99',
         totalBathRoom: '3',
         totalParkingSpace: '1',
-        totalArea: '1200 sqft',
+        totalArea: '1200',
       ),
       Property(
         photoURL: 'https://picsum.photos/200/300',
@@ -107,7 +107,7 @@ class DataHomeRepository extends HomeRepository {
         totalBedRoom: '1',
         totalBathRoom: '2',
         totalParkingSpace: '3',
-        totalArea: '500 sqft',
+        totalArea: '500',
       ),
       Property(
         photoURL: 'https://picsum.photos/200/300',
@@ -116,7 +116,7 @@ class DataHomeRepository extends HomeRepository {
         totalBedRoom: '9',
         totalBathRoom: '8',
         totalParkingSpace: '7',
-        totalArea: '654 sqft',
+        totalArea: '654',
       )
     ];
   }
@@ -140,7 +140,7 @@ class DataHomeRepository extends HomeRepository {
         totalBedRoom: '81',
         totalBathRoom: '41',
         totalParkingSpace: '0',
-        totalArea: '100 sqft',
+        totalArea: '100',
       ),
       Property(
         photoURL: 'https://picsum.photos/id/132/200/300',
@@ -149,7 +149,7 @@ class DataHomeRepository extends HomeRepository {
         totalBedRoom: '9',
         totalBathRoom: '42',
         totalParkingSpace: '16',
-        totalArea: '1,000 sqft',
+        totalArea: '1,000',
       ),
       Property(
         photoURL: 'https://picsum.photos/id/456/200/300',
@@ -158,7 +158,7 @@ class DataHomeRepository extends HomeRepository {
         totalBedRoom: '88',
         totalBathRoom: '51',
         totalParkingSpace: '90',
-        totalArea: '987 sqft',
+        totalArea: '987',
       )
     ];
   }
