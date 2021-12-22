@@ -95,6 +95,7 @@ class _ListingTabBarState extends State<ListingTabBar> with SingleTickerProvider
       ),
       body: TabBarView(
         controller: _tabcontroller,
+        physics: NeverScrollableScrollPhysics(),
         children: <Widget>[
           MyListingPage(),
           MyCollectionPage()

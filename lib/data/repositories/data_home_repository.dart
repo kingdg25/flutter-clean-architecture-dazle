@@ -80,11 +80,11 @@ class DataHomeRepository extends HomeRepository {
   @override
   Future<List<PhotoTile>> getSpotLight() async {
     return [
-      PhotoTile('', 'Near you'),
-      PhotoTile('http://via.placeholder.com/200x150', 'Lorem Ipsum'),
-      PhotoTile('http://via.placeholder.com/350x150', 'text'),
-      PhotoTile('https://images.unsplash.com/photo-1532264523420-881a47db012d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9', 'text2'),
-      PhotoTile('https://picsum.photos/250?image=9', 'text3')
+      PhotoTile(photoURL: '', text: 'Near you'),
+      PhotoTile(photoURL: 'http://via.placeholder.com/200x150', text: 'Lorem Ipsum'),
+      PhotoTile(photoURL: 'http://via.placeholder.com/350x150', text: 'text'),
+      PhotoTile(photoURL: 'https://images.unsplash.com/photo-1532264523420-881a47db012d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9', text: 'text2'),
+      PhotoTile(photoURL: 'https://picsum.photos/250?image=9', text: 'text3')
     ];
   }
 
@@ -92,37 +92,31 @@ class DataHomeRepository extends HomeRepository {
   Future<List<Property>> getMatchedProperties() async {
     return [
       Property(
-        'https://picsum.photos/200/300',
-        ['keywords1', 'keywords2'],
-        '1,500,000.00',
-        '99',
-        '3',
-        '1',
-        '1200 sqft',
-        '',
-        ''
+        photoURL: 'https://picsum.photos/200/300',
+        keywords: ['keywords1', 'keywords2'],
+        amount: '1,500,000.00',
+        totalBedRoom: '99',
+        totalBathRoom: '3',
+        totalParkingSpace: '1',
+        totalArea: '1200 sqft',
       ),
       Property(
-        'https://picsum.photos/200/300',
-        ['one', 'two'],
-        '8,786,123.00',
-        '1',
-        '2',
-        '3',
-        '500 sqft',
-        '',
-        ''
+        photoURL: 'https://picsum.photos/200/300',
+        keywords: ['one', 'two'],
+        amount: '8,786,123.00',
+        totalBedRoom: '1',
+        totalBathRoom: '2',
+        totalParkingSpace: '3',
+        totalArea: '500 sqft',
       ),
       Property(
-        'https://picsum.photos/200/300',
-        ['qwe', 'asd'],
-        '300,123.12',
-        '9',
-        '8',
-        '7',
-        '654 sqft',
-        '',
-        ''
+        photoURL: 'https://picsum.photos/200/300',
+        keywords: ['qwe', 'asd'],
+        amount: '300,123.12',
+        totalBedRoom: '9',
+        totalBathRoom: '8',
+        totalParkingSpace: '7',
+        totalArea: '654 sqft',
       )
     ];
   }
@@ -130,9 +124,9 @@ class DataHomeRepository extends HomeRepository {
   @override
   Future<List<PhotoTile>> getWhyBrooky() async {
     return [
-      PhotoTile('', ''),
-      PhotoTile('', ''),
-      PhotoTile('', ''),
+      PhotoTile(photoURL: '', text: ''),
+      PhotoTile(photoURL: '', text: ''),
+      PhotoTile(photoURL: '', text: ''),
     ];
   }
   
@@ -140,37 +134,31 @@ class DataHomeRepository extends HomeRepository {
   Future<List<Property>> getNewHomes() async {
     return [
       Property(
-        'https://picsum.photos/id/237/200/300',
-        ['qqq', 'www'],
-        '9,999,999.99',
-        '81',
-        '41',
-        '0',
-        '100 sqft',
-        '',
-        ''
+        photoURL: 'https://picsum.photos/id/237/200/300',
+        keywords: ['qqq', 'www'],
+        amount: '9,999,999.99',
+        totalBedRoom: '81',
+        totalBathRoom: '41',
+        totalParkingSpace: '0',
+        totalArea: '100 sqft',
       ),
       Property(
-        'https://picsum.photos/id/132/200/300',
-        ['aaa', 'ssss'],
-        '1,234,567.00',
-        '9',
-        '42',
-        '16',
-        '1,000 sqft',
-        '',
-        ''
+        photoURL: 'https://picsum.photos/id/132/200/300',
+        keywords: ['aaa', 'ssss'],
+        amount: '1,234,567.00',
+        totalBedRoom: '9',
+        totalBathRoom: '42',
+        totalParkingSpace: '16',
+        totalArea: '1,000 sqft',
       ),
       Property(
-        'https://picsum.photos/id/456/200/300',
-        ['ddd', 'dddd'],
-        '540,735.12',
-        '88',
-        '51',
-        '90',
-        '987 sqft',
-        '',
-        ''
+        photoURL: 'https://picsum.photos/id/456/200/300',
+        keywords: ['ddd', 'dddd'],
+        amount: '540,735.12',
+        totalBedRoom: '88',
+        totalBathRoom: '51',
+        totalParkingSpace: '90',
+        totalArea: '987 sqft',
       )
     ];
   }
