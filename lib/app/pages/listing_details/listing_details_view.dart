@@ -23,15 +23,6 @@ class ListingDetailsPage extends View {
 
 class _ListingDetailsPageState extends ViewState<ListingDetailsPage, ListingDetailsController> {
   _ListingDetailsPageState() : super(ListingDetailsController(DataListingRepository()));
-  List<String> amenities = [
-    'Kitchen',
-    'Wifi',
-    'Eco Friendly',
-    'Security',
-    'Shared Gym',
-    'Covered Parking',
-    'Central AC'
-  ];
 
   @override
   Widget get view {
@@ -87,10 +78,25 @@ class _ListingDetailsPageState extends ViewState<ListingDetailsPage, ListingDeta
                 shrinkWrap: true,
                 physics: NeverScrollableScrollPhysics(),
                 children: [
-                  CustomText(
-                    text: '${widget.property.amount} PHP',
-                    fontSize: 20,
-                    fontWeight: FontWeight.w800,
+                  Text.rich(
+                    TextSpan(
+                      children: [
+                        TextSpan(
+                          text: "${widget.property.amount}",
+                          style: App.textStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.w800
+                          )
+                        ),
+                        TextSpan(
+                          text: "/${widget.property.timePeriod}",
+                          style: App.textStyle(
+                            fontSize: 13,
+                            fontWeight: FontWeight.w700
+                          )
+                        ),
+                      ]
+                    ),
                   ),
                   CustomText(
                     text: '${widget.property.city}',
@@ -214,7 +220,7 @@ class _ListingDetailsPageState extends ViewState<ListingDetailsPage, ListingDeta
                                 'assets/icons/furnished.png'
                               ),
                               CustomText(
-                                text: 'unfurnished',
+                                text: '${widget.property.isYourProperty}',
                                 fontSize: 12,
                                 fontWeight: FontWeight.w600,
                               )
@@ -285,7 +291,7 @@ class _ListingDetailsPageState extends ViewState<ListingDetailsPage, ListingDeta
                     padding: EdgeInsets.zero,
                     physics: NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
-                    itemCount: amenities.length,
+                    itemCount: widget.property.amenities.length,
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: MediaQuery.of(context).orientation == Orientation.landscape ? 3 : 2,
                       childAspectRatio: 5
@@ -299,7 +305,7 @@ class _ListingDetailsPageState extends ViewState<ListingDetailsPage, ListingDeta
                           ),
                           SizedBox(width: 8),
                           CustomText(
-                            text: amenities[index],
+                            text: widget.property.amenities[index],
                             fontSize: 13,
                             fontWeight: FontWeight.w600,
                           ),
@@ -315,7 +321,7 @@ class _ListingDetailsPageState extends ViewState<ListingDetailsPage, ListingDeta
                   ),
                   SizedBox(height: 10),
                   CustomText(
-                    text: "Property Description: Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s",
+                    text: "${widget.property.description}",
                     color: App.hintColor,
                     fontSize: 12,
                     fontWeight: FontWeight.w500,
