@@ -2,6 +2,7 @@ import 'package:dazle/app/pages/create_listing/create_listing_view.dart';
 import 'package:dazle/app/pages/my_collection/my_collection_view.dart';
 import 'package:dazle/app/pages/my_listing/my_listing_view.dart';
 import 'package:dazle/app/utils/app.dart';
+import 'package:dazle/app/widgets/custom_bottom_tab_bar.dart';
 import 'package:dazle/app/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 
@@ -41,40 +42,9 @@ class _ListingTabBarState extends State<ListingTabBar> with SingleTickerProvider
           fontSize: 20,
           fontWeight: FontWeight.w600,
         ),
-        bottom: PreferredSize(
-          preferredSize: Size.fromHeight(40),
-          child: Container(
-            alignment: Alignment.centerLeft,
-            // decoration: BoxDecoration(
-            //   border: Border(
-            //     top: BorderSide(
-            //       color: App.hintColor,
-            //       width: 0.3
-            //     )
-            //   )
-            // ),
-            child: TabBar(
-              controller: _tabcontroller,
-              tabs: myTabs,
-              indicatorColor: App.mainColor,
-              labelColor: App.textColor,
-              unselectedLabelColor: App.hintColor,
-              indicatorSize: TabBarIndicatorSize.label,
-              isScrollable: true,
-              // labelPadding: EdgeInsets.only(left: 0, right: 0),
-              // indicatorPadding: EdgeInsets.only(
-              //   left: 0,
-              //   right: 8,
-              //   bottom: 4
-              // ),
-              // indicator: UnderlineTabIndicator(
-              //   borderSide: BorderSide(
-              //     width: 4,
-              //     color: Color(0xFF646464),
-              //   ),
-              // )
-            ),
-          ),
+        bottom: CustomBottomTabBar(
+          tabController: _tabcontroller,
+          tabs: myTabs,
         ),
         automaticallyImplyLeading: false,
         backgroundColor: Colors.white,
