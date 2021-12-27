@@ -27,6 +27,9 @@ class CustomTextField extends StatelessWidget {
   final bool filled;
 
   final TextCapitalization textCapitalization;
+
+  final int minLines;
+  final int maxLines;
   
   CustomTextField({
     this.hintText,
@@ -43,7 +46,9 @@ class CustomTextField extends StatelessWidget {
     this.inputFormatters,
     this.fillColor = const Color.fromRGBO(255, 255, 255, 0.4),
     this.filled = false,
-    this.textCapitalization = TextCapitalization.none
+    this.textCapitalization = TextCapitalization.none,
+    this.minLines,
+    this.maxLines
   });
 
   @override
@@ -55,6 +60,8 @@ class CustomTextField extends StatelessWidget {
         initialValue: initialValue,
         readOnly: readOnly,
         onSaved: onSaved,
+        minLines: minLines,
+        maxLines: maxLines,
         validator: (isRequired && validator == null) ? (val) {
           if (val.length == 0){
             return "Required field.";
