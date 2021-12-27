@@ -1,3 +1,5 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dazle/app/pages/listing_details/components/listing_details_container_box.dart';
 import 'package:dazle/app/pages/listing_details/components/listing_details_icon_button.dart';
 import 'package:dazle/app/pages/listing_details/listing_details_controller.dart';
@@ -25,6 +27,7 @@ class ListingDetailsPage extends View {
 
 class _ListingDetailsPageState extends ViewState<ListingDetailsPage, ListingDetailsController> {
   _ListingDetailsPageState() : super(ListingDetailsController(DataListingRepository()));
+  CarouselController carouselController = CarouselController();
 
   @override
   Widget get view {
@@ -58,8 +61,55 @@ class _ListingDetailsPageState extends ViewState<ListingDetailsPage, ListingDeta
               onPressed: () => Navigator.of(context).pop(),
             ),
             leadingWidth: 51,
-            backgroundColor: App.mainColor,  
+            backgroundColor: Colors.white,
             expandedHeight: 271,
+            flexibleSpace: FlexibleSpaceBar(
+              background: CarouselSlider.builder(
+                itemCount: widget.property.photos.length ?? 0,
+                options: CarouselOptions(
+                  aspectRatio: 1,
+                  viewportFraction: 1.0,
+                  initialPage: 0,
+                  enableInfiniteScroll: true,
+                  reverse: false,
+                  autoPlay: true,
+                  autoPlayInterval: Duration(seconds: 5),
+                  autoPlayAnimationDuration: Duration(milliseconds: 800),
+                  autoPlayCurve: Curves.fastOutSlowIn,
+                  enlargeCenterPage: true,
+                  scrollDirection: Axis.horizontal,
+                  // onPageChanged: callbackFunction,
+                ),
+                itemBuilder: (BuildContext context, int itemIndex, int pageViewIndex) =>
+                  GestureDetector(
+                    onTap: () {
+                      print(widget.property.photos[itemIndex]);
+                    },
+                    child: CachedNetworkImage(
+                      imageUrl: widget.property.photos[itemIndex].toString(),
+                      imageBuilder: (context, imageProvider) => Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10)),
+                          image: DecorationImage(
+                            image: imageProvider,
+                            fit: BoxFit.cover
+                          ),
+                        ),
+                      ),
+                      progressIndicatorBuilder: (context, url, progress) => Center(
+                        child: CircularProgressIndicator(
+                          valueColor: AlwaysStoppedAnimation<Color>(Colors.indigo[900]),
+                          value: progress.progress,
+                        ),
+                      ),
+                      errorWidget: (context, url, error) => Image.asset(
+                        'assets/brooky_logo.png',
+                        fit: BoxFit.scaleDown,
+                      ),
+                    ),
+                  )
+              )
+            ),
           ),
           SliverList(
             delegate: SliverChildListDelegate([
