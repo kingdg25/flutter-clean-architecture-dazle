@@ -14,9 +14,6 @@ class HomeController extends Controller {
   User _user;
   User get user => _user;
 
-  String _displayName;
-  String get displayName => _displayName;
-
   List<PhotoTile> _spotLight;
   List<PhotoTile> get spotLight => _spotLight;
 
@@ -31,8 +28,7 @@ class HomeController extends Controller {
 
 
   HomeController(userRepo)
-    : _displayName = '',
-      _spotLight = <PhotoTile>[],
+    : _spotLight = <PhotoTile>[],
       _matchedProperties = <Property>[],
       _whyBrooky = <PhotoTile>[],
       _newHomes = <Property>[],
@@ -48,8 +44,6 @@ class HomeController extends Controller {
       print('get user on next $res ${res.displayName}');
       if(res != null) {
         _user = res;
-
-        _displayName = res.displayName ?? res.email;
       }
       refreshUI();
     };
