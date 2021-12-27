@@ -4,6 +4,8 @@ import 'package:dazle/app/pages/listing/listing_view.dart';
 import 'package:dazle/app/pages/main/components/triangle_painter.dart';
 import 'package:dazle/app/pages/message/message_view.dart';
 import 'package:dazle/app/pages/profile/profile_view.dart';
+import 'package:dazle/app/utils/app.dart';
+import 'package:dazle/domain/entities/user.dart';
 import 'package:flutter/material.dart';
 
 class MainPage extends StatefulWidget {
@@ -16,13 +18,23 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
+  User user;
   int _currentIndex = 0;
-  final List<Widget> _navs = [
-    HomePage(),
-    ConnectionPage(),
-    ListingPage(),
-    MessagePage(),
-    ProfilePage(),
+
+  getCurrentUser() async {
+    User _user = await App.getUser();
+
+    if (_user != null){
+      user = _user;
+    }
+  }
+
+  List<Widget> _navs() => [
+    HomePage(user: user),
+    ConnectionPage(user: user),
+    ListingPage(user: user),
+    MessagePage(user: user),
+    ProfilePage(user: user),
   ];
 
   customBottomNavigationBarItem({
@@ -47,11 +59,19 @@ class _MainPageState extends State<MainPage> {
     );
   }
 
+  @override
+  void initState() {
+    super.initState();
+    getCurrentUser();
+  }
+
 
   @override
   Widget build(BuildContext context) {
+    final List<Widget> navs = _navs();
+
     return Scaffold(
-      body: _navs[_currentIndex],
+      body: navs[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         showSelectedLabels: false,
