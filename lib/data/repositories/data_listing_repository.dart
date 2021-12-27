@@ -22,6 +22,11 @@ class DataListingRepository extends ListingRepository {
     return [
       Property(
         coverPhoto: 'https://picsum.photos/id/73/200/300',
+        photos: [
+          'https://picsum.photos/id/70/200/300',
+          'https://picsum.photos/id/71/200/300',
+          'https://picsum.photos/id/72/200/300',
+        ],
         keywords: ['aa', 'ss'],
         amount: '540,735.12',
         totalBedRoom: '213',
@@ -43,6 +48,11 @@ class DataListingRepository extends ListingRepository {
     return [
       Property(
         coverPhoto: 'https://picsum.photos/id/76/200/300',
+        photos: [
+          'https://picsum.photos/id/77/200/300',
+          'https://picsum.photos/id/78/200/300',
+          'https://picsum.photos/id/79/200/300',
+        ],
         keywords: ['qq', 'ww'],
         amount: '664,321.12',
         totalBedRoom: '11',
