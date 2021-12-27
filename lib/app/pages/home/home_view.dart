@@ -7,6 +7,7 @@ import 'package:dazle/app/utils/app.dart';
 import 'package:dazle/app/utils/app_constant.dart';
 import 'package:dazle/app/widgets/form_fields/custom_search_field.dart';
 import 'package:dazle/data/repositories/data_home_repository.dart';
+import 'package:dazle/domain/entities/user.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:dazle/app/pages/home/home_controller.dart';
@@ -14,7 +15,12 @@ import 'package:dazle/app/pages/home/home_controller.dart';
 
 
 class HomePage extends View {
-  HomePage({Key key}) : super(key: key);
+  final User user;
+
+  HomePage({
+    Key key,
+    this.user
+  }) : super(key: key);
 
   @override
   _HomePageState createState() => _HomePageState();
