@@ -165,7 +165,7 @@ class LoginController extends Controller {
   }
 
   void mainPage() {
-    Navigator.popAndPushNamed(getContext(), MainPage.id);
+    Navigator.pushReplacementNamed(getContext(), MainPage.id);
   }
 
   void welcomePage() {
