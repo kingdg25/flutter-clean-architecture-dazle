@@ -1,4 +1,4 @@
-import 'package:dazle/domain/usecases/authentication/get_user_usecase.dart';
+import 'package:dazle/domain/usecases/get_user_usecase.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 
 class ConnectionPresenter extends Presenter {

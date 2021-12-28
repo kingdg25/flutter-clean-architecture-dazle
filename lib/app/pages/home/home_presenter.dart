@@ -4,7 +4,7 @@ import 'package:dazle/domain/usecases/home/get_spot_light_usecase.dart';
 import 'package:dazle/domain/usecases/home/get_why_brooky_usecase.dart';
 import 'package:dazle/domain/usecases/home/is_new_user_usecase.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
-import 'package:dazle/domain/usecases/authentication/get_user_usecase.dart';
+import 'package:dazle/domain/usecases/get_user_usecase.dart';
 
 
 class HomePresenter extends Presenter {

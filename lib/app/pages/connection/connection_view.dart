@@ -12,12 +12,7 @@ import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 
 
 class ConnectionPage extends View {
-  final User user;
-
-  ConnectionPage({
-    Key key,
-    this.user
-  }) : super(key: key);
+  ConnectionPage({Key key}) : super(key: key);
 
   @override
   _ConnectionPageState createState() => _ConnectionPageState();
