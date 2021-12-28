@@ -3,6 +3,7 @@ import 'package:dazle/app/pages/profile/profile_controller.dart';
 import 'package:dazle/app/utils/app.dart';
 import 'package:dazle/app/widgets/custom_text.dart';
 import 'package:dazle/app/widgets/form_fields/custom_button.dart';
+import 'package:dazle/app/widgets/form_fields/custom_field_layout.dart';
 import 'package:dazle/data/repositories/data_profile_repository.dart';
 import 'package:dazle/domain/entities/user.dart';
 import 'package:flutter/material.dart';
@@ -61,7 +62,7 @@ class _ProfilePageState extends ViewState<ProfilePage, ProfileController> {
 
           return SingleChildScrollView(
             child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 20),
+              padding: EdgeInsets.only(left: 20, right: 20, bottom: 40),
               child: Column(
                 children: [
                   Center(
@@ -83,12 +84,14 @@ class _ProfilePageState extends ViewState<ProfilePage, ProfileController> {
                     fontWeight: FontWeight.w500,
                   ),
                   SizedBox(height: 10),
-                  CustomText(
-                    text: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.",
-                    fontSize: 11,
-                    color: App.hintColor,
-                    fontWeight: FontWeight.w500,
-                    textAlign: TextAlign.center,
+                  CustomFieldLayout(
+                    child: CustomText(
+                      text: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.",
+                      fontSize: 11,
+                      color: App.hintColor,
+                      fontWeight: FontWeight.w500,
+                      textAlign: TextAlign.center,
+                    ),
                   ),
                   SizedBox(height: 20),
                   Row(
@@ -120,69 +123,71 @@ class _ProfilePageState extends ViewState<ProfilePage, ProfileController> {
                     ],
                   ),
                   SizedBox(height: 20),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Column(
-                        children: [
-                          CustomText(
-                            text: '25',
-                            fontSize: 18,
-                            fontWeight: FontWeight.w600,
-                          ),
-                          CustomText(
-                            text: 'LISTING',
-                            fontSize: 10,
-                            color: App.hintColor,
-                            fontWeight: FontWeight.w400,
-                          )
-                        ],
-                      ),
-                      SizedBox(
-                        height: 25,
-                        child: VerticalDivider(
-                          color: App.hintColor,
-                          thickness: 1,
+                  CustomFieldLayout(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Column(
+                          children: [
+                            CustomText(
+                              text: '25',
+                              fontSize: 18,
+                              fontWeight: FontWeight.w600,
+                            ),
+                            CustomText(
+                              text: 'LISTING',
+                              fontSize: 10,
+                              color: App.hintColor,
+                              fontWeight: FontWeight.w400,
+                            )
+                          ],
                         ),
-                      ),
-                      Column(
-                        children: [
-                          CustomText(
-                            text: '125',
-                            fontSize: 18,
-                            fontWeight: FontWeight.w600,
-                          ),
-                          CustomText(
-                            text: 'CONNECTIONS',
-                            fontSize: 10,
+                        SizedBox(
+                          height: 25,
+                          child: VerticalDivider(
                             color: App.hintColor,
-                            fontWeight: FontWeight.w400,
-                          )
-                        ],
-                      ),
-                      SizedBox(
-                        height: 25,
-                        child: VerticalDivider(
-                          color: App.hintColor,
-                          thickness: 1,
+                            thickness: 1,
+                          ),
                         ),
-                      ),
-                      Column(
-                        children: [
-                          CustomText(
-                            text: '250',
-                            fontSize: 18,
-                            fontWeight: FontWeight.w600,
-                          ),
-                          CustomText(
-                            text: 'FOLLOWING',
-                            fontSize: 10,
+                        Column(
+                          children: [
+                            CustomText(
+                              text: '125',
+                              fontSize: 18,
+                              fontWeight: FontWeight.w600,
+                            ),
+                            CustomText(
+                              text: 'CONNECTIONS',
+                              fontSize: 10,
+                              color: App.hintColor,
+                              fontWeight: FontWeight.w400,
+                            )
+                          ],
+                        ),
+                        SizedBox(
+                          height: 25,
+                          child: VerticalDivider(
                             color: App.hintColor,
-                            fontWeight: FontWeight.w400,
-                          )
-                        ],
-                      )
-                    ],
+                            thickness: 1,
+                          ),
+                        ),
+                        Column(
+                          children: [
+                            CustomText(
+                              text: '250',
+                              fontSize: 18,
+                              fontWeight: FontWeight.w600,
+                            ),
+                            CustomText(
+                              text: 'FOLLOWING',
+                              fontSize: 10,
+                              color: App.hintColor,
+                              fontWeight: FontWeight.w400,
+                            )
+                          ],
+                        )
+                      ],
+                    ),
                   )
                 ]
               ),
