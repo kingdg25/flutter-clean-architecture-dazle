@@ -22,7 +22,7 @@ class _MessageLeadPageState extends ViewState<MessageLeadPage, MessageLeadContro
       key: globalKey,
       backgroundColor: Colors.white,
       body: Center(
-        child: Text('message page'),
+        child: Text('message lead page'),
       ),
     );
   }
