@@ -1,5 +1,6 @@
 import 'package:dazle/app/pages/edit_profile/edit_profile_view.dart';
 import 'package:dazle/app/pages/profile/profile_controller.dart';
+import 'package:dazle/app/pages/settings/settings_view.dart';
 import 'package:dazle/app/utils/app.dart';
 import 'package:dazle/app/widgets/custom_text.dart';
 import 'package:dazle/app/widgets/form_fields/custom_button.dart';
@@ -44,7 +45,12 @@ class _ProfilePageState extends ViewState<ProfilePage, ProfileController> {
               ),
               iconSize: 30,
               onPressed: () {
-                print("Hello");
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (buildContext) => SettingsPage()
+                  )
+                );
               }
             ),
           )
