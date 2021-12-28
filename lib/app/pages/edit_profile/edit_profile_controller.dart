@@ -1,8 +1,10 @@
 import 'package:dazle/app/pages/edit_profile/edit_profile_presenter.dart';
 import 'package:dazle/app/utils/app.dart';
+import 'package:dazle/app/utils/app_constant.dart';
 import 'package:dazle/domain/entities/user.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
+import 'package:flutter_overlay_loader/flutter_overlay_loader.dart';
 
 
 class EditProfileController extends Controller {
@@ -21,7 +23,7 @@ class EditProfileController extends Controller {
   final TextEditingController aboutMeTextController;
 
   EditProfileController(userRepo)
-    : editProfilePresenter = EditProfilePresenter(),
+    : editProfilePresenter = EditProfilePresenter(userRepo),
       editProfileFormKey = GlobalKey<FormState>(),
       firstNameTextController = TextEditingController(),
       lastNameTextController = TextEditingController(),
@@ -36,6 +38,30 @@ class EditProfileController extends Controller {
   @override
   void initListeners() {
     getCurrentUser();
+
+    // update user
+    editProfilePresenter.updateUserOnNext = () {
+      print('update user on next');
+    };
+
+    editProfilePresenter.updateUserOnComplete = () {
+      print('update user on complete');
+      AppConstant.showLoader(getContext(), false);
+
+      _statusDialog('Success!', 'Updated Sucessfully');
+    };
+
+    editProfilePresenter.updateUserOnError = (e) {
+      print('update user on error $e');
+      AppConstant.showLoader(getContext(), false);
+      
+      if ( !e['error'] ) {
+        _statusDialog('Oops!', '${e['status'] ?? ''}');
+      }
+      else{
+        _statusDialog('Something went wrong', '${e.toString()}');
+      } 
+    };
   }
 
 
@@ -61,6 +87,37 @@ class EditProfileController extends Controller {
   }
 
 
+  void updateUser(){
+    AppConstant.showLoader(getContext(), true);
+    User updatedUser = User(
+      id: _user.id,
+
+      firstName: firstNameTextController.text,
+      lastName: lastNameTextController.text,
+      mobileNumber: mobileNumberTextController.text,
+      aboutMe: aboutMeTextController.text,
+
+      // retain value
+      email: _user.email,
+      position: _user.position,
+      brokerLicenseNumber: _user.brokerLicenseNumber,
+      isNewUser: false
+    );
+
+    editProfilePresenter.updateUser(user: updatedUser);
+  }
+
+
+  _statusDialog(String title, String text, {bool success, Function onPressed}){
+    AppConstant.statusDialog(
+      context: getContext(),
+      success: success ?? false,
+      title: title,
+      text: text,
+      onPressed: onPressed
+    );
+  }
+  
 
   @override
   void onResumed() => print('On resumed');
@@ -83,6 +140,7 @@ class EditProfileController extends Controller {
     brokerLicenseNumberTextController.dispose();
     aboutMeTextController.dispose();
 
+    Loader.hide();
     super.onDisposed();
   }
   

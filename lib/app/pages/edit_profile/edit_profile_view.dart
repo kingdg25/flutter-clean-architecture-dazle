@@ -1,4 +1,5 @@
 import 'package:dazle/app/pages/edit_profile/edit_profile_controller.dart';
+import 'package:dazle/app/utils/app.dart';
 import 'package:dazle/app/widgets/custom_appbar.dart';
 import 'package:dazle/app/widgets/form_fields/custom_button.dart';
 import 'package:dazle/app/widgets/form_fields/custom_field_layout.dart';
@@ -80,22 +81,6 @@ class _EditProfilePageState extends ViewState<EditProfilePage, EditProfileContro
                       )
                     ),
                     TitleField(
-                      title: 'Profession'
-                    ),
-                    CustomTextField(
-                      controller: controller.professionTextController,
-                      hintText: 'Profession',
-                      readOnly: true,
-                    ),
-                    TitleField(
-                      title: 'Email Address'
-                    ),
-                    CustomTextField(
-                      controller: controller.emailTextController,
-                      hintText: '+63',
-                      readOnly: true,
-                    ),
-                    TitleField(
                       title: 'Mobile Number'
                     ),
                     CustomTextField(
@@ -103,15 +88,6 @@ class _EditProfilePageState extends ViewState<EditProfilePage, EditProfileContro
                       hintText: '+63',
                       isRequired: true,
                       keyboardType: TextInputType.phone,
-                    ),
-                    TitleField(
-                      title: 'Broker License #'
-                    ),
-                    CustomTextField(
-                      controller: controller.brokerLicenseNumberTextController,
-                      hintText: 'Broker License #',
-                      readOnly: true,
-                      keyboardType: TextInputType.number,
                     ),
                     TitleField(
                       title: 'About Me'
@@ -124,7 +100,7 @@ class _EditProfilePageState extends ViewState<EditProfilePage, EditProfileContro
                       minLines: 4,
                       maxLines: null,
                     ),
-                    SizedBox(height: 20.0),
+                    SizedBox(height: 30.0),
                     CustomButton(
                       text: 'Save Profile',
                       expanded: true,
@@ -134,8 +110,41 @@ class _EditProfilePageState extends ViewState<EditProfilePage, EditProfileContro
                         if (_formKey.currentState.validate()) {
                           _formKey.currentState.save();
                           
+                          controller.updateUser();
                         }
                       }
+                    ),
+                    SizedBox(height: 30.0),
+                    CustomFieldLayout(
+                      child: Divider(
+                        color: App.hintColor,
+                      ),
+                    ),
+                    SizedBox(height: 30.0),
+                    TitleField(
+                      title: 'Email Address'
+                    ),
+                    CustomTextField(
+                      controller: controller.emailTextController,
+                      hintText: '+63',
+                      readOnly: true,
+                    ),
+                    TitleField(
+                      title: 'Profession'
+                    ),
+                    CustomTextField(
+                      controller: controller.professionTextController,
+                      hintText: 'Profession',
+                      readOnly: true,
+                    ),
+                    TitleField(
+                      title: 'Broker License #'
+                    ),
+                    CustomTextField(
+                      controller: controller.brokerLicenseNumberTextController,
+                      hintText: 'Broker License #',
+                      readOnly: true,
+                      keyboardType: TextInputType.number,
                     )
                   ]
                 ),
