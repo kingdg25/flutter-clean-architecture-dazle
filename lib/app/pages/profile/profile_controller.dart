@@ -1,12 +1,17 @@
 import 'package:dazle/app/pages/login/login_view.dart';
 import 'package:dazle/app/pages/profile/profile_presenter.dart';
+import 'package:dazle/app/utils/app.dart';
 import 'package:dazle/app/utils/app_constant.dart';
+import 'package:dazle/domain/entities/user.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 
 
 class ProfileController extends Controller {
   final ProfilePresenter profilePresenter;
+
+  User _user;
+  User get user => _user;
 
   ProfileController(userRepo)
     : profilePresenter = ProfilePresenter(userRepo),
@@ -15,6 +20,8 @@ class ProfileController extends Controller {
 
   @override
   void initListeners() {
+    getCurrentUser();
+
     // logout
     profilePresenter.logoutUserOnNext = () {
       print('logout on next');
@@ -42,6 +49,16 @@ class ProfileController extends Controller {
 
   void loginPage() {
     Navigator.popAndPushNamed(getContext(), LoginPage.id);
+  }
+
+  getCurrentUser() async {
+    User user = await App.getUser();
+
+    if (user != null){
+      _user = user;
+
+      refreshUI();
+    }
   }
 
 

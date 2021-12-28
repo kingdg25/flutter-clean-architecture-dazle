@@ -5,19 +5,13 @@ import 'package:dazle/app/widgets/custom_text.dart';
 import 'package:dazle/app/widgets/form_fields/custom_button.dart';
 import 'package:dazle/app/widgets/form_fields/custom_field_layout.dart';
 import 'package:dazle/data/repositories/data_profile_repository.dart';
-import 'package:dazle/domain/entities/user.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 
 
 
 class ProfilePage extends View {
-  final User user;
-
-  ProfilePage({
-    Key key,
-    this.user
-  }) : super(key: key);
+  ProfilePage({Key key}) : super(key: key);
 
   @override
   _ProfilePageState createState() => _ProfilePageState();
@@ -59,6 +53,13 @@ class _ProfilePageState extends ViewState<ProfilePage, ProfileController> {
       backgroundColor: Colors.white,
       body: ControlledWidgetBuilder<ProfileController>(
         builder: (context, controller) {
+          var user = controller.user;
+
+          if ( user == null ) {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          }
 
           return SingleChildScrollView(
             child: Container(
@@ -73,20 +74,20 @@ class _ProfilePageState extends ViewState<ProfilePage, ProfileController> {
                     ),
                   ),
                   CustomText(
-                    text: widget.user.displayName ?? '',
+                    text: user.displayName ?? '',
                     fontSize: 25,
                     fontWeight: FontWeight.w600,
                   ),
                   SizedBox(height: 5),
                   CustomText(
-                    text: 'Real Estate ${widget.user.position ?? ''}',
+                    text: 'Real Estate ${user.position ?? ''}',
                     fontSize: 13,
                     fontWeight: FontWeight.w500,
                   ),
                   SizedBox(height: 10),
                   CustomFieldLayout(
                     child: CustomText(
-                      text: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.",
+                      text: user.aboutMe ?? '',
                       fontSize: 11,
                       color: App.hintColor,
                       fontWeight: FontWeight.w500,
@@ -101,15 +102,17 @@ class _ProfilePageState extends ViewState<ProfilePage, ProfileController> {
                         text: 'Edit Profile',
                         width: 120,
                         borderRadius: 30,
-                        onPressed: () {
-                          Navigator.push(
+                        onPressed: () async {
+                          await Navigator.push(
                             context,
                             MaterialPageRoute(
                               builder: (buildContext) => EditProfilePage(
-                                user: widget.user,
+                                user: user,
                               )
                             )
                           );
+
+                          controller.getCurrentUser();
                         }
                       ),
                       SizedBox(width: 8),
