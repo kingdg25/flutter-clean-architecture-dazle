@@ -14,41 +14,13 @@ class ProfileController extends Controller {
   User get user => _user;
 
   ProfileController(userRepo)
-    : profilePresenter = ProfilePresenter(userRepo),
+    : profilePresenter = ProfilePresenter(),
       super();
 
 
   @override
   void initListeners() {
     getCurrentUser();
-
-    // logout
-    profilePresenter.logoutUserOnNext = () {
-      print('logout on next');
-    };
-
-    profilePresenter.logoutUserOnComplete = () {
-      print('logout on complete');
-      AppConstant.showLoader(getContext(), false);
-      loginPage();
-    };
-
-    profilePresenter.logoutUserOnError = (e) {
-      print('logout on error $e');
-      AppConstant.showLoader(getContext(), false);
-    };
-  }
-
-
-  void userLogout(){
-    print('user logout home controller');
-    AppConstant.showLoader(getContext(), true);
-
-    profilePresenter.logoutUser();
-  }
-
-  void loginPage() {
-    Navigator.popAndPushNamed(getContext(), LoginPage.id);
   }
 
   getCurrentUser() async {
