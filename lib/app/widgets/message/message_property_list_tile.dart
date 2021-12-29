@@ -73,7 +73,7 @@ class MessagePropertyListTile extends StatelessWidget {
                           overflow: TextOverflow.ellipsis,
                         ),
                         CustomText(
-                          text: 'Property Name',
+                          text: '${items[index].property.keywordsToString}',
                           fontSize: 10,
                           fontWeight: FontWeight.w700,
                           overflow: TextOverflow.ellipsis,
