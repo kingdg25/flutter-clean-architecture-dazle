@@ -1,4 +1,4 @@
-import 'package:dazle/app/pages/listing/components/listing_property_list_tile.dart';
+import 'package:dazle/app/widgets/listing/listing_property_list_tile.dart';
 import 'package:dazle/app/pages/my_collection/my_collection_controller.dart';
 import 'package:dazle/app/widgets/form_fields/custom_search_field.dart';
 import 'package:dazle/data/repositories/data_listing_repository.dart';
