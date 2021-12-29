@@ -1,3 +1,4 @@
+import 'package:dazle/app/pages/settings/components/settings_list_tile.dart';
 import 'package:dazle/app/pages/settings/settings_controller.dart';
 import 'package:dazle/app/utils/app.dart';
 import 'package:dazle/app/widgets/custom_appbar.dart';
@@ -27,25 +28,49 @@ class _SettingsPageState extends ViewState<SettingsPage, SettingsController> {
         title: 'Settings',
       ),
       backgroundColor: Colors.white,
-      body: SingleChildScrollView(
-        child: Container(
-          padding: EdgeInsets.only(left: 20, right: 20, bottom: 40),
-          child: Column(
-            children: [
-              SizedBox(height: 40),
-              Container(
-                alignment: Alignment.center,
-                child: CustomButton(
-                  text: 'Sign Out',
-                  expanded: true,
-                  backgroudColor: Color.fromRGBO(229, 229, 229, 1.0),
-                  textColor: App.textColor,
-                  onPressed: () {}
+      body: ControlledWidgetBuilder<SettingsController>(
+        builder: (context, controller) {
+          return SingleChildScrollView(
+            padding: EdgeInsets.only(bottom: 40),
+            child: Column(
+              children: [
+                SettingsListTile(
+                  text: 'Help Center',
+                  onTap: () {},
                 ),
-              )
-            ]
-          )
-        )
+                SettingsListTile(
+                  text: 'Privacy Policy',
+                  onTap: () {},
+                ),
+                SettingsListTile(
+                  text: 'Accessibility',
+                  onTap: () {},
+                ),
+                SettingsListTile(
+                  text: 'User Agreement',
+                  onTap: () {},
+                ),
+                SettingsListTile(
+                  text: 'End User License Agreement',
+                  onTap: () {},
+                ),
+                SizedBox(height: 40),
+                Container(
+                  alignment: Alignment.center,
+                  child: CustomButton(
+                    text: 'Sign Out',
+                    expanded: true,
+                    backgroudColor: Color.fromRGBO(229, 229, 229, 1.0),
+                    textColor: App.textColor,
+                    onPressed: () {
+                      controller.signOut();
+                    }
+                  ),
+                )
+              ]
+            )
+          );
+        }
       )
     );
   }

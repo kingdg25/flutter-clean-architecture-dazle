@@ -34,7 +34,7 @@ class SettingsController extends Controller {
   }
 
 
-  void userLogout(){
+  void signOut(){
     print('user logout home controller');
     AppConstant.showLoader(getContext(), true);
 
