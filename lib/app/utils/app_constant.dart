@@ -94,7 +94,8 @@ class AppConstant{
 
   static loadAssets({
     @required BuildContext context,
-    List<AssetEntity> selectedAssets
+    List<AssetEntity> selectedAssets,
+    int maxAssets = 1
   }) async {
     List<AssetEntity> assets = List<AssetEntity>();
 
@@ -104,7 +105,7 @@ class AppConstant{
       if (result) {
         final List<AssetEntity> pickAssets = await AssetPicker.pickAssets(
           context,
-          maxAssets: 5,
+          maxAssets: maxAssets,
           requestType: RequestType.image,
           textDelegate: EnglishTextDelegate(),
           selectedAssets: selectedAssets

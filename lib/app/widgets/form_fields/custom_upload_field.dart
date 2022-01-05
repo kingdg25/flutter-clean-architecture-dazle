@@ -50,7 +50,7 @@ class _CustomUploadFieldState extends State<CustomUploadField> {
               backgroudColor: App.hintColor,
               main: false,
               onPressed: () async {
-                var result = await AppConstant.loadAssets(context: context, selectedAssets: selectedAssets);
+                var result = await AppConstant.loadAssets(context: context, selectedAssets: selectedAssets, maxAssets: 5);
                 
                 setState(() {
                   selectedAssets = result;
