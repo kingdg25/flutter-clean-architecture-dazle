@@ -124,9 +124,9 @@ class CreateListingController extends Controller {
   validatePage4(){
     bool isValidated = false;
 
-    if ( amenities.length > 4 ) {
+    if ( amenities.length > 1 ) {
       isValidated = true;
-    }
+    } else AppConstant.statusDialog(context: getContext(), text: "Choose at least 1 amenities.", title: "Choose more amenities.");
 
     return isValidated;
   }
@@ -134,9 +134,9 @@ class CreateListingController extends Controller {
   validatePage5(){
     bool isValidated = false;
 
-    if ( assets.length > 4 ) {
+    if ( assets.length > 0 ) {
       isValidated = true;
-    }
+    } else AppConstant.statusDialog(context: getContext(), text: "Upload files at least 4 photos.", title: "Upload Photos.");
 
     return isValidated;
   }
@@ -148,6 +148,12 @@ class CreateListingController extends Controller {
     final assetsBased64 = await AppConstant.initializeAssetImages(images: assets);
 
     var listing = {
+      "cover_photo": 'https://picsum.photos/id/73/200/300',
+      "photos": [
+        'https://picsum.photos/id/70/200/300',
+        'https://picsum.photos/id/71/200/300',
+        'https://picsum.photos/id/72/200/300',
+      ],
       "property_type": propertyType,
       "property_for": propertyFor,
       "time_period": timePeriod,
@@ -155,8 +161,8 @@ class CreateListingController extends Controller {
 
       "number_of_bedrooms": numberOfBedRooms,
       "number_of_bathrooms": numberOfBathRooms,
-      "number_of_parking": numberOfParking,
-      "area": areaTextController.text,
+      "number_of_parking_space": numberOfParking,
+      "total_area": areaTextController.text,
       "is_your_property": isYourProperty,
 
       "street": streetTextController.text,
@@ -165,7 +171,7 @@ class CreateListingController extends Controller {
 
       "amenities": amenities,
 
-      "assets": assetsBased64
+      // "assets": assetsBased64
     };
 
     createListingPresenter.createListing(listing: listing);

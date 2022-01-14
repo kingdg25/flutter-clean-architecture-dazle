@@ -68,7 +68,7 @@ class MessagePropertyListTile extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         CustomText(
-                          text: '${items[index].property.amount} PHP',
+                          text: '${items[index].property.price} PHP',
                           fontWeight: FontWeight.w800,
                           overflow: TextOverflow.ellipsis,
                         ),

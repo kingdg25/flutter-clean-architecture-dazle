@@ -23,10 +23,10 @@ class ListingPropertyListTile extends StatelessWidget {
     return Container(
       alignment: Alignment.center,
       padding: EdgeInsets.symmetric(horizontal: 20),
-      height: height,
+      height: MediaQuery.of(context).size.height,
       constraints: BoxConstraints(maxWidth: 300, minWidth: 250),
       child: ListView.builder(
-        shrinkWrap: true,
+        shrinkWrap: false,
         itemCount: items?.length ?? 0,
         itemBuilder: (BuildContext context, int index){
           return Container(
@@ -86,12 +86,12 @@ class ListingPropertyListTile extends StatelessWidget {
                         fontWeight: FontWeight.w500,
                       ),
                       CustomText(
-                        text: '${items[index].amount} PHP',
+                        text: '${items[index].price} PHP',
                         fontSize: 13,
                         fontWeight: FontWeight.w700,
                       ),
                       CustomText(
-                        text: '${items[index].district}',
+                        text: '${items[index].district ?? "No disctrict specified"}',
                         fontSize: 10,
                         fontWeight: FontWeight.w500,
                       ),

@@ -1,5 +1,11 @@
+import 'package:dazle/app/utils/app.dart';
+import 'package:dazle/data/constants.dart';
 import 'package:dazle/domain/entities/property.dart';
 import 'package:dazle/domain/repositories/listing_repository.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import 'dart:convert' as convert;
+import 'package:http/http.dart' as http;
 
 class DataListingRepository extends ListingRepository {
   List<Property> myListing;
@@ -13,12 +19,102 @@ class DataListingRepository extends ListingRepository {
   factory DataListingRepository() => _instance;
 
   @override
-  Future<void> create({Map listing}) async {
-    print('creating listing $listing');
+  Future<Property> create({Map listing}) async {
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    // final user = convert.jsonDecode(await prefs.get('user'));
+
+    final user = await App.getUser();
+    final uid = user.id;
+
+    if (uid!=null) {
+      listing['createdBy'] = uid;
+      Map params = {
+      "property": listing,
+      "user_token": prefs.getString("accessToken")
+    };
+
+
+      var response = await http.post(
+        "${Constants.siteURL}/api/listings/create-listing",
+        body: convert.jsonEncode(params),
+        headers: {
+          'Authorization': 'Bearer ${prefs.getString("accessToken")}',
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        }
+      );
+
+      var jsonResponse = await convert.jsonDecode(response.body);
+      print(jsonResponse);
+      if (response.statusCode == 200){
+        final Map property = jsonResponse["property"];
+        property['price'] = jsonResponse["property"]['price'].toString();
+
+        print(property['createdAt'].runtimeType);
+        print(property['createdAt']);
+        
+        final Property propertyInstance = Property.fromJson(property);
+
+        print(propertyInstance.toJson());
+        
+        return propertyInstance;
+      } else {
+        throw {
+          "error": true,
+          "error_type": "server_error",
+          "status": "Listing not created."
+        };
+      }
+      
+    } else {
+      throw {
+        "error": false,
+        "error_type": "dynamic",
+        "status": "Has no user _id"
+      };
+    }
   }
 
   @override
   Future<List<Property>> getMyListing() async {
+    final List<Property> listings = <Property>[];
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final user = await App.getUser();
+    final uid = user.id;
+
+    if (uid==null) {
+      throw {
+        "error": false,
+        "error_type": "dynamic",
+        "status": "Has no user _id"
+      };
+    }
+
+    var response = await http.get(
+        "${Constants.siteURL}/api/listings/my-listings?user_id=$uid",
+        headers: {
+          'Authorization': 'Bearer ${prefs.getString("accessToken")}',
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        }
+    );
+    
+    var jsonResponse = await convert.jsonDecode(response.body);
+    print("LISTING YOW");
+    if (response.statusCode == 200){
+      print(jsonResponse['listings'].length);
+      jsonResponse['listings'].forEach((val){
+        val['price'] = "${val['price'] ?? 0}";
+        val['time_period'] = "${val['time_period'] ?? 0}";
+        val['total_area'] = "${val['total_area'] ?? 0}";
+        print(val);
+        listings.add(Property.fromJson(val));
+      });
+    }
+    print("WEWWEW");
+    return listings;
+    
     return [
       Property(
         coverPhoto: 'https://picsum.photos/id/73/200/300',
@@ -28,7 +124,7 @@ class DataListingRepository extends ListingRepository {
           'https://picsum.photos/id/72/200/300',
         ],
         keywords: ['aa', 'ss'],
-        amount: '540,735.12',
+        price: '540,735.12',
         totalBedRoom: '213',
         totalBathRoom: '321',
         totalParkingSpace: '22',
@@ -54,7 +150,7 @@ class DataListingRepository extends ListingRepository {
           'https://picsum.photos/id/79/200/300',
         ],
         keywords: ['qq', 'ww'],
-        amount: '664,321.12',
+        price: '664,321.12',
         totalBedRoom: '11',
         totalBathRoom: '22',
         totalParkingSpace: '33',

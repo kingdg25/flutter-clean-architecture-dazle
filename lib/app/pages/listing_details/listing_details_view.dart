@@ -122,7 +122,7 @@ class _ListingDetailsPageState extends ViewState<ListingDetailsPage, ListingDeta
                     TextSpan(
                       children: [
                         TextSpan(
-                          text: "${widget.property.amount}",
+                          text: "${widget.property.price}",
                           style: App.textStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.w800

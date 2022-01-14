@@ -3,7 +3,11 @@ class Property {
   final List photos;
   final List amenities;
   final List keywords;
-  final String amount;
+
+  final String propertyType;
+  final String propertyFor;
+  final String price;
+
   final String timePeriod;
   final String totalBedRoom;
   final String totalBathRoom;
@@ -12,11 +16,16 @@ class Property {
   /// furnished or unfurnished
   final String isYourProperty;
   final String district;
+  final String landmark;
   final String city;
   final String description;
+  final String createdBy;
+  final String createdAt;
+  final String updatedAt;
+  final String id;
 
   String get keywordsToString{
-    return keywords.join(" • ");
+    return keywords?.join(" • ");
   }
 
 
@@ -25,7 +34,9 @@ class Property {
     this.photos,
     this.amenities,
     this.keywords,
-    this.amount,
+    this.propertyType,
+    this.propertyFor,
+    this.price,
     this.timePeriod,
     this.totalBathRoom,
     this.totalBedRoom,
@@ -33,8 +44,13 @@ class Property {
     this.totalArea,
     this.isYourProperty,
     this.district,
+    this.landmark,
     this.city,
-    this.description
+    this.description,
+    this.createdBy,
+    this.createdAt,
+    this.updatedAt,
+    this.id
   });
 
   Property.fromJson(Map<String, dynamic> json)
@@ -42,31 +58,41 @@ class Property {
       photos = json['photos'],
       amenities = json['amenities'],
       keywords = json['keywords'],
-      amount = json['amount'],
+      propertyType = json['property_type'],
+      propertyFor = json['property_for'],
+      price = json['price'],
       timePeriod = json['time_period'],
-      totalBedRoom = json['total_bed_room'],
-      totalBathRoom = json['total_bath_room'],
-      totalParkingSpace = json['total_parking_space'],
+      totalBedRoom = json['number_of_bedrooms'],
+      totalBathRoom = json['number_of_bathrooms'],
+      totalParkingSpace = json['number_of_parking_space'],
       totalArea = json['total_area'],
       isYourProperty = json['is_your_property'],
       district = json['district'],
+      landmark = json['landmark'],
       city = json['city'],
-      description = json['description'];
+      description = json['description'],
+      createdBy = json['createdBy'],
+      createdAt = json['createdAt'].toString(),
+      updatedAt = json['updatedAt'].toString(),
+      id = json['_id'];
 
   Map<String, dynamic> toJson() => {
-    'cover_photo': coverPhoto,
-    'photos': photos,
-    'amenities': amenities,
-    'keywords': keywords,
-    'amount': amount,
-    'time_period': timePeriod,
-    'total_bed_room': totalBedRoom,
-    'total_bath_room': totalBathRoom,
-    'total_parking_space': totalParkingSpace,
-    'total_area': totalArea,
-    'is_your_property': isYourProperty,
-    'district': district,
-    'city': city,
-    'description': description
+    'cover_photo': coverPhoto ?? "",
+    'photos': photos ?? "",
+    'amenities': amenities ?? "",
+    'keywords': keywords ?? "",
+    'price': price ?? "",
+    'time_period': timePeriod ?? "",
+    'number_of_bedrooms': totalBedRoom ?? "",
+    'number_of_bathrooms': totalBathRoom ?? "",
+    'number_of_parking_space': totalParkingSpace ?? "",
+    'total_area': totalArea ?? "",
+    'is_your_property': isYourProperty ?? "",
+    'district': district ?? "",
+    'landmark': landmark ?? "",
+    'city': city ?? "",
+    'description': description ?? "",
+    'create_by': createdBy,
+    'id': id
   };
 }

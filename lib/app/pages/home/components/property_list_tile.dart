@@ -79,7 +79,7 @@ class PropertyListTile extends StatelessWidget {
                           ),
                           SizedBox(height: 2),
                           CustomText(
-                            text: '${items[index].amount} PHP',
+                            text: '${items[index].price} PHP',
                             fontSize: 12,
                             fontWeight: FontWeight.w700,
                           ),

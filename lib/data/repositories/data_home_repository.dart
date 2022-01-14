@@ -94,7 +94,7 @@ class DataHomeRepository extends HomeRepository {
       Property(
         coverPhoto: 'https://picsum.photos/200/300',
         keywords: ['keywords1', 'keywords2'],
-        amount: '1,500,000.00',
+        price: '1,500,000.00',
         totalBedRoom: '99',
         totalBathRoom: '3',
         totalParkingSpace: '1',
@@ -103,7 +103,7 @@ class DataHomeRepository extends HomeRepository {
       Property(
         coverPhoto: 'https://picsum.photos/200/300',
         keywords: ['one', 'two'],
-        amount: '8,786,123.00',
+        price: '8,786,123.00',
         totalBedRoom: '1',
         totalBathRoom: '2',
         totalParkingSpace: '3',
@@ -112,7 +112,7 @@ class DataHomeRepository extends HomeRepository {
       Property(
         coverPhoto: 'https://picsum.photos/200/300',
         keywords: ['qwe', 'asd'],
-        amount: '300,123.12',
+        price: '300,123.12',
         totalBedRoom: '9',
         totalBathRoom: '8',
         totalParkingSpace: '7',
@@ -136,7 +136,7 @@ class DataHomeRepository extends HomeRepository {
       Property(
         coverPhoto: 'https://picsum.photos/id/237/200/300',
         keywords: ['qqq', 'www'],
-        amount: '9,999,999.99',
+        price: '9,999,999.99',
         totalBedRoom: '81',
         totalBathRoom: '41',
         totalParkingSpace: '0',
@@ -145,7 +145,7 @@ class DataHomeRepository extends HomeRepository {
       Property(
         coverPhoto: 'https://picsum.photos/id/132/200/300',
         keywords: ['aaa', 'ssss'],
-        amount: '1,234,567.00',
+        price: '1,234,567.00',
         totalBedRoom: '9',
         totalBathRoom: '42',
         totalParkingSpace: '16',
@@ -154,7 +154,7 @@ class DataHomeRepository extends HomeRepository {
       Property(
         coverPhoto: 'https://picsum.photos/id/456/200/300',
         keywords: ['ddd', 'dddd'],
-        amount: '540,735.12',
+        price: '540,735.12',
         totalBedRoom: '88',
         totalBathRoom: '51',
         totalParkingSpace: '90',

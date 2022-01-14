@@ -234,7 +234,7 @@ class _CreateListingPageState extends ViewState<CreateListingPage, CreateListing
                   padding: EdgeInsets.symmetric(horizontal: 20),
                   child: CustomTextField(
                     controller: controller.areaTextController,
-                    keyboardType: const TextInputType.numberWithOptions(),
+                    keyboardType: const TextInputType.numberWithOptions(decimal: true),
                     hintText: 'Area (sqft)',
                   ),
                 ),
@@ -405,6 +405,7 @@ class _CreateListingPageState extends ViewState<CreateListingPage, CreateListing
                   defaultSelected: controller.amenities,
                   checkBoxButtonValues: (values) {
                     controller.amenities = values;
+                    print(values);
                   } ,
                 ),
                 SizedBox(height: 20.0),
