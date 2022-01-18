@@ -86,7 +86,7 @@ class CreateListingController extends Controller {
       priceTextController.text.isNotEmpty
     ) {
       isValidated = true;
-    }
+    } else AppConstant.statusDialog(context: getContext(), text: "All inputs in this section are required.", title: "Values missing.");
 
     return isValidated;
   }
@@ -102,7 +102,7 @@ class CreateListingController extends Controller {
       isYourProperty != null
     ) {
       isValidated = true;
-    }
+    } else AppConstant.statusDialog(context: getContext(), text: "All inputs in this section are required.", title: "Values missing.");
 
     return isValidated;
   }
@@ -111,12 +111,11 @@ class CreateListingController extends Controller {
     bool isValidated = false;
 
     if (
-      priceTextController.text.isNotEmpty &&
-      priceTextController.text.isNotEmpty &&
-      priceTextController.text.isNotEmpty
+      streetTextController.text.isNotEmpty &&
+      cityTextController.text.isNotEmpty
     ) {
       isValidated = true;
-    }
+    } else AppConstant.statusDialog(context: getContext(), text: "Street Address and City inputs are required.", title: "Values missing.");
 
     return isValidated;
   }
@@ -149,11 +148,7 @@ class CreateListingController extends Controller {
 
     var listing = {
       "cover_photo": 'https://picsum.photos/id/73/200/300',
-      "photos": [
-        'https://picsum.photos/id/70/200/300',
-        'https://picsum.photos/id/71/200/300',
-        'https://picsum.photos/id/72/200/300',
-      ],
+      "photos": [],
       "property_type": propertyType,
       "property_for": propertyFor,
       "time_period": timePeriod,
@@ -171,7 +166,7 @@ class CreateListingController extends Controller {
 
       "amenities": amenities,
 
-      // "assets": assetsBased64
+      "assets": assetsBased64
     };
 
     createListingPresenter.createListing(listing: listing);

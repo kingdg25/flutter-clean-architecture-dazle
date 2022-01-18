@@ -22,8 +22,11 @@ class DataListingRepository extends ListingRepository {
   Future<Property> create({Map listing}) async {
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    // final user = convert.jsonDecode(await prefs.get('user'));
+    
+    List imageUrls = await getFileUrls(assetsBase64: listing['assets']);
 
+    listing['photos'] = imageUrls;
+    
     final user = await App.getUser();
     final uid = user.id;
 
@@ -163,6 +166,38 @@ class DataListingRepository extends ListingRepository {
         description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
       )
     ];
+  }
+
+
+  Future<List<String>> getFileUrls({List assetsBase64}) async {
+    List<String> urls = [];
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    await Future.forEach(assetsBase64, (d) async {
+      var response = await http.post(
+          "${Constants.siteURL}/api/s3/upload-file-from-base64",
+          body: convert.jsonEncode({
+        "filename": d['name'],
+        "base64": d['image']
+      }),
+          headers: {
+            'Authorization': 'Bearer ${prefs.getString("accessToken")}',
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          }
+      );
+      var jsonResponse = await convert.jsonDecode(response.body);
+      if (response.statusCode == 200){
+        urls.add(jsonResponse['data']['file_url']);
+      } else {
+        throw {
+          "error": true,
+          "error_type": "server_error",
+          "status": "Listing not created."
+        };
+      }
+    });
+    return urls;
   }
 
 }
