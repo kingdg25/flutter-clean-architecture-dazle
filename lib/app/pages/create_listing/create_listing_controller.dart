@@ -2,6 +2,9 @@ import 'dart:async';
 
 import 'package:dazle/app/pages/create_listing/create_listing_presenter.dart';
 import 'package:dazle/app/utils/app_constant.dart';
+import 'package:dazle/app/widgets/custom_text.dart';
+import 'package:dazle/app/widgets/form_fields/custom_button.dart';
+import 'package:dazle/app/widgets/form_fields/custom_radio_group_button.dart';
 // import 'package:dazle/domain/entities/amenity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
@@ -37,6 +40,7 @@ class CreateListingController extends Controller {
 
   // page 5
   List<AssetEntity> assets;
+  String viewType;
 
   CreateListingController(userRepo)
     : createListingPresenter = CreateListingPresenter(userRepo),
@@ -137,12 +141,24 @@ class CreateListingController extends Controller {
     return isValidated;
   }
 
-  validatePage5(){
+  validatePage5() async {
     bool isValidated = false;
 
     if ( assets.length > 0 ) {
       isValidated = true;
-    } else AppConstant.statusDialog(context: getContext(), text: "Upload files at least 4 photos.", title: "Upload Photos.");
+    } else {
+      await AppConstant.statusDialog(context: getContext(), text: "Upload files at least 4 photos.", title: "Upload Photos.");
+      return false;
+    }
+
+    final confirmViewType = await _viewType(getContext());
+
+    if (confirmViewType==null) {
+      AppConstant.statusDialog(context: getContext(), text: "Please confirm the view type of your list", title: "Confirm");
+      return false;
+    }
+    
+    AppConstant.statusDialog(context: getContext(), text: "Your listing will view as $confirmViewType", title: "View Type");
 
     return isValidated;
   }
@@ -173,7 +189,9 @@ class CreateListingController extends Controller {
 
       "amenities": amenities,
 
-      "assets": assetsBased64 // for photos
+      "assets": assetsBased64, // for photos
+
+      "view_type": viewType
     };
 
     createListingPresenter.createListing(listing: listing);
@@ -187,6 +205,85 @@ class CreateListingController extends Controller {
       title: title,
       text: text,
       onPressed: onPressed
+    );
+  }
+  
+  Future _viewType(parentContext) async {
+    // String viewType = "public";
+    return showDialog(
+      context: parentContext,
+      builder: (BuildContext context) {
+        return Center(
+          child: SingleChildScrollView(
+            child: AlertDialog(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.0)
+              ),
+              actionsPadding: EdgeInsets.all(20.0),
+              title: Padding(
+                padding: const EdgeInsets.only(left: 10.0),
+                child: CustomText(
+                  text: "Do you want to make your list...",
+                  fontSize: 15.0,
+                  textAlign: TextAlign.left,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              insetPadding: EdgeInsets.all(0.0),
+              content: Container(
+                margin: EdgeInsets.all((0.0)),
+                // color: Colors.blue,
+                constraints: BoxConstraints(maxHeight: double.infinity, maxWidth: 300),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Center(
+                      child: Container(
+                        width: 400,
+                        height: 50,
+                        child: Center(
+                          child: CustomRadioGroupButton(
+                            radioPadding: 15,radioWidth: 130,
+                            buttonLables: ["Public", "Private",
+                            ],
+                            buttonValues: ["public", "private",
+                            ],
+                            radioButtonValue: (value) {
+                              print(value);
+                              viewType = value;
+                            },
+                            defaultSelected: viewType,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: CustomText(
+                        text: """If you make your list public, your connections will be able to see your list. While making your list private means you are the only one can see your list but you can still change it to public later.
+                          """,
+                        fontSize: 13.0,
+                        textAlign: TextAlign.left,
+                      ),
+                    )
+                  ],
+                ),
+              ),
+              actions: <Widget>[
+                CustomButton(
+                  text: 'Confirm',
+                  expanded: true,
+                  borderRadius: 20.0,
+                  onPressed: () {
+                    Navigator.pop(context, viewType);
+                  },
+                ),
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 

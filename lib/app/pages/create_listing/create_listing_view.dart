@@ -475,10 +475,10 @@ class _CreateListingPageState extends ViewState<CreateListingPage, CreateListing
                       ),
                       CustomIconButton(
                         alignment: null,
-                        onPressed: () {
+                        onPressed: () async {
                           FocusScope.of(context).unfocus();
 
-                          if ( controller.validatePage5() ) {
+                          if ( await controller.validatePage5() ) {
                             controller.createListing();
                           }
                         },
