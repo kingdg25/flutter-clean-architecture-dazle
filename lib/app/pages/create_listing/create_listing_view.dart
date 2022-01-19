@@ -257,6 +257,19 @@ class _CreateListingPageState extends ViewState<CreateListingPage, CreateListing
                   },
                   defaultSelected: controller.isYourProperty,
                 ),
+                AppConstant.customTitleField(
+                  title: 'Description'
+                ),
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 20),
+                  child: CustomTextField(
+                    controller: controller.descriptionTextController,
+                    keyboardType: TextInputType.multiline,
+                    minLines: 3,
+                    maxLines: 3,
+                    hintText: 'description',
+                  ),
+                ),
                 SizedBox(height: 20.0),
                 Container(
                   padding: EdgeInsets.symmetric(horizontal: 20),

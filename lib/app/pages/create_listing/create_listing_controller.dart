@@ -28,6 +28,7 @@ class CreateListingController extends Controller {
   String numberOfBathRooms;
   String numberOfParking;
   final TextEditingController areaTextController;
+  final TextEditingController descriptionTextController;
   String isYourProperty;
 
   // page 3
@@ -47,11 +48,13 @@ class CreateListingController extends Controller {
       createListingPageController = PageController(),
       priceTextController = TextEditingController(),
       areaTextController = TextEditingController(),
+      descriptionTextController = TextEditingController(),
       streetTextController = TextEditingController(),
       landmarkTextController = TextEditingController(),
       cityTextController = TextEditingController(),
       amenities = [],
       assets = <AssetEntity>[],
+      viewType = "public",
       super();
 
 
@@ -110,6 +113,7 @@ class CreateListingController extends Controller {
       numberOfBathRooms != null &&
       numberOfParking != null &&
       areaTextController.text.isNotEmpty &&
+      descriptionTextController.text.isNotEmpty &&
       isYourProperty != null
     ) {
       isValidated = true;
@@ -154,11 +158,11 @@ class CreateListingController extends Controller {
     final confirmViewType = await _viewType(getContext());
 
     if (confirmViewType==null) {
-      AppConstant.statusDialog(context: getContext(), text: "Please confirm the view type of your list", title: "Confirm");
+      AppConstant.statusDialog(context: getContext(), text: "Please confirm the view type of your list.", title: "Confirm");
       return false;
     }
     
-    AppConstant.statusDialog(context: getContext(), text: "Your listing will view as $confirmViewType", title: "View Type");
+    await AppConstant.statusDialog(context: getContext(), text: "Your listing will view as $confirmViewType", title: "View Type");
 
     return isValidated;
   }
@@ -182,6 +186,7 @@ class CreateListingController extends Controller {
       "number_of_parking_space": numberOfParking,
       "total_area": areaTextController.text,
       "is_your_property": isYourProperty,
+      "description": descriptionTextController.text,
 
       "street": streetTextController.text,
       "landmark": landmarkTextController.text,
@@ -303,6 +308,7 @@ class CreateListingController extends Controller {
     
     priceTextController.dispose();
     areaTextController.dispose();
+    descriptionTextController.dispose();
     streetTextController.dispose();
     landmarkTextController.dispose();
     cityTextController.dispose();

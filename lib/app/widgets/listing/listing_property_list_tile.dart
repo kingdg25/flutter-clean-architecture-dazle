@@ -23,117 +23,120 @@ class ListingPropertyListTile extends StatelessWidget {
     return Container(
       alignment: Alignment.center,
       padding: EdgeInsets.symmetric(horizontal: 20),
-      height: MediaQuery.of(context).size.height,
+      height: MediaQuery.of(context).size.height - 290,
       constraints: BoxConstraints(maxWidth: 300, minWidth: 250),
       child: ListView.builder(
         shrinkWrap: false,
         itemCount: items?.length ?? 0,
         itemBuilder: (BuildContext context, int index){
-          return Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-              color: Colors.white,
-              boxShadow: [
-                AppConstant.boxShadow
-              ]
-            ),
-            child: Column(
-              children: [
-                GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (buildContext) => ListingDetailsPage(
-                          property: items[index],
+          return Padding(
+            padding: const EdgeInsets.only(bottom: 20.0),
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: Colors.white,
+                boxShadow: [
+                  AppConstant.boxShadow
+                ]
+              ),
+              child: Column(
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (buildContext) => ListingDetailsPage(
+                            property: items[index],
+                          )
                         )
-                      )
-                    );
-                  },
-                  child: CachedNetworkImage(
-                    height: height*0.51,
-                    imageUrl: items[index].coverPhoto.toString(),
-                    imageBuilder: (context, imageProvider) => Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10)),
-                        image: DecorationImage(
-                          image: imageProvider,
-                          fit: BoxFit.cover
+                      );
+                    },
+                    child: CachedNetworkImage(
+                      height: height*0.51,
+                      imageUrl: items[index].coverPhoto.toString(),
+                      imageBuilder: (context, imageProvider) => Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10)),
+                          image: DecorationImage(
+                            image: imageProvider,
+                            fit: BoxFit.cover
+                          ),
                         ),
                       ),
-                    ),
-                    progressIndicatorBuilder: (context, url, progress) => Center(
-                      child: CircularProgressIndicator(
-                        valueColor: AlwaysStoppedAnimation<Color>(Colors.indigo[900]),
-                        value: progress.progress,
+                      progressIndicatorBuilder: (context, url, progress) => Center(
+                        child: CircularProgressIndicator(
+                          valueColor: AlwaysStoppedAnimation<Color>(Colors.indigo[900]),
+                          value: progress.progress,
+                        ),
                       ),
-                    ),
-                    errorWidget: (context, url, error) => Image.asset(
-                      'assets/brooky_logo.png',
-                      fit: BoxFit.scaleDown,
+                      errorWidget: (context, url, error) => Image.asset(
+                        'assets/brooky_logo.png',
+                        fit: BoxFit.scaleDown,
+                      ),
                     ),
                   ),
-                ),
-                Padding(
-                  padding: EdgeInsets.all(8),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      CustomText(
-                        text: items[index].keywordsToString ?? '',
-                        fontSize: 9,
-                        color: App.hintColor,
-                        fontWeight: FontWeight.w500,
-                      ),
-                      CustomText(
-                        text: '${items[index].price} PHP',
-                        fontSize: 13,
-                        fontWeight: FontWeight.w700,
-                      ),
-                      CustomText(
-                        text: '${items[index].district ?? "No disctrict specified"}',
-                        fontSize: 10,
-                        fontWeight: FontWeight.w500,
-                      ),
-                      CustomText(
-                        text: '${items[index].city}',
-                        fontSize: 10,
-                        color: App.hintColor,
-                        fontWeight: FontWeight.w500,
-                      ),
-                      SizedBox(height: 5),
-                      Container(
-                        height: 20,
-                        child: ListView(
-                          scrollDirection: Axis.horizontal,
-                          children: [
-                            PropertyTextInfo(
-                              asset: 'assets/icons/bed.png',
-                              text: items[index].totalBedRoom,
-                            ),
-                            SizedBox(width: 4),
-                            PropertyTextInfo(
-                              asset: 'assets/icons/bath.png',
-                              text: items[index].totalBathRoom,
-                            ),
-                            SizedBox(width: 4),
-                            PropertyTextInfo(
-                              asset: 'assets/icons/car.png',
-                              text: items[index].totalParkingSpace,
-                            ),
-                            SizedBox(width: 4),
-                            PropertyTextInfo(
-                              asset: '',
-                              text: items[index].totalArea,
-                            ),
-                          ],
+                  Padding(
+                    padding: EdgeInsets.all(8),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        CustomText(
+                          text: items[index].keywordsToString ?? '',
+                          fontSize: 9,
+                          color: App.hintColor,
+                          fontWeight: FontWeight.w500,
                         ),
-                      )
-                    ],
+                        CustomText(
+                          text: '${items[index].price} PHP',
+                          fontSize: 13,
+                          fontWeight: FontWeight.w700,
+                        ),
+                        CustomText(
+                          text: '${items[index].district ?? "No disctrict specified"}',
+                          fontSize: 10,
+                          fontWeight: FontWeight.w500,
+                        ),
+                        CustomText(
+                          text: '${items[index].city}',
+                          fontSize: 10,
+                          color: App.hintColor,
+                          fontWeight: FontWeight.w500,
+                        ),
+                        SizedBox(height: 5),
+                        Container(
+                          height: 20,
+                          child: ListView(
+                            scrollDirection: Axis.horizontal,
+                            children: [
+                              PropertyTextInfo(
+                                asset: 'assets/icons/bed.png',
+                                text: items[index].totalBedRoom,
+                              ),
+                              SizedBox(width: 4),
+                              PropertyTextInfo(
+                                asset: 'assets/icons/bath.png',
+                                text: items[index].totalBathRoom,
+                              ),
+                              SizedBox(width: 4),
+                              PropertyTextInfo(
+                                asset: 'assets/icons/car.png',
+                                text: items[index].totalParkingSpace,
+                              ),
+                              SizedBox(width: 4),
+                              PropertyTextInfo(
+                                asset: '',
+                                text: items[index].totalArea,
+                              ),
+                            ],
+                          ),
+                        )
+                      ],
+                    )
                   )
-                )
-              ],
-            )
+                ],
+              )
+            ),
           );
         },
       ),
