@@ -23,7 +23,7 @@ class AppConstant{
     }
   }
   
-  static statusDialog({
+  static Future statusDialog({
     BuildContext context,
     bool success = false,
     String title,

@@ -6,10 +6,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'dart:convert' as convert;
 import 'package:http/http.dart' as http;
+import 'dart:typed_data';
 
 class DataListingRepository extends ListingRepository {
   List<Property> myListing;
   List<Property> myCollection;
+  final double maxFileSize = 5.0;
 
   static DataListingRepository _instance = DataListingRepository._internal();
   DataListingRepository._internal() {
@@ -23,9 +25,10 @@ class DataListingRepository extends ListingRepository {
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
     
-    List imageUrls = await getFileUrls(assetsBase64: listing['assets']);
+    List imageUrls = await _getFileUrls(assetsBase64: listing['assets']);
 
     listing['photos'] = imageUrls;
+    listing.remove("assets");
     
     final user = await App.getUser();
     final uid = user.id;
@@ -115,7 +118,6 @@ class DataListingRepository extends ListingRepository {
         listings.add(Property.fromJson(val));
       });
     }
-    print("WEWWEW");
     return listings;
     
     return [
@@ -169,11 +171,12 @@ class DataListingRepository extends ListingRepository {
   }
 
 
-  Future<List<String>> getFileUrls({List assetsBase64}) async {
+  Future<List<String>> _getFileUrls({List assetsBase64}) async {
     List<String> urls = [];
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
     await Future.forEach(assetsBase64, (d) async {
+      _checkFileSize(base64: d['image'], fileName: d['name']);
       var response = await http.post(
           "${Constants.siteURL}/api/s3/upload-file-from-base64",
           body: convert.jsonEncode({
@@ -199,5 +202,17 @@ class DataListingRepository extends ListingRepository {
     });
     return urls;
   }
-
+  
+  void _checkFileSize({String base64, String fileName}) {
+    Uint8List bytes = convert.base64Decode(base64);
+    double sizeInMB = bytes.length/1000000;
+    print(maxFileSize);
+    if (sizeInMB > this.maxFileSize) {
+      throw {
+        "error": false,
+        "error_type": "filesize_error",
+        "status": "File size must not exceed ${this.maxFileSize}mb. A file $fileName has a size of ${sizeInMB.toStringAsFixed(2)} MB."
+      };
+    }
+  }
 }

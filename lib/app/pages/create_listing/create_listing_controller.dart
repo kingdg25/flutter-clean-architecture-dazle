@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:dazle/app/pages/create_listing/create_listing_presenter.dart';
 import 'package:dazle/app/utils/app_constant.dart';
 // import 'package:dazle/domain/entities/amenity.dart';
@@ -56,9 +58,10 @@ class CreateListingController extends Controller {
       print('create listing on next');
     };
 
-    createListingPresenter.createListingOnComplete = () {
+    createListingPresenter.createListingOnComplete = () async {
       print('create listing on complete');
       AppConstant.showLoader(getContext(), false);
+      await _statusDialog('Done!', 'Your listing has been created.');
       Navigator.pop(getContext());
     };
 
@@ -67,7 +70,11 @@ class CreateListingController extends Controller {
       AppConstant.showLoader(getContext(), false);
       
       if ( !e['error'] ) {
-        _statusDialog('Oops!', '${e['status'] ?? ''}');
+        if (e['error_type']=="filesize_error") {
+          _statusDialog('File size error.', '${e['status'] ?? ''}');
+        } else {
+          _statusDialog('Oops!', '${e['status'] ?? ''}');
+        }
       }
       else{
         _statusDialog('Something went wrong', '${e.toString()}');
@@ -166,15 +173,15 @@ class CreateListingController extends Controller {
 
       "amenities": amenities,
 
-      "assets": assetsBased64
+      "assets": assetsBased64 // for photos
     };
 
     createListingPresenter.createListing(listing: listing);
   }
 
 
-  _statusDialog(String title, String text, {bool success, Function onPressed}){
-    AppConstant.statusDialog(
+  Future _statusDialog(String title, String text, {bool success, Function onPressed}) async {
+    return await AppConstant.statusDialog(
       context: getContext(),
       success: success ?? false,
       title: title,
