@@ -384,5 +384,10 @@ class DataAuthenticationRepository extends AuthenticationRepository {
     }
   }
 
+  @override
+  Future<bool> loggedIn() async{
+    throw UnimplementedError();
+  }
+
   
 }

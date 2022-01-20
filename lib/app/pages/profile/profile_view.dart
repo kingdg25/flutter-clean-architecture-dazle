@@ -5,22 +5,25 @@ import 'package:dazle/app/utils/app.dart';
 import 'package:dazle/app/widgets/custom_text.dart';
 import 'package:dazle/app/widgets/form_fields/custom_button.dart';
 import 'package:dazle/app/widgets/form_fields/custom_field_layout.dart';
+import 'package:dazle/app/widgets/listing/listing_property_list_tile.dart';
 import 'package:dazle/data/repositories/data_profile_repository.dart';
+import 'package:dazle/domain/entities/property.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 
 
 
 class ProfilePage extends View {
-  ProfilePage({Key key}) : super(key: key);
+  final String uid;
+  ProfilePage({Key key, this.uid}) : super(key: key);
 
   @override
-  _ProfilePageState createState() => _ProfilePageState();
+  _ProfilePageState createState() => _ProfilePageState(uid);
 }
 
 
 class _ProfilePageState extends ViewState<ProfilePage, ProfileController> {
-  _ProfilePageState() : super(ProfileController(DataProfileRepository()));
+  _ProfilePageState(uid) : super(ProfileController(dataProfileRepo: DataProfileRepository(), uidToDisplay: uid));
 
   @override
   Widget get view {
@@ -59,7 +62,9 @@ class _ProfilePageState extends ViewState<ProfilePage, ProfileController> {
       backgroundColor: Colors.white,
       body: ControlledWidgetBuilder<ProfileController>(
         builder: (context, controller) {
-          var user = controller.user;
+          var user = controller.userToDisplay;
+          print("IN THE CONTROLLERERERERERERE $user");
+          controller.getUserToDisplay();
 
           if ( user == null ) {
             return Center(
@@ -69,7 +74,7 @@ class _ProfilePageState extends ViewState<ProfilePage, ProfileController> {
 
           return SingleChildScrollView(
             child: Container(
-              padding: EdgeInsets.only(left: 20, right: 20, bottom: 40),
+              padding: EdgeInsets.only(left: 20, right: 20, bottom: 20),
               child: Column(
                 children: [
                   Center(
@@ -127,7 +132,14 @@ class _ProfilePageState extends ViewState<ProfilePage, ProfileController> {
                         width: 120,
                         borderRadius: 30,
                         main: false,
-                        onPressed: () {}
+                        onPressed: () async {
+                          await Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (buildContext) => ProfilePage()
+                            )
+                          );
+                        }
                       )
                     ],
                   ),
@@ -196,6 +208,14 @@ class _ProfilePageState extends ViewState<ProfilePage, ProfileController> {
                           ],
                         )
                       ],
+                    ),
+                  ),
+                  Container(
+                    width: double.infinity,
+                    child: ListingPropertyListTile(
+                      items: controller.listings,
+                      height: 300.0,
+                      padding: EdgeInsets.symmetric(vertical: 10.0)
                     ),
                   )
                 ]

@@ -52,6 +52,8 @@ class _MyListingPageState extends ViewState<MyListingPage, MyListingController> 
               ),
               ListingPropertyListTile(
                 items: controller.myListing,
+                height: 300,
+                padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
               )
             ],
           );

@@ -145,6 +145,76 @@ class DataListingRepository extends ListingRepository {
   }
   
   @override
+  Future<List<Property>> getUserListings({uid}) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final user = await App.getUser();
+    final viewerId = user.id;
+
+
+    if (viewerId==null) {
+      throw {
+        "error": false,
+        "error_type": "dynamic",
+        "status": "No user id found. Loggin out."
+      };
+    }
+
+
+    var response = await http.get(
+        "${Constants.siteURL}/api/listings/get-listings-in-profile/$uid/$viewerId",
+        headers: {
+          'Authorization': 'Bearer ${prefs.getString("accessToken")}',
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        }
+    );
+    
+    
+    return [
+      Property(
+        coverPhoto: 'https://picsum.photos/id/73/200/300',
+        photos: [
+          'https://picsum.photos/id/70/200/300',
+          'https://picsum.photos/id/71/200/300',
+          'https://picsum.photos/id/72/200/300',
+        ],
+        keywords: ['aa', 'ss'],
+        price: '540,735.12',
+        totalBedRoom: '213',
+        totalBathRoom: '321',
+        totalParkingSpace: '22',
+        totalArea: '432',
+        district: 'Lapasan',
+        city: 'Cagayan de Oro City',
+        amenities: ['Shared Gym','Covered Parking','Central AC'],
+        isYourProperty: 'unfurnished',
+        timePeriod: 'month',
+        description: "Property Description: Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s"
+      ),
+      Property(
+        coverPhoto: 'https://picsum.photos/id/73/200/300',
+        photos: [
+          'https://picsum.photos/id/70/200/300',
+          'https://picsum.photos/id/71/200/300',
+          'https://picsum.photos/id/72/200/300',
+        ],
+        keywords: ['aa', 'ss'],
+        price: '540,735.12',
+        totalBedRoom: '213',
+        totalBathRoom: '321',
+        totalParkingSpace: '22',
+        totalArea: '432',
+        district: 'Lapasan',
+        city: 'Cagayan de Oro City',
+        amenities: ['Shared Gym','Covered Parking','Central AC'],
+        isYourProperty: 'unfurnished',
+        timePeriod: 'month',
+        description: "Property Description: Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s"
+      )
+    ];
+  }
+  
+  @override
   Future<List<Property>> getMyCollection() async {
     return [
       Property(

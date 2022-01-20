@@ -16,6 +16,7 @@ class Property {
   /// furnished or unfurnished
   final String isYourProperty;
   final String district;
+  final String street;
   final String landmark;
   final String city;
   final String description;
@@ -44,6 +45,7 @@ class Property {
     this.totalArea,
     this.isYourProperty,
     this.district,
+    this.street,
     this.landmark,
     this.city,
     this.description,
@@ -68,6 +70,7 @@ class Property {
       totalArea = json['total_area'],
       isYourProperty = json['is_your_property'],
       district = json['district'],
+      street = json['street'],
       landmark = json['landmark'],
       city = json['city'],
       description = json['description'],
@@ -89,6 +92,7 @@ class Property {
     'total_area': totalArea ?? "",
     'is_your_property': isYourProperty ?? "",
     'district': district ?? "",
+    'street': street ?? "",
     'landmark': landmark ?? "",
     'city': city ?? "",
     'description': description ?? "",

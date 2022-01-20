@@ -5,5 +5,7 @@ abstract class ListingRepository {
 
   Future<List<Property>> getMyListing();
 
+  Future<List<Property>> getUserListings({String uid});
+
   Future<List<Property>> getMyCollection();
 }

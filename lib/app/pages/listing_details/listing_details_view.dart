@@ -215,7 +215,7 @@ class _ListingDetailsPageState extends ViewState<ListingDetailsPage, ListingDeta
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             CustomText(
-                              text: '${widget.property.district}',
+                              text: '${widget.property.street ?? ""}',
                               fontSize: 11,
                               fontWeight: FontWeight.w700,
                             ),
