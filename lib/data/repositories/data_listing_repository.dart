@@ -146,6 +146,7 @@ class DataListingRepository extends ListingRepository {
   
   @override
   Future<List<Property>> getUserListings({uid}) async {
+    final List<Property> listings = <Property>[];
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final user = await App.getUser();
     final viewerId = user.id;
@@ -168,6 +169,20 @@ class DataListingRepository extends ListingRepository {
           'Accept': 'application/json'
         }
     );
+    
+    var jsonResponse = await convert.jsonDecode(response.body);
+    print("LISTING YOW");
+    if (response.statusCode == 200){
+      print(jsonResponse['listings'].length);
+      jsonResponse['listings'].forEach((val){
+        val['price'] = "${val['price'] ?? 0}";
+        val['time_period'] = "${val['time_period'] ?? 0}";
+        val['total_area'] = "${val['total_area'] ?? 0}";
+        print(val);
+        listings.add(Property.fromJson(val));
+      });
+    }
+    return listings;
     
     
     return [
