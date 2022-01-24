@@ -1,4 +1,5 @@
 import 'dart:convert' as convert;
+import 'package:dazle/app/utils/app.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:dazle/data/constants.dart';
@@ -103,6 +104,13 @@ class DataAuthenticationRepository extends AuthenticationRepository {
   @override
   Future<bool> isAuthenticated() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
+    print("IS AUTHH");
+    print(prefs.getString('accessToken'));
+    User _user = await App.getUser();
+    // temp
+
+    if (prefs.getString('accessToken')!=null && _user.id!=null && _user.id.isNotEmpty) return true;
+    return false;
 
     if ( prefs.getString('accessToken') != null ) {
 
