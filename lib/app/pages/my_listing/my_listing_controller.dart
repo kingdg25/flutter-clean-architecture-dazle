@@ -1,4 +1,5 @@
 import 'package:dazle/app/pages/my_listing/my_listing_presenter.dart';
+import 'package:dazle/app/utils/app_constant.dart';
 import 'package:dazle/domain/entities/property.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 
@@ -34,6 +35,10 @@ class MyListingController extends Controller {
 
     myListingPresenter.getMyListingOnError = (e) {
       print('get my listing on error $e');
+
+      if (e.containsKey("error_type")) {
+        AppConstant.statusDialog(context: getContext(), text: "${e.toString()}", title: "Something went wrong'");
+      }
     };
   }
 

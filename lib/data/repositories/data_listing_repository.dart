@@ -117,6 +117,12 @@ class DataListingRepository extends ListingRepository {
         print(val);
         listings.add(Property.fromJson(val));
       });
+    } else {
+      throw {
+        "error": true,
+        "error_type": "dynamic",
+        "status": "$jsonResponse"
+      };
     }
     return listings;
     
@@ -181,6 +187,12 @@ class DataListingRepository extends ListingRepository {
         print(val);
         listings.add(Property.fromJson(val));
       });
+    } else {
+      throw {
+        "error": true,
+        "error_type": "dynamic",
+        "status": "$jsonResponse"
+      };
     }
     return listings;
     
