@@ -15,6 +15,7 @@ class DataProfileRepository extends ProfileRepository {
   Future<void> update({User user}) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     print('update user update user ${user.toJson()}');
+    print(prefs.getString("accessToken"));
 
     Map params = {
       "user": user.toJson()
@@ -24,6 +25,7 @@ class DataProfileRepository extends ProfileRepository {
       "${Constants.siteURL}/api/users/update",
       body: convert.jsonEncode(params),
       headers: {
+        'Authorization': 'Bearer ${prefs.getString("accessToken")}',
         'Content-Type': 'application/json',
         'Accept': 'application/json'
       }
