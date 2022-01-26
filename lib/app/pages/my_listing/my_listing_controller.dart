@@ -35,9 +35,11 @@ class MyListingController extends Controller {
 
     myListingPresenter.getMyListingOnError = (e) {
       print('get my listing on error $e');
-
-      if (e.containsKey("error_type")) {
-        AppConstant.statusDialog(context: getContext(), text: "${e.toString()}", title: "Something went wrong'");
+      
+      if (e is Map) {
+        if (e.containsKey("error_type")) {
+          AppConstant.statusDialog(context: getContext(), text: "${e.toString()}", title: "Something went wrong'");
+        }
       }
     };
   }

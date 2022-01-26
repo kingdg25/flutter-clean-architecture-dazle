@@ -7,6 +7,7 @@ class User {
   final String firstName;
   final String lastName;
   final String email;
+  final bool emailVerified;
   final String id;
 
   String get displayName{
@@ -22,6 +23,7 @@ class User {
     this.firstName, 
     this.lastName, 
     this.email, 
+    this.emailVerified,
     this.id
   });
 
@@ -34,6 +36,7 @@ class User {
       firstName = json['firstname'],
       lastName = json['lastname'],
       email = json['email'],
+      emailVerified = json['email_verified'],
       id = json['_id'];
 
   Map<String, dynamic> toJson() => {
@@ -45,6 +48,7 @@ class User {
     'firstname': firstName,
     'lastname': lastName,
     'email': email,
+    'email_verified': emailVerified,
     '_id': id
   };
 }

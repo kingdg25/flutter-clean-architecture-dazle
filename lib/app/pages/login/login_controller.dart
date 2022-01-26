@@ -40,13 +40,18 @@ class LoginController extends Controller {
       if (res){
 
         User _user = await App.getUser();
+
+         if ( _user.position != null && _user.brokerLicenseNumber != null ) {
+          if ( _user.isNewUser != null && _user.isNewUser ) {
+            welcomePage();
+          }
+          else {
+            mainPage();
+          }
+         } else {
+          setupProfilePage();
+         }
       
-        if ( _user.isNewUser != null && _user.isNewUser ) {
-          welcomePage();
-        }
-        else {
-          mainPage();
-        }
       
       }
     };
@@ -81,9 +86,13 @@ class LoginController extends Controller {
     loginPresenter.loginUserOnError = (e) {
       print('login user on error $e');
       AppConstant.showLoader(getContext(), false);
-
-      if ( !e['error'] ) {
-        _statusDialog('Oops!', '${e['status'] ?? ''}');
+      
+      if (e is Map) {
+        if (e.containsKey('error')) {
+          if ( !e['error'] ) {
+            _statusDialog('Oops!', '${e['status'] ?? ''}');
+          }
+        }
       }
       else{
         _statusDialog('Something went wrong', '${e.toString()}');

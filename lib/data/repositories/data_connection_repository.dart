@@ -4,6 +4,7 @@ import 'package:dazle/domain/entities/my_connection_tile.dart';
 import 'package:http/http.dart' as http;
 import 'package:dazle/data/constants.dart';
 import 'package:dazle/domain/repositories/connection_repository.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class DataConnectionRepository extends ConnectionRepository {
   List<InviteTile> invites;
@@ -59,6 +60,7 @@ class DataConnectionRepository extends ConnectionRepository {
 
   @override
   Future<List<InviteTile>> readInvites({String email, String filterByName}) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
     Map params = {
       "email": email,
       "filter_by_name": filterByName
@@ -68,6 +70,7 @@ class DataConnectionRepository extends ConnectionRepository {
       "${Constants.siteURL}/api/connection/read-invite",
       body: convert.jsonEncode(params),
       headers: {
+        'Authorization': 'Bearer ${prefs.getString("accessToken")}',
         'Content-Type': 'application/json',
         'Accept': 'application/json'
       }
@@ -104,6 +107,7 @@ class DataConnectionRepository extends ConnectionRepository {
 
   @override
   Future<List<MyConnectionTile>> readMyConnection({String email, String filterByName}) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
     Map params = {
       "email": email,
       "filter_by_name": filterByName
@@ -113,6 +117,7 @@ class DataConnectionRepository extends ConnectionRepository {
       "${Constants.siteURL}/api/connection/read-my-connection",
       body: convert.jsonEncode(params),
       headers: {
+        'Authorization': 'Bearer ${prefs.getString("accessToken")}',
         'Content-Type': 'application/json',
         'Accept': 'application/json'
       }
