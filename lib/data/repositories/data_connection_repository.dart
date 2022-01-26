@@ -28,7 +28,7 @@ class DataConnectionRepository extends ConnectionRepository {
     };
 
     var response = await http.post(
-      "${Constants.siteURL}/api/notify/notify-user",
+      "${Constants.siteURL}/notification/notify-user",
       body: convert.jsonEncode(params),
       headers: {
         'Content-Type': 'application/json',

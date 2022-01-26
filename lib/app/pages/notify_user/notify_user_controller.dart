@@ -31,7 +31,7 @@ class NotifyUserController extends Controller {
     notifyUserPresenter.notifyUserOnComplete = () {
       print('notify user on complete');
       AppConstant.showLoader(getContext(), false);
-      Navigator.pop(getContext());
+      Navigator.pop(getContext(), true);
 
       Navigator.push(
         getContext(),

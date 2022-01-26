@@ -57,36 +57,44 @@ class RegisterController extends Controller {
     registerPresenter.registerUserOnComplete = () {
       print('register user on complete');
       AppConstant.showLoader(getContext(), false);
+
+      // return;
       Navigator.pop(getContext());
 
+      _statusDialog("Route to verification email page", "Yeah!");
+
+      return;
+
       if ( position == 'Broker' ){
-        Navigator.push(
-          getContext(),
-          MaterialPageRoute(
-            builder: (buildContext) => WaitingScreen(
-              firstName: firstNameTextController.text,
-            )
-          )
-        );
+        // Navigator.push(
+        //   getContext(),
+        //   MaterialPageRoute(
+        //     builder: (buildContext) => WaitingScreen(
+        //       firstName: firstNameTextController.text,
+        //     )
+        //   )
+        // );
+
+        // instead, show email verification page
       }
       else if ( position == 'Salesperson' ){
 
-        if ( isBroker ) {
-          Navigator.push(
-            getContext(),
-            MaterialPageRoute(
-              builder: (buildContext) => SendRequestScreen()
-            )
-          );
-        }
-        else {
-          Navigator.push(
-            getContext(),
-            MaterialPageRoute(
-              builder: (buildContext) => NotifyUserPage()
-            )
-          );
-        }
+        // if ( isBroker ) {
+        //   Navigator.push(
+        //     getContext(),
+        //     MaterialPageRoute(
+        //       builder: (buildContext) => SendRequestScreen()
+        //     )
+        //   );
+        // }
+        // else {
+        //   Navigator.push(
+        //     getContext(),
+        //     MaterialPageRoute(
+        //       builder: (buildContext) => NotifyUserPage()
+        //     )
+        //   );
+        // }
 
       }
     };
@@ -95,8 +103,10 @@ class RegisterController extends Controller {
       print('register user on error $e');
       AppConstant.showLoader(getContext(), false);
       
-      if ( !e['error'] ) {
-        _statusDialog('Oops!', '${e['status'] ?? ''}');
+      if (e is Map) {
+        if ( !e['error'] ) {
+          _statusDialog('Oops!', '${e['status'] ?? ''}');
+        }
       }
       else{
         _statusDialog('Something went wrong', '${e.toString()}');
@@ -106,9 +116,21 @@ class RegisterController extends Controller {
 
 
     // check license number
-    registerPresenter.checkLicenseNumberOnNext = (bool res) {
+    registerPresenter.checkLicenseNumberOnNext = (bool res) async {
       print('check license number on next $res');
       isBroker = res;
+      if (!isBroker) {
+          final bool _done = await Navigator.push(
+            getContext(),
+            MaterialPageRoute(
+              builder: (buildContext) => NotifyUserPage()
+            )
+          );
+
+          if (_done==null){
+            _statusDialog("Invitation cancelled", "An invitation to your broker was cancelled.");
+          }
+      }
 
       registerPageController.nextPage(
         duration: Duration(milliseconds: 500),
