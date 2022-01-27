@@ -105,11 +105,18 @@ class DataAuthenticationRepository extends AuthenticationRepository {
   Future<bool> isAuthenticated() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     print("IS AUTHH");
-    print(prefs.getString('accessToken'));
     User _user = await App.getUser();
     // temp
 
-    if (prefs.getString('accessToken')!=null && _user.id!=null && _user.id.isNotEmpty) return true;
+    if (prefs.getString('accessToken')!=null && _user?.id!=null && _user.id.isNotEmpty) {
+        try {
+          await this.getUserInfo(); // update user profile info
+        } catch (e) {
+          print("NAA ERRRR");
+          print(e);
+        }
+      return true;
+    }
     return false;
 
     if ( prefs.getString('accessToken') != null ) {
@@ -201,6 +208,7 @@ class DataAuthenticationRepository extends AuthenticationRepository {
 
   @override
   Future<void> register({String firstName, String lastName, String mobileNumber, String position, String brokerLicenseNumber, String email, String password}) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
     Map params = {
       "user": {
         "firstname": firstName,
@@ -234,6 +242,12 @@ class DataAuthenticationRepository extends AuthenticationRepository {
           "status": jsonResponse['status']
         };
       }
+
+      final user = jsonResponse['user'];
+      print(user);
+      await prefs.setString('accessToken', user['token']);
+      await prefs.setString('user', convert.jsonEncode(user));
+
     }
     else {
       throw {
@@ -397,5 +411,54 @@ class DataAuthenticationRepository extends AuthenticationRepository {
     throw UnimplementedError();
   }
 
+  Future<User> getUserInfo() async {
+    print("ya");
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final User user = await App.getUser();
+    
+    print("jsonResponse");
+    var response = await http.get(
+      "${Constants.siteURL}/api/users/${user.id}",
+      headers: {
+        'Authorization': 'Bearer ${prefs.getString("accessToken")}',
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      }
+    );
+    var jsonResponse = await convert.jsonDecode(response.body);
+    print("jsonResponse");
+    print(jsonResponse);
+    if (response.statusCode == 200){
+      var user = jsonResponse;
+      print("USERRR");
+      print(user);
+      if(user is Map && user.containsKey("_id")){
+        await prefs.setString('user', convert.jsonEncode(user));
+        todoUser = User.fromJson(user);
+
+        return todoUser;
+      }
+      else {
+        throw {
+          "error": false,
+          "error_type": "error_fetching_profile",
+          "status": jsonResponse['status']
+        };
+      }
+    } else if (response.statusCode == 401) {
+        await App.logOutUser();
+        throw {
+          "error": false,
+          "error_type": "unauthorized",
+          "status": "Unauthorized. Logging out!"
+        };
+    } else {
+        throw {
+          "error": false,
+          "error_type": "dynamic",
+          "status": "$jsonResponse"
+        };
+    }
+  }
   
 }

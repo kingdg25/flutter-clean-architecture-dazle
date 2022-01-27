@@ -29,6 +29,8 @@ class _WelcomeScreenState extends ViewState<WelcomePage, HomeController> {
       backgroundColor: Colors.white,
       body: ControlledWidgetBuilder<HomeController>(
         builder: (context, controller) {
+          
+          if (controller.user==null) return Container();
 
           return Center(
             child: SingleChildScrollView(

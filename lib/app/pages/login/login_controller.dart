@@ -1,3 +1,4 @@
+import 'package:dazle/app/pages/email_verification/email_verification_view.dart';
 import 'package:dazle/app/pages/main/main_view.dart';
 import 'package:dazle/app/pages/notify_user/notify_user_view.dart';
 import 'package:dazle/app/pages/welcome/welcome_page.dart';
@@ -41,8 +42,12 @@ class LoginController extends Controller {
 
         User _user = await App.getUser();
 
+        print(_user.toJson());
+
          if ( _user.position != null && _user.brokerLicenseNumber != null ) {
-          if ( _user.isNewUser != null && _user.isNewUser ) {
+           if (!(_user.emailVerified ?? false) && _user.id!=null) {
+             emailVerificationPage();
+           } else if ( _user.isNewUser != null && _user.isNewUser ) {
             welcomePage();
           }
           else {
@@ -69,7 +74,9 @@ class LoginController extends Controller {
     loginPresenter.loginUserOnNext = (User res) {
       print('login user on next $res ${res.toString()}');
       if (res != null){
-        if ( res.isNewUser ) {
+        if (!(res.emailVerified ?? false) && res.id!=null) {
+          emailVerificationPage();
+        }else if ( res.isNewUser ) {
           welcomePage();
         }
         else {
@@ -192,6 +199,12 @@ class LoginController extends Controller {
 
   void loginPage() {
     Navigator.popAndPushNamed(getContext(), LoginPage.id);
+  }
+  void emailVerificationPage() {
+    Navigator.pushAndRemoveUntil(
+      getContext(),
+      MaterialPageRoute(builder: (BuildContext context) => EmailVerificationPage()),
+      (Route<dynamic> route) => false);
   }
 
   void googleSignIn() {

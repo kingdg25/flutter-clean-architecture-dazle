@@ -39,7 +39,7 @@ class _EmailVerificationPage extends ViewState {
                 SizedBox(height: 30.0),
                 CustomFieldLayout(
                   child: CustomText(
-                    text: "A verification link has been sent to your email.",
+                    text: "A link has been sent to your email for verification. After you verify your email, click the confirm button below.",
                     fontSize: 14.0,
                     fontWeight: FontWeight.w300,
                     textAlign: TextAlign.justify,
@@ -56,6 +56,18 @@ class _EmailVerificationPage extends ViewState {
                     MaterialPageRoute(builder: (BuildContext context) => LoginPage()),
                     (Route<dynamic> route) => false);
                   }
+                ),
+                SizedBox(height: 15.0),
+                CustomButton(
+                  text: 'Log out',
+                  expanded: true,
+                  onPressed: () async {
+                    await App.logOutUser();
+                    Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(builder: (BuildContext context) => LoginPage()),
+                      (Route<dynamic> route) => false);
+                    }
                 )
               ]
             )

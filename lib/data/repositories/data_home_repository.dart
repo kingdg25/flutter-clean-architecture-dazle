@@ -27,6 +27,7 @@ class DataHomeRepository extends HomeRepository {
 
   @override
   Future<void> isNewUser({String email, bool isNewUser}) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
     Map params = {
       "user": {
         "email": email,
@@ -38,6 +39,7 @@ class DataHomeRepository extends HomeRepository {
       "${Constants.siteURL}/api/users/is-new-user",
       body: convert.jsonEncode(params),
       headers: {
+        'Authorization': 'Bearer ${prefs.getString("accessToken")}',
         'Content-Type': 'application/json',
         'Accept': 'application/json'
       }

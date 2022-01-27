@@ -1,3 +1,5 @@
+import 'package:dazle/app/pages/email_verification/email_verification_view.dart';
+import 'package:dazle/app/pages/login/login_view.dart';
 import 'package:dazle/app/pages/notify_user/notify_user_view.dart';
 import 'package:dazle/app/pages/register/components/send_request_screen.dart';
 import 'package:dazle/app/pages/register/components/waiting_screen.dart';
@@ -57,12 +59,12 @@ class RegisterController extends Controller {
     registerPresenter.registerUserOnComplete = () {
       print('register user on complete');
       AppConstant.showLoader(getContext(), false);
-
-      // return;
-      Navigator.pop(getContext());
-
-      _statusDialog("Route to verification email page", "Yeah!");
-
+      
+        Navigator.pushAndRemoveUntil(
+          getContext(),
+          MaterialPageRoute(builder: (BuildContext context) => EmailVerificationPage()),
+          (Route<dynamic> route) => false);
+          
       return;
 
       if ( position == 'Broker' ){
