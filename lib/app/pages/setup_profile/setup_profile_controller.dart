@@ -1,6 +1,9 @@
+import 'package:dazle/app/pages/email_verification/email_verification_view.dart';
+import 'package:dazle/app/pages/main/main_view.dart';
 import 'package:dazle/app/pages/setup_profile/setup_profile_presenter.dart';
 import 'package:dazle/app/pages/register/components/send_request_screen.dart';
 import 'package:dazle/app/pages/register/components/waiting_screen.dart';
+import 'package:dazle/app/pages/welcome/welcome_page.dart';
 import 'package:dazle/app/utils/app.dart';
 import 'package:dazle/domain/entities/user.dart';
 import 'package:flutter/material.dart';
@@ -49,10 +52,27 @@ class SetupProfileController extends Controller {
       print('setup profile on next $res ${res.toString()}');
     };
 
-    setupProfilePresenter.setupProfileOnComplete = () {
+    setupProfilePresenter.setupProfileOnComplete = () async {
       print('setup profile on complete');
       AppConstant.showLoader(getContext(), false);
       Navigator.pop(getContext());
+
+      // TODO: get user then check if the email is verified
+      // if verified: proceed to home page
+      // else: route to email verification page
+
+        User _user = await App.getUser();
+           if (!(_user.emailVerified ?? false) && _user.id!=null) {
+             emailVerificationPage();
+           } else if ( _user.isNewUser != null && _user.isNewUser ) {
+            welcomePage();
+          }
+          else {
+            mainPage();
+          }
+
+
+      return;
 
       if ( position == 'Broker' ){
         Navigator.push(
@@ -118,6 +138,21 @@ class SetupProfileController extends Controller {
       );
     }
 
+  }
+
+  void mainPage() {
+    Navigator.pushReplacementNamed(getContext(), MainPage.id);
+  }
+
+  void welcomePage() {
+    Navigator.popAndPushNamed(getContext(), WelcomePage.id);
+  }
+
+  void emailVerificationPage() {
+    Navigator.pushAndRemoveUntil(
+      getContext(),
+      MaterialPageRoute(builder: (BuildContext context) => EmailVerificationPage()),
+      (Route<dynamic> route) => false);
   }
 
   getCurrentUser() async {

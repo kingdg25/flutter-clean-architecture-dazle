@@ -88,15 +88,17 @@ class _EmailVerificationPage extends ViewState<EmailVerificationPage, EmailVerif
                     ),
                     SizedBox(height: 15.0),
                     CustomButton(
-                      text: 'Log out',
+                      text: 'Sign Out',
                       expanded: true,
+                      backgroudColor: Color.fromRGBO(229, 229, 229, 1.0),
+                      textColor: App.textColor,
                       onPressed: () async {
                         await App.logOutUser();
                         Navigator.pushAndRemoveUntil(
                           context,
                           MaterialPageRoute(builder: (BuildContext context) => LoginPage()),
                           (Route<dynamic> route) => false);
-                        }
+                      }
                     )
                   ]
                 )
