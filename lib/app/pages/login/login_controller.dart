@@ -112,8 +112,12 @@ class LoginController extends Controller {
       print('social login on next $res ${res.toString()}');
       if (res != null){
         if ( res.position != null && res.brokerLicenseNumber != null ) {
-          print('HOOOOMMMEEE PPAAGE');
-          mainPage();
+           if (!(res.emailVerified ?? false) && res.id!=null) {
+             emailVerificationPage();
+           } else {
+            print('HOOOOMMMEEE PPAAGE');
+            mainPage();
+          }
         }
         else {
           print('setup profile page');
