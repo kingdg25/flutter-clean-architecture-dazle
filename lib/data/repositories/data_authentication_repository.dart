@@ -460,5 +460,50 @@ class DataAuthenticationRepository extends AuthenticationRepository {
         };
     }
   }
-  
+
+  @override
+  Future<void> sendEmailVerification() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    User _user = await App.getUser();
+
+    var response = await http.post(
+      "${Constants.siteURL}/api/email_verification/send-email-verification",
+      body: convert.jsonEncode({
+        "email": _user.email,
+        "user_id": _user.id
+      }),
+      headers: {
+        'Authorization': 'Bearer ${prefs.getString("accessToken")}',
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      }
+    );
+    var jsonResponse = await convert.jsonDecode(response.body);
+    print("jsonResponse");
+    print(jsonResponse);
+    if (response.statusCode == 200){
+      if (jsonResponse is Map) {
+        if (jsonResponse.containsKey('success') && !jsonResponse['success']) {
+          print("SULOD DIR");
+          throw {
+            "error": false,
+            "error_type": "error_sending_email_verification",
+            "status": "Can't send email verification. Please try again."
+          };
+        }
+      }
+    } else if (response.statusCode == 401) {
+        throw {
+          "error": false,
+          "error_type": "unauthorized",
+          "status": "Unauthorized. Signing out!"
+        };
+    } else {
+        throw {
+          "error": true,
+          "error_type": "dynamic",
+          "status": "$jsonResponse"
+        };
+    }
+  }
 }

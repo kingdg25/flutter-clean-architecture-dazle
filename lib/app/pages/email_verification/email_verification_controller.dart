@@ -11,11 +11,26 @@ class EmailVerificationPageController extends Controller {
     super();
 
   @override
-  void initListeners() {}
+  void initListeners() {
+    emailVerificationPresenter.sendEmailVerificationOnComplete = () {
+      AppConstant.showLoader(getContext(), false);
+      _statusDialog("Email Verification", "Email verification sent!");
+    };
 
-
+    emailVerificationPresenter.sendEmailVerificationOnError = (e) {
+      AppConstant.showLoader(getContext(), false);
+      if ( !e['error'] ) {
+        _statusDialog('Oops!', '${e['status'] ?? ''}');
+      }
+      else{
+        _statusDialog('Something went wrong', '${e.toString()}');
+      }
+    };
+  }
+  
   resendEmailVerification(){
-    _statusDialog("Send Verification", "Resend"); // TODO: resend verification link
+    AppConstant.showLoader(getContext(), true);
+    emailVerificationPresenter.sendEmailVerification();
   }
 
 
@@ -41,6 +56,7 @@ class EmailVerificationPageController extends Controller {
 
   @override
   void onDisposed() {
+    emailVerificationPresenter.dispose();
     super.onDisposed();
   }
 }

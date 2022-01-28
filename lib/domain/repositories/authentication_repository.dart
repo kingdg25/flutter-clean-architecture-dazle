@@ -31,4 +31,6 @@ abstract class AuthenticationRepository {
   });
 
   Future<bool> checkLicenseNumber({String brokerLicenseNumber});
+
+  Future<void> sendEmailVerification();
 }
