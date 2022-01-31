@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:dazle/app/pages/create_listing/create_listing_presenter.dart';
+import 'package:dazle/app/pages/listing_details/listing_details_view.dart';
 import 'package:dazle/app/utils/app_constant.dart';
 import 'package:dazle/app/widgets/custom_text.dart';
 import 'package:dazle/app/widgets/form_fields/custom_button.dart';
@@ -61,15 +62,26 @@ class CreateListingController extends Controller {
   @override
   void initListeners() {
     // create listing
-    createListingPresenter.createListingOnNext = () {
-      print('create listing on next');
+    createListingPresenter.createListingOnNext = (listing) async {
+      print('create listing on next $listing');
+      AppConstant.showLoader(getContext(), false);
+      await _statusDialog('Done!', 'Your listing has been created.');
+      Navigator.pop(getContext());
+
+      if (listing!=null) {
+        Navigator.push(
+          getContext(),
+          MaterialPageRoute(
+            builder: (buildContext) => ListingDetailsPage(
+          property: listing,
+        )));
+      }
+      
     };
 
     createListingPresenter.createListingOnComplete = () async {
       print('create listing on complete');
       AppConstant.showLoader(getContext(), false);
-      await _statusDialog('Done!', 'Your listing has been created.');
-      Navigator.pop(getContext());
     };
 
     createListingPresenter.createListingOnError = (e) {

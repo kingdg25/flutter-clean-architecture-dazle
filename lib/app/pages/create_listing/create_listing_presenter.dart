@@ -1,3 +1,4 @@
+import 'package:dazle/domain/entities/property.dart';
 import 'package:dazle/domain/usecases/listing/create_listing_usecase.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 
@@ -24,7 +25,7 @@ class CreateListingPresenter extends Presenter {
 
 
 
-class _CreateListingUseCaseObserver extends Observer<void> {
+class _CreateListingUseCaseObserver extends Observer<CreateListingUseCaseResponse> {
   final CreateListingPresenter presenter;
   _CreateListingUseCaseObserver(this.presenter);
   @override
@@ -41,5 +42,7 @@ class _CreateListingUseCaseObserver extends Observer<void> {
 
   @override
   void onNext(response) {
+    assert(presenter.createListingOnNext !=null);
+    presenter.createListingOnNext(response.listing);
   }
 }
