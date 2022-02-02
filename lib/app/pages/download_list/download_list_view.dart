@@ -157,7 +157,7 @@ class _DownloadListPageState
               ),
               CustomRichText(
                 mainText: 'Frontage: ',
-                valueText: '!!-For addition in Property object ',
+                valueText: '',
                 // *To be added on the Property object
               ),
               SizedBox(
@@ -224,11 +224,10 @@ class _DownloadListPageState
                         ),
                         SizedBox(width: 8),
                         CustomText(
-                          text: item,
-                          fontSize: 15,
-                          fontWeight: FontWeight.w600,
-                          color: App.hintColor,
-                        ),
+                            text: item,
+                            fontSize: 15,
+                            fontWeight: FontWeight.w600,
+                            color: App.textColor),
                       ],
                     ),
                   );
@@ -255,6 +254,7 @@ class _DownloadListPageState
                     child: CustomButton(
                       text: 'Download',
                       onPressed: () async {
+                        //* Will only works after upgrading to null safety version
                         Loader.show(context);
                         String pdfFilePath = await PdfGenerator()
                             .downloadPdf(property: widget.property);

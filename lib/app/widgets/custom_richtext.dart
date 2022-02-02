@@ -26,7 +26,7 @@ class CustomRichText extends StatelessWidget {
             text: valueText,
             style: TextStyle(
               fontSize: 15,
-              color: App.hintColor,
+              color: App.textColor,
             ),
           ),
         ],

@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:dazle/domain/entities/user.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
@@ -8,21 +9,27 @@ import 'package:flutter/services.dart';
 import '../../../../domain/entities/property.dart';
 import 'pdf_widgets.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:share_plus/share_plus.dart';
 import 'package:dio/dio.dart';
-
+import '../../../utils/app.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'dart:async';
 import 'package:downloads_path_provider/downloads_path_provider.dart';
+
+// import 'package:downloads_path_provider/downloads_path_provider.dart';
+// import 'package:ext_storage/ext_storage.dart';
 
 class PdfGenerator {
   /// Takes a Property Object and use it's properties to
   /// return a pdf
+
   Future<pw.Document> buildPdf({Property property}) async {
     final pdf = pw.Document();
     final image = (await rootBundle.load('assets/dazle_sample_logo.png'))
         .buffer
         .asUint8List();
     final List<pw.Widget> pdfImages = await pdfImageGenerator(property.photos);
+    final User currentUser = await App.getUser();
+
     pdf.addPage(
       pw.MultiPage(
         pageFormat: PdfPageFormat.a4,
@@ -56,7 +63,7 @@ class PdfGenerator {
                             ),
                             PdfWidgets().pdfCustomRichText(
                               mainText: 'Frontage: ',
-                              valueText: '?????',
+                              valueText: '',
                             ),
                             pw.SizedBox(
                               height: 10,
@@ -155,10 +162,18 @@ class PdfGenerator {
           return pw.Container(
             alignment: pw.Alignment.centerRight,
             margin: pw.EdgeInsets.only(top: 1 * PdfPageFormat.cm),
-            child: PdfWidgets().pdfCustomRichText(
-              // TODO: 2. Add Contact and Email in Footer
-              mainText: 'Selling Agent: ',
-              valueText: 'John Doe',
+            child: pw.Column(
+              crossAxisAlignment: pw.CrossAxisAlignment.end,
+              children: [
+                PdfWidgets().pdfCustomRichText(
+                  // TODO: Gio - 2. Add Contact and Email in Footer
+                  mainText: 'Selling Agent: ',
+                  valueText: currentUser.displayName,
+                ),
+                // TODO: Gio - Add icons after upgrading to null safety
+                PdfWidgets().pdfCustomText(text: currentUser.mobileNumber),
+                PdfWidgets().pdfCustomText(text: currentUser.email),
+              ],
             ),
           );
         },
@@ -169,21 +184,24 @@ class PdfGenerator {
   }
 
   /// Takes a Property object to be used by the buildPdf() function
-  /// then download the pdf to the Downloads folder of the device
+  /// then returns the String of the download path
   Future<String> downloadPdf({Property property}) async {
     String downloadPath;
-    //* Save pdf to Downloads Folder
+
+    /// Request Permission to Write on Local Storage
     Map<Permission, PermissionStatus> statuses = await [
       Permission.storage,
-      //add more permission to request here.
     ].request();
 
     if (statuses[Permission.storage].isGranted) {
-      final pdfForDownload = await buildPdf(property: property);
+      final pdfForDownload =
+          await buildPdf(property: property); // Builds the pdf file
+
       try {
         final dir = await DownloadsPathProvider.downloadsDirectory;
-        //? Finalize the filename of the PDF
-        downloadPath = '${dir.path}/${DateTime.now().toIso8601String()}.pdf';
+        // TODO: Gio - 1. Finalize the filename of the PDF
+        downloadPath =
+            '${dir.path}/Dazzle Property List - ${property.district} - ${property.city} ${DateTime.now().toIso8601String()}.pdf';
         print(downloadPath);
         final file = File(downloadPath);
         await file.writeAsBytes(pdfForDownload.save());
@@ -193,7 +211,6 @@ class PdfGenerator {
       }
     }
 
-    /// Open File after download
     return downloadPath;
   }
 
@@ -207,7 +224,8 @@ class PdfGenerator {
     //* Save pdf to App Storage Directory
     try {
       final dir = await getExternalStorageDirectory();
-      localPath = '${dir.path}/${DateTime.now().toIso8601String()}.pdf';
+      localPath =
+          '${dir.path}/Dazzle Property List - ${property.district} - ${property.city} ${DateTime.now().toIso8601String()}.pdf';
       print(localPath);
       final file = File(localPath);
       await file.writeAsBytes(pdfForDownload.save());

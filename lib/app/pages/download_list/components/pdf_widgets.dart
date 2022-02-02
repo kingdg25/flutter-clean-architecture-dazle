@@ -15,16 +15,14 @@ class PdfWidgets {
     @required String text,
     double fontSize = 13,
     pw.FontWeight fontWeight,
-    @required pw.Font font,
   }) {
     return pw.Text(
       text,
       style: pw.TextStyle(
-        color: _hintColor,
+        color: _textColor,
         fontWeight: fontWeight,
         fontStyle: pw.FontStyle.normal,
         fontSize: fontSize,
-        font: font,
       ),
     );
   }
@@ -33,6 +31,7 @@ class PdfWidgets {
   pdfCustomRichText({
     @required String mainText,
     @required String valueText,
+    double fontSize,
   }) {
     return pw.RichText(
       text: pw.TextSpan(
@@ -48,7 +47,7 @@ class PdfWidgets {
           pw.TextSpan(
             text: valueText,
             style: pw.TextStyle(
-              color: _hintColor,
+              color: _textColor,
               fontSize: 13,
             ),
           ),
