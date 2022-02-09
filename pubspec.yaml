@@ -31,6 +31,8 @@ dependencies:
     open_file: ^3.0.3
     permission_handler: ^5.1.0+2
     downloads_path_provider: ^0.1.0
+    dotted_border: ^1.0.7
+    image_picker: ^0.6.7+22
 
 
 dev_dependencies:
