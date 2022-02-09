@@ -8,21 +8,25 @@ import 'package:dazle/app/widgets/form_fields/custom_radio_group_button.dart';
 import 'package:dazle/app/widgets/form_fields/custom_text_field.dart';
 import 'package:dazle/app/widgets/form_fields/custom_upload_field.dart';
 import 'package:dazle/data/repositories/data_listing_repository.dart';
+import 'package:dazle/domain/entities/property.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 
 
 
 class CreateListingPage extends View {
-  CreateListingPage({Key key}) : super(key: key);
+  final Property property;
+  CreateListingPage({Key key, this.property}) : super(key: key);
 
   @override
-  _CreateListingPageState createState() => _CreateListingPageState();
+  _CreateListingPageState createState() => _CreateListingPageState(property);
 }
 
 
 class _CreateListingPageState extends ViewState<CreateListingPage, CreateListingController> {
-  _CreateListingPageState() : super(CreateListingController(DataListingRepository()));
+  _CreateListingPageState(property) : 
+    appBarTitle = (property!=null && property.id!=null) ? "Update Listing" : 'Create Listing',
+    super(CreateListingController(DataListingRepository(), property));
   String appBarTitle = 'Create Listing';
   List<Widget> createListingList = [];
   int currentPage = 1;

@@ -6,6 +6,7 @@ import 'package:dazle/app/utils/app_constant.dart';
 import 'package:dazle/app/widgets/custom_text.dart';
 import 'package:dazle/app/widgets/form_fields/custom_button.dart';
 import 'package:dazle/app/widgets/form_fields/custom_radio_group_button.dart';
+import 'package:dazle/domain/entities/property.dart';
 // import 'package:dazle/domain/entities/amenity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
@@ -15,6 +16,7 @@ import 'package:wechat_assets_picker/wechat_assets_picker.dart';
 
 class CreateListingController extends Controller {
   final CreateListingPresenter createListingPresenter;
+  final Property property;
 
   PageController createListingPageController;
 
@@ -44,7 +46,7 @@ class CreateListingController extends Controller {
   List<AssetEntity> assets;
   String viewType;
 
-  CreateListingController(userRepo)
+  CreateListingController(userRepo, this.property)
     : createListingPresenter = CreateListingPresenter(userRepo),
       createListingPageController = PageController(),
       priceTextController = TextEditingController(),
