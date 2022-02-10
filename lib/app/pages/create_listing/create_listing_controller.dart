@@ -1,7 +1,9 @@
 import 'dart:async';
 
 import 'package:dazle/app/pages/create_listing/create_listing_presenter.dart';
+import 'package:dazle/app/pages/email_verification/email_verification_view.dart';
 import 'package:dazle/app/pages/listing_details/listing_details_view.dart';
+import 'package:dazle/app/pages/login/login_view.dart';
 import 'package:dazle/app/utils/app_constant.dart';
 import 'package:dazle/app/widgets/custom_text.dart';
 import 'package:dazle/app/widgets/form_fields/custom_button.dart';
@@ -101,6 +103,29 @@ class CreateListingController extends Controller {
       else{
         _statusDialog('Something went wrong', '${e.toString()}');
       } 
+    };
+    
+    createListingPresenter.updateListingOnNext = (Property property) async {
+      AppConstant.showLoader(getContext(), false);
+      await _statusDialog('Done!', 'Your listing has been updated.');
+
+      print(property);
+      if (property!=null && property.id!=null) {
+        Navigator.pop(getContext(), true);
+        Navigator.push(
+          getContext(),
+          MaterialPageRoute(
+            builder: (buildContext) => ListingDetailsPage(
+              property: property,
+            )));
+      }
+    };
+    createListingPresenter.updateListingOnComplete = () async {
+      // await _statusDialog('Done!', 'Updating listing complete.');
+    };
+    createListingPresenter.updateListingOnError = (e) async {
+      await _statusDialog('Cannot update listing!', 'Your listing cannot be updated.');
+      AppConstant.showLoader(getContext(), false);
     };
   }
 
@@ -211,38 +236,39 @@ class CreateListingController extends Controller {
 
 
   void updateListing() async {
-     final confirmViewType = await _viewType(getContext());
-     if (confirmViewType==null) {
+    final confirmViewType = await _viewType(getContext());
+    if (confirmViewType==null) {
       await AppConstant.statusDialog(context: getContext(), text: "Please confirm the view type of your list.", title: "Confirm");
       return;
-      }
-     AppConstant.statusDialog(context: getContext(), text: "Update listing", title: "Update");
+    }
 
-     Map data = {
-      "id": this.property.id,
-      "cover_photo": 'https://picsum.photos/id/73/200/300',
-      "property_type": propertyType,
-      "property_for": propertyFor,
-      "time_period": timePeriod,
-      "price": priceTextController.text,
+    AppConstant.showLoader(getContext(), true);
 
-      "number_of_bedrooms": numberOfBedRooms,
-      "number_of_bathrooms": numberOfBathRooms,
-      "number_of_parking_space": numberOfParking,
-      "total_area": areaTextController.text,
-      "is_your_property": isYourProperty,
-      "description": descriptionTextController.text,
+    Map data = {
+    "id": this.property.id,
+    "cover_photo": 'https://picsum.photos/id/73/200/300',
+    "property_type": propertyType,
+    "property_for": propertyFor,
+    "time_period": timePeriod,
+    "price": priceTextController.text,
 
-      "street": streetTextController.text,
-      "landmark": landmarkTextController.text,
-      "city": cityTextController.text,
+    "number_of_bedrooms": numberOfBedRooms,
+    "number_of_bathrooms": numberOfBathRooms,
+    "number_of_parking_space": numberOfParking,
+    "total_area": areaTextController.text,
+    "is_your_property": isYourProperty,
+    "description": descriptionTextController.text,
 
-      "amenities": amenities,
+    "street": streetTextController.text,
+    "landmark": landmarkTextController.text,
+    "city": cityTextController.text,
 
-      "view_type": viewType
+    "amenities": amenities,
+
+    "view_type": viewType
     };
 
-     createListingPresenter.updateListing(data);
+    createListingPresenter.updateListing(data);
   }
 
 

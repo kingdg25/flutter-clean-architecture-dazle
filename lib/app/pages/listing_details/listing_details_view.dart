@@ -41,14 +41,15 @@ class _ListingDetailsPageState
                   controller.currentUser?.id == widget.property?.createdBy ? ListingDetailsIconButton(
                     iconData: Icons.edit,
                     tooltip: "Edit Property",
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (buildContext) => CreateListingPage(
-                              property: widget.property,
-                            ),
-                          ));
+                    onPressed: () async {
+                      Navigator.pop(context);
+                      final popThisPage = await Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (buildContext) => CreateListingPage(
+                            property: widget.property,
+                          ),
+                        ));
                     },
                   ) : Container(),
                   ListingDetailsIconButton(

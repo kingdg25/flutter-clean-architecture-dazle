@@ -334,19 +334,26 @@ class DataListingRepository extends ListingRepository {
     var jsonResponse = await convert.jsonDecode(response.body);
     print(jsonResponse);
     if (response.statusCode == 200){
+      if (!jsonResponse['success']) {
+        throw {
+          "error": true,
+          "error_type": jsonResponse['error_type'],
+          "status": "Listing not updated."
+        };
+      }
       final Map property = jsonResponse["listing"];
       property['price'] = jsonResponse["listing"]['price'].toString();
-
-      print(property['createdAt'].runtimeType);
-      print(property['createdAt']);
       
       final Property propertyInstance = Property.fromJson(property);
-
-      print(propertyInstance.toJson());
       
       return propertyInstance;
-    }
-    return null;
+    } else {
+        throw {
+          "error": false,
+          "error_type": "server_error",
+          "status": "Listing not updated."
+        };
+      }
   }
 
   @override
