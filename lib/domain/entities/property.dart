@@ -23,6 +23,7 @@ class Property {
   final String createdBy;
   final String createdAt;
   final String updatedAt;
+  final String viewType;
   final String id;
 
   String get keywordsToString{
@@ -52,6 +53,7 @@ class Property {
     this.createdBy,
     this.createdAt,
     this.updatedAt,
+    this.viewType,
     this.id
   });
 
@@ -77,6 +79,7 @@ class Property {
       createdBy = json['createdBy'],
       createdAt = json['createdAt'].toString(),
       updatedAt = json['updatedAt'].toString(),
+      viewType = json['view_type'],
       id = json['_id'];
 
   Map<String, dynamic> toJson() => {
@@ -97,6 +100,7 @@ class Property {
     'city': city ?? "",
     'description': description ?? "",
     'create_by': createdBy,
+    'view_type': viewType,
     'id': id
   };
 }

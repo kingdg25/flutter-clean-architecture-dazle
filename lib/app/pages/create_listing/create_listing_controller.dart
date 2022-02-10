@@ -63,6 +63,7 @@ class CreateListingController extends Controller {
 
   @override
   void initListeners() {
+    initializeProperty();
     // create listing
     createListingPresenter.createListingOnNext = (listing) async {
       print('create listing on next $listing');
@@ -101,6 +102,33 @@ class CreateListingController extends Controller {
         _statusDialog('Something went wrong', '${e.toString()}');
       } 
     };
+  }
+
+  void initializeProperty() async {
+    if (this.property!=null && this.property.id != null){
+      await setValues();
+      createListingPresenter.fetchListingDetails(id: this.property.id);
+    }
+  }
+
+  // initialize values on updating
+  setValues() async {
+      priceTextController.text = this.property.price;
+      areaTextController.text = this.property.totalArea;
+      descriptionTextController.text = this.property.description;
+      streetTextController.text = this.property.street;
+      landmarkTextController.text = this.property.landmark;
+      cityTextController.text = this.property.city;
+      propertyType = this.property.propertyType;
+      propertyFor = this.property.propertyFor;
+      timePeriod = this.property.timePeriod;
+      numberOfBedRooms = this.property.totalBedRoom;
+      numberOfBathRooms = this.property.totalBathRoom;
+      numberOfParking = this.property.totalParkingSpace;
+      isYourProperty = this.property.isYourProperty;
+      amenities = this.property.amenities;
+      viewType = this.property.viewType;
+      refreshUI();
   }
 
 
@@ -179,6 +207,42 @@ class CreateListingController extends Controller {
     await AppConstant.statusDialog(context: getContext(), text: "Your listing will view as $confirmViewType", title: "View Type");
 
     return isValidated;
+  }
+
+
+  void updateListing() async {
+     final confirmViewType = await _viewType(getContext());
+     if (confirmViewType==null) {
+      await AppConstant.statusDialog(context: getContext(), text: "Please confirm the view type of your list.", title: "Confirm");
+      return;
+      }
+     AppConstant.statusDialog(context: getContext(), text: "Update listing", title: "Update");
+
+     Map data = {
+      "id": this.property.id,
+      "cover_photo": 'https://picsum.photos/id/73/200/300',
+      "property_type": propertyType,
+      "property_for": propertyFor,
+      "time_period": timePeriod,
+      "price": priceTextController.text,
+
+      "number_of_bedrooms": numberOfBedRooms,
+      "number_of_bathrooms": numberOfBathRooms,
+      "number_of_parking_space": numberOfParking,
+      "total_area": areaTextController.text,
+      "is_your_property": isYourProperty,
+      "description": descriptionTextController.text,
+
+      "street": streetTextController.text,
+      "landmark": landmarkTextController.text,
+      "city": cityTextController.text,
+
+      "amenities": amenities,
+
+      "view_type": viewType
+    };
+
+     createListingPresenter.updateListing(data);
   }
 
 

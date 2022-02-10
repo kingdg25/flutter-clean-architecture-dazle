@@ -312,4 +312,46 @@ class DataListingRepository extends ListingRepository {
       };
     }
   }
+
+  @override
+  Future<Property> update({Map data}) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final userToken = prefs.getString("accessToken");
+    final listingId = data['id'];
+    Map params = {
+      "data": data
+    };
+    var response = await http.put(
+      "${Constants.siteURL}/api/listings/update-listing/$listingId",
+      body: convert.jsonEncode(params),
+      headers: {
+        'Authorization': 'Bearer ${userToken ?? ""}',
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      }
+    );
+
+    var jsonResponse = await convert.jsonDecode(response.body);
+    print(jsonResponse);
+    if (response.statusCode == 200){
+      final Map property = jsonResponse["listing"];
+      property['price'] = jsonResponse["listing"]['price'].toString();
+
+      print(property['createdAt'].runtimeType);
+      print(property['createdAt']);
+      
+      final Property propertyInstance = Property.fromJson(property);
+
+      print(propertyInstance.toJson());
+      
+      return propertyInstance;
+    }
+    return null;
+  }
+
+  @override
+  Future<Property> getListingDetails(String id) {
+    // TODO: implement getListingDetails
+    throw UnimplementedError();
+  }
 }

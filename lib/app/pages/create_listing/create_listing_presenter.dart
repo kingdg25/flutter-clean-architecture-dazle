@@ -17,6 +17,14 @@ class CreateListingPresenter extends Presenter {
     createListingUseCase.execute(_CreateListingUseCaseObserver(this), CreateListingUseCaseParams(listing));
   }
 
+  void updateListing(Map data) {
+
+  }
+
+  void fetchListingDetails({id}){
+    
+  }
+
   @override
   void dispose() {
     createListingUseCase.dispose();

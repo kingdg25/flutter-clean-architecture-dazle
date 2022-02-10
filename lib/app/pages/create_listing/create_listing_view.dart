@@ -449,7 +449,9 @@ class _CreateListingPageState extends ViewState<CreateListingPage, CreateListing
                           FocusScope.of(context).unfocus();
 
                           if ( controller.validatePage4() ) {
-                            _pageController.nextPage(
+                            if (widget.property!=null && widget.property.id!=null) {
+                              controller.updateListing();
+                            } else _pageController.nextPage(
                               duration: Duration(milliseconds: 500),
                               curve: Curves.ease
                             );
@@ -520,22 +522,22 @@ class _CreateListingPageState extends ViewState<CreateListingPage, CreateListing
 
               if ( i == 0 || i == 1 ) {
                 setState(() {
-                  appBarTitle = 'Create Listing';
+                  appBarTitle = (widget.property!=null && widget.property.id!=null) ? "Update Listing" : 'Create Listing';
                 });
               }
               else if ( i == 2 ) {
                 setState(() {
-                  appBarTitle = 'Location';
+                  appBarTitle = (widget.property!=null && widget.property.id!=null) ? "Update Location" : 'Location';
                 });
               }
               else if ( i == 3 ) {
                 setState(() {
-                  appBarTitle = 'Amenities';
+                  appBarTitle = (widget.property!=null && widget.property.id!=null) ? "Update Amenities" : 'Amenities';
                 });
               }
               else if ( i == 4 ) {
                 setState(() {
-                  appBarTitle = 'Photos';
+                  appBarTitle = (widget.property!=null && widget.property.id!=null) ? "Update Photos" : 'Photos';
                 });
               }
             },
