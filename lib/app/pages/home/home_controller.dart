@@ -1,4 +1,5 @@
 import 'package:dazle/app/pages/main/main_view.dart';
+import 'package:dazle/app/utils/app_constant.dart';
 import 'package:dazle/domain/entities/photo_tile.dart';
 import 'package:dazle/domain/entities/property.dart';
 import 'package:flutter/material.dart';
@@ -6,7 +7,7 @@ import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:dazle/app/pages/home/home_presenter.dart';
 import 'package:dazle/domain/entities/user.dart';
 import 'package:flutter_overlay_loader/flutter_overlay_loader.dart';
-
+import 'package:dazle/app/pages/login/login_view.dart';
 
 class HomeController extends Controller {
   final HomePresenter homePresenter;
@@ -26,15 +27,17 @@ class HomeController extends Controller {
   List<Property> _newHomes;
   List<Property> get newHomes => _newHomes;
 
+  List<Property> _myListing;
+  List<Property> get myListing => _myListing;
 
   HomeController(userRepo)
-    : _spotLight = <PhotoTile>[],
-      _matchedProperties = <Property>[],
-      _whyBrooky = <PhotoTile>[],
-      _newHomes = <Property>[],
-      homePresenter = HomePresenter(userRepo),
-      super();
-
+      : _spotLight = <PhotoTile>[],
+        _matchedProperties = <Property>[],
+        _whyBrooky = <PhotoTile>[],
+        _newHomes = <Property>[],
+        _myListing = <Property>[],
+        homePresenter = HomePresenter(userRepo),
+        super();
 
   @override
   void initListeners() {
@@ -42,7 +45,7 @@ class HomeController extends Controller {
     // get user
     homePresenter.getUserOnNext = (User res) {
       print('get user on next $res ${res.displayName}');
-      if(res != null) {
+      if (res != null) {
         _user = res;
       }
       refreshUI();
@@ -55,7 +58,6 @@ class HomeController extends Controller {
     homePresenter.getUserOnError = (e) {
       print('get user on error $e');
     };
-
 
     //new user or not
     homePresenter.isNewUserOnNext = (res) {
@@ -70,15 +72,33 @@ class HomeController extends Controller {
 
     homePresenter.isNewUserOnError = (e) {
       print('new user on error $e');
+      if (e is Map) {
+        print(e);
+        if (e.containsKey("error_type")) {
+          if (e["error_type"] == "unauthorized") {
+            AppConstant.statusDialog(
+                context: getContext(),
+                text: "Please log in again.",
+                title: "Session Expired",
+                onPressed: () {
+                  signOut();
+                });
+          } else {
+            AppConstant.statusDialog(
+                context: getContext(),
+                text: "${e.toString()}",
+                title: "Something went wrong'");
+          }
+        }
+      }
     };
 
-    
     getData();
 
     // get spot light
     homePresenter.getSpotLightOnNext = (List<PhotoTile> res) {
       print('get spot light on next $res');
-      if (res != null){
+      if (res != null) {
         _spotLight = res;
       }
     };
@@ -95,7 +115,7 @@ class HomeController extends Controller {
     // get matched properties
     homePresenter.getMatchedPropertiesOnNext = (List<Property> res) {
       print('get matched properties on next $res');
-      if (res != null){
+      if (res != null) {
         _matchedProperties = res;
       }
     };
@@ -112,7 +132,7 @@ class HomeController extends Controller {
     // get why brooky
     homePresenter.getWhyBrookyOnNext = (List<PhotoTile> res) {
       print('get why brooky on next $res');
-      if (res != null){
+      if (res != null) {
         _whyBrooky = res;
       }
     };
@@ -129,7 +149,7 @@ class HomeController extends Controller {
     // get new homes
     homePresenter.getNewHomesOnNext = (List<Property> res) {
       print('get new homes on next $res');
-      if (res != null){
+      if (res != null) {
         _newHomes = res;
       }
     };
@@ -143,6 +163,48 @@ class HomeController extends Controller {
       print('get new homes on error $e');
     };
 
+    // get my listing
+    homePresenter.getMyListingOnNext = (List<Property> res) {
+      print('get my listing on next $res');
+      if (res != null) {
+        _myListing = res;
+      }
+    };
+
+    homePresenter.getMyListingOnComplete = () {
+      print('get my listing on complete');
+      refreshUI();
+    };
+
+    homePresenter.getMyListingOnError = (e) {
+      print('get my listing on error $e');
+
+      if (e is Map) {
+        print(e);
+        if (e.containsKey("error_type")) {
+          AppConstant.statusDialog(
+              context: getContext(),
+              text: "${e.toString()}",
+              title: "Something went wrong'");
+        }
+      }
+    };
+
+    // logout
+    homePresenter.logoutUserOnNext = () {
+      print('logout on next');
+    };
+
+    homePresenter.logoutUserOnComplete = () {
+      print('logout on complete');
+      AppConstant.showLoader(getContext(), false);
+      loginPage();
+    };
+
+    homePresenter.logoutUserOnError = (e) {
+      print('logout on error $e');
+      AppConstant.showLoader(getContext(), false);
+    };
   }
 
   void getData() {
@@ -151,12 +213,16 @@ class HomeController extends Controller {
 
     homePresenter.getWhyBrooky();
     homePresenter.getNewHomes();
+
+    homePresenter.getMyListing();
+
+    homePresenter.isNewUser();
   }
 
   void isNewUser() {
     print('_user _user _user $_user ${_user.displayName} ${_user.isNewUser}');
 
-    if ( _user != null ) {
+    if (_user != null) {
       homePresenter.isNewUser(email: _user.email, isNewUser: false);
     }
   }
@@ -165,7 +231,16 @@ class HomeController extends Controller {
     Navigator.popAndPushNamed(getContext(), MainPage.id);
   }
 
+  void signOut() {
+    print('user logout home controller');
+    AppConstant.showLoader(getContext(), true);
 
+    homePresenter.logoutUser();
+  }
+
+  void loginPage() {
+    Navigator.popAndPushNamed(getContext(), LoginPage.id);
+  }
 
   @override
   void onResumed() => print('On resumed');
@@ -182,5 +257,4 @@ class HomeController extends Controller {
     Loader.hide();
     super.onDisposed();
   }
-  
 }

@@ -166,7 +166,6 @@ class PdfGenerator {
               crossAxisAlignment: pw.CrossAxisAlignment.end,
               children: [
                 PdfWidgets().pdfCustomRichText(
-                  // TODO: Gio - 2. Add Contact and Email in Footer
                   mainText: 'Selling Agent: ',
                   valueText: currentUser.displayName,
                 ),

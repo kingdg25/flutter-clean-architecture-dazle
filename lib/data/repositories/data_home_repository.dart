@@ -7,8 +7,6 @@ import 'package:dazle/domain/repositories/home_repository.dart';
 import 'package:dazle/data/constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-
-
 class DataHomeRepository extends HomeRepository {
   List<PhotoTile> spotLight;
   List<Property> matchedProperties;
@@ -24,68 +22,69 @@ class DataHomeRepository extends HomeRepository {
   }
   factory DataHomeRepository() => _instance;
 
-
   @override
+  //TODO: Gio - 2. Add validation for token expiration on user login
   Future<void> isNewUser({String email, bool isNewUser}) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
+
     Map params = {
-      "user": {
-        "email": email,
-        "is_new_user": isNewUser
-      }
+      "user": {"email": email, "is_new_user": isNewUser}
     };
 
-    var response = await http.post(
-      "${Constants.siteURL}/api/users/is-new-user",
-      body: convert.jsonEncode(params),
-      headers: {
-        'Authorization': 'Bearer ${prefs.getString("accessToken")}',
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-      }
-    );
+    var response = await http.post("${Constants.siteURL}/api/users/is-new-user",
+        body: convert.jsonEncode(params),
+        headers: {
+          'Authorization': 'Bearer ${prefs.getString("accessToken")}',
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        });
 
     var jsonResponse = await convert.jsonDecode(response.body);
-    if (response.statusCode == 200){
+    if (response.statusCode == 200) {
       print('new user json data $jsonResponse');
       bool success = jsonResponse['success'];
       var user = jsonResponse['user'];
 
       if (success) {
-        print('isNewUser isNewUser isNewUser isNewUser ${user['is_new_user']} $user');
+        print(
+            'isNewUser isNewUser isNewUser isNewUser ${user['is_new_user']} $user');
         SharedPreferences prefs = await SharedPreferences.getInstance();
 
-        if(user != null){
+        if (user != null) {
           await prefs.setString('user', convert.jsonEncode(user));
         }
-
-      }
-      else {
+      } else {
         throw {
           "error": false,
           "error_type": "${jsonResponse['error_type'] ?? ''}",
           "status": "$jsonResponse"
         };
       }
-      
-    }
-    else {
+    } else if (response.statusCode == 401) {
       throw {
-        "error": true,
-        "error_type": "dynamic",
-        "status": "$jsonResponse"
+        "error": false,
+        "error_type": "unauthorized",
+        "status": "Unauthorized. Signing out!"
       };
+    } else {
+      throw {"error": true, "error_type": "dynamic", "status": "$jsonResponse"};
     }
-  
   }
 
   @override
   Future<List<PhotoTile>> getSpotLight() async {
     return [
-      PhotoTile(photoURL: '', text: 'Near you'),
-      PhotoTile(photoURL: 'http://via.placeholder.com/200x150', text: 'Lorem Ipsum'),
+      PhotoTile(
+          photoURL:
+              'https://static.wixstatic.com/media/ef6ac7_baf7e4eecf0b4d72a6b122d1721ea68e~mv2.gif',
+          text: ''),
+      PhotoTile(
+          photoURL: 'http://via.placeholder.com/200x150', text: 'Lorem Ipsum'),
       PhotoTile(photoURL: 'http://via.placeholder.com/350x150', text: 'text'),
-      PhotoTile(photoURL: 'https://images.unsplash.com/photo-1532264523420-881a47db012d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9', text: 'text2'),
+      PhotoTile(
+          photoURL:
+              'https://images.unsplash.com/photo-1532264523420-881a47db012d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9',
+          text: 'text2'),
       PhotoTile(photoURL: 'https://picsum.photos/250?image=9', text: 'text3')
     ];
   }
@@ -95,6 +94,7 @@ class DataHomeRepository extends HomeRepository {
     return [
       Property(
         coverPhoto: 'https://picsum.photos/200/300',
+        photos: ['https://picsum.photos/200/300'],
         keywords: ['keywords1', 'keywords2'],
         price: '1,500,000.00',
         totalBedRoom: '99',
@@ -104,6 +104,7 @@ class DataHomeRepository extends HomeRepository {
       ),
       Property(
         coverPhoto: 'https://picsum.photos/200/300',
+        photos: ['https://picsum.photos/200/300'],
         keywords: ['one', 'two'],
         price: '8,786,123.00',
         totalBedRoom: '1',
@@ -113,6 +114,7 @@ class DataHomeRepository extends HomeRepository {
       ),
       Property(
         coverPhoto: 'https://picsum.photos/200/300',
+        photos: ['https://picsum.photos/200/300'],
         keywords: ['qwe', 'asd'],
         price: '300,123.12',
         totalBedRoom: '9',
@@ -131,12 +133,13 @@ class DataHomeRepository extends HomeRepository {
       PhotoTile(photoURL: '', text: ''),
     ];
   }
-  
+
   @override
   Future<List<Property>> getNewHomes() async {
     return [
       Property(
         coverPhoto: 'https://picsum.photos/id/237/200/300',
+        photos: ['https://picsum.photos/id/237/200/300'],
         keywords: ['qqq', 'www'],
         price: '9,999,999.99',
         totalBedRoom: '81',
@@ -146,6 +149,7 @@ class DataHomeRepository extends HomeRepository {
       ),
       Property(
         coverPhoto: 'https://picsum.photos/id/132/200/300',
+        photos: ['https://picsum.photos/id/237/200/300'],
         keywords: ['aaa', 'ssss'],
         price: '1,234,567.00',
         totalBedRoom: '9',
@@ -155,6 +159,7 @@ class DataHomeRepository extends HomeRepository {
       ),
       Property(
         coverPhoto: 'https://picsum.photos/id/456/200/300',
+        photos: ['https://picsum.photos/id/237/200/300'],
         keywords: ['ddd', 'dddd'],
         price: '540,735.12',
         totalBedRoom: '88',
@@ -164,5 +169,4 @@ class DataHomeRepository extends HomeRepository {
       )
     ];
   }
-  
 }

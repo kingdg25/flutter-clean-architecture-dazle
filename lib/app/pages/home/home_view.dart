@@ -10,8 +10,7 @@ import 'package:dazle/data/repositories/data_home_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:dazle/app/pages/home/home_controller.dart';
-
-
+import 'package:dazle/app/pages/listing_details/listing_details_view.dart';
 
 class HomePage extends View {
   HomePage({Key key}) : super(key: key);
@@ -20,41 +19,37 @@ class HomePage extends View {
   _HomePageState createState() => _HomePageState();
 }
 
-
 class _HomePageState extends ViewState<HomePage, HomeController> {
   _HomePageState() : super(HomeController(DataHomeRepository()));
 
   @override
   Widget get view {
     return Scaffold(
-      key: globalKey,
-      appBar: AppBar(
-        title: Image(
-          height: 60.0,
-          image: AssetImage('assets/brooky_logo.png'),
+        key: globalKey,
+        appBar: AppBar(
+          title: Image(
+            height: 30.0,
+            image: AssetImage('assets/dazle_sample_logo.png'),
+          ),
+          automaticallyImplyLeading: false,
+          backgroundColor: Colors.white,
+          actions: [
+            Container(
+              padding: EdgeInsets.only(right: 10.0),
+              child: IconButton(
+                  icon: Image.asset('assets/icons/find.png'),
+                  iconSize: 30,
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (buildContext) => FindMatchPage()));
+                  }),
+            )
+          ],
         ),
-        automaticallyImplyLeading: false,
-        backgroundColor: Colors.white,
-        actions: [
-          Container(
-            padding: EdgeInsets.only(right: 10.0),
-            child: IconButton(
-              icon: Image.asset('assets/icons/find.png'),
-              iconSize: 30,
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (buildContext) => FindMatchPage()
-                  )
-                );
-              }
-            ),
-          )
-        ],
-      ),
-      body: ControlledWidgetBuilder<HomeController>(
-        builder: (context, controller) {
+        body: ControlledWidgetBuilder<HomeController>(
+            builder: (context, controller) {
           final double screenHeight = MediaQuery.of(context).size.height;
           final double screenWidth = MediaQuery.of(context).size.width;
 
@@ -64,7 +59,7 @@ class _HomePageState extends ViewState<HomePage, HomeController> {
                 children: [
                   Container(
                     width: screenWidth,
-                    height: screenHeight/2,
+                    height: screenHeight / 2,
                     decoration: BoxDecoration(
                       image: DecorationImage(
                         fit: BoxFit.cover,
@@ -75,11 +70,11 @@ class _HomePageState extends ViewState<HomePage, HomeController> {
                   ),
                   Container(
                     width: screenWidth,
-                    height: (screenWidth < 375) ? screenHeight/3 : screenHeight/2,
+                    height: (screenWidth < 375)
+                        ? screenHeight / 3
+                        : screenHeight / 2,
                     decoration: BoxDecoration(
-                      boxShadow: [
-                        AppConstant.boxShadow
-                      ],
+                      boxShadow: [AppConstant.boxShadow],
                     ),
                   ),
                   Positioned(
@@ -94,14 +89,10 @@ class _HomePageState extends ViewState<HomePage, HomeController> {
                       filled: true,
                       fillColor: Colors.white,
                       enabledBorder: OutlineInputBorder(
-                        borderSide:  BorderSide(
-                          color: Colors.white
-                        ),
+                        borderSide: BorderSide(color: Colors.white),
                       ),
                       focusedBorder: OutlineInputBorder(
-                        borderSide:  BorderSide(
-                          color: Colors.white
-                        ),
+                        borderSide: BorderSide(color: Colors.white),
                       ),
                       withIcon: true,
                       isAssetIcon: true,
@@ -121,51 +112,50 @@ class _HomePageState extends ViewState<HomePage, HomeController> {
                       },
                       onPressedButton: () {
                         Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (buildContext) => FilterPage()
-                          )
-                        );
+                            context,
+                            MaterialPageRoute(
+                                builder: (buildContext) => FilterPage()));
                       },
                     ),
                   ),
                   Positioned(
-                    bottom: screenHeight/14,
+                    bottom: screenHeight / 14,
                     left: 20,
-                    right: screenWidth/2.6,
+                    right: screenWidth / 2.6,
                     child: Text.rich(
-                      TextSpan(
-                        children: [
+                        TextSpan(children: [
                           TextSpan(
-                            text: "Dazle\n",
-                            style: TextStyle(
-                              fontSize: 30.0,
-                              fontWeight: FontWeight.bold
-                            )
-                          ),
+                              text: "Dazle\n",
+                              style: TextStyle(
+                                  fontSize: 30.0, fontWeight: FontWeight.bold)),
                           TextSpan(
-                            text: "Matching brokers with properties to brokers with clients.",
-                            style: TextStyle(
-                              fontSize: 15.0,
-                              height: 1.5,
-                              fontWeight: FontWeight.w600
-                            )
-                          ),
-                        ]
-                      ),
-                      style: App.textStyle(
-                        color: Colors.white,
-                      )
-                    ),
+                              text:
+                                  "Matching brokers with properties to brokers with clients.",
+                              style: TextStyle(
+                                  fontSize: 15.0,
+                                  height: 1.5,
+                                  fontWeight: FontWeight.w600)),
+                        ]),
+                        style: App.textStyle(
+                          color: Colors.white,
+                        )),
                   )
                 ],
               ),
               HeaderHomeTile(
+                title: 'Your Listings',
+                subTitle: 'Your Listings',
+                child: PropertyListTile(
+                  items: controller.myListing,
+                ),
+                viewAllOnTap: () {
+                  print('view all your listings');
+                },
+              ),
+              HeaderHomeTile(
                 title: 'Spotlight',
                 subTitle: 'Most unique and exclusive properties',
-                child: PhotoListTile(
-                  items: controller.spotLight
-                ),
+                child: PhotoListTile(items: controller.spotLight),
                 viewAllOnTap: () {
                   print('view all spot light');
                 },
@@ -183,9 +173,7 @@ class _HomePageState extends ViewState<HomePage, HomeController> {
               HeaderHomeTile(
                 title: 'Why Brooky?',
                 subTitle: 'Take control of the deal, Here’s how',
-                child: PhotoListTile(
-                  items: controller.whyBrooky
-                ),
+                child: PhotoListTile(items: controller.whyBrooky),
                 viewAllOnTap: () {
                   print('view all why brooky');
                 },
@@ -202,8 +190,6 @@ class _HomePageState extends ViewState<HomePage, HomeController> {
               ),
             ],
           );
-        }
-      )
-    );
+        }));
   }
 }
