@@ -18,7 +18,7 @@ class _ListingTabBarState extends State<ListingTabBar> with SingleTickerProvider
 
   final List myTabs = <Widget>[
     Tab(text: 'My Listing'),
-    Tab(text: 'My Collection'),
+    // Tab(text: 'My Collection'),
   ];
 
   @override
@@ -68,7 +68,7 @@ class _ListingTabBarState extends State<ListingTabBar> with SingleTickerProvider
         physics: NeverScrollableScrollPhysics(),
         children: <Widget>[
           MyListingPage(),
-          MyCollectionPage()
+          // MyCollectionPage()
         ],
       ),
     );

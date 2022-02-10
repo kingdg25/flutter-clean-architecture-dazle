@@ -95,7 +95,7 @@ class _ListingDetailsPageState
                 expandedHeight: 271,
                 flexibleSpace: FlexibleSpaceBar(
                     background: CarouselSlider.builder(
-                        itemCount: widget.property.photos.length ?? 0,
+                        itemCount: widget.property.photos?.length ?? 0,
                         options: CarouselOptions(
                           aspectRatio: 1,
                           viewportFraction: 1.0,
@@ -272,7 +272,7 @@ class _ListingDetailsPageState
                         padding: EdgeInsets.zero,
                         physics: NeverScrollableScrollPhysics(),
                         shrinkWrap: true,
-                        itemCount: widget.property.amenities.length,
+                        itemCount: widget.property.amenities?.length ?? 0,
                         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: MediaQuery.of(context).orientation ==
                                     Orientation.landscape
