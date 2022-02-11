@@ -109,10 +109,15 @@ class _AmenitiesCheckBoxGroupState extends State<AmenitiesCheckBoxGroup> {
       height: widget.height * (widget.buttonLables.length * 1.5) +
           widget.padding * 2 * widget.buttonLables.length,
       child: Center(
-        child: CustomListViewSpacing(
-          spacing: widget.spacing,
+        child: ListView(
+          physics: NeverScrollableScrollPhysics(),
           scrollDirection: Axis.vertical,
-          children: _buildButtonsColumn(),
+          children: _buildButtonsColumn()
+            .map((c) => Container(
+                  padding: EdgeInsets.all(widget.spacing),
+                  child: c,
+                ))
+            .toList(),
         ),
       ),
     );
