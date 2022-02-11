@@ -46,11 +46,12 @@ class SocialLoginUseCase extends UseCase<SocialLoginUseCaseResponse, SocialLogin
       }
 
       else if ( params.loginType == 'facebook' ){
-        AccessToken accessToken = await FacebookAuth.instance.login(
+        LoginResult result = await FacebookAuth.instance.login(
           permissions: ['email', 'public_profile']
         );
+        final AccessToken accessToken = result?.accessToken;
         
-        if(accessToken != null){
+        if(result.status == LoginStatus.success && result?.accessToken != null){
           final userData = await FacebookAuth.instance.getUserData();
           // final graphResponse = await http.get('https://graph.facebook.com/v2.12/me?fields=name,first_name,last_name,email&access_token=${accessToken.token}');
           // final profile = await convert.jsonDecode(graphResponse.body);
@@ -75,19 +76,19 @@ class SocialLoginUseCase extends UseCase<SocialLoginUseCaseResponse, SocialLogin
 
       controller.close();
     } 
-    on FacebookAuthException catch (e) {
-      switch (e.errorCode) {
-          case FacebookAuthErrorCode.OPERATION_IN_PROGRESS:
-            controller.addError("You have a previous login operation in progress");
-            break;
-          case FacebookAuthErrorCode.CANCELLED:
-            controller.addError("login cancelled");
-            break;
-          case FacebookAuthErrorCode.FAILED:
-            controller.addError("login failed");
-            break;
-      }
-    }
+    // on FacebookAuthException catch (e) {
+    //   switch (e.errorCode) {
+    //       case FacebookAuthErrorCode.OPERATION_IN_PROGRESS:
+    //         controller.addError("You have a previous login operation in progress");
+    //         break;
+    //       case FacebookAuthErrorCode.CANCELLED:
+    //         controller.addError("login cancelled");
+    //         break;
+    //       case FacebookAuthErrorCode.FAILED:
+    //         controller.addError("login failed");
+    //         break;
+    //   }
+    // }
     catch (e) {
       logger.severe('Social login in fail.');
       userSignOut();
