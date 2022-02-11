@@ -75,20 +75,10 @@ class HomeController extends Controller {
       if (e is Map) {
         print(e);
         if (e.containsKey("error_type")) {
-          if (e["error_type"] == "unauthorized") {
-            AppConstant.statusDialog(
-                context: getContext(),
-                text: "Please log in again.",
-                title: "Session Expired",
-                onPressed: () {
-                  signOut();
-                });
-          } else {
-            AppConstant.statusDialog(
-                context: getContext(),
-                text: "${e.toString()}",
-                title: "Something went wrong'");
-          }
+          AppConstant.statusDialog(
+              context: getContext(),
+              text: "${e.toString()}",
+              title: "Something went wrong'");
         }
       }
     };
@@ -180,12 +170,21 @@ class HomeController extends Controller {
       print('get my listing on error $e');
 
       if (e is Map) {
-        print(e);
         if (e.containsKey("error_type")) {
-          AppConstant.statusDialog(
-              context: getContext(),
-              text: "${e.toString()}",
-              title: "Something went wrong'");
+          if (e["error_type"] == "unauthorized") {
+            AppConstant.statusDialog(
+                context: getContext(),
+                text: "Please log in again.",
+                title: "Session Expired",
+                onPressed: () {
+                  signOut();
+                });
+          } else {
+            AppConstant.statusDialog(
+                context: getContext(),
+                text: "${e.toString()}",
+                title: "Something went wrong'");
+          }
         }
       }
     };
@@ -215,8 +214,6 @@ class HomeController extends Controller {
     homePresenter.getNewHomes();
 
     homePresenter.getMyListing();
-
-    homePresenter.isNewUser();
   }
 
   void isNewUser() {
