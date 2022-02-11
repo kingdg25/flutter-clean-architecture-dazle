@@ -163,9 +163,7 @@ class _HomePageState extends ViewState<HomePage, HomeController> {
               HeaderHomeTile(
                 title: 'Matched Properties',
                 subTitle: 'Just listed in the app',
-                child: PropertyListTile(
-                  items: controller.matchedProperties,
-                ),
+                child: PhotoListTile(items: controller.spotLight),
                 viewAllOnTap: () {
                   print('view all matched properties');
                 },
@@ -173,7 +171,7 @@ class _HomePageState extends ViewState<HomePage, HomeController> {
               HeaderHomeTile(
                 title: 'Why Brooky?',
                 subTitle: 'Take control of the deal, Here’s how',
-                child: PhotoListTile(items: controller.whyBrooky),
+                child: PhotoListTile(items: controller.spotLight),
                 viewAllOnTap: () {
                   print('view all why brooky');
                 },
@@ -181,9 +179,7 @@ class _HomePageState extends ViewState<HomePage, HomeController> {
               HeaderHomeTile(
                 title: 'New Homes',
                 subTitle: 'Just listed in the app',
-                child: PropertyListTile(
-                  items: controller.newHomes,
-                ),
+                child: PhotoListTile(items: controller.spotLight),
                 viewAllOnTap: () {
                   print('view all new homes');
                 },
