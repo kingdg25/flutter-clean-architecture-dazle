@@ -31,7 +31,7 @@ class DataHomeRepository extends HomeRepository {
       "user": {"email": email, "is_new_user": isNewUser}
     };
 
-    var response = await http.post("${Constants.siteURL}/api/users/is-new-user",
+    var response = await http.post(Uri.parse("${Constants.siteURL}/api/users/is-new-user"),
         body: convert.jsonEncode(params),
         headers: {
           'Authorization': 'Bearer ${prefs.getString("accessToken")}',

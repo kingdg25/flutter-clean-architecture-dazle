@@ -25,7 +25,7 @@ class DataProfileRepository extends ProfileRepository {
 
     Map params = {"user": user.toJson()};
 
-    var response = await http.put("${Constants.siteURL}/api/users/update",
+    var response = await http.put(Uri.parse("${Constants.siteURL}/api/users/update"),
         body: convert.jsonEncode(params),
         headers: {
           'Authorization': 'Bearer ${prefs.getString("accessToken")}',
@@ -71,7 +71,7 @@ class DataProfileRepository extends ProfileRepository {
       };
 
       var response = await http.post(
-          "${Constants.siteURL}/api/verifications/create-verification",
+          Uri.parse("${Constants.siteURL}/api/verifications/create-verification"),
           body: convert.jsonEncode(params),
           headers: {
             'Authorization': 'Bearer ${prefs.getString("accessToken")}',
@@ -118,7 +118,7 @@ class DataProfileRepository extends ProfileRepository {
 
     _checkFileSize(base64: base64Asset, fileName: fileName);
     var response = await http.post(
-        "${Constants.siteURL}/api/s3/upload-file-from-base64",
+        Uri.parse("${Constants.siteURL}/api/s3/upload-file-from-base64"),
         body: convert.jsonEncode({"filename": fileName, "base64": base64Asset}),
         headers: {
           'Authorization': 'Bearer ${prefs.getString("accessToken")}',

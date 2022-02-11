@@ -25,7 +25,7 @@ class DataAuthenticationRepository extends AuthenticationRepository {
     };
 
     var response = await http.post(
-      "${Constants.siteURL}/auth/forgot-password",
+      Uri.parse("${Constants.siteURL}/auth/forgot-password"),
       body: convert.jsonEncode(params),
       headers: {
         'Content-Type': 'application/json',
@@ -70,7 +70,7 @@ class DataAuthenticationRepository extends AuthenticationRepository {
     };
 
     var response = await http.post(
-      "${Constants.siteURL}/auth/reset-password",
+      Uri.parse("${Constants.siteURL}/auth/reset-password"),
       body: convert.jsonEncode(params),
       headers: {
         'Content-Type': 'application/json',
@@ -126,7 +126,7 @@ class DataAuthenticationRepository extends AuthenticationRepository {
       };
       
       var response = await http.post(
-        "${Constants.siteURL}/auth/is-authenticated",
+        Uri.parse("${Constants.siteURL}/auth/is-authenticated"),
         body: convert.jsonEncode(params),
         headers: {
           'Content-Type': 'application/json',
@@ -163,7 +163,7 @@ class DataAuthenticationRepository extends AuthenticationRepository {
     };
     
     var response = await http.post(
-      "${Constants.siteURL}/auth/login",
+      Uri.parse("${Constants.siteURL}/auth/login"),
       body: convert.jsonEncode(params),
       headers: {
         'Content-Type': 'application/json',
@@ -222,7 +222,7 @@ class DataAuthenticationRepository extends AuthenticationRepository {
     };
 
     var response = await http.post(
-      "${Constants.siteURL}/auth/register",
+      Uri.parse("${Constants.siteURL}/auth/register"),
       body: convert.jsonEncode(params),
       headers: {
         'Content-Type': 'application/json',
@@ -271,7 +271,7 @@ class DataAuthenticationRepository extends AuthenticationRepository {
     };
     
     var response = await http.post(
-      "${Constants.siteURL}/auth/social-login",
+      Uri.parse("${Constants.siteURL}/auth/social-login"),
       body: convert.jsonEncode(params),
       headers: {
         'Content-Type': 'application/json',
@@ -336,7 +336,7 @@ class DataAuthenticationRepository extends AuthenticationRepository {
     };
     
     var response = await http.put(
-      "${Constants.siteURL}/auth/setup-profile",
+      Uri.parse("${Constants.siteURL}/auth/setup-profile"),
       body: convert.jsonEncode(params),
       headers: {
         'Content-Type': 'application/json',
@@ -383,7 +383,7 @@ class DataAuthenticationRepository extends AuthenticationRepository {
     };
     
     var response = await http.post(
-      "${Constants.siteURL}/auth/check-license-number",
+      Uri.parse("${Constants.siteURL}/auth/check-license-number"),
       body: convert.jsonEncode(params),
       headers: {
         'Content-Type': 'application/json',
@@ -418,7 +418,7 @@ class DataAuthenticationRepository extends AuthenticationRepository {
     
     print("jsonResponse");
     var response = await http.get(
-      "${Constants.siteURL}/api/users/${user.id}",
+      Uri.parse("${Constants.siteURL}/api/users/${user.id}"),
       headers: {
         'Authorization': 'Bearer ${prefs.getString("accessToken")}',
         'Content-Type': 'application/json',
@@ -467,7 +467,7 @@ class DataAuthenticationRepository extends AuthenticationRepository {
     User _user = await App.getUser();
 
     var response = await http.post(
-      "${Constants.siteURL}/api/email_verification/send-email-verification",
+      Uri.parse("${Constants.siteURL}/api/email_verification/send-email-verification"),
       body: convert.jsonEncode({
         "email": _user.email,
         "user_id": _user.id

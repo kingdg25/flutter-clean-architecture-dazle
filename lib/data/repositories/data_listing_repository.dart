@@ -40,7 +40,7 @@ class DataListingRepository extends ListingRepository {
       };
 
       var response = await http.post(
-          "${Constants.siteURL}/api/listings/create-listing",
+          Uri.parse("${Constants.siteURL}/api/listings/create-listing"),
           body: convert.jsonEncode(params),
           headers: {
             'Authorization': 'Bearer ${prefs.getString("accessToken")}',
@@ -94,7 +94,7 @@ class DataListingRepository extends ListingRepository {
     }
 
     var response = await http.get(
-        "${Constants.siteURL}/api/listings/my-listings?user_id=$uid",
+        Uri.parse("${Constants.siteURL}/api/listings/my-listings?user_id=$uid"),
         headers: {
           'Authorization': 'Bearer ${prefs.getString("accessToken")}',
           'Content-Type': 'application/json',
@@ -163,7 +163,7 @@ class DataListingRepository extends ListingRepository {
     }
 
     var response = await http.get(
-        "${Constants.siteURL}/api/listings/get-listings-in-profile/$uid/$viewerId",
+        Uri.parse("${Constants.siteURL}/api/listings/get-listings-in-profile/$uid/$viewerId"),
         headers: {
           'Authorization': 'Bearer ${prefs.getString("accessToken")}',
           'Content-Type': 'application/json',
@@ -263,7 +263,7 @@ class DataListingRepository extends ListingRepository {
     await Future.forEach(assetsBase64, (d) async {
       _checkFileSize(base64: d['image'], fileName: d['name']);
       var response = await http.post(
-          "${Constants.siteURL}/api/s3/upload-file-from-base64",
+          Uri.parse("${Constants.siteURL}/api/s3/upload-file-from-base64"),
           body:
               convert.jsonEncode({"filename": d['name'], "base64": d['image']}),
           headers: {
@@ -306,7 +306,7 @@ class DataListingRepository extends ListingRepository {
     final listingId = data['id'];
     Map params = {"data": data};
     var response = await http.put(
-        "${Constants.siteURL}/api/listings/update-listing/$listingId",
+        Uri.parse("${Constants.siteURL}/api/listings/update-listing/$listingId"),
         body: convert.jsonEncode(params),
         headers: {
           'Authorization': 'Bearer ${userToken ?? ""}',

@@ -28,7 +28,7 @@ class DataConnectionRepository extends ConnectionRepository {
     };
 
     var response = await http.post(
-      "${Constants.siteURL}/notification/notify-user",
+      Uri.parse("${Constants.siteURL}/notification/notify-user"),
       body: convert.jsonEncode(params),
       headers: {
         'Content-Type': 'application/json',
@@ -67,7 +67,7 @@ class DataConnectionRepository extends ConnectionRepository {
     };
 
     var response = await http.post(
-      "${Constants.siteURL}/api/connection/read-invite",
+      Uri.parse("${Constants.siteURL}/api/connection/read-invite"),
       body: convert.jsonEncode(params),
       headers: {
         'Authorization': 'Bearer ${prefs.getString("accessToken")}',
@@ -114,7 +114,7 @@ class DataConnectionRepository extends ConnectionRepository {
     };
 
     var response = await http.post(
-      "${Constants.siteURL}/api/connection/read-my-connection",
+      Uri.parse("${Constants.siteURL}/api/connection/read-my-connection"),
       body: convert.jsonEncode(params),
       headers: {
         'Authorization': 'Bearer ${prefs.getString("accessToken")}',
@@ -160,7 +160,7 @@ class DataConnectionRepository extends ConnectionRepository {
     };
 
     var response = await http.post(
-      "${Constants.siteURL}/api/connection/add-connection",
+      Uri.parse("${Constants.siteURL}/api/connection/add-connection"),
       body: convert.jsonEncode(params),
       headers: {
         'Content-Type': 'application/json',
@@ -203,7 +203,7 @@ class DataConnectionRepository extends ConnectionRepository {
     };
 
     var response = await http.post(
-      "${Constants.siteURL}/api/connection/remove-connection",
+      Uri.parse("${Constants.siteURL}/api/connection/remove-connection"),
       body: convert.jsonEncode(params),
       headers: {
         'Content-Type': 'application/json',
@@ -244,7 +244,7 @@ class DataConnectionRepository extends ConnectionRepository {
     };
 
     var response = await http.post(
-      "${Constants.siteURL}/api/connection/search-user",
+      Uri.parse("${Constants.siteURL}/api/connection/search-user"),
       body: convert.jsonEncode(params),
       headers: {
         'Content-Type': 'application/json',
