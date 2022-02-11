@@ -22,48 +22,45 @@ class DataListingRepository extends ListingRepository {
 
   @override
   Future<Property> create({Map listing}) async {
-
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    
+
     List imageUrls = await _getFileUrls(assetsBase64: listing['assets']);
 
     listing['photos'] = imageUrls;
     listing.remove("assets");
-    
+
     final user = await App.getUser();
     final uid = user.id;
 
-    if (uid!=null) {
+    if (uid != null) {
       listing['createdBy'] = uid;
       Map params = {
-      "property": listing,
-      "user_token": prefs.getString("accessToken")
-    };
-
+        "property": listing,
+        "user_token": prefs.getString("accessToken")
+      };
 
       var response = await http.post(
-        "${Constants.siteURL}/api/listings/create-listing",
-        body: convert.jsonEncode(params),
-        headers: {
-          'Authorization': 'Bearer ${prefs.getString("accessToken")}',
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-        }
-      );
+          "${Constants.siteURL}/api/listings/create-listing",
+          body: convert.jsonEncode(params),
+          headers: {
+            'Authorization': 'Bearer ${prefs.getString("accessToken")}',
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          });
 
       var jsonResponse = await convert.jsonDecode(response.body);
       print(jsonResponse);
-      if (response.statusCode == 200){
+      if (response.statusCode == 200) {
         final Map property = jsonResponse["property"];
         property['price'] = jsonResponse["property"]['price'].toString();
 
         print(property['createdAt'].runtimeType);
         print(property['createdAt']);
-        
+
         final Property propertyInstance = Property.fromJson(property);
 
         print(propertyInstance.toJson());
-        
+
         return propertyInstance;
       } else {
         throw {
@@ -72,7 +69,6 @@ class DataListingRepository extends ListingRepository {
           "status": "Listing not created."
         };
       }
-      
     } else {
       throw {
         "error": false,
@@ -89,7 +85,7 @@ class DataListingRepository extends ListingRepository {
     final user = await App.getUser();
     final uid = user.id;
 
-    if (uid==null) {
+    if (uid == null) {
       throw {
         "error": false,
         "error_type": "dynamic",
@@ -103,53 +99,54 @@ class DataListingRepository extends ListingRepository {
           'Authorization': 'Bearer ${prefs.getString("accessToken")}',
           'Content-Type': 'application/json',
           'Accept': 'application/json'
-        }
-    );
-    
+        });
+
     var jsonResponse = await convert.jsonDecode(response.body);
     print("LISTING YOW");
-    if (response.statusCode == 200){
+    if (response.statusCode == 200) {
       print(jsonResponse['listings'].length);
-      jsonResponse['listings'].forEach((val){
+      jsonResponse['listings'].forEach((val) {
         val['price'] = "${val['price'] ?? 0}";
         val['time_period'] = "${val['time_period'] ?? 0}";
         val['total_area'] = "${val['total_area'] ?? 0}";
         print(val);
         listings.add(Property.fromJson(val));
       });
-    } else {
+    } else if (response.statusCode == 401) {
       throw {
-        "error": true,
-        "error_type": "dynamic",
-        "status": "$jsonResponse"
+        "error": false,
+        "error_type": "unauthorized",
+        "status": "Unauthorized. Signing out!"
       };
+    } else {
+      throw {"error": true, "error_type": "dynamic", "status": "$jsonResponse"};
     }
     return listings;
-    
+
     return [
       Property(
-        coverPhoto: 'https://picsum.photos/id/73/200/300',
-        photos: [
-          'https://picsum.photos/id/70/200/300',
-          'https://picsum.photos/id/71/200/300',
-          'https://picsum.photos/id/72/200/300',
-        ],
-        keywords: ['aa', 'ss'],
-        price: '540,735.12',
-        totalBedRoom: '213',
-        totalBathRoom: '321',
-        totalParkingSpace: '22',
-        totalArea: '432',
-        district: 'Lapasan',
-        city: 'Cagayan de Oro City',
-        amenities: ['Shared Gym','Covered Parking','Central AC'],
-        isYourProperty: 'unfurnished',
-        timePeriod: 'month',
-        description: "Property Description: Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s"
-      )
+          coverPhoto: 'https://picsum.photos/id/73/200/300',
+          photos: [
+            'https://picsum.photos/id/70/200/300',
+            'https://picsum.photos/id/71/200/300',
+            'https://picsum.photos/id/72/200/300',
+          ],
+          keywords: ['aa', 'ss'],
+          price: '540,735.12',
+          totalBedRoom: '213',
+          totalBathRoom: '321',
+          totalParkingSpace: '22',
+          totalArea: '432',
+          district: 'Lapasan',
+          city: 'Cagayan de Oro City',
+          amenities: ['Shared Gym', 'Covered Parking', 'Central AC'],
+          isYourProperty: 'unfurnished',
+          timePeriod: 'month',
+          description:
+              "Property Description: Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s")
     ];
   }
-  
+
   @override
   Future<List<Property>> getUserListings({uid}) async {
     final List<Property> listings = <Property>[];
@@ -157,8 +154,7 @@ class DataListingRepository extends ListingRepository {
     final user = await App.getUser();
     final viewerId = user.id;
 
-
-    if (viewerId==null) {
+    if (viewerId == null) {
       throw {
         "error": false,
         "error_type": "dynamic",
@@ -166,21 +162,19 @@ class DataListingRepository extends ListingRepository {
       };
     }
 
-
     var response = await http.get(
         "${Constants.siteURL}/api/listings/get-listings-in-profile/$uid/$viewerId",
         headers: {
           'Authorization': 'Bearer ${prefs.getString("accessToken")}',
           'Content-Type': 'application/json',
           'Accept': 'application/json'
-        }
-    );
-    
+        });
+
     var jsonResponse = await convert.jsonDecode(response.body);
     print("LISTING YOW");
-    if (response.statusCode == 200){
+    if (response.statusCode == 200) {
       print(jsonResponse['listings'].length);
-      jsonResponse['listings'].forEach((val){
+      jsonResponse['listings'].forEach((val) {
         val['price'] = "${val['price'] ?? 0}";
         val['time_period'] = "${val['time_period'] ?? 0}";
         val['total_area'] = "${val['total_area'] ?? 0}";
@@ -188,85 +182,79 @@ class DataListingRepository extends ListingRepository {
         listings.add(Property.fromJson(val));
       });
     } else {
-      throw {
-        "error": true,
-        "error_type": "dynamic",
-        "status": "$jsonResponse"
-      };
+      throw {"error": true, "error_type": "dynamic", "status": "$jsonResponse"};
     }
     return listings;
-    
-    
+
     return [
       Property(
-        coverPhoto: 'https://picsum.photos/id/73/200/300',
-        photos: [
-          'https://picsum.photos/id/70/200/300',
-          'https://picsum.photos/id/71/200/300',
-          'https://picsum.photos/id/72/200/300',
-        ],
-        keywords: ['aa', 'ss'],
-        price: '540,735.12',
-        totalBedRoom: '213',
-        totalBathRoom: '321',
-        totalParkingSpace: '22',
-        totalArea: '432',
-        district: 'Lapasan',
-        city: 'Cagayan de Oro City',
-        amenities: ['Shared Gym','Covered Parking','Central AC'],
-        isYourProperty: 'unfurnished',
-        timePeriod: 'month',
-        description: "Property Description: Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s"
-      ),
+          coverPhoto: 'https://picsum.photos/id/73/200/300',
+          photos: [
+            'https://picsum.photos/id/70/200/300',
+            'https://picsum.photos/id/71/200/300',
+            'https://picsum.photos/id/72/200/300',
+          ],
+          keywords: ['aa', 'ss'],
+          price: '540,735.12',
+          totalBedRoom: '213',
+          totalBathRoom: '321',
+          totalParkingSpace: '22',
+          totalArea: '432',
+          district: 'Lapasan',
+          city: 'Cagayan de Oro City',
+          amenities: ['Shared Gym', 'Covered Parking', 'Central AC'],
+          isYourProperty: 'unfurnished',
+          timePeriod: 'month',
+          description:
+              "Property Description: Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s"),
       Property(
-        coverPhoto: 'https://picsum.photos/id/73/200/300',
-        photos: [
-          'https://picsum.photos/id/70/200/300',
-          'https://picsum.photos/id/71/200/300',
-          'https://picsum.photos/id/72/200/300',
-        ],
-        keywords: ['aa', 'ss'],
-        price: '540,735.12',
-        totalBedRoom: '213',
-        totalBathRoom: '321',
-        totalParkingSpace: '22',
-        totalArea: '432',
-        district: 'Lapasan',
-        city: 'Cagayan de Oro City',
-        amenities: ['Shared Gym','Covered Parking','Central AC'],
-        isYourProperty: 'unfurnished',
-        timePeriod: 'month',
-        description: "Property Description: Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s"
-      )
+          coverPhoto: 'https://picsum.photos/id/73/200/300',
+          photos: [
+            'https://picsum.photos/id/70/200/300',
+            'https://picsum.photos/id/71/200/300',
+            'https://picsum.photos/id/72/200/300',
+          ],
+          keywords: ['aa', 'ss'],
+          price: '540,735.12',
+          totalBedRoom: '213',
+          totalBathRoom: '321',
+          totalParkingSpace: '22',
+          totalArea: '432',
+          district: 'Lapasan',
+          city: 'Cagayan de Oro City',
+          amenities: ['Shared Gym', 'Covered Parking', 'Central AC'],
+          isYourProperty: 'unfurnished',
+          timePeriod: 'month',
+          description:
+              "Property Description: Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s")
     ];
   }
-  
+
   @override
   Future<List<Property>> getMyCollection() async {
     return [
       Property(
-        coverPhoto: 'https://picsum.photos/id/76/200/300',
-        photos: [
-          'https://picsum.photos/id/77/200/300',
-          'https://picsum.photos/id/78/200/300',
-          'https://picsum.photos/id/79/200/300',
-        ],
-        keywords: ['qq', 'ww'],
-        price: '664,321.12',
-        totalBedRoom: '11',
-        totalBathRoom: '22',
-        totalParkingSpace: '33',
-        totalArea: '64',
-        district: 'Lapasan',
-        city: 'Cagayan de Oro City',
-        amenities: ['Kitchen','Wifi','Eco Friendly','Security'],
-        isYourProperty: 'furnished',
-        timePeriod: 'year',
-        description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
-      )
+          coverPhoto: 'https://picsum.photos/id/76/200/300',
+          photos: [
+            'https://picsum.photos/id/77/200/300',
+            'https://picsum.photos/id/78/200/300',
+            'https://picsum.photos/id/79/200/300',
+          ],
+          keywords: ['qq', 'ww'],
+          price: '664,321.12',
+          totalBedRoom: '11',
+          totalBathRoom: '22',
+          totalParkingSpace: '33',
+          totalArea: '64',
+          district: 'Lapasan',
+          city: 'Cagayan de Oro City',
+          amenities: ['Kitchen', 'Wifi', 'Eco Friendly', 'Security'],
+          isYourProperty: 'furnished',
+          timePeriod: 'year',
+          description:
+              "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.")
     ];
   }
-
 
   Future<List<String>> _getFileUrls({List assetsBase64}) async {
     List<String> urls = [];
@@ -276,18 +264,15 @@ class DataListingRepository extends ListingRepository {
       _checkFileSize(base64: d['image'], fileName: d['name']);
       var response = await http.post(
           "${Constants.siteURL}/api/s3/upload-file-from-base64",
-          body: convert.jsonEncode({
-        "filename": d['name'],
-        "base64": d['image']
-      }),
+          body:
+              convert.jsonEncode({"filename": d['name'], "base64": d['image']}),
           headers: {
             'Authorization': 'Bearer ${prefs.getString("accessToken")}',
             'Content-Type': 'application/json',
             'Accept': 'application/json'
-          }
-      );
+          });
       var jsonResponse = await convert.jsonDecode(response.body);
-      if (response.statusCode == 200){
+      if (response.statusCode == 200) {
         urls.add(jsonResponse['data']['file_url']);
       } else {
         throw {
@@ -299,16 +284,17 @@ class DataListingRepository extends ListingRepository {
     });
     return urls;
   }
-  
+
   void _checkFileSize({String base64, String fileName}) {
     Uint8List bytes = convert.base64Decode(base64);
-    double sizeInMB = bytes.length/1000000;
+    double sizeInMB = bytes.length / 1000000;
     print(maxFileSize);
     if (sizeInMB > this.maxFileSize) {
       throw {
         "error": false,
         "error_type": "filesize_error",
-        "status": "File size must not exceed ${this.maxFileSize}mb. A file $fileName has a size of ${sizeInMB.toStringAsFixed(2)} MB."
+        "status":
+            "File size must not exceed ${this.maxFileSize}mb. A file $fileName has a size of ${sizeInMB.toStringAsFixed(2)} MB."
       };
     }
   }
@@ -318,22 +304,19 @@ class DataListingRepository extends ListingRepository {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final userToken = prefs.getString("accessToken");
     final listingId = data['id'];
-    Map params = {
-      "data": data
-    };
+    Map params = {"data": data};
     var response = await http.put(
-      "${Constants.siteURL}/api/listings/update-listing/$listingId",
-      body: convert.jsonEncode(params),
-      headers: {
-        'Authorization': 'Bearer ${userToken ?? ""}',
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-      }
-    );
+        "${Constants.siteURL}/api/listings/update-listing/$listingId",
+        body: convert.jsonEncode(params),
+        headers: {
+          'Authorization': 'Bearer ${userToken ?? ""}',
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        });
 
     var jsonResponse = await convert.jsonDecode(response.body);
     print(jsonResponse);
-    if (response.statusCode == 200){
+    if (response.statusCode == 200) {
       if (!jsonResponse['success']) {
         throw {
           "error": true,
@@ -343,17 +326,17 @@ class DataListingRepository extends ListingRepository {
       }
       final Map property = jsonResponse["listing"];
       property['price'] = jsonResponse["listing"]['price'].toString();
-      
+
       final Property propertyInstance = Property.fromJson(property);
-      
+
       return propertyInstance;
     } else {
-        throw {
-          "error": false,
-          "error_type": "server_error",
-          "status": "Listing not updated."
-        };
-      }
+      throw {
+        "error": false,
+        "error_type": "server_error",
+        "status": "Listing not updated."
+      };
+    }
   }
 
   @override

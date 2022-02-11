@@ -60,12 +60,6 @@ class DataHomeRepository extends HomeRepository {
           "status": "$jsonResponse"
         };
       }
-    } else if (response.statusCode == 401) {
-      throw {
-        "error": false,
-        "error_type": "unauthorized",
-        "status": "Unauthorized. Signing out!"
-      };
     } else {
       throw {"error": true, "error_type": "dynamic", "status": "$jsonResponse"};
     }
