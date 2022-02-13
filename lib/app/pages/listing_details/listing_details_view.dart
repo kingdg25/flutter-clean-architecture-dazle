@@ -154,7 +154,7 @@ class _ListingDetailsPageState
                       Text.rich(
                         TextSpan(children: [
                           TextSpan(
-                              text: "${widget.property.price}",
+                              text: "${widget.property.formatPrice}",
                               style: App.textStyle(
                                   fontSize: 20, fontWeight: FontWeight.w800)),
                           TextSpan(
