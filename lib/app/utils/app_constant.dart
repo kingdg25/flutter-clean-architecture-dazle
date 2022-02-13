@@ -134,9 +134,9 @@ class AppConstant{
     List files = [];
 
     await Future.forEach(images, (AssetEntity data) async {
-      Uint8List bytes = await (data.originBytes as FutureOr<Uint8List>);
+      Uint8List? bytes = await (data.originBytes);
       String fileName = await data.titleAsync;
-      String base64Image = convert.base64Encode(bytes);
+      String base64Image = convert.base64Encode(bytes as List<int>);
 
       files.add({
         "name": fileName,
