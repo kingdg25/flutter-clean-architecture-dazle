@@ -2,9 +2,9 @@ import 'package:dazle/domain/usecases/listing/get_my_listing_usecase.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 
 class MyListingPresenter extends Presenter {
-  Function getMyListingOnNext;
-  Function getMyListingOnComplete;
-  Function getMyListingOnError;
+  Function? getMyListingOnNext;
+  Function? getMyListingOnComplete;
+  Function? getMyListingOnError;
 
   final GetMyListingUseCase getMyListingUseCase;
 
@@ -29,18 +29,18 @@ class _GetMyListingUseCaseObserver extends Observer<GetMyListingUseCaseResponse>
   @override
   void onComplete() {
     assert(presenter.getMyListingOnComplete != null);
-    presenter.getMyListingOnComplete();
+    presenter.getMyListingOnComplete!();
   }
 
   @override
   void onError(e) {
     assert(presenter.getMyListingOnError != null);
-    presenter.getMyListingOnError(e);
+    presenter.getMyListingOnError!(e);
   }
 
   @override
   void onNext(response) {
     assert(presenter.getMyListingOnNext != null);
-    presenter.getMyListingOnNext(response.myListing);
+    presenter.getMyListingOnNext!(response!.myListing);
   }
 }

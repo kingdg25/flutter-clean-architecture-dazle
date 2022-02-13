@@ -8,7 +8,7 @@ class GetMatchedPropertiesUseCase extends UseCase<GetMatchedPropertiesUseCaseRes
   GetMatchedPropertiesUseCase(this.dataHomeRepository);
 
   @override
-  Future<Stream<GetMatchedPropertiesUseCaseResponse>> buildUseCaseStream(GetMatchedPropertiesUseCaseParams params) async {
+  Future<Stream<GetMatchedPropertiesUseCaseResponse>> buildUseCaseStream(GetMatchedPropertiesUseCaseParams? params) async {
     final controller = StreamController<GetMatchedPropertiesUseCaseResponse>();
     
     try {

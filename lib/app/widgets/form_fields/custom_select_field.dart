@@ -6,22 +6,22 @@ import 'package:flutter/material.dart';
 class CustomSelectField extends StatelessWidget {
   final bool isRequired;
 
-  final String value;
+  final String? value;
   final Function onChanged;
   final List items;
 
-  final String hintText;
+  final String? hintText;
   final double fontSize;
 
-  final Function validator;
-  final Function onTap;
-  final Function onSaved;
+  final Function? validator;
+  final Function? onTap;
+  final Function? onSaved;
   
   CustomSelectField({
     this.isRequired = false,
-    @required this.value,
-    @required this.onChanged,
-    @required this.items,
+    required this.value,
+    required this.onChanged,
+    required this.items,
     this.hintText,
     this.fontSize = 16.0,
     this.validator,
@@ -29,10 +29,10 @@ class CustomSelectField extends StatelessWidget {
     this.onSaved
   });
 
-  customSelectMenuItems(List arr){
+  customSelectMenuItems(List? arr){
     try {
       if(arr?.isNotEmpty ?? false){
-        return arr.map<DropdownMenuItem<String>>((item) =>
+        return arr?.map<DropdownMenuItem<String>>((item) =>
           new DropdownMenuItem<String>(
             value: item ?? '',
             child: CustomText(
@@ -53,8 +53,8 @@ class CustomSelectField extends StatelessWidget {
     return CustomFieldLayout(
       child: DropdownButtonFormField<String>(
         value: value,
-        onChanged: onChanged,
-        onSaved: onSaved,
+        onChanged: onChanged as void Function(String?)?,
+        onSaved: onSaved as void Function(String?)?,
         isDense: true,
         isExpanded: true,
         items: customSelectMenuItems(items),
@@ -84,7 +84,7 @@ class CustomSelectField extends StatelessWidget {
             return "Required field.";
           }
           return null;
-        } : validator,
+        } as String? Function(String?)? : validator as String? Function(String?)?,
       )
     );
   }

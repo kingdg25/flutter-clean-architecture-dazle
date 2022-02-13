@@ -9,14 +9,14 @@ class CustomRadioGroupButton extends StatelessWidget {
   final List<String> buttonLables;
   final List<String> buttonValues;
   final Function radioButtonValue;
-  final String defaultSelected;
+  final String? defaultSelected;
 
   CustomRadioGroupButton({
     this.radioPadding = 6.0,
     this.radioWidth = 100.0,
-    @required this.buttonLables,
-    @required this.buttonValues,
-    @required this.radioButtonValue,
+    required this.buttonLables,
+    required this.buttonValues,
+    required this.radioButtonValue,
     this.defaultSelected
   });
 
@@ -42,7 +42,7 @@ class CustomRadioGroupButton extends StatelessWidget {
         width: radioWidth,
         buttonLables: buttonLables,
         buttonValues: buttonValues,
-        radioButtonValue: radioButtonValue,
+        radioButtonValue: radioButtonValue as void Function(String),
         defaultSelected: defaultSelected,
       ),
     );

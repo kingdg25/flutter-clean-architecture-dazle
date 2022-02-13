@@ -4,11 +4,11 @@ import 'package:flutter/material.dart';
 
 class SettingsListTile extends StatelessWidget {
   final String text;
-  final Function onTap;
+  final Function? onTap;
 
 
   SettingsListTile({
-    @required this.text,
+    required this.text,
     this.onTap
   });
 
@@ -31,7 +31,7 @@ class SettingsListTile extends StatelessWidget {
           fontSize: 13,
           fontWeight: FontWeight.w700,
         ),
-        onTap: onTap,
+        onTap: onTap as void Function()?,
       ),
     );
   }

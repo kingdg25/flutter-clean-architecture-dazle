@@ -9,12 +9,12 @@ class IsNewUserUseCase extends UseCase<void, IsNewUserUseCaseParams> {
   IsNewUserUseCase(this.homeRepository);
 
   @override
-  Future<Stream<void>> buildUseCaseStream(IsNewUserUseCaseParams params) async {
+  Future<Stream<void>> buildUseCaseStream(IsNewUserUseCaseParams? params) async {
     final controller = StreamController();
     
     try {
       await homeRepository.isNewUser(
-        email: params.email,
+        email: params!.email,
         isNewUser: params.isNewUser
       );
       
@@ -34,8 +34,8 @@ class IsNewUserUseCase extends UseCase<void, IsNewUserUseCaseParams> {
 
 
 class IsNewUserUseCaseParams {
-  final String email;
-  final bool isNewUser;
+  final String? email;
+  final bool? isNewUser;
 
   IsNewUserUseCaseParams(this.email, this.isNewUser);
 }

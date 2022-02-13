@@ -84,7 +84,7 @@ class MyConnectionController extends Controller {
   }
 
 
-  void getMyConnection({String filterByName}) {
+  void getMyConnection({String? filterByName}) {
     myConnectionPresenter.readMyConnection(filterByName: filterByName);
   }
 

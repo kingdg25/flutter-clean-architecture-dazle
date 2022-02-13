@@ -9,14 +9,14 @@ class CustomIconButton extends StatelessWidget {
 
   final IconData iconData;
   final Function onPressed;
-  final Alignment alignment;
+  final Alignment? alignment;
 
   CustomIconButton({
     this.main = true,
     this.backgroudColor = App.mainColor,
     this.borderRadius = 5.0,
     this.iconData = Icons.arrow_right_alt,
-    @required this.onPressed,
+    required this.onPressed,
     this.alignment = Alignment.centerRight
   });
 
@@ -44,7 +44,7 @@ class CustomIconButton extends StatelessWidget {
             size: 35.0,
           ),
         ),
-        onPressed: onPressed
+        onPressed: onPressed as void Function()?
       ),
     );
   }

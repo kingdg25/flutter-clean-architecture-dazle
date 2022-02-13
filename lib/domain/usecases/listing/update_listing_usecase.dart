@@ -10,12 +10,12 @@ class UpdateListingUseCase extends UseCase<UpdateListingUseCaseResponse, UpdateL
   UpdateListingUseCase(this.dataListingRepository);
 
   @override
-  Future<Stream<UpdateListingUseCaseResponse>> buildUseCaseStream(UpdateListingUseCaseParams params) async {
+  Future<Stream<UpdateListingUseCaseResponse>> buildUseCaseStream(UpdateListingUseCaseParams? params) async {
     final controller = StreamController<UpdateListingUseCaseResponse>();
     
     try {
       final listing = await dataListingRepository.update(
-        data: params.data
+        data: params!.data
       );
       
       logger.finest('Update Listing successful.');

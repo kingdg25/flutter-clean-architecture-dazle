@@ -17,7 +17,7 @@ import 'package:dazle/app/widgets/custom_appbar.dart';
 class RegisterPage extends View {
   static const String id = 'register_page';
 
-  RegisterPage({Key key}) : super(key: key);
+  RegisterPage({Key? key}) : super(key: key);
 
   @override
   _RegisterPageState createState() => _RegisterPageState();
@@ -121,8 +121,8 @@ class _RegisterPageState extends ViewState<RegisterPage, RegisterController> {
                     onPressed: () {
                       FocusScope.of(context).unfocus();
 
-                      if (_formKey1.currentState.validate()) {
-                        _formKey1.currentState.save();
+                      if (_formKey1.currentState!.validate()) {
+                        _formKey1.currentState!.save();
 
                         controller.checkLicenseNumber();
                       }
@@ -175,8 +175,8 @@ class _RegisterPageState extends ViewState<RegisterPage, RegisterController> {
                         onPressed: () {
                           FocusScope.of(context).unfocus();
 
-                          if (_formKey2.currentState.validate()) {
-                            _formKey2.currentState.save();
+                          if (_formKey2.currentState!.validate()) {
+                            _formKey2.currentState!.save();
 
                             controller.register();
                           }

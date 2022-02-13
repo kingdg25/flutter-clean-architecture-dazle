@@ -6,8 +6,8 @@ import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 
 class EmailVerificationPresenter extends Presenter {
   final SendEmailVerificationUseCase sendEmailVerificationUserCase;
-  Function sendEmailVerificationOnComplete;
-  Function sendEmailVerificationOnError;
+  Function? sendEmailVerificationOnComplete;
+  Function? sendEmailVerificationOnError;
 
   EmailVerificationPresenter():
     sendEmailVerificationUserCase = SendEmailVerificationUseCase(DataAuthenticationRepository()),
@@ -29,13 +29,13 @@ class _SendEmailVerificationUseCaseObserver extends Observer<void> {
   @override
   void onComplete() {
     assert(presenter.sendEmailVerificationOnComplete != null);
-    presenter.sendEmailVerificationOnComplete();
+    presenter.sendEmailVerificationOnComplete!();
   }
 
   @override
   void onError(e) {
     assert(presenter.sendEmailVerificationOnError != null);
-    presenter.sendEmailVerificationOnError(e);
+    presenter.sendEmailVerificationOnError!(e);
   }
 
   @override

@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 class MainPage extends StatefulWidget {
   static const String id = 'main_page';
   
-  const MainPage({ Key key }) : super(key: key);
+  const MainPage({ Key? key }) : super(key: key);
 
   @override
   _MainPageState createState() => _MainPageState();
@@ -19,15 +19,15 @@ class _MainPageState extends State<MainPage> {
   int _currentIndex = 0;
   final List<Widget> _navs = [
     HomePage(),
-    ConnectionPage(),
+    // ConnectionPage(),
     ListingPage(),
-    MessagePage(),
+    // MessagePage(),
     ProfilePage(),
   ];
 
   customBottomNavigationBarItem({
-    @required String asset,
-    @required String label
+    required String asset,
+    required String label
   }) {
     return BottomNavigationBarItem(
       activeIcon: CustomPaint(
@@ -63,20 +63,20 @@ class _MainPageState extends State<MainPage> {
             label: 'home',
           ),
 
-          customBottomNavigationBarItem(
-            asset: 'assets/icons/tab_bar/connection.png',
-            label: 'connection',
-          ),
+          // customBottomNavigationBarItem(
+          //   asset: 'assets/icons/tab_bar/connection.png',
+          //   label: 'connection',
+          // ),
 
           customBottomNavigationBarItem(
             asset: 'assets/icons/tab_bar/listing.png',
             label: 'listing',
           ),
 
-          customBottomNavigationBarItem(
-            asset: 'assets/icons/tab_bar/message.png',
-            label: 'message',
-          ),
+          // customBottomNavigationBarItem(
+          //   asset: 'assets/icons/tab_bar/message.png',
+          //   label: 'message',
+          // ),
 
           customBottomNavigationBarItem(
             asset: 'assets/icons/tab_bar/profile.png',

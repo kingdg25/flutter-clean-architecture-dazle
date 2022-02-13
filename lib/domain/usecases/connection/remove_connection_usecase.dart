@@ -10,14 +10,14 @@ class RemoveConnectionUseCase extends UseCase<RemoveConnectionUseCaseResponse, R
   RemoveConnectionUseCase(this.dataConnectionRepository);
 
   @override
-  Future<Stream<RemoveConnectionUseCaseResponse>> buildUseCaseStream(RemoveConnectionUseCaseParams params) async {
+  Future<Stream<RemoveConnectionUseCaseResponse>> buildUseCaseStream(RemoveConnectionUseCaseParams? params) async {
     final controller = StreamController<RemoveConnectionUseCaseResponse>();
 
     try {
       // add connection
       User user = await App.getUser();
       if (user != null) {
-        await dataConnectionRepository.removeConnection(userId: user.id, invitedId: params.invitedId);
+        await dataConnectionRepository.removeConnection(userId: user.id, invitedId: params!.invitedId);
         logger.finest('Remove Connection successful.');
       }
       else {
@@ -40,7 +40,7 @@ class RemoveConnectionUseCase extends UseCase<RemoveConnectionUseCaseResponse, R
 
 
 class RemoveConnectionUseCaseParams {
-  final String invitedId;
+  final String? invitedId;
   RemoveConnectionUseCaseParams(this.invitedId);
 }
 

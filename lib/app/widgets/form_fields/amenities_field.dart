@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 
 
 class AmenitiesField<T> extends StatefulWidget {
-  final String hintText;
+  final String? hintText;
   final Color hintColor;
   final double fontSize;
   final ValueChanged onChanged;
@@ -15,12 +15,12 @@ class AmenitiesField<T> extends StatefulWidget {
   final T defaultSelected;
   
   const AmenitiesField({
-    Key key,
+    Key? key,
     this.hintText,
     this.hintColor = App.hintColor,
     this.fontSize = 16.0,
-    @required this.onChanged,
-    @required this.defaultSelected
+    required this.onChanged,
+    required this.defaultSelected
   }) : super(key: key);
 
   @override
@@ -141,7 +141,7 @@ class _AmenitiesFieldState extends State<AmenitiesField> {
                 return InkWell(
                   onTap: () {
                     setState(() {
-                      amenities[index].added =  !( amenities[index].added );
+                      amenities[index].added =  ! amenities[index].added! ;
                     });
 
                     amenitiesOnChanged();
@@ -164,8 +164,8 @@ class _AmenitiesFieldState extends State<AmenitiesField> {
                           fontWeight: FontWeight.w600,
                         ),
                         Icon(
-                          amenities[index].added ? Icons.check_circle : Icons.add_circle_outline_rounded,
-                          color: amenities[index].added ? App.mainColor : App.hintColor,
+                          amenities[index].added! ? Icons.check_circle : Icons.add_circle_outline_rounded,
+                          color: amenities[index].added! ? App.mainColor : App.hintColor,
                         )
                       ],
                     )

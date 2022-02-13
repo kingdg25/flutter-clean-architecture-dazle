@@ -5,7 +5,7 @@ class CustomFieldLayout extends StatelessWidget {
   final EdgeInsets margin;
   
   CustomFieldLayout({
-    @required this.child,
+    required this.child,
     this.margin = const EdgeInsets.symmetric(vertical: 6.0)
   });
 

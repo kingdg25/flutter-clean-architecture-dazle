@@ -10,14 +10,14 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 
 class DataAuthenticationRepository extends AuthenticationRepository {
-  User todoUser;
+  User? todoUser;
 
   static DataAuthenticationRepository _instance = DataAuthenticationRepository._internal();
   DataAuthenticationRepository._internal();
   factory DataAuthenticationRepository() => _instance;
 
   @override
-  Future<String> forgotPassword({String email}) async {
+  Future<String?> forgotPassword({String? email}) async {
     Map params = {
       "user": {
         "email": email,
@@ -60,7 +60,7 @@ class DataAuthenticationRepository extends AuthenticationRepository {
   }
 
   @override
-  Future<void> resetPassword({String email, String code, String password}) async {
+  Future<void> resetPassword({String? email, String? code, String? password}) async {
     Map params = {
       "user": {
         "email": email,
@@ -105,10 +105,10 @@ class DataAuthenticationRepository extends AuthenticationRepository {
   Future<bool> isAuthenticated() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     print("IS AUTHH");
-    User _user = await App.getUser();
+    User? _user = await App.getUser();
     // temp
 
-    if (prefs.getString('accessToken')!=null && _user?.id!=null && _user.id.isNotEmpty) {
+    if (prefs.getString('accessToken')!=null && _user?.id!=null && _user?.id!=null) {
         try {
           await this.getUserInfo(); // update user profile info
         } catch (e) {
@@ -152,7 +152,7 @@ class DataAuthenticationRepository extends AuthenticationRepository {
   }
 
   @override
-  Future<User> login({String email, String password}) async {
+  Future<User?> login({String? email, String? password}) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
     Map params = {
@@ -207,7 +207,7 @@ class DataAuthenticationRepository extends AuthenticationRepository {
   }
 
   @override
-  Future<void> register({String firstName, String lastName, String mobileNumber, String position, String brokerLicenseNumber, String email, String password}) async {
+  Future<void> register({String? firstName, String? lastName, String? mobileNumber, String? position, String? brokerLicenseNumber, String? email, String? password}) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     Map params = {
       "user": {
@@ -259,7 +259,7 @@ class DataAuthenticationRepository extends AuthenticationRepository {
   }
 
   @override
-  Future<User> socialLogin({String email, String loginType, String token}) async {
+  Future<User?> socialLogin({String? email, String? loginType, String? token}) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
     Map params = {
@@ -321,7 +321,7 @@ class DataAuthenticationRepository extends AuthenticationRepository {
   }
 
   @override
-  Future<User> setupProfile({String firstName, String lastName, String mobileNumber, String position, String brokerLicenseNumber, String email}) async {
+  Future<User?> setupProfile({String? firstName, String? lastName, String? mobileNumber, String? position, String? brokerLicenseNumber, String? email}) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
     Map params = {
@@ -377,7 +377,7 @@ class DataAuthenticationRepository extends AuthenticationRepository {
   }
 
   @override
-  Future<bool> checkLicenseNumber({String brokerLicenseNumber}) async {
+  Future<bool?> checkLicenseNumber({String? brokerLicenseNumber}) async {
     Map params = {
       "broker_license_number": brokerLicenseNumber
     };
@@ -393,7 +393,7 @@ class DataAuthenticationRepository extends AuthenticationRepository {
 
     var jsonResponse = await convert.jsonDecode(response.body);
     if (response.statusCode == 200){
-      bool success = jsonResponse['success'];
+      bool? success = jsonResponse['success'];
       
       return success;
     }
@@ -411,7 +411,7 @@ class DataAuthenticationRepository extends AuthenticationRepository {
     throw UnimplementedError();
   }
 
-  Future<User> getUserInfo() async {
+  Future<User?> getUserInfo() async {
     print("ya");
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final User user = await App.getUser();
@@ -434,7 +434,7 @@ class DataAuthenticationRepository extends AuthenticationRepository {
       print(user);
       if(user is Map && user.containsKey("_id")){
         await prefs.setString('user', convert.jsonEncode(user));
-        todoUser = User.fromJson(user);
+        todoUser = User.fromJson(user as Map<String, dynamic>);
 
         return todoUser;
       }

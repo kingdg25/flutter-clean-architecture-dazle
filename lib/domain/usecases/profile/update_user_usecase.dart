@@ -10,11 +10,11 @@ class UpdateUserUseCase extends UseCase<void, UpdateUserUseCaseParams> {
   UpdateUserUseCase(this.dataProfileRepository);
 
   @override
-  Future<Stream<void>> buildUseCaseStream(UpdateUserUseCaseParams params) async {
+  Future<Stream<void>> buildUseCaseStream(UpdateUserUseCaseParams? params) async {
     final controller = StreamController();
     
     try {
-      await dataProfileRepository.update(user: params.user);
+      await dataProfileRepository.update(user: params!.user);
       
       logger.finest('Update User successful.');
       controller.close();
@@ -32,7 +32,7 @@ class UpdateUserUseCase extends UseCase<void, UpdateUserUseCaseParams> {
 
 
 class UpdateUserUseCaseParams {
-  final User user;
+  final User? user;
 
   UpdateUserUseCaseParams(
     this.user

@@ -32,7 +32,7 @@ class App{
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
 
-      var user = prefs.getString('user');
+      var user = prefs.getString('user')!;
       var todoUser = convert.jsonDecode(user);
 
       return User.fromJson(todoUser);

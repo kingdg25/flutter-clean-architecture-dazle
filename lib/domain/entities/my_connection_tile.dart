@@ -1,10 +1,10 @@
 class MyConnectionTile {
-  final String id;
-  final String photoURL;
-  final String firstName;
-  final String lastName;
-  final String position;
-  final String dateModified;
+  final String? id;
+  final String? photoURL;
+  final String? firstName;
+  final String? lastName;
+  final String? position;
+  final String? dateModified;
 
   String get displayName{
     return "$firstName $lastName";

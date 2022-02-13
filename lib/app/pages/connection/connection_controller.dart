@@ -6,8 +6,8 @@ import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 class ConnectionController extends Controller {
   final ConnectionPresenter connectionPresenter;
 
-  User _user;
-  User get user => _user;
+  User? _user;
+  User? get user => _user;
 
   ConnectionController(userRepo)
     : connectionPresenter = ConnectionPresenter(userRepo),

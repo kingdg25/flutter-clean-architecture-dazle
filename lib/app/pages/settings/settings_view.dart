@@ -10,7 +10,7 @@ import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 
 
 class SettingsPage extends View {
-  SettingsPage({Key key}) : super(key: key);
+  SettingsPage({Key? key}) : super(key: key);
 
   @override
   _SettingsPageState createState() => _SettingsPageState();

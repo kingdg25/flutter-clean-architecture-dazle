@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 // ignore: must_be_immutable
 class AmenitiesCheckBoxGroup<T> extends StatefulWidget {
   const AmenitiesCheckBoxGroup({
-    Key key,
+    Key? key,
     this.hintText,
     this.hintColor = App.hintColor,
     this.fontSize = 16.0,
@@ -20,7 +20,7 @@ class AmenitiesCheckBoxGroup<T> extends StatefulWidget {
     this.checkBoxButtonValues,
   }) : super(key: key);
 
-  final String hintText;
+  final String? hintText;
   final Color hintColor;
   final double fontSize;
 
@@ -29,17 +29,17 @@ class AmenitiesCheckBoxGroup<T> extends StatefulWidget {
   final double padding;
 
   ///Default Selected button
-  final T defaultSelected;
+  final T? defaultSelected;
 
   ///Spacing between buttons
   final double spacing;
 
   ///Values of button
-  final List<T> buttonValuesList;
+  final List<T>? buttonValuesList;
 
-  final List<String> buttonLables;
+  final List<String>? buttonLables;
 
-  final void Function(List<T>) checkBoxButtonValues;
+  final void Function(List<T>)? checkBoxButtonValues;
 
   @override
   _AmenitiesCheckBoxGroupState createState() => _AmenitiesCheckBoxGroupState();
@@ -53,15 +53,15 @@ class _AmenitiesCheckBoxGroupState extends State<AmenitiesCheckBoxGroup> {
   void initState() {
     super.initState();
     widget.defaultSelected?.where((e) {
-      return widget.buttonValuesList.contains(e);
+      return widget.buttonValuesList!.contains(e);
     })?.forEach((e) {
       selectedLables.add(e);
     });
   }
 
   List<Widget> _buildButtonsColumn() {
-    return widget.buttonValuesList.map((e) {
-      int index = widget.buttonValuesList.indexOf(e);
+    return widget.buttonValuesList!.map((e) {
+      int index = widget.buttonValuesList!.indexOf(e);
       return Padding(
         padding: EdgeInsets.symmetric(horizontal: 20),
         child: InkWell(
@@ -72,7 +72,7 @@ class _AmenitiesCheckBoxGroupState extends State<AmenitiesCheckBoxGroup> {
               selectedLables.add(e);
             }
             setState(() {});
-            widget.checkBoxButtonValues(selectedLables);
+            widget.checkBoxButtonValues!(selectedLables);
           },
           child: Container(
             padding: EdgeInsets.symmetric(vertical: 10),
@@ -87,7 +87,7 @@ class _AmenitiesCheckBoxGroupState extends State<AmenitiesCheckBoxGroup> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 CustomText(
-                  text: widget.buttonLables[index],
+                  text: widget.buttonLables![index],
                   fontSize: 13,
                   fontWeight: FontWeight.w600,
                 ),
@@ -106,8 +106,8 @@ class _AmenitiesCheckBoxGroupState extends State<AmenitiesCheckBoxGroup> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: widget.height * (widget.buttonLables.length * 1.5) +
-          widget.padding * 2 * widget.buttonLables.length,
+      height: widget.height * (widget.buttonLables!.length * 1.5) +
+          widget.padding * 2 * widget.buttonLables!.length,
       child: Center(
         child: ListView(
           physics: NeverScrollableScrollPhysics(),

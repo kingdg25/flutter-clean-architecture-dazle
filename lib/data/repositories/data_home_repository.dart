@@ -8,10 +8,10 @@ import 'package:dazle/data/constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class DataHomeRepository extends HomeRepository {
-  List<PhotoTile> spotLight;
-  List<Property> matchedProperties;
-  List<PhotoTile> whyBrooky;
-  List<Property> newHomes;
+  List<PhotoTile>? spotLight;
+  List<Property>? matchedProperties;
+  List<PhotoTile>? whyBrooky;
+  List<Property>? newHomes;
 
   static DataHomeRepository _instance = DataHomeRepository._internal();
   DataHomeRepository._internal() {
@@ -24,7 +24,7 @@ class DataHomeRepository extends HomeRepository {
 
   @override
   //TODO: Gio - 2. Add validation for token expiration on user login
-  Future<void> isNewUser({String email, bool isNewUser}) async {
+  Future<void> isNewUser({String? email, bool? isNewUser}) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
     Map params = {

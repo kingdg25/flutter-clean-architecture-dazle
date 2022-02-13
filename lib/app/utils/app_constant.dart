@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:typed_data';
 import 'dart:convert' as convert;
 
@@ -24,11 +25,11 @@ class AppConstant{
   }
   
   static Future statusDialog({
-    BuildContext context,
+    required BuildContext context,
     bool success = false,
-    String title,
-    String text,
-    Function onPressed
+    String? title,
+    String? text,
+    Function? onPressed
   }){
     return showDialog(
       context: context,
@@ -79,7 +80,7 @@ class AppConstant{
   );
 
   static customTitleField({
-    @required String title,
+    required String title,
     EdgeInsets padding = const EdgeInsets.only(left: 18, top: 12)
   }) {
     return Container(
@@ -93,17 +94,17 @@ class AppConstant{
   }
 
   static loadAssets({
-    @required BuildContext context,
-    List<AssetEntity> selectedAssets,
+    required BuildContext context,
+    List<AssetEntity>? selectedAssets,
     int maxAssets = 1
   }) async {
-    List<AssetEntity> assets = List<AssetEntity>();
+    List<AssetEntity> assets = <AssetEntity>[];
 
     try {
       var result = await PhotoManager.requestPermission();
 
       if (result) {
-        final List<AssetEntity> pickAssets = await AssetPicker.pickAssets(
+        final List<AssetEntity>? pickAssets = await AssetPicker.pickAssets(
           context,
           maxAssets: maxAssets,
           requestType: RequestType.image,
@@ -128,12 +129,12 @@ class AppConstant{
   }
 
   static initializeAssetImages({
-    @required List<AssetEntity> images
+    required List<AssetEntity> images
   }) async {
     List files = [];
 
     await Future.forEach(images, (AssetEntity data) async {
-      Uint8List bytes = await data.originBytes;
+      Uint8List bytes = await (data.originBytes as FutureOr<Uint8List>);
       String fileName = await data.titleAsync;
       String base64Image = convert.base64Encode(bytes);
 

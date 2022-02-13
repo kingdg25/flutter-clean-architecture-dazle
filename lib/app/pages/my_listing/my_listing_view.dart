@@ -8,7 +8,7 @@ import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 
 
 class MyListingPage extends View {
-  MyListingPage({Key key}) : super(key: key);
+  MyListingPage({Key? key}) : super(key: key);
 
   @override
   _MyListingPageState createState() => _MyListingPageState();
@@ -40,7 +40,7 @@ class _MyListingPageState extends ViewState<MyListingPage, MyListingController> 
                 suggestionsCallback: (pattern) async {
                   print('suggestionsCallback $pattern');
 
-                  return null;
+                  return [];
                 },
                 onSuggestionSelected: (suggestion) {
                   // controller.searchTextController.text = suggestion;

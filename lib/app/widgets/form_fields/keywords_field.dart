@@ -5,17 +5,17 @@ import 'package:flutter/material.dart';
 
 
 class KeywordsField extends StatefulWidget {
-  final String hintText;
+  final String? hintText;
   final Color hintColor;
   final double fontSize;
   final ValueChanged onChanged;
   
   const KeywordsField({
-    Key key,
+    Key? key,
     this.hintText,
     this.hintColor = App.hintColor,
     this.fontSize = 16.0,
-    @required this.onChanged
+    required this.onChanged
   }) : super(key: key);
 
   @override

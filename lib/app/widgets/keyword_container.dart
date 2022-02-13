@@ -7,8 +7,8 @@ class KeywordContainer extends StatelessWidget {
   final ValueChanged onRemoved;
 
   KeywordContainer({
-    @required this.text,
-    @required this.onRemoved
+    required this.text,
+    required this.onRemoved
   });
 
   @override

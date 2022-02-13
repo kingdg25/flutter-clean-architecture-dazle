@@ -2,10 +2,10 @@ import 'package:dazle/app/utils/app.dart';
 import 'package:flutter/material.dart';
 
 class CustomText extends StatelessWidget {
-  final String text;
-  final double fontSize;
+  final String? text;
+  final double? fontSize;
 
-  final Color color;
+  final Color? color;
   final FontWeight fontWeight;
   final TextAlign textAlign;
   
@@ -15,7 +15,7 @@ class CustomText extends StatelessWidget {
 
 
   CustomText({
-    @required this.text,
+    required this.text,
     this.fontSize = 14.0,
     this.color = App.textColor,
     this.fontWeight = FontWeight.normal,
@@ -29,7 +29,7 @@ class CustomText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text(
-      text,
+      text!,
       style: TextStyle(
         fontSize: fontSize,
         color: color,

@@ -2,13 +2,13 @@ import 'package:dazle/app/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 
 class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
-  final String title;
+  final String? title;
   final bool centerTitle;
   final bool automaticallyImplyLeading;
-  final List<Widget> actions;
+  final List<Widget>? actions;
 
   CustomAppBar({
-    Key key,
+    Key? key,
     this.title,
     this.centerTitle = false,
     this.automaticallyImplyLeading = true,

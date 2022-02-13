@@ -2,9 +2,9 @@ import 'package:dazle/domain/usecases/get_user_usecase.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 
 class ConnectionPresenter extends Presenter {
-  Function getUserOnNext;
-  Function getUserOnComplete;
-  Function getUserOnError;
+  Function? getUserOnNext;
+  Function? getUserOnComplete;
+  Function? getUserOnError;
   
   final GetUserUseCase getUserUseCase;
 
@@ -29,18 +29,18 @@ class _GetUserUseCaseObserver extends Observer<GetUserUseCaseResponse> {
   @override
   void onComplete() {
     assert(presenter.getUserOnComplete != null);
-    presenter.getUserOnComplete();
+    presenter.getUserOnComplete!();
   }
 
   @override
   void onError(e) {
     assert(presenter.getUserOnError != null);
-    presenter.getUserOnError(e);
+    presenter.getUserOnError!(e);
   }
 
   @override
   void onNext(response) {
     assert(presenter.getUserOnNext != null);
-    presenter.getUserOnNext(response.user);
+    presenter.getUserOnNext!(response!.user);
   }
 }

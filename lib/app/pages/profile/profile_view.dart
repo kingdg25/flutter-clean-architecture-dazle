@@ -14,8 +14,8 @@ import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:dazle/app/pages/verify_profile/verify_profile_view.dart';
 
 class ProfilePage extends View {
-  final String uid;
-  ProfilePage({Key key, this.uid}) : super(key: key);
+  final String? uid;
+  ProfilePage({Key? key, this.uid}) : super(key: key);
 
   @override
   _ProfilePageState createState() => _ProfilePageState(uid);
@@ -118,7 +118,7 @@ class _ProfilePageState extends ViewState<ProfilePage, ProfileController> {
                 ),
               ),
               CustomText(
-                text: user.displayName ?? '',
+                text: user.displayName,
                 fontSize: 25,
                 fontWeight: FontWeight.w600,
               ),

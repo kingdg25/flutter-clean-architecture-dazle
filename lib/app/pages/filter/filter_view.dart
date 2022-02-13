@@ -15,7 +15,7 @@ import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 
 
 class FilterPage extends View {
-  FilterPage({Key key}) : super(key: key);
+  FilterPage({Key? key}) : super(key: key);
 
   @override
   _FilterPageState createState() => _FilterPageState();
@@ -63,7 +63,7 @@ class _FilterPageState extends ViewState<FilterPage, FilterController> {
                 suggestionsCallback: (pattern) async {
                   print('suggestionsCallback $pattern');
 
-                  return null;
+                  return [];
                 },
                 onSuggestionSelected: (suggestion) {
                 },

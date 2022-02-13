@@ -13,7 +13,7 @@ class PropertyListTile extends StatelessWidget {
   final double width;
 
   PropertyListTile(
-      {@required this.items, this.height = 215.0, this.width = 285.0});
+      {required this.items, this.height = 215.0, this.width = 285.0});
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +21,7 @@ class PropertyListTile extends StatelessWidget {
       height: height,
       child: ListView.builder(
         shrinkWrap: true,
-        itemCount: items?.length ?? 0,
+        itemCount: items.length,
         scrollDirection: Axis.horizontal,
         itemBuilder: (BuildContext context, int index) {
           return Padding(
@@ -48,9 +48,9 @@ class PropertyListTile extends StatelessWidget {
                     children: [
                       CachedNetworkImage(
                         height: height * 0.56,
-                        imageUrl: items[index].photos[0].toString() == null
+                        imageUrl: items[index].photos![0].toString() == null
                             ? items[index].coverPhoto.toString()
-                            : items[index].photos[0].toString(),
+                            : items[index].photos![0].toString(),
                         imageBuilder: (context, imageProvider) => Container(
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.only(
@@ -63,7 +63,7 @@ class PropertyListTile extends StatelessWidget {
                         progressIndicatorBuilder: (context, url, progress) =>
                             Center(
                           child: CircularProgressIndicator(
-                            valueColor: AlwaysStoppedAnimation<Color>(
+                            valueColor: AlwaysStoppedAnimation<Color?>(
                                 Colors.indigo[900]),
                             value: progress.progress,
                           ),

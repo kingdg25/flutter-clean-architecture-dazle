@@ -9,12 +9,12 @@ class RegisterUserUseCase extends UseCase<void, RegisterUserUseCaseParams> {
   RegisterUserUseCase(this.dataAuthenticationRepository);
 
   @override
-  Future<Stream<void>> buildUseCaseStream(RegisterUserUseCaseParams params) async {
+  Future<Stream<void>> buildUseCaseStream(RegisterUserUseCaseParams? params) async {
     final controller = StreamController();
     
     try {
       await dataAuthenticationRepository.register(
-        firstName: params.firstName, 
+        firstName: params!.firstName, 
         lastName: params.lastName,
         mobileNumber: params.mobileNumber,
         position: params.position,
@@ -40,13 +40,13 @@ class RegisterUserUseCase extends UseCase<void, RegisterUserUseCaseParams> {
 
 
 class RegisterUserUseCaseParams {
-  final String firstName;
-  final String lastName;
-  final String mobileNumber;
-  final String position;
-  final String brokerLicenseNumber;
-  final String email;
-  final String password;
+  final String? firstName;
+  final String? lastName;
+  final String? mobileNumber;
+  final String? position;
+  final String? brokerLicenseNumber;
+  final String? email;
+  final String? password;
 
   RegisterUserUseCaseParams(
     this.firstName,

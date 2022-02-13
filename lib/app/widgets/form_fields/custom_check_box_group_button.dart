@@ -14,9 +14,9 @@ class CustomCheckBoxGroupButton extends StatelessWidget {
   CustomCheckBoxGroupButton({
     this.checkBoxPadding = 6.0,
     this.checkBoxWidth = 100.0,
-    @required this.buttonLables,
-    @required this.buttonValuesList,
-    @required this.checkBoxButtonValues,
+    required this.buttonLables,
+    required this.buttonValuesList,
+    required this.checkBoxButtonValues,
     this.defaultSelected
   });
 
@@ -41,7 +41,7 @@ class CustomCheckBoxGroupButton extends StatelessWidget {
         width: checkBoxWidth,
         buttonLables: buttonLables,
         buttonValuesList: buttonValuesList,
-        checkBoxButtonValues: checkBoxButtonValues,
+        checkBoxButtonValues: checkBoxButtonValues as void Function(List<Object>),
         defaultSelected: defaultSelected,
       ),
     );

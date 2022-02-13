@@ -18,23 +18,23 @@ import 'package:wechat_assets_picker/wechat_assets_picker.dart';
 
 class CreateListingController extends Controller {
   final CreateListingPresenter createListingPresenter;
-  final Property property;
+  final Property? property;
 
   PageController createListingPageController;
 
   // page 1
-  String propertyType;
-  String propertyFor;
-  String timePeriod;
+  String? propertyType;
+  String? propertyFor;
+  String? timePeriod;
   final TextEditingController priceTextController;
 
   // page 2
-  String numberOfBedRooms;
-  String numberOfBathRooms;
-  String numberOfParking;
+  String? numberOfBedRooms;
+  String? numberOfBathRooms;
+  String? numberOfParking;
   final TextEditingController areaTextController;
   final TextEditingController descriptionTextController;
-  String isYourProperty;
+  String? isYourProperty;
 
   // page 3
   final TextEditingController streetTextController;
@@ -42,11 +42,11 @@ class CreateListingController extends Controller {
   final TextEditingController cityTextController;
 
   // page 4
-  List amenities;
+  List? amenities;
 
   // page 5
   List<AssetEntity> assets;
-  String viewType;
+  String? viewType;
 
   CreateListingController(userRepo, this.property)
     : createListingPresenter = CreateListingPresenter(userRepo),
@@ -124,35 +124,35 @@ class CreateListingController extends Controller {
       // await _statusDialog('Done!', 'Updating listing complete.');
     };
     createListingPresenter.updateListingOnError = (e) async {
-      await _statusDialog('Cannot update listing!', 'Your listing cannot be updated.');
       AppConstant.showLoader(getContext(), false);
+      await _statusDialog('Cannot update listing!', 'Your listing cannot be updated.');
     };
   }
 
   void initializeProperty() async {
-    if (this.property!=null && this.property.id != null){
+    if (this.property!=null && this.property!.id != null){
       await setValues();
-      createListingPresenter.fetchListingDetails(id: this.property.id);
+      createListingPresenter.fetchListingDetails(id: this.property!.id);
     }
   }
 
   // initialize values on updating
   setValues() async {
-      priceTextController.text = this.property.price;
-      areaTextController.text = this.property.totalArea;
-      descriptionTextController.text = this.property.description;
-      streetTextController.text = this.property.street;
-      landmarkTextController.text = this.property.landmark;
-      cityTextController.text = this.property.city;
-      propertyType = this.property.propertyType;
-      propertyFor = this.property.propertyFor;
-      timePeriod = this.property.timePeriod;
-      numberOfBedRooms = this.property.totalBedRoom;
-      numberOfBathRooms = this.property.totalBathRoom;
-      numberOfParking = this.property.totalParkingSpace;
-      isYourProperty = this.property.isYourProperty;
-      amenities = this.property.amenities;
-      viewType = this.property.viewType;
+      priceTextController.text = this.property!.price!;
+      areaTextController.text = this.property!.totalArea!;
+      descriptionTextController.text = this.property!.description!;
+      streetTextController.text = this.property!.street!;
+      landmarkTextController.text = this.property!.landmark!;
+      cityTextController.text = this.property!.city!;
+      propertyType = this.property!.propertyType;
+      propertyFor = this.property!.propertyFor;
+      timePeriod = this.property!.timePeriod;
+      numberOfBedRooms = this.property!.totalBedRoom;
+      numberOfBathRooms = this.property!.totalBathRoom;
+      numberOfParking = this.property!.totalParkingSpace;
+      isYourProperty = this.property!.isYourProperty;
+      amenities = this.property!.amenities;
+      viewType = this.property!.viewType;
       refreshUI();
   }
 
@@ -205,7 +205,7 @@ class CreateListingController extends Controller {
   validatePage4(){
     bool isValidated = false;
 
-    if ( amenities.length > 1 ) {
+    if ( amenities!.length > 1 ) {
       isValidated = true;
     } else AppConstant.statusDialog(context: getContext(), text: "Choose at least 1 amenities.", title: "Choose more amenities.");
 
@@ -245,7 +245,7 @@ class CreateListingController extends Controller {
     AppConstant.showLoader(getContext(), true);
 
     Map data = {
-    "id": this.property.id,
+    "id": this.property!.id,
     "cover_photo": 'https://picsum.photos/id/73/200/300',
     "property_type": propertyType,
     "property_for": propertyFor,
@@ -307,7 +307,7 @@ class CreateListingController extends Controller {
   }
 
 
-  Future _statusDialog(String title, String text, {bool success, Function onPressed}) async {
+  Future _statusDialog(String title, String text, {bool? success, Function? onPressed}) async {
     return await AppConstant.statusDialog(
       context: getContext(),
       success: success ?? false,

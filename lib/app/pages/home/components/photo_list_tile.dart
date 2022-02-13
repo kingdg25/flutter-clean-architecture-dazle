@@ -10,7 +10,7 @@ class PhotoListTile extends StatelessWidget {
   final double width;
 
   PhotoListTile(
-      {@required this.items, this.height = 130.0, this.width = 250.0});
+      {required this.items, this.height = 130.0, this.width = 250.0});
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +18,7 @@ class PhotoListTile extends StatelessWidget {
       height: height,
       child: ListView.builder(
         shrinkWrap: true,
-        itemCount: items?.length ?? 0,
+        itemCount: items.length,
         scrollDirection: Axis.horizontal,
         itemBuilder: (BuildContext context, int index) {
           return Padding(
@@ -49,7 +49,7 @@ class PhotoListTile extends StatelessWidget {
                         progressIndicatorBuilder: (context, url, progress) =>
                             Center(
                           child: CircularProgressIndicator(
-                            valueColor: AlwaysStoppedAnimation<Color>(
+                            valueColor: AlwaysStoppedAnimation<Color?>(
                                 Colors.indigo[900]),
                             value: progress.progress,
                           ),
@@ -61,7 +61,7 @@ class PhotoListTile extends StatelessWidget {
                       ),
                     ),
                   ),
-                  (items[index].text != null && items[index].text.isNotEmpty)
+                  (items[index].text != null && items[index].text!.isNotEmpty)
                       ? Positioned(
                           bottom: 5,
                           child: Container(

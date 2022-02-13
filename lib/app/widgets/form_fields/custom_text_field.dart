@@ -6,30 +6,30 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class CustomTextField extends StatelessWidget {
-  final String hintText;
+  final String? hintText;
   final Color hintColor;
-  final TextEditingController controller;
+  final TextEditingController? controller;
 
-  final String initialValue;
+  final String? initialValue;
   final bool readOnly;
   final bool isRequired;
   
   final TextInputType keyboardType;
   final double fontSize;
 
-  final Function validator;
-  final Function onTap;
-  final Function onSaved;
+  final Function? validator;
+  final Function? onTap;
+  final Function? onSaved;
 
-  final List<TextInputFormatter> inputFormatters;
+  final List<TextInputFormatter>? inputFormatters;
 
   final Color fillColor;
   final bool filled;
 
   final TextCapitalization textCapitalization;
 
-  final int minLines;
-  final int maxLines;
+  final int? minLines;
+  final int? maxLines;
   
   CustomTextField({
     this.hintText,
@@ -59,7 +59,7 @@ class CustomTextField extends StatelessWidget {
         inputFormatters: inputFormatters,
         initialValue: initialValue,
         readOnly: readOnly,
-        onSaved: onSaved,
+        onSaved: onSaved as void Function(String?)?,
         minLines: minLines,
         maxLines: maxLines,
         validator: (isRequired && validator == null) ? (val) {
@@ -67,8 +67,8 @@ class CustomTextField extends StatelessWidget {
             return "Required field.";
           }
           return null;
-        } : validator,
-        onTap: onTap,
+        } as String? Function(String?)? : validator as String? Function(String?)?,
+        onTap: onTap as void Function()?,
         keyboardType: keyboardType,
         textCapitalization: textCapitalization,
         style: TextStyle(

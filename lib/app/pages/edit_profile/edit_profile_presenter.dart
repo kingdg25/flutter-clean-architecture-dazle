@@ -3,9 +3,9 @@ import 'package:dazle/domain/usecases/profile/update_user_usecase.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 
 class EditProfilePresenter extends Presenter {
-  Function updateUserOnNext;
-  Function updateUserOnComplete;
-  Function updateUserOnError;
+  Function? updateUserOnNext;
+  Function? updateUserOnComplete;
+  Function? updateUserOnError;
 
   final UpdateUserUseCase updateUserUseCase;
 
@@ -13,7 +13,7 @@ class EditProfilePresenter extends Presenter {
     : updateUserUseCase = UpdateUserUseCase(userRepo);
   
 
-  void updateUser({User user}){
+  void updateUser({User? user}){
     updateUserUseCase.execute(_UpdateUserUseCaseObserver(this), UpdateUserUseCaseParams(user));
   }
 
@@ -32,13 +32,13 @@ class _UpdateUserUseCaseObserver extends Observer<void> {
   @override
   void onComplete() {
     assert(presenter.updateUserOnComplete != null);
-    presenter.updateUserOnComplete();
+    presenter.updateUserOnComplete!();
   }
 
   @override
   void onError(e) {
     assert(presenter.updateUserOnError != null);
-    presenter.updateUserOnError(e);
+    presenter.updateUserOnError!(e);
   }
 
   @override

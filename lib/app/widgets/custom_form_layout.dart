@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 
 class CustomFormLayout extends StatelessWidget {
   final Widget child;
-  final EdgeInsets margin;
-  final Key formKey;
+  final EdgeInsets? margin;
+  final Key? formKey;
   
   CustomFormLayout({
-    @required this.child,
+    required this.child,
     this.formKey,
     this.margin
   });

@@ -10,12 +10,12 @@ class SetupProfileUseCase extends UseCase<SetupProfileUseCaseResponse, SetupProf
   SetupProfileUseCase(this.dataAuthenticationRepository);
 
   @override
-  Future<Stream<SetupProfileUseCaseResponse>> buildUseCaseStream(SetupProfileUseCaseParams params) async {
+  Future<Stream<SetupProfileUseCaseResponse>> buildUseCaseStream(SetupProfileUseCaseParams? params) async {
     final controller = StreamController<SetupProfileUseCaseResponse>();
     
     try {
-      User user = await dataAuthenticationRepository.setupProfile(
-        firstName: params.firstName, 
+      User? user = await dataAuthenticationRepository.setupProfile(
+        firstName: params!.firstName, 
         lastName: params.lastName,
         mobileNumber: params.mobileNumber,
         position: params.position,
@@ -40,12 +40,12 @@ class SetupProfileUseCase extends UseCase<SetupProfileUseCaseResponse, SetupProf
 
 
 class SetupProfileUseCaseParams {
-  final String firstName;
-  final String lastName;
-  final String mobileNumber;
-  final String position;
-  final String brokerLicenseNumber;
-  final String email;
+  final String? firstName;
+  final String? lastName;
+  final String? mobileNumber;
+  final String? position;
+  final String? brokerLicenseNumber;
+  final String? email;
 
   SetupProfileUseCaseParams(
     this.firstName,
@@ -59,6 +59,6 @@ class SetupProfileUseCaseParams {
 
 
 class SetupProfileUseCaseResponse {
-  final User user;
+  final User? user;
   SetupProfileUseCaseResponse(this.user);
 }

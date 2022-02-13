@@ -1,6 +1,6 @@
 class Amenity {
-  final String text;
-  bool added;
+  final String? text;
+  bool? added;
 
   Amenity({
     this.text,

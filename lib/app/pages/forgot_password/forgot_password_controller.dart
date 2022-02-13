@@ -140,7 +140,7 @@ class ForgotPasswordController extends Controller {
   _statusDialog(bool success, String title, String text){
     AppConstant.statusDialog(
       context: getContext(),
-      success: success ?? false,
+      success: success,
       title: title,
       text: text,
     );

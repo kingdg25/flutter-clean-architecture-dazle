@@ -7,7 +7,7 @@ import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 
 
 class MessagePage extends View {
-  MessagePage({Key key}) : super(key: key);
+  MessagePage({Key? key}) : super(key: key);
 
   @override
   _MessagePageState createState() => _MessagePageState();

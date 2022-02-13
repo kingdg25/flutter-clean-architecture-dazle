@@ -8,12 +8,12 @@ class RegisterLayout extends StatelessWidget {
   final double height;
   final String svgAsset;
   final Widget child;
-  final Key formKey;
+  final Key? formKey;
 
   RegisterLayout({
-    @required this.height,
-    @required this.svgAsset,
-    @required this.child,
+    required this.height,
+    required this.svgAsset,
+    required this.child,
     this.formKey
   });
 

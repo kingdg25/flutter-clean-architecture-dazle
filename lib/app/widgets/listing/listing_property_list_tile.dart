@@ -9,13 +9,13 @@ import 'package:dazle/domain/entities/property.dart';
 import 'package:flutter/material.dart';
 
 class ListingPropertyListTile extends StatelessWidget {
-  final List<Property> items;
+  final List<Property>? items;
   final double height;
   final double width;
   final EdgeInsetsGeometry padding;
 
   ListingPropertyListTile(
-      {@required this.items,
+      {required this.items,
       this.height = 255.0,
       this.width = 322.0,
       this.padding = const EdgeInsets.all(0.0)});
@@ -42,12 +42,12 @@ class ListingPropertyListTile extends StatelessWidget {
                           context,
                           MaterialPageRoute(
                               builder: (buildContext) => ListingDetailsPage(
-                                    property: items[index],
+                                    property: items![index],
                                   )));
                     },
                     child: true
                         ? CarouselSlider.builder(
-                            itemCount: items[index].photos.length ?? 0,
+                            itemCount: items![index].photos?.length ?? 0,
                             options: CarouselOptions(
                               aspectRatio: 1,
                               viewportFraction: 0.84,
@@ -68,12 +68,12 @@ class ListingPropertyListTile extends StatelessWidget {
                                 int pageViewIndex) {
                               print("POTOTOTOTs");
 
-                              print(items[index].photos);
+                              print(items![index].photos);
 
                               return CachedNetworkImage(
                                 // height: height*0.51,
                                 imageUrl:
-                                    items[index].photos[itemIndex].toString(),
+                                    items![index].photos![itemIndex].toString(),
                                 imageBuilder: (context, imageProvider) =>
                                     Container(
                                   decoration: BoxDecoration(
@@ -88,7 +88,7 @@ class ListingPropertyListTile extends StatelessWidget {
                                 progressIndicatorBuilder:
                                     (context, url, progress) => Center(
                                   child: CircularProgressIndicator(
-                                    valueColor: AlwaysStoppedAnimation<Color>(
+                                    valueColor: AlwaysStoppedAnimation<Color?>(
                                         Colors.indigo[900]),
                                     value: progress.progress,
                                   ),
@@ -102,7 +102,7 @@ class ListingPropertyListTile extends StatelessWidget {
                             })
                         : CachedNetworkImage(
                             height: height * 0.51,
-                            imageUrl: items[index].coverPhoto.toString(),
+                            imageUrl: items![index].coverPhoto.toString(),
                             imageBuilder: (context, imageProvider) => Container(
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.only(
@@ -115,7 +115,7 @@ class ListingPropertyListTile extends StatelessWidget {
                             progressIndicatorBuilder:
                                 (context, url, progress) => Center(
                               child: CircularProgressIndicator(
-                                valueColor: AlwaysStoppedAnimation<Color>(
+                                valueColor: AlwaysStoppedAnimation<Color?>(
                                     Colors.indigo[900]),
                                 value: progress.progress,
                               ),
@@ -132,24 +132,24 @@ class ListingPropertyListTile extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           CustomText(
-                            text: items[index].keywordsToString ?? '',
+                            text: items![index].keywordsToString ?? '',
                             fontSize: 9,
                             color: App.hintColor,
                             fontWeight: FontWeight.w500,
                           ),
                           CustomText(
-                            text: '${items[index].price} PHP',
+                            text: '${items![index].formatPrice} PHP',
                             fontSize: 13,
                             fontWeight: FontWeight.w700,
                           ),
                           CustomText(
                             text:
-                                '${items[index].district ?? "No disctrict specified"}',
+                                '${items![index].district ?? "No disctrict specified"}',
                             fontSize: 10,
                             fontWeight: FontWeight.w500,
                           ),
                           CustomText(
-                            text: '${items[index].city}',
+                            text: '${items![index].city}',
                             fontSize: 10,
                             color: App.hintColor,
                             fontWeight: FontWeight.w500,
@@ -162,22 +162,22 @@ class ListingPropertyListTile extends StatelessWidget {
                               children: [
                                 PropertyTextInfo(
                                   asset: 'assets/icons/bed.png',
-                                  text: items[index].totalBedRoom,
+                                  text: items![index].totalBedRoom,
                                 ),
                                 SizedBox(width: 4),
                                 PropertyTextInfo(
                                   asset: 'assets/icons/bath.png',
-                                  text: items[index].totalBathRoom,
+                                  text: items![index].totalBathRoom,
                                 ),
                                 SizedBox(width: 4),
                                 PropertyTextInfo(
                                   asset: 'assets/icons/car.png',
-                                  text: items[index].totalParkingSpace,
+                                  text: items![index].totalParkingSpace,
                                 ),
                                 SizedBox(width: 4),
                                 PropertyTextInfo(
                                   asset: '',
-                                  text: items[index].totalArea,
+                                  text: items![index].totalArea,
                                 ),
                               ],
                             ),

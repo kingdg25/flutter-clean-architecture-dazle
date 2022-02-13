@@ -10,12 +10,12 @@ class ResetPasswordUseCase extends UseCase<ResetPasswordUseCaseResponse, ResetPa
 
 
   @override
-  Future<Stream<ResetPasswordUseCaseResponse>> buildUseCaseStream(ResetPasswordUseCaseParams params) async {
+  Future<Stream<ResetPasswordUseCaseResponse>> buildUseCaseStream(ResetPasswordUseCaseParams? params) async {
     final controller = StreamController<ResetPasswordUseCaseResponse>();
     
     try {
       await dataAuthenticationRepository.resetPassword(
-        email: params.email,
+        email: params!.email,
         code: params.code,
         password: params.password
       );
@@ -36,9 +36,9 @@ class ResetPasswordUseCase extends UseCase<ResetPasswordUseCaseResponse, ResetPa
 
 
 class ResetPasswordUseCaseParams {
-  final String email;
-  final String code;
-  final String password;
+  final String? email;
+  final String? code;
+  final String? password;
   ResetPasswordUseCaseParams(this.email, this.code, this.password);
 }
 

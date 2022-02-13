@@ -11,7 +11,7 @@ class LogoutUserUseCase extends UseCase<LogoutUserUseCaseResponse, LogoutUserUse
 
 
   @override
-  Future<Stream<LogoutUserUseCaseResponse>> buildUseCaseStream(LogoutUserUseCaseParams params) async {
+  Future<Stream<LogoutUserUseCaseResponse>> buildUseCaseStream(LogoutUserUseCaseParams? params) async {
     final controller = StreamController<LogoutUserUseCaseResponse>();
     
     try {

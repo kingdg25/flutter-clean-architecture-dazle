@@ -3,8 +3,8 @@ import 'package:dazle/app/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 
 class PropertyTextInfo extends StatelessWidget {
-  final String text;
-  final String asset;
+  final String? text;
+  final String? asset;
 
   PropertyTextInfo({
     this.text,
@@ -30,8 +30,8 @@ class PropertyTextInfo extends StatelessWidget {
             text: text,
             fontSize: 10,
           ),
-          (asset != null && asset.isNotEmpty) ? Image.asset(
-            asset
+          (asset != null && asset!.isNotEmpty) ? Image.asset(
+            asset!
           ) : Container()
         ],
       ),

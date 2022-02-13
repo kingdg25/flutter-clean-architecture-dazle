@@ -10,12 +10,12 @@ class CreateListingUseCase extends UseCase<CreateListingUseCaseResponse, CreateL
   CreateListingUseCase(this.dataListingRepository);
 
   @override
-  Future<Stream<CreateListingUseCaseResponse>> buildUseCaseStream(CreateListingUseCaseParams params) async {
+  Future<Stream<CreateListingUseCaseResponse>> buildUseCaseStream(CreateListingUseCaseParams? params) async {
     final controller = StreamController<CreateListingUseCaseResponse>();
     
     try {
       final listing = await dataListingRepository.create(
-        listing: params.listing
+        listing: params!.listing
       );
       
       logger.finest('Create Listing successful.');
@@ -35,7 +35,7 @@ class CreateListingUseCase extends UseCase<CreateListingUseCaseResponse, CreateL
 
 
 class CreateListingUseCaseParams {
-  final Map listing;
+  final Map? listing;
 
   CreateListingUseCaseParams(this.listing);
 }

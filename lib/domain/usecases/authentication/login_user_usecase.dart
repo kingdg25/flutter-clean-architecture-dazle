@@ -12,11 +12,11 @@ class LoginUserUseCase extends UseCase<LoginUserUseCaseResponse, LoginUserUseCas
 
 
   @override
-  Future<Stream<LoginUserUseCaseResponse>> buildUseCaseStream(LoginUserUseCaseParams params) async {
+  Future<Stream<LoginUserUseCaseResponse>> buildUseCaseStream(LoginUserUseCaseParams? params) async {
     final controller = StreamController<LoginUserUseCaseResponse>();
     
     try {
-      final user = await dataAuthenticationRepository.login(email: params.email, password: params.password);
+      final user = await dataAuthenticationRepository.login(email: params!.email, password: params.password);
 
       controller.add(LoginUserUseCaseResponse(user));
 
@@ -37,12 +37,12 @@ class LoginUserUseCase extends UseCase<LoginUserUseCaseResponse, LoginUserUseCas
 
 
 class LoginUserUseCaseParams {
-  final String email;
-  final String password;
+  final String? email;
+  final String? password;
   LoginUserUseCaseParams(this.email, this.password);
 }
 
 class LoginUserUseCaseResponse {
-  final User user;
+  final User? user;
   LoginUserUseCaseResponse(this.user);
 }

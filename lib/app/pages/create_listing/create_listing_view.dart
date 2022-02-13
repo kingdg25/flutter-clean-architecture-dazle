@@ -15,8 +15,8 @@ import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 
 
 class CreateListingPage extends View {
-  final Property property;
-  CreateListingPage({Key key, this.property}) : super(key: key);
+  final Property? property;
+  CreateListingPage({Key? key, this.property}) : super(key: key);
 
   @override
   _CreateListingPageState createState() => _CreateListingPageState(property);
@@ -116,20 +116,23 @@ class _CreateListingPageState extends ViewState<CreateListingPage, CreateListing
                 AppConstant.customTitleField(
                   title: 'Property For'
                 ),
-                CustomRadioGroupButton(
-                  radioPadding: 15,
-                  buttonLables: [
-                    "Sell",
-                    "Rent",
-                  ],
-                  buttonValues: [
-                    "Sell",
-                    "Rent",
-                  ],
-                  radioButtonValue: (value) {
-                    controller.propertyFor = value;
-                  },
-                  defaultSelected: controller.propertyFor,
+                Container(
+                  alignment: Alignment.centerLeft,
+                  child: CustomRadioGroupButton(
+                    radioPadding: 15,
+                    buttonLables: [
+                      "Sell",
+                      "Rent",
+                    ],
+                    buttonValues: [
+                      "Sell",
+                      "Rent",
+                    ],
+                    radioButtonValue: (value) {
+                      controller.propertyFor = value;
+                    },
+                    defaultSelected: controller.propertyFor,
+                  ),
                 ),
                 AppConstant.customTitleField(
                   title: 'Time Period'
@@ -449,7 +452,7 @@ class _CreateListingPageState extends ViewState<CreateListingPage, CreateListing
                           FocusScope.of(context).unfocus();
 
                           if ( controller.validatePage4() ) {
-                            if (widget.property!=null && widget.property.id!=null) {
+                            if (widget.property!=null && widget.property!.id!=null) {
                               controller.updateListing();
                             } else _pageController.nextPage(
                               duration: Duration(milliseconds: 500),
@@ -522,22 +525,22 @@ class _CreateListingPageState extends ViewState<CreateListingPage, CreateListing
 
               if ( i == 0 || i == 1 ) {
                 setState(() {
-                  appBarTitle = (widget.property!=null && widget.property.id!=null) ? "Update Listing" : 'Create Listing';
+                  appBarTitle = (widget.property!=null && widget.property!.id!=null) ? "Update Listing" : 'Create Listing';
                 });
               }
               else if ( i == 2 ) {
                 setState(() {
-                  appBarTitle = (widget.property!=null && widget.property.id!=null) ? "Update Location" : 'Location';
+                  appBarTitle = (widget.property!=null && widget.property!.id!=null) ? "Update Location" : 'Location';
                 });
               }
               else if ( i == 3 ) {
                 setState(() {
-                  appBarTitle = (widget.property!=null && widget.property.id!=null) ? "Update Amenities" : 'Amenities';
+                  appBarTitle = (widget.property!=null && widget.property!.id!=null) ? "Update Amenities" : 'Amenities';
                 });
               }
               else if ( i == 4 ) {
                 setState(() {
-                  appBarTitle = (widget.property!=null && widget.property.id!=null) ? "Update Photos" : 'Photos';
+                  appBarTitle = (widget.property!=null && widget.property!.id!=null) ? "Update Photos" : 'Photos';
                 });
               }
             },

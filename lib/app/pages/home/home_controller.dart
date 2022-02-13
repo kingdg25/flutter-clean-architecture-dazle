@@ -12,8 +12,8 @@ import 'package:dazle/app/pages/login/login_view.dart';
 class HomeController extends Controller {
   final HomePresenter homePresenter;
 
-  User _user;
-  User get user => _user;
+  User? _user;
+  User? get user => _user;
 
   List<PhotoTile> _spotLight;
   List<PhotoTile> get spotLight => _spotLight;
@@ -30,6 +30,8 @@ class HomeController extends Controller {
   List<Property> _myListing;
   List<Property> get myListing => _myListing;
 
+  TextEditingController? searchTextController;
+
   HomeController(userRepo)
       : _spotLight = <PhotoTile>[],
         _matchedProperties = <Property>[],
@@ -37,6 +39,7 @@ class HomeController extends Controller {
         _newHomes = <Property>[],
         _myListing = <Property>[],
         homePresenter = HomePresenter(userRepo),
+        searchTextController = TextEditingController(),
         super();
 
   @override
@@ -217,10 +220,10 @@ class HomeController extends Controller {
   }
 
   void isNewUser() {
-    print('_user _user _user $_user ${_user.displayName} ${_user.isNewUser}');
+    print('_user _user _user $_user ${_user!.displayName} ${_user!.isNewUser}');
 
     if (_user != null) {
-      homePresenter.isNewUser(email: _user.email, isNewUser: false);
+      homePresenter.isNewUser(email: _user!.email, isNewUser: false);
     }
   }
 

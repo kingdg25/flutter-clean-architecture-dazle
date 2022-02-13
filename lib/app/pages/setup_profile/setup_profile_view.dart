@@ -15,7 +15,7 @@ import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 class SetupProfilePage extends View {
   static const String id = 'setup_profile_page';
   
-  SetupProfilePage({ Key key }) : super(key: key);
+  SetupProfilePage({ Key? key }) : super(key: key);
 
   @override
   _SetupProfilePageState createState() => _SetupProfilePageState();
@@ -116,8 +116,8 @@ class _SetupProfilePageState extends ViewState<SetupProfilePage, SetupProfileCon
                           onPressed: () {
                             FocusScope.of(context).unfocus();
 
-                            if (_formKey.currentState.validate()) {
-                              _formKey.currentState.save();
+                            if (_formKey.currentState!.validate()) {
+                              _formKey.currentState!.save();
                               
                               controller.setupProfile();
                             }

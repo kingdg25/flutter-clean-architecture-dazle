@@ -7,9 +7,9 @@ import 'package:dazle/domain/repositories/connection_repository.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class DataConnectionRepository extends ConnectionRepository {
-  List<InviteTile> invites;
-  List<MyConnectionTile> myConnection;
-  List<String> userSearch;
+  List<InviteTile>? invites;
+  List<MyConnectionTile>? myConnection;
+  List<String>? userSearch;
 
   static DataConnectionRepository _instance = DataConnectionRepository._internal();
   DataConnectionRepository._internal() {
@@ -21,7 +21,7 @@ class DataConnectionRepository extends ConnectionRepository {
 
 
   @override
-  Future<void> notifyUser({String email, String mobileNumber}) async {
+  Future<void> notifyUser({String? email, String? mobileNumber}) async {
     Map params = {
       "email": email,
       "mobile_number": mobileNumber
@@ -59,7 +59,7 @@ class DataConnectionRepository extends ConnectionRepository {
   }
 
   @override
-  Future<List<InviteTile>> readInvites({String email, String filterByName}) async {
+  Future<List<InviteTile>?> readInvites({String? email, String? filterByName}) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     Map params = {
       "email": email,
@@ -106,7 +106,7 @@ class DataConnectionRepository extends ConnectionRepository {
   }
 
   @override
-  Future<List<MyConnectionTile>> readMyConnection({String email, String filterByName}) async {
+  Future<List<MyConnectionTile>?> readMyConnection({String? email, String? filterByName}) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     Map params = {
       "email": email,
@@ -153,7 +153,7 @@ class DataConnectionRepository extends ConnectionRepository {
   }
 
   @override
-  Future<void> addConnection({String userId, String invitedId}) async {
+  Future<void> addConnection({String? userId, String? invitedId}) async {
     Map params = {
       "user_id": userId,
       "invited_id": invitedId
@@ -173,7 +173,7 @@ class DataConnectionRepository extends ConnectionRepository {
       bool success = jsonResponse['success'];
 
       if (success) {
-        invites.removeWhere((element) => element.id == invitedId); // remove in UI
+        invites!.removeWhere((element) => element.id == invitedId); // remove in UI
       }
       else {
         throw {
@@ -193,9 +193,9 @@ class DataConnectionRepository extends ConnectionRepository {
   }
 
   @override
-  Future<void> removeConnection({String userId, String invitedId}) async {
+  Future<void> removeConnection({String? userId, String? invitedId}) async {
     print(myConnection);
-    myConnection.removeWhere((element) => element.id == invitedId); // remove in UI
+    myConnection!.removeWhere((element) => element.id == invitedId); // remove in UI
 
     Map params = {
       "user_id": userId,
@@ -233,7 +233,7 @@ class DataConnectionRepository extends ConnectionRepository {
   }
 
   @override
-  Future<List<String>> searchUser({String userId, String pattern, bool invited}) async {
+  Future<List<String>?> searchUser({String? userId, String? pattern, bool? invited}) async {
     // if (userDetail.firstName.toLowerCase().contains(text.toLowerCase()) || userDetail.lastName.toLowerCase().contains(text.toLowerCase()))
     print('searUSer pattern $pattern');
 
@@ -255,12 +255,12 @@ class DataConnectionRepository extends ConnectionRepository {
     var jsonResponse = await convert.jsonDecode(response.body);
     if (response.statusCode == 200){
       bool success = jsonResponse['success'];
-      List data = jsonResponse['data'];
+      List? data = jsonResponse['data'];
 
       print('searchInvites searchInvites searchInvites $jsonResponse');
 
       if (success){
-        userSearch = data.map((e) => e.toString()).toList();
+        userSearch = data!.map((e) => e.toString()).toList();
       }
       else{
         throw {

@@ -5,17 +5,17 @@ import 'package:dazle/domain/usecases/authentication/login_user_usecase.dart';
 
 
 class LoginPresenter extends Presenter {
-  Function loginUserOnNext;
-  Function loginUserOnComplete;
-  Function loginUserOnError;
+  Function? loginUserOnNext;
+  Function? loginUserOnComplete;
+  Function? loginUserOnError;
 
-  Function isAuthenticatedOnNext;
-  Function isAuthenticatedOnComplete;
-  Function isAuthenticatedOnError;
+  Function? isAuthenticatedOnNext;
+  Function? isAuthenticatedOnComplete;
+  Function? isAuthenticatedOnError;
 
-  Function socialLoginOnNext;
-  Function socialLoginOnComplete;
-  Function socialLoginOnError;
+  Function? socialLoginOnNext;
+  Function? socialLoginOnComplete;
+  Function? socialLoginOnError;
 
   final LoginUserUseCase loginUserUseCase;
   final IsAuthenticatedUseCase isAuthenticatedUseCase;
@@ -26,7 +26,7 @@ class LoginPresenter extends Presenter {
       isAuthenticatedUseCase = IsAuthenticatedUseCase(userRepo),
       socialLoginUseCase = SocialLoginUseCase(userRepo);
   
-  void loginUser({String email, String password}) {
+  void loginUser({String? email, String? password}) {
     loginUserUseCase.execute(_LoginUserUseCaseObserver(this), LoginUserUseCaseParams(email, password));
   }
 
@@ -34,7 +34,7 @@ class LoginPresenter extends Presenter {
     isAuthenticatedUseCase.execute(_IsAuthenticatedUseCaseObserver(this), IsAuthenticatedUseCaseParams());
   }
 
-  void socialLogin({String loginType}) {
+  void socialLogin({String? loginType}) {
     socialLoginUseCase.execute(_SocialLoginUseCaseObserver(this), SocialLoginUseCaseParams(loginType));
   }
 
@@ -55,19 +55,19 @@ class _LoginUserUseCaseObserver extends Observer<LoginUserUseCaseResponse> {
   @override
   void onComplete() {
     assert(presenter.loginUserOnComplete != null);
-    presenter.loginUserOnComplete();
+    presenter.loginUserOnComplete!();
   }
 
   @override
   void onError(e) {
     assert(presenter.loginUserOnError != null);
-    presenter.loginUserOnError(e);
+    presenter.loginUserOnError!(e);
   }
 
   @override
   void onNext(response) {
     assert(presenter.loginUserOnNext != null);
-    presenter.loginUserOnNext(response.user);
+    presenter.loginUserOnNext!(response?.user);
   }
 }
 
@@ -79,19 +79,19 @@ class _IsAuthenticatedUseCaseObserver extends Observer<IsAuthenticatedUseCaseRes
   @override
   void onComplete() {
     assert(presenter.isAuthenticatedOnComplete != null);
-    presenter.isAuthenticatedOnComplete();
+    presenter.isAuthenticatedOnComplete!();
   }
 
   @override
   void onError(e) {
     assert(presenter.isAuthenticatedOnError != null);
-    presenter.isAuthenticatedOnError(e);
+    presenter.isAuthenticatedOnError!(e);
   }
 
   @override
   void onNext(response) {
     assert(presenter.isAuthenticatedOnNext != null);
-    presenter.isAuthenticatedOnNext(response.isAuthenticate);
+    presenter.isAuthenticatedOnNext!(response?.isAuthenticate);
   }
 }
 
@@ -103,18 +103,18 @@ class _SocialLoginUseCaseObserver extends Observer<SocialLoginUseCaseResponse> {
   @override
   void onComplete() {
     assert(presenter.socialLoginOnComplete != null);
-    presenter.socialLoginOnComplete();
+    presenter.socialLoginOnComplete!();
   }
 
   @override
   void onError(e) {
     assert(presenter.socialLoginOnError != null);
-    presenter.socialLoginOnError(e);
+    presenter.socialLoginOnError!(e);
   }
 
   @override
   void onNext(response) {
     assert(presenter.socialLoginOnNext != null);
-    presenter.socialLoginOnNext(response.user);
+    presenter.socialLoginOnNext!(response?.user);
   }
 }

@@ -4,20 +4,20 @@ import 'package:flutter/material.dart';
 
 class CustomRichText extends StatelessWidget {
   final String mainText;
-  final String valueText;
-  final FontWeight mainTextFontWeight;
-  final FontWeight valueTextfontWeight;
-  final TextDecoration mainTextDecoration;
-  final TextDecoration valueTextDecoration;
+  final String? valueText;
+  final FontWeight? mainTextFontWeight;
+  final FontWeight? valueTextfontWeight;
+  final TextDecoration? mainTextDecoration;
+  final TextDecoration? valueTextDecoration;
   final mainTextCallback;
   final valueTextCallback;
 
   const CustomRichText({
-    @required this.mainText,
+    required this.mainText,
     this.mainTextFontWeight,
     this.mainTextDecoration,
     this.mainTextCallback,
-    @required this.valueText,
+    required this.valueText,
     this.valueTextfontWeight,
     this.valueTextDecoration,
     this.valueTextCallback,

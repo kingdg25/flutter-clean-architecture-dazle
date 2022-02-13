@@ -10,8 +10,8 @@ class WaitingScreen extends StatelessWidget {
   final String firstName;
 
   const WaitingScreen({
-    Key key,
-    @required this.firstName
+    Key? key,
+    required this.firstName
   }) : super(key: key);
 
   @override

@@ -12,9 +12,9 @@ class PdfWidgets {
 
   /// Custom Text for the pdf file
   pdfCustomText({
-    @required String text,
+    required String text,
     double fontSize = 13,
-    pw.FontWeight fontWeight,
+    pw.FontWeight? fontWeight,
   }) {
     return pw.Text(
       text,
@@ -29,9 +29,9 @@ class PdfWidgets {
 
   /// Custom RichText for the pdf file
   pdfCustomRichText({
-    @required String mainText,
-    @required String valueText,
-    double fontSize,
+    required String mainText,
+    required String? valueText,
+    double? fontSize,
   }) {
     return pw.RichText(
       text: pw.TextSpan(
@@ -59,7 +59,7 @@ class PdfWidgets {
   /// Takes a the district property from "Property" and returns a pill shaped
   /// container on top of the pdf pictures
   pdfAddressContainer({
-    @required String district,
+    required String? district,
   }) {
     return pw.Container(
       padding: pw.EdgeInsets.symmetric(vertical: 15),
@@ -67,7 +67,7 @@ class PdfWidgets {
       height: 50,
       decoration: pw.BoxDecoration(
         shape: pw.BoxShape.rectangle,
-        borderRadiusEx: pw.BorderRadius.all(pw.Radius.circular(25)),
+        borderRadius: pw.BorderRadius.all(pw.Radius.circular(25)),
         border: pw.Border.all(
           color: PdfColors.white,
           width: 2,
@@ -90,7 +90,7 @@ class PdfWidgets {
   /// Takes a the price property from "Property" and returns a pill shaped
   /// container below the pdf pictures
   pdfPriceContainer({
-    @required String price,
+    required String price,
   }) {
     return pw.Container(
       padding: pw.EdgeInsets.symmetric(vertical: 5),
@@ -102,7 +102,7 @@ class PdfWidgets {
           color: PdfColors.white,
           width: 2,
         ),
-        borderRadiusEx: pw.BorderRadius.all(pw.Radius.circular(25)),
+        borderRadius: pw.BorderRadius.all(pw.Radius.circular(25)),
         color: _mainColor,
       ),
       child: pw.Center(

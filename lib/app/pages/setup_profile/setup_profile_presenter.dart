@@ -3,9 +3,9 @@ import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 
 
 class SetupProfilePresenter extends Presenter {
-  Function setupProfileOnNext;
-  Function setupProfileOnComplete;
-  Function setupProfileOnError;
+  Function? setupProfileOnNext;
+  Function? setupProfileOnComplete;
+  Function? setupProfileOnError;
 
   final SetupProfileUseCase setupProfileUseCase;
   
@@ -14,12 +14,12 @@ class SetupProfilePresenter extends Presenter {
   
 
   void setupProfile({
-    String firstName,
-    String lastName,
-    String mobileNumber,
-    String position,
-    String brokerLicenseNumber,
-    String email
+    String? firstName,
+    String? lastName,
+    String? mobileNumber,
+    String? position,
+    String? brokerLicenseNumber,
+    String? email
   }) {
     setupProfileUseCase.execute(_SetupProfileUseCaseObserver(this), SetupProfileUseCaseParams(
       firstName,
@@ -45,18 +45,18 @@ class _SetupProfileUseCaseObserver extends Observer<SetupProfileUseCaseResponse>
   @override
   void onComplete() {
     assert(presenter.setupProfileOnComplete != null);
-    presenter.setupProfileOnComplete();
+    presenter.setupProfileOnComplete!();
   }
 
   @override
   void onError(e) {
     assert(presenter.setupProfileOnError != null);
-    presenter.setupProfileOnError(e);
+    presenter.setupProfileOnError!(e);
   }
 
   @override
   void onNext(response) {
     assert(presenter.setupProfileOnNext != null);
-    presenter.setupProfileOnNext(response.user);
+    presenter.setupProfileOnNext!(response!.user);
   }
 }

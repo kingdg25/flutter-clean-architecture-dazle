@@ -2,9 +2,9 @@ import 'package:dazle/domain/usecases/message/get_message_leads_usecase.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 
 class MessageLeadPresenter extends Presenter {
-  Function getMessageLeadsOnNext;
-  Function getMessageLeadsOnComplete;
-  Function getMessageLeadsOnError;
+  Function? getMessageLeadsOnNext;
+  Function? getMessageLeadsOnComplete;
+  Function? getMessageLeadsOnError;
 
   final GetMessageLeadsUseCase getMessageLeadsUseCase;
 
@@ -30,18 +30,18 @@ class _GetMessageLeadsUseCaseObserver extends Observer<GetMessageLeadsUseCaseRes
   @override
   void onComplete() {
     assert(presenter.getMessageLeadsOnComplete != null);
-    presenter.getMessageLeadsOnComplete();
+    presenter.getMessageLeadsOnComplete!();
   }
 
   @override
   void onError(e) {
     assert(presenter.getMessageLeadsOnError != null);
-    presenter.getMessageLeadsOnError(e);
+    presenter.getMessageLeadsOnError!(e);
   }
 
   @override
   void onNext(response) {
     assert(presenter.getMessageLeadsOnNext != null);
-    presenter.getMessageLeadsOnNext(response.messageLeads);
+    presenter.getMessageLeadsOnNext!(response?.messageLeads);
   }
 }

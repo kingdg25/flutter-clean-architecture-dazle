@@ -10,7 +10,7 @@ import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 
 class EmailVerificationPage extends View {
 
-  EmailVerificationPage({Key key}) : super(key: key);
+  EmailVerificationPage({Key? key}) : super(key: key);
 
   @override
   _EmailVerificationPage createState() => _EmailVerificationPage();

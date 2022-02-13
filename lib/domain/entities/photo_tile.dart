@@ -1,6 +1,6 @@
 class PhotoTile {
-  final String photoURL;
-  final String text;
+  final String? photoURL;
+  final String? text;
 
 
   PhotoTile({

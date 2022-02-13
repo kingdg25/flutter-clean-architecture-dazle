@@ -12,11 +12,11 @@ class GetUserListingsUseCase extends UseCase<GetUserListingsUseCaseResponse, Get
   GetUserListingsUseCase(this.dataListingRepository);
 
   @override
-  Future<Stream<GetUserListingsUseCaseResponse>> buildUseCaseStream(GetUserListingsUseCaseParams params) async {
+  Future<Stream<GetUserListingsUseCaseResponse>> buildUseCaseStream(GetUserListingsUseCaseParams? params) async {
     final controller = StreamController<GetUserListingsUseCaseResponse>();
     
     try {
-      final listings = await dataListingRepository.getUserListings(uid: params.uid);
+      final listings = await dataListingRepository.getUserListings(uid: params!.uid);
       
       logger.finest('Fetching user listing success.');
       controller.add(GetUserListingsUseCaseResponse(listings: listings));
@@ -34,13 +34,13 @@ class GetUserListingsUseCase extends UseCase<GetUserListingsUseCaseResponse, Get
 
 
 class GetUserListingsUseCaseParams {
-  final String uid; // user_id to view listings
+  final String? uid; // user_id to view listings
 
   GetUserListingsUseCaseParams({
     this.uid
   });
 }
 class GetUserListingsUseCaseResponse {
-  List<Property> listings;
+  List<Property>? listings;
   GetUserListingsUseCaseResponse({this.listings});
 }

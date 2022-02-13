@@ -7,7 +7,7 @@ import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 
 
 class MessageLeadPage extends View {
-  MessageLeadPage({Key key}) : super(key: key);
+  MessageLeadPage({Key? key}) : super(key: key);
 
   @override
   _MessageLeadPageState createState() => _MessageLeadPageState();

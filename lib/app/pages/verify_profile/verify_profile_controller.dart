@@ -9,7 +9,7 @@ import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 class VerifyProfileController extends Controller {
   final VerifyProfilePresenter verifyProfilePresenter;
 
-  File attachement; // image
+  File? attachement; // image
 
   VerifyProfileController(userRepo)
       : verifyProfilePresenter = VerifyProfilePresenter(userRepo),
@@ -64,7 +64,7 @@ class VerifyProfileController extends Controller {
   }
 
   Future _statusDialog(String title, String text,
-      {bool success, Function onPressed}) async {
+      {bool? success, Function? onPressed}) async {
     return await AppConstant.statusDialog(
         context: getContext(),
         success: success ?? false,

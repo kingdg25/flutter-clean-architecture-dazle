@@ -16,15 +16,15 @@ import 'package:dazle/app/utils/app_constant.dart';
 class SetupProfileController extends Controller {
   final SetupProfilePresenter setupProfilePresenter;
 
-  User _user;
-  User get user => _user;
+  User? _user;
+  User? get user => _user;
 
   // for setup profile
   GlobalKey<FormState> setupProfileFormKey;
   final TextEditingController firstNameTextController;
   final TextEditingController lastNameTextController;
   final TextEditingController mobileNumberTextController;
-  String position;
+  String? position;
   final TextEditingController brokerLicenseNumberTextController;
   String brokerLicenseNumberTextField;
 
@@ -64,7 +64,7 @@ class SetupProfileController extends Controller {
         User _user = await App.getUser();
            if (!(_user.emailVerified ?? false) && _user.id!=null) {
              emailVerificationPage();
-           } else if ( _user.isNewUser != null && _user.isNewUser ) {
+           } else if ( _user.isNewUser != null && _user.isNewUser! ) {
             welcomePage();
           }
           else {
@@ -125,16 +125,16 @@ class SetupProfileController extends Controller {
 
   void setupProfile() {
     AppConstant.showLoader(getContext(), true);
-    print('setupProfile ${_user.email}');
+    print('setupProfile ${_user!.email}');
 
-    if ( _user.email != null ) {
+    if ( _user!.email != null ) {
       setupProfilePresenter.setupProfile(
         firstName: firstNameTextController.text, 
         lastName: lastNameTextController.text, 
         mobileNumber: mobileNumberTextController.text,
         position: position,
         brokerLicenseNumber: brokerLicenseNumberTextController.text,
-        email: _user.email
+        email: _user!.email
       );
     }
 
@@ -161,11 +161,11 @@ class SetupProfileController extends Controller {
     if (user != null){
       _user = user;
 
-      firstNameTextController.text = user.firstName;
-      lastNameTextController.text = user.lastName;
-      mobileNumberTextController.text = user.mobileNumber;
+      firstNameTextController.text = user.firstName!;
+      lastNameTextController.text = user.lastName!;
+      mobileNumberTextController.text = user.mobileNumber!;
       position = user.position;
-      brokerLicenseNumberTextController.text = user.brokerLicenseNumber;
+      brokerLicenseNumberTextController.text = user.brokerLicenseNumber!;
 
       refreshUI();
     }
@@ -188,7 +188,7 @@ class SetupProfileController extends Controller {
   _statusDialog(bool success, String title, String text){
     AppConstant.statusDialog(
       context: getContext(),
-      success: success ?? false,
+      success: success,
       title: title,
       text: text,
     );

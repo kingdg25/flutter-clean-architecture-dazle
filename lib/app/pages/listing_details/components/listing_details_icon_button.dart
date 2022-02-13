@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 
 class ListingDetailsIconButton extends StatelessWidget {
   final EdgeInsets margin;
-  final String tooltip;
+  final String? tooltip;
   final IconData iconData;
   final Function onPressed;
 
   ListingDetailsIconButton({
     this.margin = const EdgeInsets.only(right: 8),
     this.tooltip,
-    @required this.iconData,
-    @required this.onPressed
+    required this.iconData,
+    required this.onPressed
   });
 
   @override
@@ -31,7 +31,7 @@ class ListingDetailsIconButton extends StatelessWidget {
           color: Colors.black
         ),
         tooltip: tooltip,
-        onPressed: onPressed,
+        onPressed: onPressed as void Function()?,
       ),
     );
   }

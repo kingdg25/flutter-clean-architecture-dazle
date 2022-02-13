@@ -13,7 +13,7 @@ import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:dazle/app/pages/download_list/download_list_view.dart';
 
 class ListingDetailsPage extends View {
-  ListingDetailsPage({Key key, @required this.property}) : super(key: key);
+  ListingDetailsPage({Key? key, required this.property}) : super(key: key);
 
   final Property property;
 
@@ -38,7 +38,7 @@ class _ListingDetailsPageState
             slivers: [
               SliverAppBar(
                 actions: <Widget>[
-                  controller.currentUser?.id == widget.property?.createdBy ? ListingDetailsIconButton(
+                  controller.currentUser?.id == widget.property.createdBy ? ListingDetailsIconButton(
                     iconData: Icons.edit,
                     tooltip: "Edit Property",
                     onPressed: () async {
@@ -114,11 +114,11 @@ class _ListingDetailsPageState
                                 int pageViewIndex) =>
                             GestureDetector(
                               onTap: () {
-                                print(widget.property.photos[itemIndex]);
+                                print(widget.property.photos![itemIndex]);
                               },
                               child: CachedNetworkImage(
                                 imageUrl:
-                                    widget.property.photos[itemIndex].toString(),
+                                    widget.property.photos![itemIndex].toString(),
                                 imageBuilder: (context, imageProvider) =>
                                     Container(
                                   decoration: BoxDecoration(
@@ -132,7 +132,7 @@ class _ListingDetailsPageState
                                 progressIndicatorBuilder:
                                     (context, url, progress) => Center(
                                   child: CircularProgressIndicator(
-                                    valueColor: AlwaysStoppedAnimation<Color>(
+                                    valueColor: AlwaysStoppedAnimation<Color?>(
                                         Colors.indigo[900]),
                                     value: progress.progress,
                                   ),
@@ -288,7 +288,7 @@ class _ListingDetailsPageState
                               ),
                               SizedBox(width: 8),
                               CustomText(
-                                text: widget.property.amenities[index],
+                                text: widget.property.amenities![index],
                                 fontSize: 13,
                                 fontWeight: FontWeight.w600,
                               ),

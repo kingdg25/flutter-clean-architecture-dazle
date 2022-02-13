@@ -47,7 +47,7 @@ class LoginController extends Controller {
          if ( _user.position != null && _user.brokerLicenseNumber != null ) {
            if (!(_user.emailVerified ?? false) && _user.id!=null) {
              emailVerificationPage();
-           } else if ( _user.isNewUser != null && _user.isNewUser ) {
+           } else if ( _user.isNewUser != null && _user.isNewUser! ) {
             welcomePage();
           }
           else {
@@ -76,7 +76,7 @@ class LoginController extends Controller {
       if (res != null){
         if (!(res.emailVerified ?? false) && res.id!=null) {
           emailVerificationPage();
-        }else if ( res.isNewUser ) {
+        }else if ( res.isNewUser! ) {
           welcomePage();
         }
         else {
@@ -223,7 +223,7 @@ class LoginController extends Controller {
     loginPresenter.socialLogin(loginType: 'facebook');
   }
 
-  _statusDialog(String title, String text, {bool success, Function onPressed}){
+  _statusDialog(String title, String text, {bool? success, Function? onPressed}){
     AppConstant.statusDialog(
       context: getContext(),
       success: success ?? false,

@@ -4,17 +4,17 @@ import 'package:dazle/domain/usecases/connection/search_user_usecase.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 
 class MyConnectionPresenter extends Presenter {
-  Function readMyConnectionOnNext;
-  Function readMyConnectionOnComplete;
-  Function readMyConnectionOnError;
+  Function? readMyConnectionOnNext;
+  Function? readMyConnectionOnComplete;
+  Function? readMyConnectionOnError;
 
-  Function removeConnectionOnNext;
-  Function removeConnectionOnComplete;
-  Function removeConnectionOnError;
+  Function? removeConnectionOnNext;
+  Function? removeConnectionOnComplete;
+  Function? removeConnectionOnError;
 
-  Function searchUserOnNext;
-  Function searchUserOnComplete;
-  Function searchUserOnError;
+  Function? searchUserOnNext;
+  Function? searchUserOnComplete;
+  Function? searchUserOnError;
 
   final ReadMyConnectionUseCase readMyConnectionUseCase;
   final RemoveConnectionUseCase removeConnectionUseCase;
@@ -25,15 +25,15 @@ class MyConnectionPresenter extends Presenter {
       removeConnectionUseCase = RemoveConnectionUseCase(userRepo),
       searchUserUseCase = SearchUserUseCase(userRepo);
 
-  void readMyConnection({String filterByName}){
+  void readMyConnection({String? filterByName}){
     readMyConnectionUseCase.execute(_ReadMyConnectionUseCaseObserver(this), ReadMyConnectionUseCaseParams(filterByName));
   }
 
-  void removeConnection({String invitedId}){
+  void removeConnection({String? invitedId}){
     removeConnectionUseCase.execute(_RemoveConnectionUseCaseObserver(this), RemoveConnectionUseCaseParams(invitedId));
   }
 
-  void searchUser({String pattern}){
+  void searchUser({String? pattern}){
     searchUserUseCase.execute(_SearchUserUseCaseObserver(this), SearchUserUseCaseParams(pattern, true));
   }
   
@@ -53,19 +53,19 @@ class _ReadMyConnectionUseCaseObserver extends Observer<ReadMyConnectionUseCaseR
   @override
   void onComplete() {
     assert(presenter.readMyConnectionOnComplete != null);
-    presenter.readMyConnectionOnComplete();
+    presenter.readMyConnectionOnComplete!();
   }
 
   @override
   void onError(e) {
     assert(presenter.readMyConnectionOnError != null);
-    presenter.readMyConnectionOnError(e);
+    presenter.readMyConnectionOnError!(e);
   }
 
   @override
   void onNext(response) {
     assert(presenter.readMyConnectionOnNext != null);
-    presenter.readMyConnectionOnNext(response.myConnection);
+    presenter.readMyConnectionOnNext!(response?.myConnection);
   }
 }
 
@@ -76,19 +76,19 @@ class _RemoveConnectionUseCaseObserver extends Observer<RemoveConnectionUseCaseR
   @override
   void onComplete() {
     assert(presenter.removeConnectionOnComplete != null);
-    presenter.removeConnectionOnComplete();
+    presenter.removeConnectionOnComplete!();
   }
 
   @override
   void onError(e) {
     assert(presenter.removeConnectionOnError != null);
-    presenter.removeConnectionOnError(e);
+    presenter.removeConnectionOnError!(e);
   }
 
   @override
   void onNext(response) {
     assert(presenter.removeConnectionOnNext != null);
-    presenter.removeConnectionOnNext(response);
+    presenter.removeConnectionOnNext!(response);
   }
 }
 
@@ -100,18 +100,18 @@ class _SearchUserUseCaseObserver extends Observer<SearchUserUseCaseResponse> {
   @override
   void onComplete() {
     assert(presenter.searchUserOnComplete != null);
-    presenter.searchUserOnComplete();
+    presenter.searchUserOnComplete!();
   }
 
   @override
   void onError(e) {
     assert(presenter.searchUserOnError != null);
-    presenter.searchUserOnError(e);
+    presenter.searchUserOnError!(e);
   }
 
   @override
   void onNext(response) {
     assert(presenter.searchUserOnNext != null);
-    presenter.searchUserOnNext(response.data);
+    presenter.searchUserOnNext!(response!.data);
   }
 }

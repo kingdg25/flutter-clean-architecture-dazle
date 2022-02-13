@@ -34,7 +34,7 @@ class EmailVerificationPageController extends Controller {
   }
 
 
-  _statusDialog(String title, String text, {bool success, Function onPressed}){
+  _statusDialog(String title, String text, {bool? success, Function? onPressed}){
     AppConstant.statusDialog(
       context: getContext(),
       success: success ?? false,

@@ -13,7 +13,7 @@ import 'package:dio/dio.dart';
 import '../../../utils/app.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'dart:async';
-import 'package:downloads_path_provider/downloads_path_provider.dart';
+// import 'package:downloads_path_provider/downloads_path_provider.dart';
 
 // import 'package:downloads_path_provider/downloads_path_provider.dart';
 // import 'package:ext_storage/ext_storage.dart';
@@ -22,12 +22,12 @@ class PdfGenerator {
   /// Takes a Property Object and use it's properties to
   /// return a pdf
 
-  Future<pw.Document> buildPdf({Property property}) async {
+  Future<pw.Document> buildPdf({required Property property}) async {
     final pdf = pw.Document();
     final image = (await rootBundle.load('assets/dazle_sample_logo.png'))
         .buffer
         .asUint8List();
-    final List<pw.Widget> pdfImages = await pdfImageGenerator(property.photos);
+    final List<pw.Widget> pdfImages = await pdfImageGenerator(property.photos!);
     final User currentUser = await App.getUser();
 
     pdf.addPage(
@@ -38,7 +38,8 @@ class PdfGenerator {
             child: pw.Column(
                 crossAxisAlignment: pw.CrossAxisAlignment.start,
                 children: [
-                  pw.Image.provider(
+                  // changed from pw.Image.provider() to pw.Image()
+                  pw.Image(
                     pw.MemoryImage(image),
                     height: 50,
                   ),
@@ -120,7 +121,7 @@ class PdfGenerator {
                             ),
                             PdfWidgets().pdfCustomRichText(
                               mainText: 'Features and amenities: ',
-                              valueText: property.amenities.join(", "),
+                              valueText: property.amenities!.join(", "),
                             ),
                           ],
                         ),
@@ -147,7 +148,7 @@ class PdfGenerator {
                               pw.Positioned(
                                 bottom: -18,
                                 child: PdfWidgets()
-                                    .pdfPriceContainer(price: property.price),
+                                    .pdfPriceContainer(price: property.price!),
                               )
                             ],
                           ),
@@ -170,8 +171,8 @@ class PdfGenerator {
                   valueText: currentUser.displayName,
                 ),
                 // TODO: Gio - Add icons after upgrading to null safety
-                PdfWidgets().pdfCustomText(text: currentUser.mobileNumber),
-                PdfWidgets().pdfCustomText(text: currentUser.email),
+                PdfWidgets().pdfCustomText(text: currentUser.mobileNumber!),
+                PdfWidgets().pdfCustomText(text: currentUser.email!),
               ],
             ),
           );
@@ -184,27 +185,27 @@ class PdfGenerator {
 
   /// Takes a Property object to be used by the buildPdf() function
   /// then returns the String of the download path
-  Future<String> downloadPdf({Property property}) async {
-    String downloadPath;
+  Future<String?> downloadPdf({Property? property}) async {
+    String? downloadPath;
 
     /// Request Permission to Write on Local Storage
     Map<Permission, PermissionStatus> statuses = await [
       Permission.storage,
     ].request();
 
-    if (statuses[Permission.storage].isGranted) {
+    if (statuses[Permission.storage]!.isGranted) {
       final pdfForDownload =
-          await buildPdf(property: property); // Builds the pdf file
+          await buildPdf(property: property!); // Builds the pdf file
 
       try {
-        final dir = await DownloadsPathProvider.downloadsDirectory;
-        // TODO: Gio - 1. Finalize the filename of the PDF
-        downloadPath =
-            '${dir.path}/Dazzle Property List - ${property.district} - ${property.city} ${DateTime.now().toIso8601String()}.pdf';
-        print(downloadPath);
-        final file = File(downloadPath);
-        await file.writeAsBytes(pdfForDownload.save());
-        print('saved to documents');
+        // final dir = await DownloadsPathProvider.downloadsDirectory;
+        // // TODO: Gio - 1. Finalize the filename of the PDF
+        // downloadPath =
+        //     '${dir.path}/Dazzle Property List - ${property.district} - ${property.city} ${DateTime.now().toIso8601String()}.pdf';
+        // print(downloadPath);
+        // final file = File(downloadPath);
+        // await file.writeAsBytes(pdfForDownload.save());
+        // print('saved to documents');
       } catch (e) {
         print('error ${e.toString()}');
       }
@@ -215,19 +216,19 @@ class PdfGenerator {
 
   /// Takes a Property object to be used by the buildPdf() function
   /// then share the pdf using the share_plus package
-  Future<String> sharePdf({Property property}) async {
+  Future<String?> sharePdf({required Property property}) async {
     //* Will hold the pdf generated by buildPdf() function
     final pdfForDownload = await buildPdf(property: property);
-    String localPath;
+    String? localPath;
 
     //* Save pdf to App Storage Directory
     try {
-      final dir = await getExternalStorageDirectory();
+      final dir = await (getExternalStorageDirectory() as FutureOr<Directory>);
       localPath =
           '${dir.path}/Dazzle Property List - ${property.district} - ${property.city} ${DateTime.now().toIso8601String()}.pdf';
       print(localPath);
       final file = File(localPath);
-      await file.writeAsBytes(pdfForDownload.save());
+      await file.writeAsBytes(await pdfForDownload.save());
       print('saved to documents');
     } catch (e) {
       print('error ${e.toString()}');
@@ -250,7 +251,7 @@ class PdfGenerator {
         child: pw.ClipRRect(
           horizontalRadius: 5.0,
           verticalRadius: 5.0,
-          child: pw.Image.provider(
+          child: pw.Image(
             pw.MemoryImage(await imageConverter(photos[0])),
             fit: pw.BoxFit.cover,
             height: 200,
@@ -268,7 +269,7 @@ class PdfGenerator {
           child: pw.ClipRRect(
             horizontalRadius: 5.0,
             verticalRadius: 5.0,
-            child: pw.Image.provider(
+            child: pw.Image(
               pw.MemoryImage(await imageConverter(photos[1])),
               fit: pw.BoxFit.cover,
               height: 200,
@@ -287,7 +288,7 @@ class PdfGenerator {
               child: pw.ClipRRect(
                 horizontalRadius: 5.0,
                 verticalRadius: 5.0,
-                child: pw.Image.provider(
+                child: pw.Image(
                   pw.MemoryImage(await imageConverter(photos[1])),
                   fit: pw.BoxFit.cover,
                   height: 100,
@@ -301,7 +302,7 @@ class PdfGenerator {
               child: pw.ClipRRect(
                 horizontalRadius: 5.0,
                 verticalRadius: 5.0,
-                child: pw.Image.provider(
+                child: pw.Image(
                   pw.MemoryImage(await imageConverter(photos[2])),
                   fit: pw.BoxFit.cover,
                   height: 100,
@@ -322,7 +323,7 @@ class PdfGenerator {
           child: pw.ClipRRect(
             horizontalRadius: 5.0,
             verticalRadius: 5.0,
-            child: pw.Image.provider(
+            child: pw.Image(
               pw.MemoryImage(await imageConverter(photos[3])),
               fit: pw.BoxFit.cover,
               height: 200,
@@ -342,7 +343,7 @@ class PdfGenerator {
               child: pw.ClipRRect(
                 horizontalRadius: 5.0,
                 verticalRadius: 5.0,
-                child: pw.Image.provider(
+                child: pw.Image(
                   pw.MemoryImage(await imageConverter(photos[3])),
                   fit: pw.BoxFit.cover,
                   height: 100,
@@ -356,7 +357,7 @@ class PdfGenerator {
               child: pw.ClipRRect(
                 horizontalRadius: 5.0,
                 verticalRadius: 5.0,
-                child: pw.Image.provider(
+                child: pw.Image(
                   pw.MemoryImage(await imageConverter(photos[4])),
                   fit: pw.BoxFit.cover,
                   height: 100,

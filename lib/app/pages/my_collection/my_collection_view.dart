@@ -8,7 +8,7 @@ import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 
 
 class MyCollectionPage extends View {
-  MyCollectionPage({Key key}) : super(key: key);
+  MyCollectionPage({Key? key}) : super(key: key);
 
   @override
   _MyCollectionPageState createState() => _MyCollectionPageState();

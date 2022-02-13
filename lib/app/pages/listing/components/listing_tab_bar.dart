@@ -7,14 +7,14 @@ import 'package:dazle/app/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 
 class ListingTabBar extends StatefulWidget {
-  const ListingTabBar({ Key key }) : super(key: key);
+  const ListingTabBar({ Key? key }) : super(key: key);
 
   @override
   _ListingTabBarState createState() => _ListingTabBarState();
 }
 
 class _ListingTabBarState extends State<ListingTabBar> with SingleTickerProviderStateMixin {
-  TabController _tabcontroller;
+  TabController? _tabcontroller;
 
   final List myTabs = <Widget>[
     Tab(text: 'My Listing'),
@@ -29,7 +29,7 @@ class _ListingTabBarState extends State<ListingTabBar> with SingleTickerProvider
 
   @override
   void dispose(){
-    _tabcontroller.dispose();
+    _tabcontroller!.dispose();
     super.dispose();
   }
 
@@ -44,7 +44,7 @@ class _ListingTabBarState extends State<ListingTabBar> with SingleTickerProvider
         ),
         bottom: CustomBottomTabBar(
           tabController: _tabcontroller,
-          tabs: myTabs,
+          tabs: myTabs as List<Widget>,
         ),
         automaticallyImplyLeading: false,
         backgroundColor: Colors.white,

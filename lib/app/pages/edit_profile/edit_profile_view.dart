@@ -13,10 +13,10 @@ import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 
 
 class EditProfilePage extends View {
-  final User user;
+  final User? user;
 
   EditProfilePage({
-    Key key,
+    Key? key,
     this.user
   }) : super(key: key);
 
@@ -107,8 +107,8 @@ class _EditProfilePageState extends ViewState<EditProfilePage, EditProfileContro
                       onPressed: () {
                         FocusScope.of(context).unfocus();
 
-                        if (_formKey.currentState.validate()) {
-                          _formKey.currentState.save();
+                        if (_formKey.currentState!.validate()) {
+                          _formKey.currentState!.save();
                           
                           controller.updateUser();
                         }

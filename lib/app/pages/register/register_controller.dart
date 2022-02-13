@@ -18,7 +18,7 @@ class RegisterController extends Controller {
   final TextEditingController firstNameTextController;
   final TextEditingController lastNameTextController;
   final TextEditingController mobileNumberTextController;
-  String position;
+  String? position;
   final TextEditingController brokerLicenseNumberTextController;
 
   String brokerLicenseNumberTextField;
@@ -122,7 +122,7 @@ class RegisterController extends Controller {
       print('check license number on next $res');
       isBroker = res;
       if (!isBroker) {
-          final bool _done = await Navigator.push(
+          final bool? _done = await Navigator.push(
             getContext(),
             MaterialPageRoute(
               builder: (buildContext) => NotifyUserPage()
@@ -203,7 +203,7 @@ class RegisterController extends Controller {
     );
   }
 
-  _statusDialog(String title, String text, {bool success, Function onPressed}){
+  _statusDialog(String title, String text, {bool? success, Function? onPressed}){
     AppConstant.statusDialog(
       context: getContext(),
       success: success ?? false,

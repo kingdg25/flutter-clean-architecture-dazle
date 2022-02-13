@@ -79,7 +79,7 @@ class InvitesController extends Controller {
     };
   }
 
-  void getInvites({String filterByName}) {
+  void getInvites({String? filterByName}) {
     invitesPresenter.readInvites(filterByName: filterByName);
   }
 

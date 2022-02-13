@@ -12,7 +12,7 @@ import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 
 
 class ConnectionPage extends View {
-  ConnectionPage({Key key}) : super(key: key);
+  ConnectionPage({Key? key}) : super(key: key);
 
   @override
   _ConnectionPageState createState() => _ConnectionPageState();
@@ -38,7 +38,7 @@ class _ConnectionPageState extends ViewState<ConnectionPage, ConnectionControlle
       backgroundColor: Colors.white,
       body: ControlledWidgetBuilder<ConnectionController>(
         builder: (context, controller) {
-          User user = controller.user;
+          User? user = controller.user;
 
           return (user != null && user.position == "Broker") ?
           ListView(

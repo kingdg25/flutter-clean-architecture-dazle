@@ -2,13 +2,13 @@ import 'package:dazle/app/utils/app.dart';
 import 'package:flutter/material.dart';
 
 class CustomBottomTabBar extends StatefulWidget implements PreferredSizeWidget {
-  final TabController tabController;
+  final TabController? tabController;
   final List<Widget> tabs;
 
   CustomBottomTabBar({
-    Key key,
-    @required this.tabController,
-    @required this.tabs
+    Key? key,
+    required this.tabController,
+    required this.tabs
   }) : preferredSize = Size.fromHeight(40.0), super(key: key);
 
   @override

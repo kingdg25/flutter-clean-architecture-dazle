@@ -2,9 +2,9 @@ import 'package:dazle/domain/usecases/settings/logout_user_usecase.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 
 class SettingsPresenter extends Presenter {
-  Function logoutUserOnNext;
-  Function logoutUserOnComplete;
-  Function logoutUserOnError;
+  Function? logoutUserOnNext;
+  Function? logoutUserOnComplete;
+  Function? logoutUserOnError;
 
   final LogoutUserUseCase logoutUserUseCase;
 
@@ -28,13 +28,13 @@ class _LogoutUserUseCaseObserver extends Observer<LogoutUserUseCaseResponse> {
   @override
   void onComplete() {
     assert(presenter.logoutUserOnComplete != null);
-    presenter.logoutUserOnComplete();
+    presenter.logoutUserOnComplete!();
   }
 
   @override
   void onError(e) {
     assert(presenter.logoutUserOnError != null);
-    presenter.logoutUserOnError(e);
+    presenter.logoutUserOnError!(e);
   }
 
   @override

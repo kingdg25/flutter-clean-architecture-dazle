@@ -7,7 +7,7 @@ import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 
 
 class ListingPage extends View {
-  ListingPage({Key key}) : super(key: key);
+  ListingPage({Key? key}) : super(key: key);
 
   @override
   _ListingPageState createState() => _ListingPageState();

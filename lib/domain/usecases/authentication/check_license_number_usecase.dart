@@ -10,12 +10,12 @@ class CheckLicenseNumberUseCase extends UseCase<CheckLicenseNumberUseCaseRespons
 
 
   @override
-  Future<Stream<CheckLicenseNumberUseCaseResponse>> buildUseCaseStream(CheckLicenseNumberUseCaseParams params) async {
+  Future<Stream<CheckLicenseNumberUseCaseResponse>> buildUseCaseStream(CheckLicenseNumberUseCaseParams? params) async {
     final controller = StreamController<CheckLicenseNumberUseCaseResponse>();
     
     try {
-      bool check = await dataAuthenticationRepository.checkLicenseNumber(
-        brokerLicenseNumber: params.licenseNumber
+      bool? check = await dataAuthenticationRepository.checkLicenseNumber(
+        brokerLicenseNumber: params!.licenseNumber
       );
       controller.add(CheckLicenseNumberUseCaseResponse(check));
 
@@ -36,11 +36,11 @@ class CheckLicenseNumberUseCase extends UseCase<CheckLicenseNumberUseCaseRespons
 
 
 class CheckLicenseNumberUseCaseParams {
-  final String licenseNumber;
+  final String? licenseNumber;
   CheckLicenseNumberUseCaseParams(this.licenseNumber);
 }
 
 class CheckLicenseNumberUseCaseResponse {
-  final bool check;
+  final bool? check;
   CheckLicenseNumberUseCaseResponse(this.check);
 }

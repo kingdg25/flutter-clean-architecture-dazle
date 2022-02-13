@@ -10,7 +10,7 @@ import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 
 
 class ForgotPasswordPage extends View {
-  ForgotPasswordPage({ Key key }) : super(key: key);
+  ForgotPasswordPage({ Key? key }) : super(key: key);
 
   @override
   _ForgotPasswordPageState createState() => _ForgotPasswordPageState();

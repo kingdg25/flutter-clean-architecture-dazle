@@ -9,8 +9,8 @@ import 'package:http/http.dart' as http;
 import 'dart:typed_data';
 
 class DataListingRepository extends ListingRepository {
-  List<Property> myListing;
-  List<Property> myCollection;
+  List<Property>? myListing;
+  List<Property>? myCollection;
   final double maxFileSize = 5.0;
 
   static DataListingRepository _instance = DataListingRepository._internal();
@@ -21,10 +21,10 @@ class DataListingRepository extends ListingRepository {
   factory DataListingRepository() => _instance;
 
   @override
-  Future<Property> create({Map listing}) async {
+  Future<Property> create({Map? listing}) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    List imageUrls = await _getFileUrls(assetsBase64: listing['assets']);
+    List imageUrls = await _getFileUrls(assetsBase64: listing!['assets']);
 
     listing['photos'] = imageUrls;
     listing.remove("assets");
@@ -57,7 +57,7 @@ class DataListingRepository extends ListingRepository {
         print(property['createdAt'].runtimeType);
         print(property['createdAt']);
 
-        final Property propertyInstance = Property.fromJson(property);
+        final Property propertyInstance = Property.fromJson(property as Map<String, dynamic>);
 
         print(propertyInstance.toJson());
 
@@ -256,11 +256,11 @@ class DataListingRepository extends ListingRepository {
     ];
   }
 
-  Future<List<String>> _getFileUrls({List assetsBase64}) async {
-    List<String> urls = [];
+  Future<List<String?>> _getFileUrls({required List assetsBase64}) async {
+    List<String?> urls = [];
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    await Future.forEach(assetsBase64, (d) async {
+    await Future.forEach(assetsBase64, (dynamic d) async {
       _checkFileSize(base64: d['image'], fileName: d['name']);
       var response = await http.post(
           Uri.parse("${Constants.siteURL}/api/s3/upload-file-from-base64"),
@@ -285,7 +285,7 @@ class DataListingRepository extends ListingRepository {
     return urls;
   }
 
-  void _checkFileSize({String base64, String fileName}) {
+  void _checkFileSize({required String base64, String? fileName}) {
     Uint8List bytes = convert.base64Decode(base64);
     double sizeInMB = bytes.length / 1000000;
     print(maxFileSize);
@@ -300,10 +300,10 @@ class DataListingRepository extends ListingRepository {
   }
 
   @override
-  Future<Property> update({Map data}) async {
+  Future<Property> update({Map? data}) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final userToken = prefs.getString("accessToken");
-    final listingId = data['id'];
+    final listingId = data!['id'];
     Map params = {"data": data};
     var response = await http.put(
         Uri.parse("${Constants.siteURL}/api/listings/update-listing/$listingId"),
@@ -327,7 +327,7 @@ class DataListingRepository extends ListingRepository {
       final Map property = jsonResponse["listing"];
       property['price'] = jsonResponse["listing"]['price'].toString();
 
-      final Property propertyInstance = Property.fromJson(property);
+      final Property propertyInstance = Property.fromJson(property as Map<String, dynamic>);
 
       return propertyInstance;
     } else {

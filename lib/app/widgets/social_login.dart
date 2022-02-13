@@ -4,30 +4,30 @@ import 'dart:io' show Platform;
 class SocialLogin extends StatelessWidget {
   final Function facebookHandleSignIn;
   final Function googleHandleSignIn;
-  final Function appleHandleSignIn;
+  final Function? appleHandleSignIn;
 
   SocialLogin({
-    @required this.facebookHandleSignIn, 
-    @required this.googleHandleSignIn, 
-    @required this.appleHandleSignIn
+    required this.facebookHandleSignIn, 
+    required this.googleHandleSignIn, 
+    required this.appleHandleSignIn
   });
 
 
   Widget brookySocialButton({
-    String text,
+    String? text,
     Color textColor = Colors.black,
-    Color backgroundColor = Colors.white,
-    Border border,
-    @required AssetImage image,
+    Color? backgroundColor = Colors.white,
+    Border? border,
+    required AssetImage image,
     double imageHeight = 25.0,
     double imageWidth = 25.0,
-    @required Function onPressed
+    required Function? onPressed
   }){
 
     return Tooltip(
       message: text ?? '',
       child: GestureDetector(
-        onTap: onPressed,
+        onTap: onPressed as void Function()?,
         child: Container(
           width: 50,
           height: 50,
@@ -52,7 +52,7 @@ class SocialLogin extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
+      children: true ? <Widget>[] : <Widget>[
         /** ===============================    LOGIN WITH APPLE           ============================================ */
         Platform.isIOS ?
         brookySocialButton(
@@ -61,7 +61,7 @@ class SocialLogin extends StatelessWidget {
           backgroundColor: Colors.black,
           image: AssetImage(
             "graphics/apple_logo_white.png",
-            package: "flutter_auth_buttons",
+            // package: "flutter_auth_buttons",
           ),
           onPressed: appleHandleSignIn,
         ) : Container(),
@@ -73,7 +73,7 @@ class SocialLogin extends StatelessWidget {
           textColor: Colors.white,
           image: AssetImage(
             "graphics/flogo-HexRBG-Wht-100.png",
-            package: "flutter_auth_buttons",
+            // package: "flutter_auth_buttons",
           ),
           onPressed: facebookHandleSignIn,
         ),
@@ -86,7 +86,7 @@ class SocialLogin extends StatelessWidget {
             package: "flutter_auth_buttons",
           ),
           border: Border.all(
-            color: Colors.grey[300]
+            color: Colors.grey[300]!
           ),
           onPressed: googleHandleSignIn,
         ),

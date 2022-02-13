@@ -1,14 +1,14 @@
 class User {
-  final String aboutMe;
-  final String position;
-  final String brokerLicenseNumber;
-  final String mobileNumber;
-  final bool isNewUser;
-  final String firstName;
-  final String lastName;
-  final String email;
-  final bool emailVerified;
-  final String id;
+  final String? aboutMe;
+  final String? position;
+  final String? brokerLicenseNumber;
+  final String? mobileNumber;
+  final bool? isNewUser;
+  final String? firstName;
+  final String? lastName;
+  final String? email;
+  final bool? emailVerified;
+  final String? id;
 
   String get displayName {
     return "$firstName $lastName";
@@ -53,9 +53,9 @@ class User {
 }
 
 class Verification {
-  final String user_id;
-  final String status;
-  final String attachment;
+  final String? user_id;
+  final String? status;
+  final String? attachment;
 
   Verification({this.user_id, this.status, this.attachment});
 

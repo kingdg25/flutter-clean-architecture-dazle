@@ -8,7 +8,7 @@ class GetNewHomesUseCase extends UseCase<GetNewHomesUseCaseResponse, GetNewHomes
   GetNewHomesUseCase(this.dataHomeRepository);
 
   @override
-  Future<Stream<GetNewHomesUseCaseResponse>> buildUseCaseStream(GetNewHomesUseCaseParams params) async {
+  Future<Stream<GetNewHomesUseCaseResponse>> buildUseCaseStream(GetNewHomesUseCaseParams? params) async {
     final controller = StreamController<GetNewHomesUseCaseResponse>();
     
     try {

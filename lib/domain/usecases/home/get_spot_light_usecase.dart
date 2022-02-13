@@ -8,7 +8,7 @@ class GetSpotLightUseCase extends UseCase<GetSpotLightUseCaseResponse, GetSpotLi
   GetSpotLightUseCase(this.dataHomeRepository);
 
   @override
-  Future<Stream<GetSpotLightUseCaseResponse>> buildUseCaseStream(GetSpotLightUseCaseParams params) async {
+  Future<Stream<GetSpotLightUseCaseResponse>> buildUseCaseStream(GetSpotLightUseCaseParams? params) async {
     final controller = StreamController<GetSpotLightUseCaseResponse>();
     
     try {

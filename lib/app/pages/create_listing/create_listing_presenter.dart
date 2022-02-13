@@ -4,13 +4,13 @@ import 'package:dazle/domain/usecases/listing/update_listing_usecase.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 
 class CreateListingPresenter extends Presenter {
-  Function createListingOnNext;
-  Function createListingOnComplete;
-  Function createListingOnError;
+  Function? createListingOnNext;
+  Function? createListingOnComplete;
+  Function? createListingOnError;
 
-  Function updateListingOnNext;
-  Function updateListingOnComplete;
-  Function updateListingOnError;
+  Function? updateListingOnNext;
+  Function? updateListingOnComplete;
+  Function? updateListingOnError;
 
   final CreateListingUseCase createListingUseCase;
   final UpdateListingUseCase updateListingUseCase;
@@ -20,7 +20,7 @@ class CreateListingPresenter extends Presenter {
       updateListingUseCase = UpdateListingUseCase(userRepo);
 
   
-  void createListing({Map listing}){
+  void createListing({Map? listing}){
     createListingUseCase.execute(_CreateListingUseCaseObserver(this), CreateListingUseCaseParams(listing));
   }
 
@@ -46,19 +46,19 @@ class _CreateListingUseCaseObserver extends Observer<CreateListingUseCaseRespons
   @override
   void onComplete() {
     assert(presenter.createListingOnComplete != null);
-    presenter.createListingOnComplete();
+    presenter.createListingOnComplete!();
   }
 
   @override
   void onError(e) {
     assert(presenter.createListingOnError != null);
-    presenter.createListingOnError(e);
+    presenter.createListingOnError!(e);
   }
 
   @override
   void onNext(response) {
     assert(presenter.createListingOnNext !=null);
-    presenter.createListingOnNext(response.listing);
+    presenter.createListingOnNext!(response!.listing);
   }
 }
 
@@ -68,18 +68,18 @@ class _UpdateListingUseCaseObserver extends Observer<UpdateListingUseCaseRespons
   @override
   void onComplete() {
     assert(presenter.updateListingOnComplete != null);
-    presenter.updateListingOnComplete();
+    presenter.updateListingOnComplete!();
   }
 
   @override
   void onError(e) {
     assert(presenter.updateListingOnError != null);
-    presenter.updateListingOnError(e);
+    presenter.updateListingOnError!(e);
   }
 
   @override
   void onNext(response) {
     assert(presenter.updateListingOnNext !=null);
-    presenter.updateListingOnNext(response.listing);
+    presenter.updateListingOnNext!(response!.listing);
   }
 }

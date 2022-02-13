@@ -6,15 +6,15 @@ import 'package:flutter/material.dart';
 
 class HeaderHomeTile extends StatelessWidget {
   final Widget child;
-  final String title;
-  final String subTitle;
-  final Function viewAllOnTap;
+  final String? title;
+  final String? subTitle;
+  final Function? viewAllOnTap;
 
 
   HeaderHomeTile({
-    @required this.child,
-    @required this.title,
-    @required this.subTitle,
+    required this.child,
+    required this.title,
+    required this.subTitle,
     this.viewAllOnTap
   });
 

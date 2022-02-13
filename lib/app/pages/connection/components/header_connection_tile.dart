@@ -4,11 +4,11 @@ import 'package:flutter/material.dart';
 
 class HeaderConnectionTile extends StatelessWidget {
   final String text;
-  final Function onTap;
+  final Function? onTap;
 
 
   HeaderConnectionTile({
-    @required this.text,
+    required this.text,
     this.onTap
   });
 
@@ -35,7 +35,7 @@ class HeaderConnectionTile extends StatelessWidget {
           size: 22,
           color: App.textColor,
         ),
-        onTap: onTap,
+        onTap: onTap as void Function()?,
       ),
     );
   }

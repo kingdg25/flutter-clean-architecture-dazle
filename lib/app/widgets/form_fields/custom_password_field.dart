@@ -3,15 +3,15 @@ import 'package:dazle/app/widgets/form_fields/custom_field_layout.dart';
 import 'package:flutter/material.dart';
 
 class CustomPasswordField extends StatefulWidget {
-  final String hintText;
+  final String? hintText;
   final Color hintColor;
   
-  final TextEditingController controller;
+  final TextEditingController? controller;
   
   final TextInputType keyboardType;
   final double fontSize;
 
-  final Function onSaved;
+  final Function? onSaved;
 
   final Color fillColor;
   final bool filled;
@@ -42,9 +42,9 @@ class _CustomPasswordFieldState extends State<CustomPasswordField> {
       child: TextFormField(
         controller: widget.controller,
         obscureText: _obscureText,
-        onSaved: widget.onSaved,
+        onSaved: widget.onSaved as void Function(String?)?,
         validator: (val) {
-          if (val.length == 0){
+          if (val!.length == 0){
             return "Required field.";
           }
           else if (val.length < 8) {

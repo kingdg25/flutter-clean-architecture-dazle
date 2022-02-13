@@ -13,7 +13,7 @@ import 'package:dazle/app/pages/home/home_controller.dart';
 import 'package:dazle/app/pages/listing_details/listing_details_view.dart';
 
 class HomePage extends View {
-  HomePage({Key key}) : super(key: key);
+  HomePage({Key? key}) : super(key: key);
 
   @override
   _HomePageState createState() => _HomePageState();
@@ -82,7 +82,7 @@ class _HomePageState extends ViewState<HomePage, HomeController> {
                     left: 1,
                     right: 1,
                     child: CustomSearchField(
-                      // controller: controller.searchTextController,
+                      controller: controller.searchTextController,
                       hintText: 'Building, Neighboorhood, City',
                       iconData: Icons.contacts_outlined,
                       borderRadius: 10.0,
@@ -101,7 +101,7 @@ class _HomePageState extends ViewState<HomePage, HomeController> {
                         // controller.searchUser();
                       },
                       suggestionsCallback: (pattern) async {
-                        return null;
+                        return [];
                       },
                       onSuggestionSelected: (suggestion) {
                         // controller.searchTextController.text = suggestion;

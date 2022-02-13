@@ -14,7 +14,7 @@ import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 
 
 class NotifyUserPage extends View {
-  NotifyUserPage({Key key}) : super(key: key);
+  NotifyUserPage({Key? key}) : super(key: key);
 
   @override
   _NotifyUserPageState createState() => _NotifyUserPageState();
@@ -96,8 +96,8 @@ class _NotifyUserPageState extends ViewState<NotifyUserPage, NotifyUserControlle
                           onPressed: () {
                             FocusScope.of(context).unfocus();
 
-                            if (_formKey.currentState.validate()) {
-                              _formKey.currentState.save();
+                            if (_formKey.currentState!.validate()) {
+                              _formKey.currentState!.save();
                               
                               controller.notifyUser();
                             }

@@ -1,35 +1,40 @@
+import 'package:intl/intl.dart';
+
 class Property {
-  final String coverPhoto;
-  final List photos;
-  final List amenities;
-  final List keywords;
+  final String? coverPhoto;
+  final List? photos;
+  final List? amenities;
+  final List? keywords;
 
-  final String propertyType;
-  final String propertyFor;
-  final String price;
+  final String? propertyType;
+  final String? propertyFor;
+  final String? price;
 
-  final String timePeriod;
-  final String totalBedRoom;
-  final String totalBathRoom;
-  final String totalParkingSpace;
-  final String totalArea;
+  final String? timePeriod;
+  final String? totalBedRoom;
+  final String? totalBathRoom;
+  final String? totalParkingSpace;
+  final String? totalArea;
   /// furnished or unfurnished
-  final String isYourProperty;
-  final String district;
-  final String street;
-  final String landmark;
-  final String city;
-  final String description;
-  final String createdBy;
-  final String createdAt;
-  final String updatedAt;
-  final String viewType;
-  final String id;
+  final String? isYourProperty;
+  final String? district;
+  final String? street;
+  final String? landmark;
+  final String? city;
+  final String? description;
+  final String? createdBy;
+  final String? createdAt;
+  final String? updatedAt;
+  final String? viewType;
+  final String? id;
 
-  String get keywordsToString{
+  NumberFormat numberFormat = NumberFormat('##,###.00');
+
+  String? get keywordsToString{
     return keywords?.join(" • ");
   }
 
+  String get formatPrice => numberFormat.format(double.parse(price ?? "0"));
 
   Property({
     this.coverPhoto,

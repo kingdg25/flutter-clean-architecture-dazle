@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 
 class ResetPassword extends StatelessWidget {
-  const ResetPassword({Key key}) : super(key: key);
+  const ResetPassword({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -62,8 +62,8 @@ class ResetPassword extends StatelessWidget {
                 onPressed: () {
                   FocusScope.of(context).unfocus();
 
-                  if (_formKey.currentState.validate()) {
-                    _formKey.currentState.save();
+                  if (_formKey.currentState!.validate()) {
+                    _formKey.currentState!.save();
                     
                     controller.resetPassword();
                   }

@@ -6,19 +6,19 @@ import 'package:flutter/material.dart';
 import 'package:wechat_assets_picker/wechat_assets_picker.dart';
 
 class CustomUploadField extends StatefulWidget {
-  final String text;
+  final String? text;
 
   /// default selected list of assets
-  final List<AssetEntity> defaultSelected;
+  final List<AssetEntity>? defaultSelected;
 
   /// on change value for asset image.
   final ValueChanged onAssetValue;
 
   const CustomUploadField({
-    Key key,
+    Key? key,
     this.text,
-    @required this.onAssetValue,
-    @required this.defaultSelected
+    required this.onAssetValue,
+    this.defaultSelected
   }) : super(key: key);
 
   @override
@@ -79,13 +79,13 @@ class _CustomUploadFieldState extends State<CustomUploadField> {
               itemBuilder: (context, index) {
                 return ClipRRect(
                   borderRadius: BorderRadius.circular(5),
-                  child: FutureBuilder(
+                  child: FutureBuilder<dynamic>(
                     future: selectedAssets[index].thumbDataWithSize(200, 200, format: ThumbFormat.png),
                     builder: (BuildContext context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.done){
                         return Stack(
-                          overflow: Overflow.visible,
-                          children: [
+                          // TODO: recheck changes in here
+                          clipBehavior: Clip.none, children: [
                             Positioned.fill(
                               child: Image.memory(
                                 snapshot.data,

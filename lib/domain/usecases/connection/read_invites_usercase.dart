@@ -10,14 +10,14 @@ class ReadInvitesUseCase extends UseCase<ReadInvitesUseCaseResponse, ReadInvites
   ReadInvitesUseCase(this.dataConnectionRepository);
 
   @override
-  Future<Stream<ReadInvitesUseCaseResponse>> buildUseCaseStream(ReadInvitesUseCaseParams params) async {
+  Future<Stream<ReadInvitesUseCaseResponse>> buildUseCaseStream(ReadInvitesUseCaseParams? params) async {
     final controller = StreamController<ReadInvitesUseCaseResponse>();
     
     try {
       // read invites
       User user = await App.getUser();
       if (user != null) {
-        final invites = await dataConnectionRepository.readInvites(email: user.email, filterByName: params.filterByName);
+        final invites = await dataConnectionRepository.readInvites(email: user.email, filterByName: params!.filterByName);
         controller.add(ReadInvitesUseCaseResponse(invites));
         logger.finest('Read Invites successful.');
       }
@@ -40,11 +40,11 @@ class ReadInvitesUseCase extends UseCase<ReadInvitesUseCaseResponse, ReadInvites
 
 
 class ReadInvitesUseCaseParams {
-  final String filterByName;
+  final String? filterByName;
   ReadInvitesUseCaseParams(this.filterByName);
 }
 
 class ReadInvitesUseCaseResponse {
-  List<InviteTile> invites;
+  List<InviteTile>? invites;
   ReadInvitesUseCaseResponse(this.invites);
 }

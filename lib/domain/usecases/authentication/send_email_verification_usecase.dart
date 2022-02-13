@@ -10,7 +10,7 @@ class SendEmailVerificationUseCase extends UseCase<void, SendEmailVerificationUs
 
 
   @override
-  Future<Stream<void>> buildUseCaseStream(SendEmailVerificationUseCaseParams params) async {
+  Future<Stream<void>> buildUseCaseStream(SendEmailVerificationUseCaseParams? params) async {
     final controller = StreamController<void>();
     
     try {

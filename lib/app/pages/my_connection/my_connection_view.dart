@@ -10,7 +10,7 @@ import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 
 
 class MyConnectionPage extends View {
-  MyConnectionPage({Key key}) : super(key: key);
+  MyConnectionPage({Key? key}) : super(key: key);
 
   @override
   _MyConnectionPageState createState() => _MyConnectionPageState();
@@ -43,7 +43,7 @@ class _MyConnectionPageState extends ViewState<MyConnectionPage, MyConnectionCon
                     controller.searchUser();
                   },
                   suggestionsCallback: (pattern) async {
-                    return null;
+                    return [];
                   },
                   onSuggestionSelected: (suggestion) {
                     controller.searchTextController.text = suggestion;

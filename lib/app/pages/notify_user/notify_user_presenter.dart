@@ -2,16 +2,16 @@ import 'package:dazle/domain/usecases/connection/notify_user_usecase.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 
 class NotifyUserPresenter extends Presenter {
-  Function notifyUserOnNext;
-  Function notifyUserOnComplete;
-  Function notifyUserOnError;
+  Function? notifyUserOnNext;
+  Function? notifyUserOnComplete;
+  Function? notifyUserOnError;
 
   final NotifyUserUseCase notifyUserUseCase;
 
   NotifyUserPresenter(userRepo)
     : notifyUserUseCase = NotifyUserUseCase(userRepo);
 
-  void notifyUser({String email, String mobileNumber}){
+  void notifyUser({String? email, String? mobileNumber}){
     notifyUserUseCase.execute(_NotifyUserUseCaseObserver(this), NotifyUserUseCaseParams(email, mobileNumber));
   }
   
@@ -29,13 +29,13 @@ class _NotifyUserUseCaseObserver extends Observer<void> {
   @override
   void onComplete() {
     assert(presenter.notifyUserOnComplete != null);
-    presenter.notifyUserOnComplete();
+    presenter.notifyUserOnComplete!();
   }
 
   @override
   void onError(e) {
     assert(presenter.notifyUserOnError != null);
-    presenter.notifyUserOnError(e);
+    presenter.notifyUserOnError!(e);
   }
 
   @override

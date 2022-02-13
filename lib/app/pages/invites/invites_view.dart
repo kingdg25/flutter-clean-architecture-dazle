@@ -10,7 +10,7 @@ import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 
 
 class InvitesPage extends View {
-  InvitesPage({Key key}) : super(key: key);
+  InvitesPage({Key? key}) : super(key: key);
 
   @override
   _InvitesPageState createState() => _InvitesPageState();
@@ -47,7 +47,7 @@ class _InvitesPageState extends ViewState<InvitesPage, InvitesController> {
                   suggestionsCallback: (pattern) async {
                     print('suggestionsCallback $pattern');
 
-                    return null;
+                    return [];
                   },
                   onSuggestionSelected: (suggestion) {
                     controller.searchTextController.text = suggestion;

@@ -1,31 +1,33 @@
+import 'dart:async';
+
 import 'package:dazle/app/utils/app.dart';
 import 'package:dazle/app/widgets/form_fields/custom_field_layout.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 
 class CustomSearchField extends StatelessWidget {
-  final String hintText;
+  final String? hintText;
   final Color hintColor;
-  final TextEditingController controller;
+  final TextEditingController? controller;
 
-  final Function onChanged;
-  final Function onTap;
-  final Function suggestionsCallback;
-  final Function onSuggestionSelected;
-  final Function onSubmitted;
+  final Function? onChanged;
+  final Function? onTap;
+  final Function? suggestionsCallback;
+  final Function? onSuggestionSelected;
+  final Function? onSubmitted;
 
-  final Function onPressedButton;
-  final IconData iconData;
+  final Function? onPressedButton;
+  final IconData? iconData;
   final double borderRadius;
 
   final bool filled;
-  final Color fillColor;
-  final InputBorder enabledBorder;
-  final InputBorder focusedBorder;
+  final Color? fillColor;
+  final InputBorder? enabledBorder;
+  final InputBorder? focusedBorder;
 
   final bool withIcon;
   final bool isAssetIcon;
-  final String asset;
+  final String? asset;
 
   final EdgeInsets padding;
   
@@ -62,16 +64,16 @@ class CustomSearchField extends StatelessWidget {
               child: TypeAheadFormField(
                 textFieldConfiguration: TextFieldConfiguration(
                   controller: controller,
-                  onChanged: onChanged,
+                  onChanged: onChanged as void Function(String)?,
                   onSubmitted: (value) {
                     FocusScope.of(context).unfocus();
 
-                    onSubmitted(value);
+                    onSubmitted!(value);
                   },
                   onEditingComplete: () {
                     print('onEditingComplete 12312');
                   },
-                  onTap: onTap,
+                  onTap: onTap as void Function()?,
                   decoration: InputDecoration(
                     prefixIcon: Icon(Icons.search),
                     border: OutlineInputBorder(
@@ -89,8 +91,8 @@ class CustomSearchField extends StatelessWidget {
                     focusedBorder: focusedBorder,
                   ),
                 ),
-                suggestionsCallback: suggestionsCallback,
-                itemBuilder: (context, suggestion) {
+                suggestionsCallback: suggestionsCallback as Future<List<dynamic>> Function(String),
+                itemBuilder: (context, dynamic suggestion) {
                   return ListTile(
                     title: Text(suggestion),
                   );
@@ -109,12 +111,12 @@ class CustomSearchField extends StatelessWidget {
                   return FadeTransition(
                     child: suggestionsBox,
                     opacity: CurvedAnimation(
-                      parent: controller,
+                      parent: controller!,
                       curve: Curves.fastOutSlowIn
                     ),
                   );
                 },
-                onSuggestionSelected: onSuggestionSelected,
+                onSuggestionSelected: onSuggestionSelected as void Function(dynamic),
                 validator: (value) {
                   return null;
                 },
@@ -127,13 +129,13 @@ class CustomSearchField extends StatelessWidget {
             withIcon ? ClipRRect(
               borderRadius: BorderRadius.circular(20),
               child: MaterialButton(
-                onPressed: onPressedButton,
+                onPressed: onPressedButton as void Function()?,
                 minWidth: 0,
                 height: 0,
                 padding: EdgeInsets.zero,
                 materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                 child: isAssetIcon ? Image.asset(
-                  asset,
+                  asset!,
                   width: 70,
                   height: 70,
                   

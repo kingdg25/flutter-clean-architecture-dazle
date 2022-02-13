@@ -10,7 +10,7 @@ class IsAuthenticatedUseCase extends UseCase<IsAuthenticatedUseCaseResponse, IsA
 
 
   @override
-  Future<Stream<IsAuthenticatedUseCaseResponse>> buildUseCaseStream(IsAuthenticatedUseCaseParams params) async {
+  Future<Stream<IsAuthenticatedUseCaseResponse>> buildUseCaseStream(IsAuthenticatedUseCaseParams? params) async {
     final controller = StreamController<IsAuthenticatedUseCaseResponse>();
     
     try {

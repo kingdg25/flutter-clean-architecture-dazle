@@ -14,15 +14,15 @@ class ProfileController extends Controller {
 
 
   final uidToDisplay;
-  User _currentUser;
-  User _userToDisplay;
-  List<Property> _listings;
+  User? _currentUser;
+  User? _userToDisplay;
+  List<Property>? _listings;
 
-  User get currentUser => _currentUser;
-  User get userToDisplay => _userToDisplay;
-  List<Property> get listings => _listings;
+  User? get currentUser => _currentUser;
+  User? get userToDisplay => _userToDisplay;
+  List<Property>? get listings => _listings;
 
-  ProfileController({DataProfileRepository dataProfileRepo, this.uidToDisplay})
+  ProfileController({DataProfileRepository? dataProfileRepo, this.uidToDisplay})
     : profilePresenter = ProfilePresenter(),
       super();
 
@@ -67,7 +67,7 @@ class ProfileController extends Controller {
   }
 
   getListings() async {
-    profilePresenter.getUserListing(this._userToDisplay.id);
+    profilePresenter.getUserListing(this._userToDisplay!.id);
   }
   
   @override

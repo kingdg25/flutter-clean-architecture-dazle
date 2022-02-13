@@ -17,7 +17,7 @@ import 'package:dazle/data/repositories/data_authentication_repository.dart';
 class LoginPage extends View {
   static const String id = 'login_page';
 
-  LoginPage({Key key}) : super(key: key);
+  LoginPage({Key? key}) : super(key: key);
 
   @override
   _LoginPageState createState() => _LoginPageState();
@@ -105,8 +105,8 @@ class _LoginPageState extends ViewState<LoginPage, LoginController> {
                       onPressed: () {
                         FocusScope.of(context).unfocus();
 
-                        if (_formKey.currentState.validate()) {
-                          _formKey.currentState.save();
+                        if (_formKey.currentState!.validate()) {
+                          _formKey.currentState!.save();
                           controller.login();
                         }
                       }

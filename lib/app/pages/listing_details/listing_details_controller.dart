@@ -12,9 +12,9 @@ class ListingDetailsController extends Controller {
     : listingDetailsPresenter = ListingDetailsPresenter(),
       super();
 
-  User _currentUser;
+  User? _currentUser;
 
-  User get currentUser => _currentUser;
+  User? get currentUser => _currentUser;
 
   @override
   void initListeners() async {

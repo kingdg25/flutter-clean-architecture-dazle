@@ -10,14 +10,14 @@ class AddConnectionUseCase extends UseCase<AddConnectionUseCaseResponse, AddConn
   AddConnectionUseCase(this.dataConnectionRepository);
 
   @override
-  Future<Stream<AddConnectionUseCaseResponse>> buildUseCaseStream(AddConnectionUseCaseParams params) async {
+  Future<Stream<AddConnectionUseCaseResponse>> buildUseCaseStream(AddConnectionUseCaseParams? params) async {
     final controller = StreamController<AddConnectionUseCaseResponse>();
 
     try {
       // add connection
       User user = await App.getUser();
       if (user != null) {
-        await dataConnectionRepository.addConnection(userId: user.id, invitedId: params.invitedId);
+        await dataConnectionRepository.addConnection(userId: user.id, invitedId: params!.invitedId);
         logger.finest('Add Connection successful.');
       }
       else {
@@ -40,7 +40,7 @@ class AddConnectionUseCase extends UseCase<AddConnectionUseCaseResponse, AddConn
 
 
 class AddConnectionUseCaseParams {
-  final String invitedId;
+  final String? invitedId;
   AddConnectionUseCaseParams(this.invitedId);
 }
 

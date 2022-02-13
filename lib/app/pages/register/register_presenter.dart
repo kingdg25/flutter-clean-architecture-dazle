@@ -3,13 +3,13 @@ import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:dazle/domain/usecases/authentication/register_user_usecase.dart';
 
 class RegisterPresenter extends Presenter {
-  Function registerUserOnNext;
-  Function registerUserOnComplete;
-  Function registerUserOnError;
+  Function? registerUserOnNext;
+  Function? registerUserOnComplete;
+  Function? registerUserOnError;
 
-  Function checkLicenseNumberOnNext;
-  Function checkLicenseNumberOnComplete;
-  Function checkLicenseNumberOnError;
+  Function? checkLicenseNumberOnNext;
+  Function? checkLicenseNumberOnComplete;
+  Function? checkLicenseNumberOnError;
 
   final RegisterUserUseCase registerUserUseCase;
   final CheckLicenseNumberUseCase checkLicenseNumberUseCase;
@@ -19,13 +19,13 @@ class RegisterPresenter extends Presenter {
       checkLicenseNumberUseCase = CheckLicenseNumberUseCase(userRepo);
   
   void registerUser({
-    String firstName,
-    String lastName,
-    String mobileNumber,
-    String position,
-    String brokerLicenseNumber,
-    String email,
-    String password
+    String? firstName,
+    String? lastName,
+    String? mobileNumber,
+    String? position,
+    String? brokerLicenseNumber,
+    String? email,
+    String? password
   }) {
     registerUserUseCase.execute(_RegisterUserUseCaseObserver(this), RegisterUserUseCaseParams(
       firstName,
@@ -38,7 +38,7 @@ class RegisterPresenter extends Presenter {
     ));
   }
 
-  void checkLicenseNumber({String licenseNumber}){
+  void checkLicenseNumber({String? licenseNumber}){
     checkLicenseNumberUseCase.execute(_CheckLicenseNumberUseCaseObserver(this), CheckLicenseNumberUseCaseParams(licenseNumber));
   }
 
@@ -57,13 +57,13 @@ class _RegisterUserUseCaseObserver extends Observer<void> {
   @override
   void onComplete() {
     assert(presenter.registerUserOnComplete != null);
-    presenter.registerUserOnComplete();
+    presenter.registerUserOnComplete!();
   }
 
   @override
   void onError(e) {
     assert(presenter.registerUserOnError != null);
-    presenter.registerUserOnError(e);
+    presenter.registerUserOnError!(e);
   }
 
   @override
@@ -78,18 +78,18 @@ class _CheckLicenseNumberUseCaseObserver extends Observer<CheckLicenseNumberUseC
   @override
   void onComplete() {
     assert(presenter.checkLicenseNumberOnComplete != null);
-    presenter.checkLicenseNumberOnComplete();
+    presenter.checkLicenseNumberOnComplete!();
   }
 
   @override
   void onError(e) {
     assert(presenter.checkLicenseNumberOnError != null);
-    presenter.checkLicenseNumberOnError(e);
+    presenter.checkLicenseNumberOnError!(e);
   }
 
   @override
   void onNext(response) {
     assert(presenter.checkLicenseNumberOnNext != null);
-    presenter.checkLicenseNumberOnNext(response.check);
+    presenter.checkLicenseNumberOnNext!(response?.check);
   }
 }

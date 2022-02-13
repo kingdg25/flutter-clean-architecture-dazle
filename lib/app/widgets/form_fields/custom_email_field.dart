@@ -3,13 +3,13 @@ import 'package:dazle/app/widgets/form_fields/custom_field_layout.dart';
 import 'package:flutter/material.dart';
 
 class CustomEmailField extends StatelessWidget {
-  final String hintText;
+  final String? hintText;
   final Color hintColor;
   final double fontSize;
 
-  final TextEditingController controller;
+  final TextEditingController? controller;
   
-  final Function onSaved;
+  final Function? onSaved;
 
   final Color fillColor;
   final bool filled;
@@ -30,12 +30,12 @@ class CustomEmailField extends StatelessWidget {
     return CustomFieldLayout(
       child: TextFormField(
         controller: controller,
-        onSaved: onSaved,
+        onSaved: onSaved as void Function(String?)?,
         validator: (val) {
           Pattern emailPattern = r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
-          RegExp regex = new RegExp(emailPattern);
+          RegExp regex = new RegExp(emailPattern as String);
 
-          if (val.length == 0){
+          if (val!.length == 0){
             return "Required field.";
           }
           else if (!regex.hasMatch(val)){

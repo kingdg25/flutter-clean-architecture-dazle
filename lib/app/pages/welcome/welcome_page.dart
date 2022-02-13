@@ -12,7 +12,7 @@ import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 class WelcomePage extends View {
   static const String id = 'welcome_page';
   
-  WelcomePage({ Key key }) : super(key: key);
+  WelcomePage({ Key? key }) : super(key: key);
 
   @override
   _WelcomeScreenState createState() => _WelcomeScreenState();
@@ -56,7 +56,7 @@ class _WelcomeScreenState extends ViewState<WelcomePage, HomeController> {
                       textAlign: TextAlign.center,
                     ),
                     CustomText(
-                      text: "You’re ${controller.user.firstName}'s connection!",
+                      text: "You’re ${controller.user!.firstName}'s connection!",
                       fontSize: 20.0,
                       textAlign: TextAlign.center,
                     ),
@@ -68,7 +68,7 @@ class _WelcomeScreenState extends ViewState<WelcomePage, HomeController> {
                       ),
                     ),
                     CustomText(
-                      text: controller.user.displayName,
+                      text: controller.user!.displayName,
                       fontSize: 22.0,
                       textAlign: TextAlign.center,
                     ),

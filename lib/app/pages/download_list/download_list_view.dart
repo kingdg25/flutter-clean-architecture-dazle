@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dazle/app/pages/download_list/download_list_controller.dart';
 import 'package:dazle/app/utils/app.dart';
@@ -16,7 +18,7 @@ import './components/pdf_generator.dart';
 import 'package:share_plus/share_plus.dart';
 
 class DownloadListPage extends View {
-  DownloadListPage({Key key, @required this.property}) : super(key: key);
+  DownloadListPage({Key? key, required this.property}) : super(key: key);
   final Property property;
   @override
   _DownloadListPageState createState() => _DownloadListPageState();
@@ -34,11 +36,11 @@ class _DownloadListPageState
   Widget get view {
     String photoCounter = (_current + 1).toString().padLeft(2, '0');
     String totalPhoto =
-        widget.property.photos.length.toString().padLeft(2, '0');
+        widget.property.photos!.length.toString().padLeft(2, '0');
 
     /// Converts the list property.photos to a list of widgets to be used
     /// by the CarouselSlider widget
-    final List<Widget> imageSliders = widget.property.photos
+    final List<Widget> imageSliders = widget.property.photos!
         .map((item) => Container(
               child: Container(
                 // margin: EdgeInsets.all(5.0),
@@ -117,7 +119,7 @@ class _DownloadListPageState
                     bottom: 0,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: widget.property.photos.asMap().entries.map(
+                      children: widget.property.photos!.asMap().entries.map(
                         (entry) {
                           return GestureDetector(
                             onTap: () => _controller.animateToPage(entry.key),
@@ -213,7 +215,7 @@ class _DownloadListPageState
                 height: 10,
               ),
               Column(
-                children: widget.property.amenities.map((item) {
+                children: widget.property.amenities!.map((item) {
                   return Padding(
                     padding: const EdgeInsets.only(bottom: 10),
                     child: Row(
@@ -256,7 +258,7 @@ class _DownloadListPageState
                       onPressed: () async {
                         //* Will only works after upgrading to null safety version
                         Loader.show(context);
-                        String pdfFilePath = await PdfGenerator()
+                        String? pdfFilePath = await PdfGenerator()
                             .downloadPdf(property: widget.property);
                         Loader.hide();
                         await OpenFile.open(pdfFilePath);
@@ -273,8 +275,8 @@ class _DownloadListPageState
                       text: 'Share',
                       onPressed: () async {
                         Loader.show(context);
-                        String pdfFilePath = await PdfGenerator()
-                            .sharePdf(property: widget.property);
+                        String pdfFilePath = await (PdfGenerator()
+                            .sharePdf(property: widget.property) as FutureOr<String>);
                         Loader.hide();
                         await Share.shareFiles(
                           [pdfFilePath],

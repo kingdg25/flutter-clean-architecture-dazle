@@ -5,14 +5,14 @@ import 'package:dazle/app/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 
 class MessageTabBar extends StatefulWidget {
-  const MessageTabBar({ Key key }) : super(key: key);
+  const MessageTabBar({ Key? key }) : super(key: key);
 
   @override
   _MessageTabBarState createState() => _MessageTabBarState();
 }
 
 class _MessageTabBarState extends State<MessageTabBar> with SingleTickerProviderStateMixin {
-  TabController _tabcontroller;
+  TabController? _tabcontroller;
 
   final List myTabs = <Widget>[
     Tab(text: 'Listings'),
@@ -27,7 +27,7 @@ class _MessageTabBarState extends State<MessageTabBar> with SingleTickerProvider
 
   @override
   void dispose(){
-    _tabcontroller.dispose();
+    _tabcontroller!.dispose();
     super.dispose();
   }
 
@@ -42,7 +42,7 @@ class _MessageTabBarState extends State<MessageTabBar> with SingleTickerProvider
         ),
         bottom: CustomBottomTabBar(
           tabController: _tabcontroller,
-          tabs: myTabs,
+          tabs: myTabs as List<Widget>,
         ),
         automaticallyImplyLeading: false,
         backgroundColor: Colors.white,

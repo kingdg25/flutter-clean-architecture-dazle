@@ -9,12 +9,12 @@ class NotifyUserUseCase extends UseCase<void, NotifyUserUseCaseParams> {
   NotifyUserUseCase(this.dataConnectionRepository);
 
   @override
-  Future<Stream<void>> buildUseCaseStream(NotifyUserUseCaseParams params) async {
+  Future<Stream<void>> buildUseCaseStream(NotifyUserUseCaseParams? params) async {
     final controller = StreamController();
     
     try {
       await dataConnectionRepository.notifyUser(
-        email: params.email,
+        email: params!.email,
         mobileNumber: params.mobileNumber,
       );
       
@@ -34,8 +34,8 @@ class NotifyUserUseCase extends UseCase<void, NotifyUserUseCaseParams> {
 
 
 class NotifyUserUseCaseParams {
-  final String email;
-  final String mobileNumber;
+  final String? email;
+  final String? mobileNumber;
 
   NotifyUserUseCaseParams(
     this.email,

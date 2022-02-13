@@ -9,7 +9,7 @@ class GetMessageListingsUseCase extends UseCase<GetMessageListingsUseCaseRespons
   GetMessageListingsUseCase(this.dataMessageRepository);
 
   @override
-  Future<Stream<GetMessageListingsUseCaseResponse>> buildUseCaseStream(GetMessageListingsUseCaseParams params) async {
+  Future<Stream<GetMessageListingsUseCaseResponse>> buildUseCaseStream(GetMessageListingsUseCaseParams? params) async {
     final controller = StreamController<GetMessageListingsUseCaseResponse>();
     
     try {

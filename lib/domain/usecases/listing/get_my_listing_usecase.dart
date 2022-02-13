@@ -8,7 +8,7 @@ class GetMyListingUseCase extends UseCase<GetMyListingUseCaseResponse, GetMyList
   GetMyListingUseCase(this.dataListingRepository);
 
   @override
-  Future<Stream<GetMyListingUseCaseResponse>> buildUseCaseStream(GetMyListingUseCaseParams params) async {
+  Future<Stream<GetMyListingUseCaseResponse>> buildUseCaseStream(GetMyListingUseCaseParams? params) async {
     final controller = StreamController<GetMyListingUseCaseResponse>();
     
     try {

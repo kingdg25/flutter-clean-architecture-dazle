@@ -5,21 +5,21 @@ import 'package:flutter/material.dart';
 class CustomButtonReverse extends StatelessWidget {
   final String text;
   final Function onPressed;
-  final EdgeInsets padding;
+  final EdgeInsets? padding;
   final bool expanded;
   final bool main;
   final double fontSize;
   final double height;
-  final double width;
+  final double? width;
   final double borderRadius;
   final Color backgroudColor;
-  final Color textColor;
+  final Color? textColor;
   final double elevation;
   final Color disabledColor;
 
   CustomButtonReverse({
-    @required this.text,
-    @required this.onPressed,
+    required this.text,
+    required this.onPressed,
     this.padding,
     this.expanded = false,
     this.main = true,
@@ -34,15 +34,15 @@ class CustomButtonReverse extends StatelessWidget {
   });
 
   Widget buttonText({
-    String text,
-    bool main,
-    double fontSize,
+    String? text,
+    bool? main,
+    double? fontSize,
   }) {
     return CustomText(
       text: text,
       color: (textColor != null)
           ? textColor
-          : (main ? Colors.white : backgroudColor),
+          : (main! ? Colors.white : backgroudColor),
       fontSize: fontSize,
       fontWeight: FontWeight.w700,
     );
@@ -59,7 +59,7 @@ class CustomButtonReverse extends StatelessWidget {
           color: main ? backgroudColor : Colors.white,
           borderRadius: BorderRadius.circular(borderRadius),
           border: Border.all(
-            color: (onPressed != null) ? textColor : disabledColor,
+            color: (onPressed != null) ? textColor! : disabledColor,
             width: 1.5,
           ),
         ),
@@ -80,7 +80,7 @@ class CustomButtonReverse extends StatelessWidget {
                     buttonText(text: text, fontSize: fontSize, main: main)
                   ])
                 : buttonText(text: text, fontSize: fontSize, main: main),
-            onPressed: onPressed,
+            onPressed: onPressed as void Function()?,
           ),
         ),
       ),

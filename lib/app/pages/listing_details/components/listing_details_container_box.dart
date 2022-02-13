@@ -7,8 +7,8 @@ class ListingDetailsContainerBox extends StatelessWidget {
   final String text;
 
   ListingDetailsContainerBox({
-    @required this.asset,
-    @required this.text
+    required this.asset,
+    required this.text
   });
 
   @override

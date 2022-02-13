@@ -9,7 +9,7 @@ class MessagePropertyListTile extends StatelessWidget {
   final List<Message> items;
 
   MessagePropertyListTile({
-    @required this.items
+    required this.items
   });
 
   @override
@@ -18,7 +18,7 @@ class MessagePropertyListTile extends StatelessWidget {
       constraints: BoxConstraints(maxWidth: 300, minWidth: 250),
       child: ListView.builder(
         shrinkWrap: true,
-        itemCount: items?.length ?? 0,
+        itemCount: items.length,
         itemBuilder: (BuildContext context, int index){
           return Container(
             height: 93,
@@ -36,7 +36,7 @@ class MessagePropertyListTile extends StatelessWidget {
                 Flexible(
                   fit: FlexFit.tight,
                   child: CachedNetworkImage(
-                    imageUrl: items[index].property.coverPhoto,
+                    imageUrl: items[index].property!.coverPhoto!,
                     imageBuilder: (context, imageProvider) => Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.only(topLeft: Radius.circular(5), bottomLeft: Radius.circular(5)),
@@ -48,7 +48,7 @@ class MessagePropertyListTile extends StatelessWidget {
                     ),
                     progressIndicatorBuilder: (context, url, progress) => Center(
                       child: CircularProgressIndicator(
-                        valueColor: AlwaysStoppedAnimation<Color>(Colors.indigo[900]),
+                        valueColor: AlwaysStoppedAnimation<Color?>(Colors.indigo[900]),
                         value: progress.progress,
                       ),
                     ),
@@ -68,12 +68,12 @@ class MessagePropertyListTile extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         CustomText(
-                          text: '${items[index].property.price} PHP',
+                          text: '${items[index].property!.price} PHP',
                           fontWeight: FontWeight.w800,
                           overflow: TextOverflow.ellipsis,
                         ),
                         CustomText(
-                          text: '${items[index].property.keywordsToString}',
+                          text: '${items[index].property!.keywordsToString}',
                           fontSize: 10,
                           fontWeight: FontWeight.w700,
                           overflow: TextOverflow.ellipsis,
@@ -107,19 +107,19 @@ class MessagePropertyListTile extends StatelessWidget {
                       children: [
                         PropertyTextInfo(
                           asset: 'assets/icons/bed.png',
-                          text: '${items[index].property.totalBedRoom}',
+                          text: '${items[index].property!.totalBedRoom}',
                         ),
                         PropertyTextInfo(
                           asset: 'assets/icons/bath.png',
-                          text: '${items[index].property.totalBathRoom}',
+                          text: '${items[index].property!.totalBathRoom}',
                         ),
                         PropertyTextInfo(
                           asset: 'assets/icons/car.png',
-                          text: '${items[index].property.totalParkingSpace}',
+                          text: '${items[index].property!.totalParkingSpace}',
                         ),
                         PropertyTextInfo(
                           asset: 'assets/icons/area.png',
-                          text: '${items[index].property.totalArea}',
+                          text: '${items[index].property!.totalArea}',
                         ) 
                       ],
                     )

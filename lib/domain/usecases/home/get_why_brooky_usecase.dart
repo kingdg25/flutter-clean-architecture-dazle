@@ -8,7 +8,7 @@ class GetWhyBrookyUseCase extends UseCase<GetWhyBrookyUseCaseResponse, GetWhyBro
   GetWhyBrookyUseCase(this.dataHomeRepository);
 
   @override
-  Future<Stream<GetWhyBrookyUseCaseResponse>> buildUseCaseStream(GetWhyBrookyUseCaseParams params) async {
+  Future<Stream<GetWhyBrookyUseCaseResponse>> buildUseCaseStream(GetWhyBrookyUseCaseParams? params) async {
     final controller = StreamController<GetWhyBrookyUseCaseResponse>();
     
     try {

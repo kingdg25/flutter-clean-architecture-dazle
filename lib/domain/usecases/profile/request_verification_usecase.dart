@@ -13,12 +13,12 @@ class RequestVerificationUsecase extends UseCase<
 
   @override
   Future<Stream<RequestVerificationUseCaseResponse>> buildUseCaseStream(
-      RequestVerificationUseCaseParams params) async {
+      RequestVerificationUseCaseParams? params) async {
     final controller = StreamController<RequestVerificationUseCaseResponse>();
 
     try {
       final verification = await dataProfileRepository.requestVerification(
-          attachment: params.attachment);
+          attachment: params!.attachment);
 
       logger.finest('Request Verification successful.');
       controller.add(RequestVerificationUseCaseResponse(verification));
@@ -33,7 +33,7 @@ class RequestVerificationUsecase extends UseCase<
 }
 
 class RequestVerificationUseCaseParams {
-  final File attachment;
+  final File? attachment;
 
   RequestVerificationUseCaseParams(this.attachment);
 }

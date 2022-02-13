@@ -10,7 +10,7 @@ import 'package:pin_code_fields/pin_code_fields.dart';
 
 
 class VerifyCode extends StatelessWidget {
-  const VerifyCode({Key key}) : super(key: key);
+  const VerifyCode({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +50,7 @@ class VerifyCode extends StatelessWidget {
               child: Container(
                 alignment: Alignment.centerLeft,
                 child: CustomText(
-                  text: '4 digit code has been sent to ${controller.forgotPasswordEmailTextController.text ?? ''}',
+                  text: '4 digit code has been sent to ${controller.forgotPasswordEmailTextController.text}',
                   fontSize: 13.0,
                   color: App.hintColor,
                 ),

@@ -11,37 +11,37 @@ import 'package:dazle/domain/usecases/listing/get_my_listing_usecase.dart';
 import 'package:dazle/domain/usecases/settings/logout_user_usecase.dart';
 
 class HomePresenter extends Presenter {
-  Function getUserOnNext;
-  Function getUserOnComplete;
-  Function getUserOnError;
+  Function? getUserOnNext;
+  Function? getUserOnComplete;
+  Function? getUserOnError;
 
-  Function isNewUserOnNext;
-  Function isNewUserOnComplete;
-  Function isNewUserOnError;
+  Function? isNewUserOnNext;
+  Function? isNewUserOnComplete;
+  Function? isNewUserOnError;
 
-  Function getSpotLightOnNext;
-  Function getSpotLightOnComplete;
-  Function getSpotLightOnError;
+  Function? getSpotLightOnNext;
+  Function? getSpotLightOnComplete;
+  Function? getSpotLightOnError;
 
-  Function getMatchedPropertiesOnNext;
-  Function getMatchedPropertiesOnComplete;
-  Function getMatchedPropertiesOnError;
+  Function? getMatchedPropertiesOnNext;
+  Function? getMatchedPropertiesOnComplete;
+  Function? getMatchedPropertiesOnError;
 
-  Function getWhyBrookyOnNext;
-  Function getWhyBrookyOnComplete;
-  Function getWhyBrookyOnError;
+  Function? getWhyBrookyOnNext;
+  Function? getWhyBrookyOnComplete;
+  Function? getWhyBrookyOnError;
 
-  Function getNewHomesOnNext;
-  Function getNewHomesOnComplete;
-  Function getNewHomesOnError;
+  Function? getNewHomesOnNext;
+  Function? getNewHomesOnComplete;
+  Function? getNewHomesOnError;
 
-  Function getMyListingOnNext;
-  Function getMyListingOnComplete;
-  Function getMyListingOnError;
+  Function? getMyListingOnNext;
+  Function? getMyListingOnComplete;
+  Function? getMyListingOnError;
 
-  Function logoutUserOnNext;
-  Function logoutUserOnComplete;
-  Function logoutUserOnError;
+  Function? logoutUserOnNext;
+  Function? logoutUserOnComplete;
+  Function? logoutUserOnError;
 
   final GetUserUseCase getUserUseCase;
   final IsNewUserUseCase isNewUserUseCase;
@@ -68,7 +68,7 @@ class HomePresenter extends Presenter {
         _GetUserUseCaseObserver(this), GetUserUseCaseParams());
   }
 
-  void isNewUser({String email, bool isNewUser}) {
+  void isNewUser({String? email, bool? isNewUser}) {
     isNewUserUseCase.execute(_IsNewUserUseCaseObserver(this),
         IsNewUserUseCaseParams(email, isNewUser));
   }
@@ -122,19 +122,19 @@ class _GetUserUseCaseObserver extends Observer<GetUserUseCaseResponse> {
   @override
   void onComplete() {
     assert(presenter.getUserOnComplete != null);
-    presenter.getUserOnComplete();
+    presenter.getUserOnComplete!();
   }
 
   @override
   void onError(e) {
     assert(presenter.getUserOnError != null);
-    presenter.getUserOnError(e);
+    presenter.getUserOnError!(e);
   }
 
   @override
   void onNext(response) {
     assert(presenter.getUserOnNext != null);
-    presenter.getUserOnNext(response.user);
+    presenter.getUserOnNext!(response?.user);
   }
 }
 
@@ -145,13 +145,13 @@ class _IsNewUserUseCaseObserver extends Observer<void> {
   @override
   void onComplete() {
     assert(presenter.isNewUserOnComplete != null);
-    presenter.isNewUserOnComplete();
+    presenter.isNewUserOnComplete!();
   }
 
   @override
   void onError(e) {
     assert(presenter.isNewUserOnError != null);
-    presenter.isNewUserOnError(e);
+    presenter.isNewUserOnError!(e);
   }
 
   @override
@@ -165,19 +165,19 @@ class _GetSpotLightUseCaseObserver
   @override
   void onComplete() {
     assert(presenter.getSpotLightOnComplete != null);
-    presenter.getSpotLightOnComplete();
+    presenter.getSpotLightOnComplete!();
   }
 
   @override
   void onError(e) {
     assert(presenter.getSpotLightOnError != null);
-    presenter.getSpotLightOnError(e);
+    presenter.getSpotLightOnError!(e);
   }
 
   @override
   void onNext(response) {
     assert(presenter.getSpotLightOnNext != null);
-    presenter.getSpotLightOnNext(response.spotLight);
+    presenter.getSpotLightOnNext!(response?.spotLight);
   }
 }
 
@@ -188,19 +188,19 @@ class _GetMatchedPropertiesUseCaseObserver
   @override
   void onComplete() {
     assert(presenter.getMatchedPropertiesOnComplete != null);
-    presenter.getMatchedPropertiesOnComplete();
+    presenter.getMatchedPropertiesOnComplete!();
   }
 
   @override
   void onError(e) {
     assert(presenter.getMatchedPropertiesOnError != null);
-    presenter.getMatchedPropertiesOnError(e);
+    presenter.getMatchedPropertiesOnError!(e);
   }
 
   @override
   void onNext(response) {
     assert(presenter.getMatchedPropertiesOnNext != null);
-    presenter.getMatchedPropertiesOnNext(response.matchedProperties);
+    presenter.getMatchedPropertiesOnNext!(response?.matchedProperties);
   }
 }
 
@@ -211,19 +211,19 @@ class _GetWhyBrookyUseCaseObserver
   @override
   void onComplete() {
     assert(presenter.getWhyBrookyOnComplete != null);
-    presenter.getWhyBrookyOnComplete();
+    presenter.getWhyBrookyOnComplete!();
   }
 
   @override
   void onError(e) {
     assert(presenter.getWhyBrookyOnError != null);
-    presenter.getWhyBrookyOnError(e);
+    presenter.getWhyBrookyOnError!(e);
   }
 
   @override
   void onNext(response) {
     assert(presenter.getWhyBrookyOnNext != null);
-    presenter.getWhyBrookyOnNext(response.whyBrooky);
+    presenter.getWhyBrookyOnNext!(response?.whyBrooky);
   }
 }
 
@@ -233,19 +233,19 @@ class _GetNewHomesUseCaseObserver extends Observer<GetNewHomesUseCaseResponse> {
   @override
   void onComplete() {
     assert(presenter.getNewHomesOnComplete != null);
-    presenter.getNewHomesOnComplete();
+    presenter.getNewHomesOnComplete!();
   }
 
   @override
   void onError(e) {
     assert(presenter.getNewHomesOnError != null);
-    presenter.getNewHomesOnError(e);
+    presenter.getNewHomesOnError!(e);
   }
 
   @override
   void onNext(response) {
     assert(presenter.getNewHomesOnNext != null);
-    presenter.getNewHomesOnNext(response.newHomes);
+    presenter.getNewHomesOnNext!(response?.newHomes);
   }
 }
 
@@ -256,19 +256,19 @@ class _GetMyListingUseCaseObserver
   @override
   void onComplete() {
     assert(presenter.getMyListingOnComplete != null);
-    presenter.getMyListingOnComplete();
+    presenter.getMyListingOnComplete!();
   }
 
   @override
   void onError(e) {
     assert(presenter.getMyListingOnError != null);
-    presenter.getMyListingOnError(e);
+    presenter.getMyListingOnError!(e);
   }
 
   @override
   void onNext(response) {
     assert(presenter.getMyListingOnNext != null);
-    presenter.getMyListingOnNext(response.myListing);
+    presenter.getMyListingOnNext!(response!.myListing);
   }
 }
 
@@ -278,13 +278,13 @@ class _LogoutUserUseCaseObserver extends Observer<LogoutUserUseCaseResponse> {
   @override
   void onComplete() {
     assert(presenter.logoutUserOnComplete != null);
-    presenter.logoutUserOnComplete();
+    presenter.logoutUserOnComplete!();
   }
 
   @override
   void onError(e) {
     assert(presenter.logoutUserOnError != null);
-    presenter.logoutUserOnError(e);
+    presenter.logoutUserOnError!(e);
   }
 
   @override

@@ -10,11 +10,11 @@ class ForgotPasswordUseCase extends UseCase<ForgotPasswordUseCaseResponse, Forgo
 
 
   @override
-  Future<Stream<ForgotPasswordUseCaseResponse>> buildUseCaseStream(ForgotPasswordUseCaseParams params) async {
+  Future<Stream<ForgotPasswordUseCaseResponse>> buildUseCaseStream(ForgotPasswordUseCaseParams? params) async {
     final controller = StreamController<ForgotPasswordUseCaseResponse>();
     
     try {
-      final code = await dataAuthenticationRepository.forgotPassword(email: params.email);
+      final code = await dataAuthenticationRepository.forgotPassword(email: params!.email);
       
       if (code != null){
         controller.add(ForgotPasswordUseCaseResponse(code));
@@ -40,7 +40,7 @@ class ForgotPasswordUseCase extends UseCase<ForgotPasswordUseCaseResponse, Forgo
 
 
 class ForgotPasswordUseCaseParams {
-  final String email;
+  final String? email;
   ForgotPasswordUseCaseParams(this.email);
 }
 

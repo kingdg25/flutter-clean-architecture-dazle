@@ -18,9 +18,9 @@ class DataProfileRepository extends ProfileRepository {
   factory DataProfileRepository() => _instance;
 
   @override
-  Future<void> update({User user}) async {
+  Future<void> update({User? user}) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    print('update user update user ${user.toJson()}');
+    print('update user update user ${user!.toJson()}');
     print(prefs.getString("accessToken"));
 
     Map params = {"user": user.toJson()};
@@ -54,10 +54,10 @@ class DataProfileRepository extends ProfileRepository {
   }
 
   @override
-  Future<Verification> requestVerification({File attachment}) async {
+  Future<Verification> requestVerification({File? attachment}) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    String imageUrl = await _getFileUrl(attachment: attachment);
+    String? imageUrl = await _getFileUrl(attachment: attachment!);
 
     final user = await App.getUser();
     final uid = user.id;
@@ -87,7 +87,7 @@ class DataProfileRepository extends ProfileRepository {
         final Map verificationRequest = jsonResponse["property"];
 
         final Verification verificationInstance =
-            Verification.fromJson(verificationRequest);
+            Verification.fromJson(verificationRequest as Map<String, dynamic>);
 
         print(verificationInstance.toJson());
 
@@ -108,8 +108,8 @@ class DataProfileRepository extends ProfileRepository {
     }
   }
 
-  Future<String> _getFileUrl({File attachment}) async {
-    String imageUrl;
+  Future<String?> _getFileUrl({required File attachment}) async {
+    String? imageUrl;
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
     Uint8List imageBytes = await attachment.readAsBytes();
@@ -140,7 +140,7 @@ class DataProfileRepository extends ProfileRepository {
     return imageUrl;
   }
 
-  void _checkFileSize({String base64, String fileName}) {
+  void _checkFileSize({required String base64, String? fileName}) {
     Uint8List bytes = convert.base64Decode(base64);
     double sizeInMB = bytes.length / 1000000;
     print(maxFileSize);

@@ -10,14 +10,14 @@ class SearchUserUseCase extends UseCase<SearchUserUseCaseResponse, SearchUserUse
   SearchUserUseCase(this.dataConnectionRepository);
 
   @override
-  Future<Stream<SearchUserUseCaseResponse>> buildUseCaseStream(SearchUserUseCaseParams params) async {
+  Future<Stream<SearchUserUseCaseResponse>> buildUseCaseStream(SearchUserUseCaseParams? params) async {
     final controller = StreamController<SearchUserUseCaseResponse>();
 
     try {
       // search user
       User user = await App.getUser();
       if (user != null) {
-        final data = await dataConnectionRepository.searchUser(userId: user.id, pattern: params.pattern, invited: params.invited);
+        final data = await dataConnectionRepository.searchUser(userId: user.id, pattern: params!.pattern, invited: params.invited);
         controller.add(SearchUserUseCaseResponse(data));
         logger.finest('Search User successful.');
       }
@@ -41,12 +41,12 @@ class SearchUserUseCase extends UseCase<SearchUserUseCaseResponse, SearchUserUse
 
 
 class SearchUserUseCaseParams {
-  final String pattern;
+  final String? pattern;
   final bool invited;
   SearchUserUseCaseParams(this.pattern, this.invited);
 }
 
 class SearchUserUseCaseResponse {
-  List<String> data;
+  List<String>? data;
   SearchUserUseCaseResponse(this.data);
 }

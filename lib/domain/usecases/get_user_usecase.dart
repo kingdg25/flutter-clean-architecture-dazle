@@ -10,13 +10,13 @@ class GetUserUseCase extends UseCase<GetUserUseCaseResponse, GetUserUseCaseParam
 
 
   @override
-  Future<Stream<GetUserUseCaseResponse>> buildUseCaseStream(GetUserUseCaseParams params) async {
+  Future<Stream<GetUserUseCaseResponse>> buildUseCaseStream(GetUserUseCaseParams? params) async {
     final controller = StreamController<GetUserUseCaseResponse>();
     
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
 
-      var user = prefs.getString('user');
+      var user = prefs.getString('user')!;
       var todoUser = convert.jsonDecode(user);
       print('getCurrentUser getCurrentUser getUser $todoUser ${todoUser.runtimeType}');
 

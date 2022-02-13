@@ -9,8 +9,8 @@ class CustomRangeSlider extends StatefulWidget {
   final ValueChanged<RangeValues> onChange;
 
   const CustomRangeSlider({ 
-    Key key,
-    @required this.onChange
+    Key? key,
+    required this.onChange
   }) : super(key: key);
 
   @override

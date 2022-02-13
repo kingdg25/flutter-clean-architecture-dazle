@@ -1,9 +1,9 @@
 class InviteTile {
-  final String id;
-  final String photoURL;
-  final String firstName;
-  final String lastName;
-  final String totalConnection;
+  final String? id;
+  final String? photoURL;
+  final String? firstName;
+  final String? lastName;
+  final String? totalConnection;
 
   String get displayName{
     return "$firstName $lastName";

@@ -4,8 +4,8 @@ import 'package:dazle/domain/entities/user.dart';
 import 'package:dazle/domain/repositories/message_repository.dart';
 
 class DataMessageRepository extends MessageRepository {
-  List<Message> messageListings;
-  List<Message> messageLeads;
+  List<Message>? messageListings;
+  List<Message>? messageLeads;
 
   static DataMessageRepository _instance = DataMessageRepository._internal();
   DataMessageRepository._internal() {

@@ -19,9 +19,9 @@ import 'components/verify_profile_widgets.dart';
 import 'package:dotted_border/dotted_border.dart';
 
 class VerifyProfilePage extends View {
-  final String userPosition;
+  final String? userPosition;
 
-  VerifyProfilePage({@required this.userPosition});
+  VerifyProfilePage({required this.userPosition});
 
   @override
   _VerifyProfilePageState createState() => _VerifyProfilePageState();
@@ -40,7 +40,7 @@ class _VerifyProfilePageState
   ];
   List<String> _brokerRequirements = ['PRC Real Estate Broker’s ID'];
 
-  File _image;
+  File? _image;
   final picker = ImagePicker();
 
   /// Take a photo
@@ -50,7 +50,7 @@ class _VerifyProfilePageState
     setState(() {
       if (pickedFile != null) {
         _image = File(pickedFile.path);
-        print(_image.path);
+        print(_image!.path);
       } else {
         print('No image selected.');
       }
@@ -64,7 +64,7 @@ class _VerifyProfilePageState
     setState(() {
       if (pickedFile != null) {
         _image = File(pickedFile.path);
-        print(_image.path);
+        print(_image!.path);
       } else {
         print('No image selected.');
       }
@@ -151,9 +151,9 @@ class _VerifyProfilePageState
                         child: Column(
                           children: [
                             Image(
-                              image: _image == null
+                              image: (_image == null
                                   ? AssetImage('assets/upload_1.png')
-                                  : FileImage(_image),
+                                  : FileImage(_image!)) as ImageProvider<Object>,
                               width: _image == null ? 77 : 150,
                               // height: 200,
                             ),

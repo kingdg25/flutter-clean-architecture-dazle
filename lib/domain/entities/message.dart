@@ -2,12 +2,12 @@ import 'package:dazle/domain/entities/property.dart';
 import 'package:dazle/domain/entities/user.dart';
 
 class Message {
-  final Property property;
-  final User sender;
-  final String message;
-  final String timeAgo;
-  final String messageType;
-  final String avatarURL;
+  final Property? property;
+  final User? sender;
+  final String? message;
+  final String? timeAgo;
+  final String? messageType;
+  final String? avatarURL;
 
   Message({
     this.property,

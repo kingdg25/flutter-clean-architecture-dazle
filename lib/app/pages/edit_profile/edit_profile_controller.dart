@@ -10,8 +10,8 @@ import 'package:flutter_overlay_loader/flutter_overlay_loader.dart';
 class EditProfileController extends Controller {
   final EditProfilePresenter editProfilePresenter;
 
-  User _user;
-  User get user => _user;
+  User? _user;
+  User? get user => _user;
 
   GlobalKey<FormState> editProfileFormKey;
   final TextEditingController firstNameTextController;
@@ -72,15 +72,15 @@ class EditProfileController extends Controller {
     if (user != null){
       _user = user;
 
-      firstNameTextController.text = user.firstName;
-      lastNameTextController.text = user.lastName;
-      professionTextController.text = user.position;
+      firstNameTextController.text = user.firstName!;
+      lastNameTextController.text = user.lastName!;
+      professionTextController.text = user.position!;
 
-      emailTextController.text = user.email;
-      mobileNumberTextController.text = user.mobileNumber;
+      emailTextController.text = user.email!;
+      mobileNumberTextController.text = user.mobileNumber!;
       
-      brokerLicenseNumberTextController.text = user.brokerLicenseNumber;
-      aboutMeTextController.text = user.aboutMe;
+      brokerLicenseNumberTextController.text = user.brokerLicenseNumber!;
+      aboutMeTextController.text = user.aboutMe!;
 
       refreshUI();
     }
@@ -90,7 +90,7 @@ class EditProfileController extends Controller {
   void updateUser(){
     AppConstant.showLoader(getContext(), true);
     User updatedUser = User(
-      id: _user.id,
+      id: _user!.id,
 
       firstName: firstNameTextController.text,
       lastName: lastNameTextController.text,
@@ -98,9 +98,9 @@ class EditProfileController extends Controller {
       aboutMe: aboutMeTextController.text,
 
       // retain value
-      email: _user.email,
-      position: _user.position,
-      brokerLicenseNumber: _user.brokerLicenseNumber,
+      email: _user!.email,
+      position: _user!.position,
+      brokerLicenseNumber: _user!.brokerLicenseNumber,
       isNewUser: false
     );
 
@@ -108,7 +108,7 @@ class EditProfileController extends Controller {
   }
 
 
-  _statusDialog(String title, String text, {bool success, Function onPressed}){
+  _statusDialog(String title, String text, {bool? success, Function? onPressed}){
     AppConstant.statusDialog(
       context: getContext(),
       success: success ?? false,

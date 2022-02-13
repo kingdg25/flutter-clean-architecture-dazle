@@ -10,7 +10,7 @@ import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 
 
 class FindMatchPage extends View {
-  FindMatchPage({Key key}) : super(key: key);
+  FindMatchPage({Key? key}) : super(key: key);
 
   @override
   _FindMatchPageState createState() => _FindMatchPageState();

@@ -21,12 +21,12 @@ class SocialLoginUseCase extends UseCase<SocialLoginUseCaseResponse, SocialLogin
 
 
   @override
-  Future<Stream<SocialLoginUseCaseResponse>> buildUseCaseStream(SocialLoginUseCaseParams params) async {
+  Future<Stream<SocialLoginUseCaseResponse>> buildUseCaseStream(SocialLoginUseCaseParams? params) async {
     final controller = StreamController<SocialLoginUseCaseResponse>();
     
     try {
-      if( params.loginType == 'gmail' ){
-        GoogleSignInAccount googleUser = await googleSignIn.signIn();
+      if( params!.loginType == 'gmail' ){
+        GoogleSignInAccount? googleUser = await googleSignIn.signIn();
         
         if(googleUser != null){
           GoogleSignInAuthentication googleAuth = await googleUser.authentication;  
@@ -49,15 +49,15 @@ class SocialLoginUseCase extends UseCase<SocialLoginUseCaseResponse, SocialLogin
         LoginResult result = await FacebookAuth.instance.login(
           permissions: ['email', 'public_profile']
         );
-        final AccessToken accessToken = result?.accessToken;
+        final AccessToken? accessToken = result.accessToken;
         
-        if(result.status == LoginStatus.success && result?.accessToken != null){
+        if(result.status == LoginStatus.success && result.accessToken != null){
           final userData = await FacebookAuth.instance.getUserData();
           // final graphResponse = await http.get('https://graph.facebook.com/v2.12/me?fields=name,first_name,last_name,email&access_token=${accessToken.token}');
           // final profile = await convert.jsonDecode(graphResponse.body);
           // print('facebook data $userData $profile');
 
-          final user = await dataAuthenticationRepository.socialLogin(loginType: params.loginType, email: userData['email'], token: accessToken.token);
+          final user = await dataAuthenticationRepository.socialLogin(loginType: params.loginType, email: userData['email'], token: accessToken!.token);
           controller.add(SocialLoginUseCaseResponse(user));
 
           logger.finest('Facebook login successful.');
@@ -104,11 +104,11 @@ class SocialLoginUseCase extends UseCase<SocialLoginUseCaseResponse, SocialLogin
 
 
 class SocialLoginUseCaseParams {
-  final String loginType;
+  final String? loginType;
   SocialLoginUseCaseParams(this.loginType);
 }
 
 class SocialLoginUseCaseResponse {
-  final User user;
+  final User? user;
   SocialLoginUseCaseResponse(this.user);
 }

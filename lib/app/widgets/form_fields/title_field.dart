@@ -13,7 +13,7 @@ class TitleField extends StatelessWidget {
 
 
   TitleField({
-    @required this.title,
+    required this.title,
     this.fontSize = 17.0,
     this.alignment = Alignment.centerLeft,
     this.optional = false,
