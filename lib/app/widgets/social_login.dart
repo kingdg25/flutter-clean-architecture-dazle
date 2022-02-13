@@ -1,3 +1,4 @@
+import 'package:auth_buttons/auth_buttons.dart';
 import 'package:flutter/material.dart';
 import 'dart:io' show Platform;
 
@@ -52,7 +53,40 @@ class SocialLogin extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
-      children: true ? <Widget>[] : <Widget>[
+      children: true ? <Widget>[
+        /** ===============================    LOGIN WITH APPLE           ============================================ */
+        Platform.isIOS ? AppleAuthButton(
+          onPressed: facebookHandleSignIn as Function()?,
+          darkMode: false,
+          style: AuthButtonStyle(
+            buttonType: AuthButtonType.icon,
+            borderRadius: 100,
+          ),
+        ) : Container(),
+        Platform.isIOS ? SizedBox(width: 20.0) : Container(),
+        /** ===============================    LOGIN WITH FACEBOOK           ============================================ */
+        FacebookAuthButton(
+          onPressed: facebookHandleSignIn as Function(),
+          darkMode: false,
+          style: AuthButtonStyle(
+            buttonType: AuthButtonType.icon,
+            borderRadius: 100,
+            iconType: AuthIconType.secondary,
+          ),
+        ),
+        SizedBox(width: 20.0),
+        /** ===============================    LOGIN WITH GOOGLE           ============================================ */
+        GoogleAuthButton(
+          onPressed: googleHandleSignIn as Function(),
+          darkMode: false,
+          style: AuthButtonStyle(
+            buttonType: AuthButtonType.icon,
+            borderRadius: 100,
+          ),
+        ),
+      ] : 
+      
+        /** OLD VERSION */ <Widget>[
         /** ===============================    LOGIN WITH APPLE           ============================================ */
         Platform.isIOS ?
         brookySocialButton(
