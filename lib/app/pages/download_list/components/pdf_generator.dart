@@ -13,7 +13,7 @@ import 'package:dio/dio.dart';
 import '../../../utils/app.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'dart:async';
-// import 'package:downloads_path_provider/downloads_path_provider.dart';
+import 'package:downloads_path_provider_28/downloads_path_provider_28.dart';
 
 // import 'package:downloads_path_provider/downloads_path_provider.dart';
 // import 'package:ext_storage/ext_storage.dart';
@@ -189,26 +189,40 @@ class PdfGenerator {
     String? downloadPath;
 
     /// Request Permission to Write on Local Storage
-    Map<Permission, PermissionStatus> statuses = await [
-      Permission.storage,
-    ].request();
+    Map<Permission, PermissionStatus> statuses =
+        await [Permission.storage].request();
 
     if (statuses[Permission.storage]!.isGranted) {
       final pdfForDownload =
           await buildPdf(property: property!); // Builds the pdf file
 
+      // final folderName = "some_name";
+      Directory path = Directory('/storage/emulated/0/Download/Dazle_PDF');
+      if ((await path.exists())) {
+        // TODO:
+        print("exist");
+      } else {
+        // TODO:
+        print("not exist");
+        path.create();
+      }
+
       try {
+        Directory generalDownloadDir =
+            Directory('/storage/emulated/0/Download');
         // final dir = await DownloadsPathProvider.downloadsDirectory;
         // // TODO: Gio - 1. Finalize the filename of the PDF
-        // downloadPath =
-        //     '${dir.path}/Dazzle Property List - ${property.district} - ${property.city} ${DateTime.now().toIso8601String()}.pdf';
-        // print(downloadPath);
-        // final file = File(downloadPath);
-        // await file.writeAsBytes(pdfForDownload.save());
-        // print('saved to documents');
+        downloadPath =
+            '${path.path}/Dazzle Property List - ${property.district} - ${property.city} ${DateTime.now().toIso8601String()}.pdf';
+        print(downloadPath);
+        final file = File(downloadPath);
+        await file.writeAsBytes(await pdfForDownload.save());
+        print('saved to documents');
       } catch (e) {
         print('error ${e.toString()}');
       }
+    } else {
+      print(statuses);
     }
 
     return downloadPath;
@@ -223,9 +237,10 @@ class PdfGenerator {
 
     //* Save pdf to App Storage Directory
     try {
-      final dir = await (getExternalStorageDirectory() as FutureOr<Directory>);
+      // final dir = await (getExternalStorageDirectory() as FutureOr<Directory>);
+      final dir = await getExternalStorageDirectory();
       localPath =
-          '${dir.path}/Dazzle Property List - ${property.district} - ${property.city} ${DateTime.now().toIso8601String()}.pdf';
+          '${dir?.path}/Dazzle Property List - ${property.district} - ${property.city} ${DateTime.now().toIso8601String()}.pdf';
       print(localPath);
       final file = File(localPath);
       await file.writeAsBytes(await pdfForDownload.save());

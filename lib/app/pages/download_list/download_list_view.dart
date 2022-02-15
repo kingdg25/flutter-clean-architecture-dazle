@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dazle/app/pages/download_list/download_list_controller.dart';
@@ -257,11 +258,13 @@ class _DownloadListPageState
                       text: 'Download',
                       onPressed: () async {
                         //* Will only works after upgrading to null safety version
-                        Loader.show(context);
+                        // print('ashjkfdjasdhfkljashdfljkhasf');
+                        // Loader.show(context);
                         String? pdfFilePath = await PdfGenerator()
                             .downloadPdf(property: widget.property);
-                        Loader.hide();
-                        await OpenFile.open(pdfFilePath);
+                        print(pdfFilePath);
+                        // Loader.hide();
+                        // await OpenFile.open(pdfFilePath);
                       },
                     ),
                   ),
@@ -275,14 +278,16 @@ class _DownloadListPageState
                       text: 'Share',
                       onPressed: () async {
                         Loader.show(context);
-                        String pdfFilePath = await (PdfGenerator()
-                            .sharePdf(property: widget.property) as FutureOr<String>);
+                        String? pdfFilePath = await PdfGenerator()
+                            .sharePdf(property: widget.property);
                         Loader.hide();
-                        await Share.shareFiles(
-                          [pdfFilePath],
-                          //  TODO: 5. Change File name, Finalize the format of the file name
-                          text: 'Great picture',
-                        );
+                        if (pdfFilePath != null) {
+                          await Share.shareFiles(
+                            [pdfFilePath],
+                            //  TODO: 5. Change File name, Finalize the format of the file name
+                            text: 'Great picture',
+                          );
+                        }
                       },
                       backgroudColor: Colors.white,
                       textColor: App.mainColor,
