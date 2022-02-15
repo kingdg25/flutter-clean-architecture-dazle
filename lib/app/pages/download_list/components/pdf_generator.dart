@@ -196,24 +196,11 @@ class PdfGenerator {
       final pdfForDownload =
           await buildPdf(property: property!); // Builds the pdf file
 
-      // final folderName = "some_name";
-      Directory path = Directory('/storage/emulated/0/Download/Dazle_PDF');
-      if ((await path.exists())) {
-        // TODO:
-        print("exist");
-      } else {
-        // TODO:
-        print("not exist");
-        path.create();
-      }
-
       try {
-        Directory generalDownloadDir =
-            Directory('/storage/emulated/0/Download');
-        // final dir = await DownloadsPathProvider.downloadsDirectory;
-        // // TODO: Gio - 1. Finalize the filename of the PDF
+        final dir = await getExternalStorageDirectory();
+        // TODO: Gio - 1. Finalize the filename of the PDF
         downloadPath =
-            '${path.path}/Dazzle Property List - ${property.district} - ${property.city} ${DateTime.now().toIso8601String()}.pdf';
+            '${dir?.path}/Dazzle Property List - ${property.district} - ${property.city} ${DateTime.now().toIso8601String()}.pdf';
         print(downloadPath);
         final file = File(downloadPath);
         await file.writeAsBytes(await pdfForDownload.save());
@@ -222,6 +209,7 @@ class PdfGenerator {
         print('error ${e.toString()}');
       }
     } else {
+      // TODO: Inform user to allow or ask for permission again
       print(statuses);
     }
 
@@ -238,9 +226,10 @@ class PdfGenerator {
     //* Save pdf to App Storage Directory
     try {
       // final dir = await (getExternalStorageDirectory() as FutureOr<Directory>);
-      final dir = await getExternalStorageDirectory();
+      // final dir = await getExternalStorageDirectory();
+      final dir = await getApplicationDocumentsDirectory();
       localPath =
-          '${dir?.path}/Dazzle Property List - ${property.district} - ${property.city} ${DateTime.now().toIso8601String()}.pdf';
+          '${dir.path}/Dazzle Property List - ${property.district} - ${property.city} ${DateTime.now().toIso8601String()}.pdf';
       print(localPath);
       final file = File(localPath);
       await file.writeAsBytes(await pdfForDownload.save());

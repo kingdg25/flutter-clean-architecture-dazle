@@ -257,14 +257,13 @@ class _DownloadListPageState
                     child: CustomButton(
                       text: 'Download',
                       onPressed: () async {
-                        //* Will only works after upgrading to null safety version
-                        // print('ashjkfdjasdhfkljashdfljkhasf');
-                        // Loader.show(context);
+                        //? Changed to open pdf
+                        print('ashjkfdjasdhfkljashdfljkhasf');
+                        Loader.show(context);
                         String? pdfFilePath = await PdfGenerator()
                             .downloadPdf(property: widget.property);
-                        print(pdfFilePath);
-                        // Loader.hide();
-                        // await OpenFile.open(pdfFilePath);
+                        Loader.hide();
+                        await OpenFile.open(pdfFilePath);
                       },
                     ),
                   ),
