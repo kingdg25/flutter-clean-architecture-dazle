@@ -42,6 +42,7 @@ class CreateListingController extends Controller {
   final TextEditingController cityTextController;
 
   // page 4
+  List<String> amenitiesSelection;
   List? amenities;
 
   // page 5
@@ -50,6 +51,18 @@ class CreateListingController extends Controller {
 
   CreateListingController(userRepo, this.property)
     : createListingPresenter = CreateListingPresenter(userRepo),
+      amenitiesSelection = [
+        "Kitchen",
+        "Wifi",
+        "Eco Friendly",
+        "Sharing Gym",
+        "Sharing Pool",
+        "Security",
+        "Covered Parking",
+        "Central A.C.",
+        "Balcony",
+        "Tile Flooring",
+      ],
       createListingPageController = PageController(),
       priceTextController = TextEditingController(),
       areaTextController = TextEditingController(),
@@ -128,9 +141,18 @@ class CreateListingController extends Controller {
       await _statusDialog('Cannot update listing!', 'Your listing cannot be updated.');
     };
   }
-
+  
+  updateAmenitiesSelection({List amenities = const []}){
+    amenities.forEach((val){
+      if (!amenitiesSelection.contains(val)) {
+        amenitiesSelection.add(val);
+      }
+    });
+    refreshUI();
+  }
   void initializeProperty() async {
     if (this.property!=null && this.property!.id != null){
+      updateAmenitiesSelection(amenities: this.property?.amenities ?? []);
       await setValues();
       createListingPresenter.fetchListingDetails(id: this.property!.id);
     }
@@ -416,6 +438,7 @@ class CreateListingController extends Controller {
     streetTextController.dispose();
     landmarkTextController.dispose();
     cityTextController.dispose();
+    amenities = [];
 
     createListingPresenter.dispose(); // don't forget to dispose of the presenter
     Loader.hide();

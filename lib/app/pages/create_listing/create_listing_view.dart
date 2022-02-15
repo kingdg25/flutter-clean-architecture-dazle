@@ -12,6 +12,8 @@ import 'package:dazle/domain/entities/property.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 
+import '../../widgets/form_fields/amenities_field.dart';
+
 
 
 class CreateListingPage extends View {
@@ -389,39 +391,21 @@ class _CreateListingPageState extends ViewState<CreateListingPage, CreateListing
               shrinkWrap: true,
               padding: EdgeInsets.only(bottom: 20, top: 20),
               children: [
-                // AmenitiesField(
-                //   hintText: 'Add Amenity',
-                //   onChanged: (values) {
-                //     print('add amenities $values');
-                //     controller.amenities = values;
-                //   },
-                //   defaultSelected: controller.amenities,
-                // ),
+                AmenitiesField(
+                  hintText: 'Add Amenity',
+                  onChanged: (values) {
+                    print('add amenities $values');
+                    // controller.amenities = values;
+                  },
+                  onPressed: (String? value) {
+                    if (value!=null && value.isNotEmpty)
+                      controller.updateAmenitiesSelection(amenities: [value]);
+                  },
+                  defaultSelected: controller.amenities,
+                ),
                 AmenitiesCheckBoxGroup(
-                  buttonLables: [
-                    "Kitchen",
-                    "Wifi",
-                    "Eco Friendly",
-                    "Sharing Gym",
-                    "Sharing Pool",
-                    "Security",
-                    "Covered Parking",
-                    "Central A.C.",
-                    "Balcony",
-                    "Tile Flooring",
-                  ],
-                  buttonValuesList: [
-                    "Kitchen",
-                    "Wifi",
-                    "Eco Friendly",
-                    "Sharing Gym",
-                    "Sharing Pool",
-                    "Security",
-                    "Covered Parking",
-                    "Central A.C.",
-                    "Balcony",
-                    "Tile Flooring",
-                  ],
+                  buttonLables: controller.amenitiesSelection,
+                  buttonValuesList: controller.amenitiesSelection,
                   defaultSelected: controller.amenities,
                   checkBoxButtonValues: (values) {
                     controller.amenities = values;

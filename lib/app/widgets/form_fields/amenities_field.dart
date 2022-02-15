@@ -10,6 +10,7 @@ class AmenitiesField<T> extends StatefulWidget {
   final Color hintColor;
   final double fontSize;
   final ValueChanged onChanged;
+  final Function onPressed;
   
   ///Default Selected button
   final T defaultSelected;
@@ -20,7 +21,8 @@ class AmenitiesField<T> extends StatefulWidget {
     this.hintColor = App.hintColor,
     this.fontSize = 16.0,
     required this.onChanged,
-    required this.defaultSelected
+    required this.defaultSelected,
+    required this.onPressed
   }) : super(key: key);
 
   @override
@@ -122,13 +124,13 @@ class _AmenitiesFieldState extends State<AmenitiesField> {
                     color: widget.hintColor,
                   ), 
                   onPressed: () {
-                    addAmenity(amenityTextController.text);
+                    widget.onPressed(amenityTextController.text);
                   }
                 )
               ),
             ),
           ),
-          Container(
+          true ? Container() : Container(
             margin: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
             alignment: Alignment.centerLeft,
             child: Wrap(
