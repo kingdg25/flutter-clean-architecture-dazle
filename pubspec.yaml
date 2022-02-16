@@ -32,10 +32,9 @@ dependencies:
     wechat_assets_picker: ^6.3.1
     open_file: ^3.2.1
     permission_handler: ^8.3.0
-    # downloads_path_provider: ^0.1.0
-    downloads_path_provider_28: ^0.1.2
     dotted_border: ^2.0.0+2
     image_picker: ^0.8.4+8
+    printing: ^5.7.2
 
 
 dev_dependencies:
@@ -49,6 +48,8 @@ flutter:
         - assets/
         - assets/icons/
         - assets/icons/tab_bar/
+        - fonts/
+
     fonts:
         - family: Poppins
           fonts:

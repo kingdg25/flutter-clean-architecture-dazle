@@ -146,7 +146,7 @@ class _DownloadListPageState
               ),
               CustomRichText(
                 mainText: 'Price: ',
-                valueText: widget.property.price,
+                valueText: widget.property.formatPrice,
               ),
               SizedBox(
                 height: 10,
@@ -284,7 +284,10 @@ class _DownloadListPageState
                           await Share.shareFiles(
                             [pdfFilePath],
                             //  TODO: 5. Change File name, Finalize the format of the file name
-                            text: 'Great picture',
+                            subject:
+                                'Dazle Property Listing-${widget.property.id}',
+                            text:
+                                'Dazle Property Listing-${widget.property.id}',
                           );
                         }
                       },
