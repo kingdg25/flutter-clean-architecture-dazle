@@ -9,6 +9,7 @@ class User {
   final String? email;
   final bool? emailVerified;
   final String? id;
+  String? profilePicture;
 
   String get displayName {
     return "$firstName $lastName";
@@ -24,7 +25,8 @@ class User {
       this.lastName,
       this.email,
       this.emailVerified,
-      this.id});
+      this.id,
+      this.profilePicture});
 
   User.fromJson(Map<String, dynamic> json)
       : aboutMe = json['about_me'],
@@ -36,7 +38,8 @@ class User {
         lastName = json['lastname'],
         email = json['email'],
         emailVerified = json['email_verified'],
-        id = json['_id'];
+        id = json['_id'],
+        profilePicture = json['profile_picture'];
 
   Map<String, dynamic> toJson() => {
         'about_me': aboutMe,
@@ -48,7 +51,8 @@ class User {
         'lastname': lastName,
         'email': email,
         'email_verified': emailVerified,
-        '_id': id
+        '_id': id,
+        'profile_picture': profilePicture
       };
 }
 

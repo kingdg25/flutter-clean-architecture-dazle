@@ -1,17 +1,30 @@
+import 'dart:io';
+import 'dart:typed_data';
+
 import 'package:dazle/app/pages/edit_profile/edit_profile_presenter.dart';
+import 'package:dazle/app/pages/main/main_view.dart';
 import 'package:dazle/app/utils/app.dart';
 import 'package:dazle/app/utils/app_constant.dart';
+import 'package:dazle/data/constants.dart';
 import 'package:dazle/domain/entities/user.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:flutter_overlay_loader/flutter_overlay_loader.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:dazle/app/utils/app_constant.dart';
+import 'dart:convert' as convert;
+import 'package:path/path.dart';
+import 'package:http/http.dart' as http;
+import 'package:dazle/app/pages/profile/profile_view.dart';
 
 class EditProfileController extends Controller {
   final EditProfilePresenter editProfilePresenter;
 
   User? _user;
   User? get user => _user;
+  String? userProfilePicture;
+  File? profilePicturePath;
+  final double maxFileSize = 5.0;
 
   GlobalKey<FormState> editProfileFormKey;
   final TextEditingController firstNameTextController;
@@ -23,17 +36,16 @@ class EditProfileController extends Controller {
   final TextEditingController aboutMeTextController;
 
   EditProfileController(userRepo)
-    : editProfilePresenter = EditProfilePresenter(userRepo),
-      editProfileFormKey = GlobalKey<FormState>(),
-      firstNameTextController = TextEditingController(),
-      lastNameTextController = TextEditingController(),
-      professionTextController = TextEditingController(),
-      emailTextController = TextEditingController(),
-      mobileNumberTextController = TextEditingController(),
-      brokerLicenseNumberTextController = TextEditingController(),
-      aboutMeTextController = TextEditingController(),
-      super();
-
+      : editProfilePresenter = EditProfilePresenter(userRepo),
+        editProfileFormKey = GlobalKey<FormState>(),
+        firstNameTextController = TextEditingController(),
+        lastNameTextController = TextEditingController(),
+        professionTextController = TextEditingController(),
+        emailTextController = TextEditingController(),
+        mobileNumberTextController = TextEditingController(),
+        brokerLicenseNumberTextController = TextEditingController(),
+        aboutMeTextController = TextEditingController(),
+        super();
 
   @override
   void initListeners() {
@@ -54,22 +66,23 @@ class EditProfileController extends Controller {
     editProfilePresenter.updateUserOnError = (e) {
       print('update user on error $e');
       AppConstant.showLoader(getContext(), false);
-      
-      if ( !e['error'] ) {
-        _statusDialog('Oops!', '${e['status'] ?? ''}');
-      }
-      else{
+
+      if (!e['error']) {
+        if (e['error_type'] == "filesize_error") {
+          _statusDialog('File size error.', '${e['status'] ?? ''}');
+        } else {
+          _statusDialog('Oops!', '${e['status'] ?? ''}');
+        }
+      } else {
         _statusDialog('Something went wrong', '${e.toString()}');
-      } 
+      }
     };
   }
-
-
 
   getCurrentUser() async {
     User user = await App.getUser();
 
-    if (user != null){
+    if (user != null) {
       _user = user;
 
       firstNameTextController.text = user.firstName!;
@@ -78,46 +91,46 @@ class EditProfileController extends Controller {
 
       emailTextController.text = user.email!;
       mobileNumberTextController.text = user.mobileNumber!;
-      
+
       brokerLicenseNumberTextController.text = user.brokerLicenseNumber!;
       aboutMeTextController.text = user.aboutMe!;
+
+      userProfilePicture = user.profilePicture;
 
       refreshUI();
     }
   }
 
-
-  void updateUser(){
+  void updateUser() async {
     AppConstant.showLoader(getContext(), true);
+
     User updatedUser = User(
-      id: _user!.id,
+        id: _user!.id,
+        firstName: firstNameTextController.text,
+        lastName: lastNameTextController.text,
+        mobileNumber: mobileNumberTextController.text,
+        aboutMe: aboutMeTextController.text,
+        profilePicture: user?.profilePicture,
 
-      firstName: firstNameTextController.text,
-      lastName: lastNameTextController.text,
-      mobileNumber: mobileNumberTextController.text,
-      aboutMe: aboutMeTextController.text,
+        // retain value
+        email: _user!.email,
+        position: _user!.position,
+        brokerLicenseNumber: _user!.brokerLicenseNumber,
+        isNewUser: false);
 
-      // retain value
-      email: _user!.email,
-      position: _user!.position,
-      brokerLicenseNumber: _user!.brokerLicenseNumber,
-      isNewUser: false
-    );
-
-    editProfilePresenter.updateUser(user: updatedUser);
+    editProfilePresenter.updateUser(
+        user: updatedUser, profilePicture: profilePicturePath);
   }
 
-
-  _statusDialog(String title, String text, {bool? success, Function? onPressed}){
+  _statusDialog(String title, String text,
+      {bool? success, Function? onPressed}) {
     AppConstant.statusDialog(
-      context: getContext(),
-      success: success ?? false,
-      title: title,
-      text: text,
-      onPressed: onPressed
-    );
+        context: getContext(),
+        success: success ?? false,
+        title: title,
+        text: text,
+        onPressed: onPressed);
   }
-  
 
   @override
   void onResumed() => print('On resumed');
@@ -143,5 +156,4 @@ class EditProfileController extends Controller {
     Loader.hide();
     super.onDisposed();
   }
-  
 }

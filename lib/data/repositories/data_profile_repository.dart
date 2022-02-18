@@ -1,5 +1,6 @@
 import 'dart:convert' as convert;
 import 'dart:typed_data';
+import 'package:dazle/app/utils/app_constant.dart';
 import 'package:dazle/data/constants.dart';
 import 'package:http/http.dart' as http;
 import 'dart:io';
@@ -18,14 +19,23 @@ class DataProfileRepository extends ProfileRepository {
   factory DataProfileRepository() => _instance;
 
   @override
-  Future<void> update({User? user}) async {
+  Future<void> update({User? user, File? profilePicture}) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     print('update user update user ${user!.toJson()}');
     print(prefs.getString("accessToken"));
 
+    // TODO: Add a file parameter for profile picture
+    // TODO: If the file is not empty Create new User object with the updated profile picture
+    if (profilePicture != null) {
+      String? imageUrl =
+          await AppConstant().getFileUrl(attachment: profilePicture);
+      user.profilePicture = imageUrl;
+    }
+
     Map params = {"user": user.toJson()};
 
-    var response = await http.put(Uri.parse("${Constants.siteURL}/api/users/update"),
+    var response = await http.put(
+        Uri.parse("${Constants.siteURL}/api/users/update"),
         body: convert.jsonEncode(params),
         headers: {
           'Authorization': 'Bearer ${prefs.getString("accessToken")}',
@@ -71,7 +81,8 @@ class DataProfileRepository extends ProfileRepository {
       };
 
       var response = await http.post(
-          Uri.parse("${Constants.siteURL}/api/verifications/create-verification"),
+          Uri.parse(
+              "${Constants.siteURL}/api/verifications/create-verification"),
           body: convert.jsonEncode(params),
           headers: {
             'Authorization': 'Bearer ${prefs.getString("accessToken")}',

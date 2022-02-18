@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dazle/domain/entities/user.dart';
 import 'package:dazle/domain/usecases/profile/update_user_usecase.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
@@ -10,21 +12,18 @@ class EditProfilePresenter extends Presenter {
   final UpdateUserUseCase updateUserUseCase;
 
   EditProfilePresenter(userRepo)
-    : updateUserUseCase = UpdateUserUseCase(userRepo);
-  
+      : updateUserUseCase = UpdateUserUseCase(userRepo);
 
-  void updateUser({User? user}){
-    updateUserUseCase.execute(_UpdateUserUseCaseObserver(this), UpdateUserUseCaseParams(user));
+  void updateUser({User? user, File? profilePicture}) {
+    updateUserUseCase.execute(_UpdateUserUseCaseObserver(this),
+        UpdateUserUseCaseParams(user, profilePicture));
   }
-
 
   @override
   void dispose() {
     updateUserUseCase.dispose();
   }
 }
-
-
 
 class _UpdateUserUseCaseObserver extends Observer<void> {
   final EditProfilePresenter presenter;
@@ -42,6 +41,5 @@ class _UpdateUserUseCaseObserver extends Observer<void> {
   }
 
   @override
-  void onNext(response) {
-  }
+  void onNext(response) {}
 }

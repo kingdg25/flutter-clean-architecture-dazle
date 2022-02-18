@@ -74,49 +74,53 @@ class _ProfilePageState extends ViewState<ProfilePage, ProfileController> {
               child: Container(
             padding: EdgeInsets.only(left: 20, right: 20, bottom: 20, top: 20),
             child: Column(children: [
-              Container(
-                decoration: BoxDecoration(
-                  color: Color.fromRGBO(221, 99, 110, 0.5),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                padding: EdgeInsets.all(20.0),
-                child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Icon(
-                        Icons.error_outline_outlined,
-                        color: Color.fromRGBO(226, 87, 76, 1),
-                        size: 26.0,
-                      ),
-                      SizedBox(
-                        width: 10.0,
-                      ),
-                      Expanded(
-                          child: CustomRichText(
-                        mainText:
-                            'Your profile is still unverified, due to this you can only access limited features. of the app. Click this link to ',
-                        mainTextFontWeight: FontWeight.normal,
-                        valueText: 'verify now.',
-                        valueTextDecoration: TextDecoration.underline,
-                        valueTextCallback: () {
-                          print('Value text Callback called!');
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (buildContext) => VerifyProfilePage(
-                                        userPosition: user.position,
-                                      )));
-                        },
-                      ))
-                    ]),
-              ),
+              // Container(
+              //   decoration: BoxDecoration(
+              //     color: Color.fromRGBO(221, 99, 110, 0.5),
+              //     borderRadius: BorderRadius.circular(10),
+              //   ),
+              //   padding: EdgeInsets.all(20.0),
+              //   child: Row(
+              //       crossAxisAlignment: CrossAxisAlignment.start,
+              //       children: [
+              //         Icon(
+              //           Icons.error_outline_outlined,
+              //           color: Color.fromRGBO(226, 87, 76, 1),
+              //           size: 26.0,
+              //         ),
+              //         SizedBox(
+              //           width: 10.0,
+              //         ),
+              //         Expanded(
+              //             child: CustomRichText(
+              //           mainText:
+              //               'Your profile is still unverified, due to this you can only access limited features. of the app. Click this link to ',
+              //           mainTextFontWeight: FontWeight.normal,
+              //           valueText: 'verify now.',
+              //           valueTextDecoration: TextDecoration.underline,
+              //           valueTextCallback: () {
+              //             print('Value text Callback called!');
+              //             Navigator.push(
+              //                 context,
+              //                 MaterialPageRoute(
+              //                     builder: (buildContext) => VerifyProfilePage(
+              //                           userPosition: user.position,
+              //                         )));
+              //           },
+              //         ))
+              //       ]),
+              // ),
               Center(
-                child: Image(
-                  image: AssetImage('assets/user_profile.png'),
-                  width: 200,
-                  height: 200,
+                child: CircleAvatar(
+                  radius: 95,
+                  backgroundImage: user.profilePicture == null
+                      ? AssetImage('assets/user_profile.png')
+                      : NetworkImage(user.profilePicture!)
+                          as ImageProvider<Object>,
+                  backgroundColor: App.mainColor,
                 ),
               ),
+
               CustomText(
                 text: user.displayName,
                 fontSize: 25,
@@ -154,20 +158,21 @@ class _ProfilePageState extends ViewState<ProfilePage, ProfileController> {
                                       user: user,
                                     )));
 
-                        controller.getCurrentUser();
+                        await controller.getCurrentUser();
+                        await controller.getUserToDisplay();
                       }),
-                  SizedBox(width: 8),
-                  CustomButton(
-                      text: 'Share Profile',
-                      width: 120,
-                      borderRadius: 30,
-                      main: false,
-                      onPressed: () async {
-                        await Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (buildContext) => ProfilePage()));
-                      })
+                  // SizedBox(width: 8),
+                  // CustomButton(
+                  //     text: 'Share Profile',
+                  //     width: 120,
+                  //     borderRadius: 30,
+                  //     main: false,
+                  //     onPressed: () async {
+                  //       await Navigator.push(
+                  //           context,
+                  //           MaterialPageRoute(
+                  //               builder: (buildContext) => ProfilePage()));
+                  //     })
                 ],
               ),
               SizedBox(height: 20),

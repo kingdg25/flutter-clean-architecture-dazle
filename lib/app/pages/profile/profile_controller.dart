@@ -8,10 +8,8 @@ import 'package:dazle/domain/entities/user.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 
-
 class ProfileController extends Controller {
   final ProfilePresenter profilePresenter;
-
 
   final uidToDisplay;
   User? _currentUser;
@@ -23,9 +21,8 @@ class ProfileController extends Controller {
   List<Property>? get listings => _listings;
 
   ProfileController({DataProfileRepository? dataProfileRepo, this.uidToDisplay})
-    : profilePresenter = ProfilePresenter(),
-      super();
-
+      : profilePresenter = ProfilePresenter(),
+        super();
 
   @override
   void initListeners() async {
@@ -41,19 +38,20 @@ class ProfileController extends Controller {
     };
     profilePresenter.getUserListingOnComplete = () {
       print("On comlete profile presenter");
-      
     };
     profilePresenter.getUserListingOnError = () {
       print("On error profile presenter");
-      AppConstant.statusDialog(context: getContext(), text: "Can't fetch listings for this time.", title: "Can't fetch listings");
+      AppConstant.statusDialog(
+          context: getContext(),
+          text: "Can't fetch listings for this time.",
+          title: "Can't fetch listings");
     };
-
   }
 
   getCurrentUser() async {
     User user = await App.getUser();
 
-    if (user != null){
+    if (user != null) {
       _currentUser = user;
 
       refreshUI();
@@ -61,7 +59,7 @@ class ProfileController extends Controller {
   }
 
   getUserToDisplay() async {
-    if (this.uidToDisplay==null){
+    if (this.uidToDisplay == null) {
       _userToDisplay = _currentUser;
     }
   }
@@ -69,7 +67,7 @@ class ProfileController extends Controller {
   getListings() async {
     profilePresenter.getUserListing(this._userToDisplay!.id);
   }
-  
+
   @override
   void onResumed() => print('On resumed');
 
@@ -84,5 +82,4 @@ class ProfileController extends Controller {
     profilePresenter.dispose(); // don't forget to dispose of the presenter
     super.onDisposed();
   }
-  
 }
