@@ -115,8 +115,8 @@ class _ProfilePageState extends ViewState<ProfilePage, ProfileController> {
                   radius: 95,
                   backgroundImage: user.profilePicture == null
                       ? AssetImage('assets/user_profile.png')
-                      : NetworkImage(user.profilePicture!)
-                          as ImageProvider<Object>,
+                          as ImageProvider<Object>
+                      : NetworkImage(user.profilePicture!),
                   backgroundColor: App.mainColor,
                 ),
               ),
