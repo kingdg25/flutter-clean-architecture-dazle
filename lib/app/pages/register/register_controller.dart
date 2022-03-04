@@ -9,9 +9,7 @@ import 'package:dazle/app/pages/register/register_presenter.dart';
 import 'package:flutter_overlay_loader/flutter_overlay_loader.dart';
 import 'package:dazle/app/utils/app_constant.dart';
 
-
 class RegisterController extends Controller {
-
   PageController registerPageController;
 
   GlobalKey<FormState> registerFormKeyPage1;
@@ -29,25 +27,23 @@ class RegisterController extends Controller {
 
   bool isBroker;
 
-
   final RegisterPresenter registerPresenter;
 
   RegisterController(userRepo)
-    : registerPresenter = RegisterPresenter(userRepo),
-      registerPageController = PageController(),
-      registerFormKeyPage1 = GlobalKey<FormState>(),
-      firstNameTextController = TextEditingController(),
-      lastNameTextController = TextEditingController(),
-      mobileNumberTextController = TextEditingController(),
-      position = null,
-      brokerLicenseNumberTextController = TextEditingController(),
-      brokerLicenseNumberTextField = 'Enter your License #',
-      registerFormKeyPage2 = GlobalKey<FormState>(),
-      emailTextController = TextEditingController(),
-      passwordTextController = TextEditingController(),
-      isBroker = false,
-      super();
-  
+      : registerPresenter = RegisterPresenter(userRepo),
+        registerPageController = PageController(),
+        registerFormKeyPage1 = GlobalKey<FormState>(),
+        firstNameTextController = TextEditingController(),
+        lastNameTextController = TextEditingController(),
+        mobileNumberTextController = TextEditingController(),
+        position = null,
+        brokerLicenseNumberTextController = TextEditingController(),
+        brokerLicenseNumberTextField = 'Enter your License #',
+        registerFormKeyPage2 = GlobalKey<FormState>(),
+        emailTextController = TextEditingController(),
+        passwordTextController = TextEditingController(),
+        isBroker = false,
+        super();
 
   @override
   void initListeners() {
@@ -59,15 +55,16 @@ class RegisterController extends Controller {
     registerPresenter.registerUserOnComplete = () {
       print('register user on complete');
       AppConstant.showLoader(getContext(), false);
-      
-        Navigator.pushAndRemoveUntil(
+
+      Navigator.pushAndRemoveUntil(
           getContext(),
-          MaterialPageRoute(builder: (BuildContext context) => EmailVerificationPage()),
+          MaterialPageRoute(
+              builder: (BuildContext context) => EmailVerificationPage()),
           (Route<dynamic> route) => false);
-          
+
       return;
 
-      if ( position == 'Broker' ){
+      if (position == 'Broker') {
         // Navigator.push(
         //   getContext(),
         //   MaterialPageRoute(
@@ -78,9 +75,7 @@ class RegisterController extends Controller {
         // );
 
         // instead, show email verification page
-      }
-      else if ( position == 'Salesperson' ){
-
+      } else if (position == 'Salesperson') {
         // if ( isBroker ) {
         //   Navigator.push(
         //     getContext(),
@@ -104,40 +99,32 @@ class RegisterController extends Controller {
     registerPresenter.registerUserOnError = (e) {
       print('register user on error $e');
       AppConstant.showLoader(getContext(), false);
-      
+
       if (e is Map) {
-        if ( !e['error'] ) {
+        if (!e['error']) {
           _statusDialog('Oops!', '${e['status'] ?? ''}');
         }
-      }
-      else{
+      } else {
         _statusDialog('Something went wrong', '${e.toString()}');
-      } 
+      }
     };
-
-
 
     // check license number
     registerPresenter.checkLicenseNumberOnNext = (bool res) async {
       print('check license number on next $res');
       isBroker = res;
       if (!isBroker) {
-          final bool? _done = await Navigator.push(
-            getContext(),
-            MaterialPageRoute(
-              builder: (buildContext) => NotifyUserPage()
-            )
-          );
+        final bool? _done = await Navigator.push(getContext(),
+            MaterialPageRoute(builder: (buildContext) => NotifyUserPage()));
 
-          if (_done==null){
-            _statusDialog("Invitation cancelled", "An invitation to your broker was cancelled.");
-          }
+        if (_done == null) {
+          _statusDialog("Invitation Required",
+              "An invitation to your broker is required to proceed.");
+        } else {
+          registerPageController.nextPage(
+              duration: Duration(milliseconds: 500), curve: Curves.ease);
+        }
       }
-
-      registerPageController.nextPage(
-        duration: Duration(milliseconds: 500),
-        curve: Curves.ease
-      );
     };
 
     registerPresenter.checkLicenseNumberOnComplete = () {
@@ -148,43 +135,37 @@ class RegisterController extends Controller {
     registerPresenter.checkLicenseNumberOnError = (e) {
       print('check license number on error $e');
       AppConstant.showLoader(getContext(), false);
-      
-      if ( !e['error'] ) {
+
+      if (!e['error']) {
         _statusDialog('Oops!', '${e['status'] ?? ''}');
-      }
-      else{
+      } else {
         _statusDialog('Something went wrong', '${e.toString()}');
-      } 
+      }
     };
   }
 
-  setPosition(value){
+  setPosition(value) {
     print('setposition $value');
     position = value;
 
-    if(value == 'Salesperson'){
+    if (value == 'Salesperson') {
       brokerLicenseNumberTextField = 'Enter your Broker’s License #';
-    }
-    else {
+    } else {
       brokerLicenseNumberTextField = 'Enter your License #';
     }
 
     refreshUI();
   }
 
-  void checkLicenseNumber(){
-    if ( position == 'Salesperson' ) {
+  void checkLicenseNumber() {
+    if (position == 'Salesperson') {
       AppConstant.showLoader(getContext(), true);
-      
+
       registerPresenter.checkLicenseNumber(
-        licenseNumber: brokerLicenseNumberTextController.text
-      );
-    }
-    else {
+          licenseNumber: brokerLicenseNumberTextController.text);
+    } else {
       registerPageController.nextPage(
-        duration: Duration(milliseconds: 500),
-        curve: Curves.ease
-      ); 
+          duration: Duration(milliseconds: 500), curve: Curves.ease);
     }
   }
 
@@ -192,27 +173,24 @@ class RegisterController extends Controller {
     AppConstant.showLoader(getContext(), true);
 
     registerPresenter.registerUser(
-      firstName: firstNameTextController.text, 
-      lastName: lastNameTextController.text, 
-      mobileNumber: mobileNumberTextController.text,
-      position: position,
-      brokerLicenseNumber: brokerLicenseNumberTextController.text,
-
-      email: emailTextController.text, 
-      password: passwordTextController.text
-    );
+        firstName: firstNameTextController.text,
+        lastName: lastNameTextController.text,
+        mobileNumber: mobileNumberTextController.text,
+        position: position,
+        brokerLicenseNumber: brokerLicenseNumberTextController.text,
+        email: emailTextController.text,
+        password: passwordTextController.text);
   }
 
-  _statusDialog(String title, String text, {bool? success, Function? onPressed}){
+  _statusDialog(String title, String text,
+      {bool? success, Function? onPressed}) {
     AppConstant.statusDialog(
-      context: getContext(),
-      success: success ?? false,
-      title: title,
-      text: text,
-      onPressed: onPressed
-    );
+        context: getContext(),
+        success: success ?? false,
+        title: title,
+        text: text,
+        onPressed: onPressed);
   }
-  
 
   @override
   void onResumed() => print('On resumed');
@@ -226,7 +204,7 @@ class RegisterController extends Controller {
   @override
   void onDisposed() {
     registerPresenter.dispose(); // don't forget to dispose of the presenter
-    
+
     firstNameTextController.dispose();
     lastNameTextController.dispose();
     mobileNumberTextController.dispose();
@@ -234,9 +212,8 @@ class RegisterController extends Controller {
 
     emailTextController.dispose();
     passwordTextController.dispose();
-    
+
     Loader.hide();
     super.onDisposed();
   }
-
 }

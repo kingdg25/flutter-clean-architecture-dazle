@@ -113,10 +113,11 @@ class _ProfilePageState extends ViewState<ProfilePage, ProfileController> {
               Center(
                 child: CircleAvatar(
                   radius: 95,
-                  backgroundImage: user.profilePicture == null
-                      ? AssetImage('assets/user_profile.png')
-                          as ImageProvider<Object>
-                      : NetworkImage(user.profilePicture!),
+                  backgroundImage:
+                      user.profilePicture == null || user.profilePicture == ""
+                          ? AssetImage('assets/user_profile.png')
+                              as ImageProvider<Object>
+                          : NetworkImage(user.profilePicture!),
                   backgroundColor: App.mainColor,
                 ),
               ),
