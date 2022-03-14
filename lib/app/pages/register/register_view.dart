@@ -1,3 +1,6 @@
+import 'package:dazle/app/pages/register/components/register_layout.dart';
+import 'package:dazle/app/pages/register/register_controller.dart';
+import 'package:dazle/app/widgets/custom_appbar.dart';
 import 'package:dazle/app/widgets/form_fields/custom_email_field.dart';
 import 'package:dazle/app/widgets/form_fields/custom_field_layout.dart';
 import 'package:dazle/app/widgets/form_fields/custom_icon_button.dart';
@@ -5,12 +8,9 @@ import 'package:dazle/app/widgets/form_fields/custom_password_field.dart';
 import 'package:dazle/app/widgets/form_fields/custom_select_field.dart';
 import 'package:dazle/app/widgets/form_fields/custom_text_field.dart';
 import 'package:dazle/app/widgets/form_fields/title_field.dart';
-import 'package:dazle/app/pages/register/components/register_layout.dart';
+import 'package:dazle/data/repositories/data_authentication_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
-import 'package:dazle/app/pages/register/register_controller.dart';
-import 'package:dazle/data/repositories/data_authentication_repository.dart';
-import 'package:dazle/app/widgets/custom_appbar.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 
 class RegisterPage extends View {
@@ -72,18 +72,24 @@ class _RegisterPageState extends ViewState<RegisterPage, RegisterController> {
                           validator: (val) {
                             final namePattern = r'^[a-zA-Z_ ]*$';
                             final regExp = RegExp(namePattern);
-
+                            print(val.length);
                             if (val.length == 0) {
                               return "Required field.";
-                            } else if (!regExp.hasMatch(val)) {
-                              return "Letters only.";
-                            } else {
-                              return null;
                             }
+                            if (val.length < 2) {
+                              return "Min 2 Letters Only";
+                            }
+                            if (val.length >= 50) {
+                              return "Max 50 Letters Only";
+                            }
+                            if (!regExp.hasMatch(val)) {
+                              return "Letters only.";
+                            }
+                            return null;
                           },
                         ),
                       ),
-                      SizedBox(width: 8.0),
+                      SizedBox(width: 5),
                       Flexible(
                         child: CustomTextField(
                           controller: controller.lastNameTextController,
@@ -96,11 +102,17 @@ class _RegisterPageState extends ViewState<RegisterPage, RegisterController> {
 
                             if (val.length == 0) {
                               return "Required field.";
-                            } else if (!regExp.hasMatch(val)) {
-                              return "Special Charters and number now allowed.";
-                            } else {
-                              return null;
                             }
+                            if (!regExp.hasMatch(val)) {
+                              return "Letters only";
+                            }
+                            if (val.length < 2) {
+                              return "Min 2 Letters Only";
+                            }
+                            if (val.length >= 50) {
+                              return "Max 50 Letters Only";
+                            }
+                            return null;
                           },
                         ),
                       ),

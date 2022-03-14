@@ -1,15 +1,13 @@
-import 'package:dazle/app/pages/connection/connection_view.dart';
 import 'package:dazle/app/pages/home/home_view.dart';
 import 'package:dazle/app/pages/listing/listing_view.dart';
 import 'package:dazle/app/pages/main/components/triangle_painter.dart';
-import 'package:dazle/app/pages/message/message_view.dart';
 import 'package:dazle/app/pages/profile/profile_view.dart';
 import 'package:flutter/material.dart';
 
 class MainPage extends StatefulWidget {
   static const String id = 'main_page';
-  
-  const MainPage({ Key? key }) : super(key: key);
+
+  const MainPage({Key? key}) : super(key: key);
 
   @override
   _MainPageState createState() => _MainPageState();
@@ -25,10 +23,8 @@ class _MainPageState extends State<MainPage> {
     ProfilePage(),
   ];
 
-  customBottomNavigationBarItem({
-    required String asset,
-    required String label
-  }) {
+  customBottomNavigationBarItem(
+      {required String asset, required String label}) {
     return BottomNavigationBarItem(
       activeIcon: CustomPaint(
         painter: TrianglePainter(),
@@ -46,7 +42,6 @@ class _MainPageState extends State<MainPage> {
       label: label,
     );
   }
-
 
   @override
   Widget build(BuildContext context) {
