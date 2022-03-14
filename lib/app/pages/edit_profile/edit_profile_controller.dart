@@ -1,21 +1,12 @@
 import 'dart:io';
-import 'dart:typed_data';
 
 import 'package:dazle/app/pages/edit_profile/edit_profile_presenter.dart';
-import 'package:dazle/app/pages/main/main_view.dart';
 import 'package:dazle/app/utils/app.dart';
 import 'package:dazle/app/utils/app_constant.dart';
-import 'package:dazle/data/constants.dart';
 import 'package:dazle/domain/entities/user.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:flutter_overlay_loader/flutter_overlay_loader.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:dazle/app/utils/app_constant.dart';
-import 'dart:convert' as convert;
-import 'package:path/path.dart';
-import 'package:http/http.dart' as http;
-import 'package:dazle/app/pages/profile/profile_view.dart';
 
 class EditProfileController extends Controller {
   final EditProfilePresenter editProfilePresenter;
@@ -60,7 +51,7 @@ class EditProfileController extends Controller {
       print('update user on complete');
       AppConstant.showLoader(getContext(), false);
 
-      _statusDialog('Success!', 'Updated Sucessfully');
+      _statusDialog('Success!', 'Updated Successfully');
     };
 
     editProfilePresenter.updateUserOnError = (e) {
@@ -82,23 +73,21 @@ class EditProfileController extends Controller {
   getCurrentUser() async {
     User user = await App.getUser();
 
-    if (user != null) {
-      _user = user;
+    _user = user;
 
-      firstNameTextController.text = user.firstName!;
-      lastNameTextController.text = user.lastName!;
-      professionTextController.text = user.position!;
+    firstNameTextController.text = user.firstName!;
+    lastNameTextController.text = user.lastName!;
+    professionTextController.text = user.position!;
 
-      emailTextController.text = user.email!;
-      mobileNumberTextController.text = user.mobileNumber!;
+    emailTextController.text = user.email!;
+    mobileNumberTextController.text = user.mobileNumber!;
 
-      brokerLicenseNumberTextController.text = user.brokerLicenseNumber!;
-      aboutMeTextController.text = user.aboutMe!;
+    brokerLicenseNumberTextController.text = user.brokerLicenseNumber!;
+    aboutMeTextController.text = user.aboutMe!;
 
-      userProfilePicture = user.profilePicture;
+    userProfilePicture = user.profilePicture;
 
-      refreshUI();
-    }
+    refreshUI();
   }
 
   void updateUser() async {
