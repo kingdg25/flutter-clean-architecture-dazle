@@ -133,7 +133,9 @@ class _EditProfilePageState
                       child: Column(
                         children: [
                           //---full name [start]
-                          TitleField(title: 'Full Name'),
+                          CustomFieldLayout(
+                            child: TitleField(title: 'Full Name'),
+                          ),
                           CustomFieldLayout(
                             child: Row(
                               children: [
@@ -164,9 +166,10 @@ class _EditProfilePageState
                           //---full name [end]
                           //***********************
                           //  --- number [start]
-                          TitleField(title: 'Mobile Number'),
-                          Container(
-                            padding: EdgeInsets.symmetric(horizontal: 35),
+                          CustomFieldLayout(
+                            child: TitleField(title: 'Mobile Number'),
+                          ),
+                          CustomFieldLayout(
                             child: InternationalPhoneNumberInput(
                               textFieldController:
                                   controller.mobileNumberTextController,
@@ -196,7 +199,9 @@ class _EditProfilePageState
                           //  --- number [end]
                           //  *********************
                           //  --- about me [start]
-                          TitleField(title: 'About Me'),
+                          CustomFieldLayout(
+                            child: TitleField(title: 'About Me'),
+                          ),
                           CustomTextField(
                             controller: controller.aboutMeTextController,
                             hintText: 'About Me',
@@ -242,19 +247,25 @@ class _EditProfilePageState
                           _space,
                           //  *****
                           //  --- more details
-                          TitleField(title: 'Email Address'),
+                          CustomFieldLayout(
+                            child: TitleField(title: 'Email Address'),
+                          ),
                           CustomTextField(
                             controller: controller.emailTextController,
                             hintText: '+63',
                             readOnly: true,
                           ),
-                          TitleField(title: 'Profession'),
+                          CustomFieldLayout(
+                            child: TitleField(title: 'Profession'),
+                          ),
                           CustomTextField(
                             controller: controller.professionTextController,
                             hintText: 'Profession',
                             readOnly: true,
                           ),
-                          TitleField(title: 'Broker License #'),
+                          CustomFieldLayout(
+                            child: TitleField(title: 'Broker License #'),
+                          ),
                           CustomTextField(
                             controller:
                                 controller.brokerLicenseNumberTextController,

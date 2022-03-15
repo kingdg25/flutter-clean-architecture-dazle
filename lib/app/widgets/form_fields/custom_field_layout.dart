@@ -12,7 +12,8 @@ class CustomFieldLayout extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
         margin: margin,
-        constraints: BoxConstraints(maxWidth: 300, minWidth: 250),
+        width: double.infinity,
+        // constraints: BoxConstraints(maxWidth: 300, minWidth: 250),
         child: child);
   }
 }
