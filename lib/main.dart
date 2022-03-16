@@ -7,21 +7,16 @@ import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 
 import 'package:flutter/material.dart';
 
-
-
-
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   runApp(MyApp());
 }
 
-
 /// For Testing different screen devices
 // void main() async {
 //   WidgetsFlutterBinding.ensureInitialized();
-  
+
 //   runApp(
 //     DevicePreview(
 //       enabled: true,
@@ -30,14 +25,12 @@ void main() async {
 //   );
 // }
 
-
-
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     FlutterCleanArchitecture.debugModeOn();
-    
+
     return MaterialApp(
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
