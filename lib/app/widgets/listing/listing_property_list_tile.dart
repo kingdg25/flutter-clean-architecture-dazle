@@ -38,11 +38,13 @@ class ListingPropertyListTile extends StatelessWidget {
                 children: [
                   GestureDetector(
                     onTap: () {
+                      print('Inside listing tile');
+                      print(items![index].id);
                       Navigator.push(
                           context,
                           MaterialPageRoute(
                               builder: (buildContext) => ListingDetailsPage(
-                                    property: items![index],
+                                    listingId: items![index].id,
                                   )));
                     },
                     child: true
@@ -177,7 +179,7 @@ class ListingPropertyListTile extends StatelessWidget {
                                 SizedBox(width: 4),
                                 PropertyTextInfo(
                                   asset: '',
-                                  text: items![index].totalArea,
+                                  text: items![index].formatArea,
                                 ),
                               ],
                             ),

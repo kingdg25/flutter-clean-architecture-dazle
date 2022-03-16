@@ -1,29 +1,33 @@
+import 'dart:async';
+
 import 'package:dazle/app/pages/my_listing/my_listing_presenter.dart';
 import 'package:dazle/app/utils/app_constant.dart';
 import 'package:dazle/domain/entities/property.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
-
 
 class MyListingController extends Controller {
   final MyListingPresenter myListingPresenter;
 
   List<Property> _myListing;
   List<Property> get myListing => _myListing;
+  Timer? _timer;
 
   MyListingController(userRepo)
-    : myListingPresenter = MyListingPresenter(userRepo),
-      _myListing = <Property>[],
-      super();
-
+      : myListingPresenter = MyListingPresenter(userRepo),
+        _myListing = <Property>[],
+        super();
 
   @override
   void initListeners() {
-    getData();
+    const oneSec = Duration(seconds: 1);
+    _timer = Timer.periodic(oneSec, (Timer t) {
+      getData();
+    });
 
     // get my listing
     myListingPresenter.getMyListingOnNext = (List<Property> res) {
       print('get my listing on next $res');
-      if (res != null){
+      if (res != null) {
         _myListing = res;
       }
     };
@@ -35,21 +39,21 @@ class MyListingController extends Controller {
 
     myListingPresenter.getMyListingOnError = (e) {
       print('get my listing on error $e');
-      
+
       if (e is Map) {
         if (e.containsKey("error_type")) {
-          AppConstant.statusDialog(context: getContext(), text: "${e.toString()}", title: "Something went wrong'");
+          AppConstant.statusDialog(
+              context: getContext(),
+              text: "${e.toString()}",
+              title: "Something went wrong'");
         }
       }
     };
   }
 
-
   void getData() {
     myListingPresenter.getMyListing();
   }
-
-
 
   @override
   void onResumed() => print('On resumed');
@@ -62,8 +66,8 @@ class MyListingController extends Controller {
 
   @override
   void onDisposed() {
+    _timer?.cancel();
     myListingPresenter.dispose(); // don't forget to dispose of the presenter
     super.onDisposed();
   }
-  
 }

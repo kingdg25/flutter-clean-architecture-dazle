@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:dazle/app/pages/login/login_view.dart';
 import 'package:dazle/app/pages/profile/profile_presenter.dart';
 import 'package:dazle/app/utils/app.dart';
@@ -19,6 +21,7 @@ class ProfileController extends Controller {
   User? get currentUser => _currentUser;
   User? get userToDisplay => _userToDisplay;
   List<Property>? get listings => _listings;
+  Timer? _timer;
 
   ProfileController({DataProfileRepository? dataProfileRepo, this.uidToDisplay})
       : profilePresenter = ProfilePresenter(),
@@ -28,7 +31,11 @@ class ProfileController extends Controller {
   void initListeners() async {
     await getCurrentUser();
     await getUserToDisplay();
-    await getListings();
+
+    const oneSec = Duration(seconds: 1);
+    _timer = Timer.periodic(oneSec, (Timer t) async {
+      await getListings();
+    });
 
     profilePresenter.getUserListingOnNext = (listings) {
       print("On nextttt profile presenter LISTINGSSSSS");
@@ -79,6 +86,7 @@ class ProfileController extends Controller {
 
   @override
   void onDisposed() {
+    _timer?.cancel();
     profilePresenter.dispose(); // don't forget to dispose of the presenter
     super.onDisposed();
   }

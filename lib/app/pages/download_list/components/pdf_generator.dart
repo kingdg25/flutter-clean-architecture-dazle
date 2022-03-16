@@ -61,7 +61,7 @@ class PdfGenerator {
                             ),
                             PdfWidgets().pdfCustomRichText(
                               mainText: 'Lot area (sqm): ',
-                              valueText: property.totalArea,
+                              valueText: property.formatArea,
                             ),
                             pw.SizedBox(
                               height: 10,
@@ -82,8 +82,7 @@ class PdfGenerator {
                             ),
                             PdfWidgets().pdfCustomRichText(
                               mainText: 'Lcoation: ',
-                              valueText:
-                                  '${property.district}, ${property.city}',
+                              valueText: '${property.city}',
                             ),
                             pw.SizedBox(
                               height: 10,
@@ -147,12 +146,12 @@ class PdfGenerator {
                               pw.Positioned(
                                 top: -20,
                                 child: PdfWidgets().pdfAddressContainer(
-                                    district: property.district),
+                                    text: '${property.city} '),
                               ),
                               pw.Positioned(
                                 bottom: -20,
                                 child: PdfWidgets().pdfAddressContainer(
-                                    district: property.formatPrice),
+                                    text: property.formatPrice),
                               ),
                               // pw.Positioned(
                               //   bottom: -18,

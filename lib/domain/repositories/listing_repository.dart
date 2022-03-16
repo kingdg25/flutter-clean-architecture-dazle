@@ -1,7 +1,7 @@
 import 'package:dazle/domain/entities/property.dart';
 
 abstract class ListingRepository {
-  Future<Property> create({ Map? listing });
+  Future<Property> create({Map? listing});
 
   Future<Property> update({Map? data});
 
@@ -12,4 +12,6 @@ abstract class ListingRepository {
   Future<List<Property>> getUserListings({String? uid});
 
   Future<List<Property>> getMyCollection();
+
+  Future<void> deleteListing({String? listingId});
 }

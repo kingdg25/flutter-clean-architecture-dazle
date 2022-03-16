@@ -153,7 +153,7 @@ class _DownloadListPageState
               ),
               CustomRichText(
                 mainText: 'Lot area(sqm): ',
-                valueText: widget.property.totalArea,
+                valueText: widget.property.formatArea,
               ),
               SizedBox(
                 height: 10,
@@ -174,9 +174,7 @@ class _DownloadListPageState
                 height: 10,
               ),
               CustomRichText(
-                  mainText: 'Location: ',
-                  valueText:
-                      '${widget.property.district}, ${widget.property.city}'),
+                  mainText: 'Location: ', valueText: '${widget.property.city}'),
               SizedBox(
                 height: 10,
               ),

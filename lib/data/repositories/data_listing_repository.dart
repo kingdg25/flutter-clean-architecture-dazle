@@ -52,12 +52,22 @@ class DataListingRepository extends ListingRepository {
       print(jsonResponse);
       if (response.statusCode == 200) {
         final Map property = jsonResponse["property"];
-        property['price'] = jsonResponse["property"]['price'].toString();
+
+        // converts int to double
+        final price = property['price'];
+        final area = property['total_area'];
+        String priceVar = '$price';
+        String areaVar = '$area';
+        double parsedPrice = double.parse(priceVar);
+        double parsedArea = double.parse(areaVar);
+        property['price'] = parsedPrice;
+        property['total_area'] = parsedArea;
 
         print(property['createdAt'].runtimeType);
         print(property['createdAt']);
 
-        final Property propertyInstance = Property.fromJson(property as Map<String, dynamic>);
+        final Property propertyInstance =
+            Property.fromJson(property as Map<String, dynamic>);
 
         print(propertyInstance.toJson());
 
@@ -106,9 +116,17 @@ class DataListingRepository extends ListingRepository {
     if (response.statusCode == 200) {
       print(jsonResponse['listings'].length);
       jsonResponse['listings'].forEach((val) {
-        val['price'] = "${val['price'] ?? 0}";
-        val['time_period'] = "${val['time_period'] ?? 0}";
-        val['total_area'] = "${val['total_area'] ?? 0}";
+        // val['price'] = "${val['price'] ?? 0}";
+        // val['time_period'] = "${val['time_period'] ?? 0}";
+        // val['total_area'] = "${val['total_area'] ?? 0}";
+        final price = val['price'];
+        final area = val['total_area'];
+        String priceVar = '$price';
+        String areaVar = '$area';
+        double parsedPrice = double.parse(priceVar);
+        double parsedArea = double.parse(areaVar);
+        val['price'] = parsedPrice;
+        val['total_area'] = parsedArea;
         print(val);
         listings.add(Property.fromJson(val));
       });
@@ -123,28 +141,28 @@ class DataListingRepository extends ListingRepository {
     }
     return listings;
 
-    return [
-      Property(
-          coverPhoto: 'https://picsum.photos/id/73/200/300',
-          photos: [
-            'https://picsum.photos/id/70/200/300',
-            'https://picsum.photos/id/71/200/300',
-            'https://picsum.photos/id/72/200/300',
-          ],
-          keywords: ['aa', 'ss'],
-          price: '540,735.12',
-          totalBedRoom: '213',
-          totalBathRoom: '321',
-          totalParkingSpace: '22',
-          totalArea: '432',
-          district: 'Lapasan',
-          city: 'Cagayan de Oro City',
-          amenities: ['Shared Gym', 'Covered Parking', 'Central AC'],
-          isYourProperty: 'unfurnished',
-          timePeriod: 'month',
-          description:
-              "Property Description: Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s")
-    ];
+    // return [
+    //   Property(
+    //       coverPhoto: 'https://picsum.photos/id/73/200/300',
+    //       photos: [
+    //         'https://picsum.photos/id/70/200/300',
+    //         'https://picsum.photos/id/71/200/300',
+    //         'https://picsum.photos/id/72/200/300',
+    //       ],
+    //       keywords: ['aa', 'ss'],
+    //       price: '540,735.12',
+    //       totalBedRoom: '213',
+    //       totalBathRoom: '321',
+    //       totalParkingSpace: '22',
+    //       totalArea: '432',
+    //       district: 'Lapasan',
+    //       city: 'Cagayan de Oro City',
+    //       amenities: ['Shared Gym', 'Covered Parking', 'Central AC'],
+    //       isYourProperty: 'unfurnished',
+    //       timePeriod: 'month',
+    //       description:
+    //           "Property Description: Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s")
+    // ];
   }
 
   @override
@@ -163,7 +181,8 @@ class DataListingRepository extends ListingRepository {
     }
 
     var response = await http.get(
-        Uri.parse("${Constants.siteURL}/api/listings/get-listings-in-profile/$uid/$viewerId"),
+        Uri.parse(
+            "${Constants.siteURL}/api/listings/get-listings-in-profile/$uid/$viewerId"),
         headers: {
           'Authorization': 'Bearer ${prefs.getString("accessToken")}',
           'Content-Type': 'application/json',
@@ -175,9 +194,14 @@ class DataListingRepository extends ListingRepository {
     if (response.statusCode == 200) {
       print(jsonResponse['listings'].length);
       jsonResponse['listings'].forEach((val) {
-        val['price'] = "${val['price'] ?? 0}";
-        val['time_period'] = "${val['time_period'] ?? 0}";
-        val['total_area'] = "${val['total_area'] ?? 0}";
+        final price = val['price'];
+        final area = val['total_area'];
+        String priceVar = '$price';
+        String areaVar = '$area';
+        double parsedPrice = double.parse(priceVar);
+        double parsedArea = double.parse(areaVar);
+        val['price'] = parsedPrice;
+        val['total_area'] = parsedArea;
         print(val);
         listings.add(Property.fromJson(val));
       });
@@ -186,48 +210,48 @@ class DataListingRepository extends ListingRepository {
     }
     return listings;
 
-    return [
-      Property(
-          coverPhoto: 'https://picsum.photos/id/73/200/300',
-          photos: [
-            'https://picsum.photos/id/70/200/300',
-            'https://picsum.photos/id/71/200/300',
-            'https://picsum.photos/id/72/200/300',
-          ],
-          keywords: ['aa', 'ss'],
-          price: '540,735.12',
-          totalBedRoom: '213',
-          totalBathRoom: '321',
-          totalParkingSpace: '22',
-          totalArea: '432',
-          district: 'Lapasan',
-          city: 'Cagayan de Oro City',
-          amenities: ['Shared Gym', 'Covered Parking', 'Central AC'],
-          isYourProperty: 'unfurnished',
-          timePeriod: 'month',
-          description:
-              "Property Description: Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s"),
-      Property(
-          coverPhoto: 'https://picsum.photos/id/73/200/300',
-          photos: [
-            'https://picsum.photos/id/70/200/300',
-            'https://picsum.photos/id/71/200/300',
-            'https://picsum.photos/id/72/200/300',
-          ],
-          keywords: ['aa', 'ss'],
-          price: '540,735.12',
-          totalBedRoom: '213',
-          totalBathRoom: '321',
-          totalParkingSpace: '22',
-          totalArea: '432',
-          district: 'Lapasan',
-          city: 'Cagayan de Oro City',
-          amenities: ['Shared Gym', 'Covered Parking', 'Central AC'],
-          isYourProperty: 'unfurnished',
-          timePeriod: 'month',
-          description:
-              "Property Description: Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s")
-    ];
+    // return [
+    //   Property(
+    //       coverPhoto: 'https://picsum.photos/id/73/200/300',
+    //       photos: [
+    //         'https://picsum.photos/id/70/200/300',
+    //         'https://picsum.photos/id/71/200/300',
+    //         'https://picsum.photos/id/72/200/300',
+    //       ],
+    //       keywords: ['aa', 'ss'],
+    //       price: '540,735.12',
+    //       totalBedRoom: '213',
+    //       totalBathRoom: '321',
+    //       totalParkingSpace: '22',
+    //       totalArea: '432',
+    //       district: 'Lapasan',
+    //       city: 'Cagayan de Oro City',
+    //       amenities: ['Shared Gym', 'Covered Parking', 'Central AC'],
+    //       isYourProperty: 'unfurnished',
+    //       timePeriod: 'month',
+    //       description:
+    //           "Property Description: Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s"),
+    //   Property(
+    //       coverPhoto: 'https://picsum.photos/id/73/200/300',
+    //       photos: [
+    //         'https://picsum.photos/id/70/200/300',
+    //         'https://picsum.photos/id/71/200/300',
+    //         'https://picsum.photos/id/72/200/300',
+    //       ],
+    //       keywords: ['aa', 'ss'],
+    //       price: '540,735.12',
+    //       totalBedRoom: '213',
+    //       totalBathRoom: '321',
+    //       totalParkingSpace: '22',
+    //       totalArea: '432',
+    //       district: 'Lapasan',
+    //       city: 'Cagayan de Oro City',
+    //       amenities: ['Shared Gym', 'Covered Parking', 'Central AC'],
+    //       isYourProperty: 'unfurnished',
+    //       timePeriod: 'month',
+    //       description:
+    //           "Property Description: Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s")
+    // ];
   }
 
   @override
@@ -241,11 +265,11 @@ class DataListingRepository extends ListingRepository {
             'https://picsum.photos/id/79/200/300',
           ],
           keywords: ['qq', 'ww'],
-          price: '664,321.12',
+          price: 664321.12,
           totalBedRoom: '11',
           totalBathRoom: '22',
           totalParkingSpace: '33',
-          totalArea: '64',
+          totalArea: 64,
           district: 'Lapasan',
           city: 'Cagayan de Oro City',
           amenities: ['Kitchen', 'Wifi', 'Eco Friendly', 'Security'],
@@ -306,7 +330,8 @@ class DataListingRepository extends ListingRepository {
     final listingId = data!['id'];
     Map params = {"data": data};
     var response = await http.put(
-        Uri.parse("${Constants.siteURL}/api/listings/update-listing/$listingId"),
+        Uri.parse(
+            "${Constants.siteURL}/api/listings/update-listing/$listingId"),
         body: convert.jsonEncode(params),
         headers: {
           'Authorization': 'Bearer ${userToken ?? ""}',
@@ -327,7 +352,8 @@ class DataListingRepository extends ListingRepository {
       final Map property = jsonResponse["listing"];
       property['price'] = jsonResponse["listing"]['price'].toString();
 
-      final Property propertyInstance = Property.fromJson(property as Map<String, dynamic>);
+      final Property propertyInstance =
+          Property.fromJson(property as Map<String, dynamic>);
 
       return propertyInstance;
     } else {
@@ -340,8 +366,82 @@ class DataListingRepository extends ListingRepository {
   }
 
   @override
-  Future<Property> getListingDetails(String id) {
-    // TODO: implement getListingDetails
-    throw UnimplementedError();
+  Future<Property> getListingDetails(String listingId) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final Property selectedListing;
+
+    var response = await http.get(
+        Uri.parse("${Constants.siteURL}/api/listings/$listingId"),
+        headers: {
+          'Authorization': 'Bearer ${prefs.getString("accessToken")}',
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        });
+
+    var jsonResponse = await convert.jsonDecode(response.body);
+
+    if (response.statusCode == 200) {
+      final Map property = jsonResponse["listing"];
+
+      // converts int to double
+      final price = property['price'];
+      final area = property['total_area'];
+      String priceVar = '$price';
+      String areaVar = '$area';
+      double parsedPrice = double.parse(priceVar);
+      double parsedArea = double.parse(areaVar);
+      property['price'] = parsedPrice;
+      property['total_area'] = parsedArea;
+      selectedListing = Property.fromJson(property as Map<String, dynamic>);
+
+      print('printing selected listing');
+      print(selectedListing.toString());
+    } else if (response.statusCode == 401) {
+      throw {
+        "error": false,
+        "error_type": "unauthorized",
+        "status": "Unauthorized. Signing out!"
+      };
+    } else {
+      throw {"error": true, "error_type": "dynamic", "status": "$jsonResponse"};
+    }
+
+    return selectedListing;
+  }
+
+  @override
+  Future<void> deleteListing({String? listingId}) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    var response = await http.delete(
+        Uri.parse(
+            "${Constants.siteURL}/api/listings/delete-listing/$listingId"),
+        headers: {
+          'Authorization': 'Bearer ${prefs.getString("accessToken")}',
+          'Content-Type': 'application/json'
+        });
+
+    var jsonResponse = await convert.jsonDecode(response.body);
+
+    if (response.statusCode == 200) {
+      print(jsonResponse);
+      bool success = jsonResponse['success'];
+
+      if (success == false) {
+        throw {
+          "error": false,
+          "error_type": "${jsonResponse['error_type'] ?? ''}",
+          "status": jsonResponse['status']
+        };
+      }
+    } else if (response.statusCode == 401) {
+      throw {
+        "error": false,
+        "error_type": "unauthorized",
+        "status": "Unauthorized. Signing out!"
+      };
+    } else {
+      throw {"error": true, "error_type": "dynamic", "status": "$jsonResponse"};
+    }
   }
 }

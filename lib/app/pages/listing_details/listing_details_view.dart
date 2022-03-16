@@ -5,6 +5,7 @@ import 'package:dazle/app/pages/listing_details/components/listing_details_conta
 import 'package:dazle/app/pages/listing_details/components/listing_details_icon_button.dart';
 import 'package:dazle/app/pages/listing_details/listing_details_controller.dart';
 import 'package:dazle/app/utils/app.dart';
+import 'package:dazle/app/utils/app_constant.dart';
 import 'package:dazle/app/widgets/custom_text.dart';
 import 'package:dazle/data/repositories/data_listing_repository.dart';
 import 'package:dazle/domain/entities/property.dart';
@@ -13,45 +14,59 @@ import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:dazle/app/pages/download_list/download_list_view.dart';
 
 class ListingDetailsPage extends View {
-  ListingDetailsPage({Key? key, required this.property}) : super(key: key);
+  ListingDetailsPage({Key? key, required this.listingId}) : super(key: key);
 
-  final Property property;
+  // final Property property;
+  final String? listingId;
 
   @override
-  _ListingDetailsPageState createState() => _ListingDetailsPageState();
+  _ListingDetailsPageState createState() => _ListingDetailsPageState(listingId);
 }
 
 class _ListingDetailsPageState
     extends ViewState<ListingDetailsPage, ListingDetailsController> {
-  _ListingDetailsPageState()
-      : super(ListingDetailsController(DataListingRepository()));
+  _ListingDetailsPageState(listingId)
+      : super(ListingDetailsController(
+            dataListingRepo: DataListingRepository(), listingId: listingId));
   CarouselController carouselController = CarouselController();
 
   @override
   Widget get view {
     return Scaffold(
-      key: globalKey,
-      backgroundColor: Colors.white,
-      body: ControlledWidgetBuilder<ListingDetailsController>(
-        builder: (context, controller) {
+        key: globalKey,
+        backgroundColor: Colors.white,
+        body: ControlledWidgetBuilder<ListingDetailsController>(
+            builder: (context, controller) {
+          Property? selectedListing = controller.selectedListing;
+
+          print('inside listing details view:  ${selectedListing.toString()}');
+
+          if (selectedListing == null) {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          }
           return CustomScrollView(
             slivers: [
               SliverAppBar(
                 actions: <Widget>[
-                  controller.currentUser?.id == widget.property.createdBy ? ListingDetailsIconButton(
-                    iconData: Icons.edit,
-                    tooltip: "Edit Property",
-                    onPressed: () async {
-                      Navigator.pop(context);
-                      final popThisPage = await Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (buildContext) => CreateListingPage(
-                            property: widget.property,
-                          ),
-                        ));
-                    },
-                  ) : Container(),
+                  controller.currentUser?.id == selectedListing.createdBy
+                      ? ListingDetailsIconButton(
+                          iconData: Icons.edit,
+                          tooltip: "Edit Property",
+                          onPressed: () async {
+                            Navigator.pop(context);
+                            final popThisPage = await Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (buildContext) => CreateListingPage(
+                                    property: selectedListing,
+                                  ),
+                                ));
+                            await controller.getListingToDisplay();
+                          },
+                        )
+                      : Container(),
                   ListingDetailsIconButton(
                     iconData: Icons.file_download,
                     tooltip: "Download/Share",
@@ -60,29 +75,52 @@ class _ListingDetailsPageState
                           context,
                           MaterialPageRoute(
                             builder: (buildContext) => DownloadListPage(
-                              property: widget.property,
+                              property: selectedListing,
                             ),
                           ));
                     },
                   ),
-                  ListingDetailsIconButton(
-                    iconData: Icons.bookmark_border,
-                    tooltip: "Bookmark this property",
-                    onPressed: () {},
-                  ),
-                  true ? Container() : ListingDetailsIconButton(
-                    iconData: Icons.open_in_new_outlined,
-                    tooltip: "bookmark",
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (buildContext) => DownloadListPage(
-                              property: widget.property,
-                            ),
-                          ));
-                    },
-                  )
+                  controller.currentUser?.id == selectedListing.createdBy
+                      ? ListingDetailsIconButton(
+                          iconData: Icons.delete,
+                          tooltip: "Delete this property",
+                          onPressed: () {
+                            AppConstant.deleteDialog(
+                                context: context,
+                                title: 'Confim',
+                                text:
+                                    'Are you sure you want to delete this listing?',
+                                onConfirm: () async {
+                                  Navigator.pop(context);
+                                  AppConstant.showLoader(context, true);
+                                  await controller.deleteListing(
+                                      listingId: controller.listingId);
+                                  AppConstant.showLoader(context, false);
+                                  Navigator.pop(context);
+                                });
+                          },
+                        )
+                      : Container(),
+                  // ListingDetailsIconButton(
+                  //   iconData: Icons.bookmark_border,
+                  //   tooltip: "Bookmark this property",
+                  //   onPressed: () {},
+                  // ),
+                  // true
+                  //     ? Container()
+                  //     : ListingDetailsIconButton(
+                  //         iconData: Icons.open_in_new_outlined,
+                  //         tooltip: "bookmark",
+                  //         onPressed: () {
+                  //           Navigator.push(
+                  //               context,
+                  //               MaterialPageRoute(
+                  //                 builder: (buildContext) => DownloadListPage(
+                  //                   property: selectedListing,
+                  //                 ),
+                  //               ));
+                  //         },
+                  //       )
                 ],
                 leading: ListingDetailsIconButton(
                   margin: EdgeInsets.only(left: 8),
@@ -95,7 +133,7 @@ class _ListingDetailsPageState
                 expandedHeight: 271,
                 flexibleSpace: FlexibleSpaceBar(
                     background: CarouselSlider.builder(
-                        itemCount: widget.property.photos?.length ?? 0,
+                        itemCount: selectedListing.photos?.length ?? 0,
                         options: CarouselOptions(
                           aspectRatio: 1,
                           viewportFraction: 1.0,
@@ -104,7 +142,8 @@ class _ListingDetailsPageState
                           reverse: false,
                           autoPlay: true,
                           autoPlayInterval: Duration(seconds: 5),
-                          autoPlayAnimationDuration: Duration(milliseconds: 800),
+                          autoPlayAnimationDuration:
+                              Duration(milliseconds: 800),
                           autoPlayCurve: Curves.fastOutSlowIn,
                           enlargeCenterPage: true,
                           scrollDirection: Axis.horizontal,
@@ -114,11 +153,11 @@ class _ListingDetailsPageState
                                 int pageViewIndex) =>
                             GestureDetector(
                               onTap: () {
-                                print(widget.property.photos![itemIndex]);
+                                print(selectedListing.photos![itemIndex]);
                               },
                               child: CachedNetworkImage(
-                                imageUrl:
-                                    widget.property.photos![itemIndex].toString(),
+                                imageUrl: selectedListing.photos![itemIndex]
+                                    .toString(),
                                 imageBuilder: (context, imageProvider) =>
                                     Container(
                                   decoration: BoxDecoration(
@@ -126,7 +165,8 @@ class _ListingDetailsPageState
                                         topLeft: Radius.circular(10),
                                         topRight: Radius.circular(10)),
                                     image: DecorationImage(
-                                        image: imageProvider, fit: BoxFit.cover),
+                                        image: imageProvider,
+                                        fit: BoxFit.cover),
                                   ),
                                 ),
                                 progressIndicatorBuilder:
@@ -137,7 +177,8 @@ class _ListingDetailsPageState
                                     value: progress.progress,
                                   ),
                                 ),
-                                errorWidget: (context, url, error) => Image.asset(
+                                errorWidget: (context, url, error) =>
+                                    Image.asset(
                                   'assets/brooky_logo.png',
                                   fit: BoxFit.scaleDown,
                                 ),
@@ -154,17 +195,17 @@ class _ListingDetailsPageState
                       Text.rich(
                         TextSpan(children: [
                           TextSpan(
-                              text: "${widget.property.formatPrice}",
+                              text: "${selectedListing.formatPrice}",
                               style: App.textStyle(
                                   fontSize: 20, fontWeight: FontWeight.w800)),
                           TextSpan(
-                              text: "/${widget.property.timePeriod}",
+                              text: "/${selectedListing.timePeriod}",
                               style: App.textStyle(
                                   fontSize: 13, fontWeight: FontWeight.w700)),
                         ]),
                       ),
                       CustomText(
-                        text: '${widget.property.city}',
+                        text: '${selectedListing.city}',
                         color: App.hintColor,
                         fontSize: 12,
                         fontWeight: FontWeight.w600,
@@ -172,7 +213,7 @@ class _ListingDetailsPageState
                       SizedBox(height: 20),
                       ListingDetailsContainerBox(
                         asset: 'assets/icons/bed.png',
-                        text: '${widget.property.totalBedRoom} Bedroom(s)',
+                        text: '${selectedListing.totalBedRoom} Bedroom(s)',
                       ),
                       SizedBox(height: 8),
                       Row(
@@ -181,14 +222,14 @@ class _ListingDetailsPageState
                             child: ListingDetailsContainerBox(
                               asset: 'assets/icons/bath.png',
                               text:
-                                  '${widget.property.totalBathRoom} Bathroom(s)',
+                                  '${selectedListing.totalBathRoom} Bathroom(s)',
                             ),
                           ),
                           SizedBox(width: 8),
                           Flexible(
                             child: ListingDetailsContainerBox(
                               asset: 'assets/icons/area.png',
-                              text: '${widget.property.totalArea} sqft',
+                              text: '${selectedListing.totalArea} sqft',
                             ),
                           )
                         ],
@@ -200,14 +241,14 @@ class _ListingDetailsPageState
                             child: ListingDetailsContainerBox(
                               asset: 'assets/icons/car.png',
                               text:
-                                  '${widget.property.totalParkingSpace} parking spot(s)',
+                                  '${selectedListing.totalParkingSpace} parking spot(s)',
                             ),
                           ),
                           SizedBox(width: 8),
                           Flexible(
                             child: ListingDetailsContainerBox(
                               asset: 'assets/icons/furnished.png',
-                              text: '${widget.property.isYourProperty}',
+                              text: '${selectedListing.isYourProperty}',
                             ),
                           )
                         ],
@@ -241,12 +282,12 @@ class _ListingDetailsPageState
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 CustomText(
-                                  text: '${widget.property.street ?? ""}',
+                                  text: '${selectedListing.street ?? ""}',
                                   fontSize: 11,
                                   fontWeight: FontWeight.w700,
                                 ),
                                 CustomText(
-                                  text: '${widget.property.city}',
+                                  text: '${selectedListing.city}',
                                   color: App.hintColor,
                                   fontSize: 11,
                                   fontWeight: FontWeight.w700,
@@ -272,12 +313,13 @@ class _ListingDetailsPageState
                         padding: EdgeInsets.zero,
                         physics: NeverScrollableScrollPhysics(),
                         shrinkWrap: true,
-                        itemCount: widget.property.amenities?.length ?? 0,
+                        itemCount: selectedListing.amenities?.length ?? 0,
                         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: MediaQuery.of(context).orientation ==
-                                    Orientation.landscape
-                                ? 3
-                                : 2,
+                            crossAxisCount:
+                                MediaQuery.of(context).orientation ==
+                                        Orientation.landscape
+                                    ? 3
+                                    : 2,
                             childAspectRatio: 5),
                         itemBuilder: (context, index) {
                           return Row(
@@ -288,7 +330,7 @@ class _ListingDetailsPageState
                               ),
                               SizedBox(width: 8),
                               CustomText(
-                                text: widget.property.amenities![index],
+                                text: selectedListing.amenities![index],
                                 fontSize: 13,
                                 fontWeight: FontWeight.w600,
                               ),
@@ -304,7 +346,7 @@ class _ListingDetailsPageState
                       ),
                       SizedBox(height: 10),
                       CustomText(
-                        text: "${widget.property.description}",
+                        text: "${selectedListing.description}",
                         color: App.hintColor,
                         fontSize: 12,
                         fontWeight: FontWeight.w500,
@@ -316,8 +358,6 @@ class _ListingDetailsPageState
               )
             ],
           );
-        }
-      )
-    );
+        }));
   }
 }

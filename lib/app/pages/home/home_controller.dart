@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:dazle/app/pages/main/main_view.dart';
 import 'package:dazle/app/utils/app_constant.dart';
 import 'package:dazle/domain/entities/photo_tile.dart';
@@ -29,6 +31,8 @@ class HomeController extends Controller {
 
   List<Property> _myListing;
   List<Property> get myListing => _myListing;
+
+  Timer? _timer;
 
   TextEditingController? searchTextController;
 
@@ -86,7 +90,10 @@ class HomeController extends Controller {
       }
     };
 
-    getData();
+    const oneSec = Duration(seconds: 1);
+    _timer = Timer.periodic(oneSec, (Timer t) {
+      getData();
+    });
 
     // get spot light
     homePresenter.getSpotLightOnNext = (List<PhotoTile> res) {
@@ -253,6 +260,7 @@ class HomeController extends Controller {
 
   @override
   void onDisposed() {
+    _timer?.cancel();
     homePresenter.dispose(); // don't forget to dispose of the presenter
     Loader.hide();
     super.onDisposed();

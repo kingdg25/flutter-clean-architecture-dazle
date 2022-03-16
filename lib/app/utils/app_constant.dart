@@ -68,6 +68,53 @@ class AppConstant {
     );
   }
 
+  static Future deleteDialog(
+      {required BuildContext context,
+      required String title,
+      required String text,
+      required Function onConfirm}) {
+    return showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+          actionsPadding: EdgeInsets.all(20.0),
+          title: CustomText(
+            text: title,
+            fontSize: 18.0,
+            textAlign: TextAlign.center,
+          ),
+          content: CustomText(
+            text: text,
+            fontSize: 13.0,
+            textAlign: TextAlign.center,
+          ),
+          actions: <Widget>[
+            CustomButton(
+              text: 'Confirm',
+              expanded: true,
+              borderRadius: 20.0,
+              onPressed: onConfirm,
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            CustomButton(
+              text: 'Cancel',
+              main: false,
+              expanded: true,
+              borderRadius: 20.0,
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   static Decoration bottomBorder = BoxDecoration(
       border: Border(
           bottom: BorderSide(

@@ -24,8 +24,6 @@ class DataProfileRepository extends ProfileRepository {
     print('update user update user ${user!.toJson()}');
     print(prefs.getString("accessToken"));
 
-    // TODO: Add a file parameter for profile picture
-    // TODO: If the file is not empty Create new User object with the updated profile picture
     if (profilePicture != null) {
       String? imageUrl =
           await AppConstant().getFileUrl(attachment: profilePicture);

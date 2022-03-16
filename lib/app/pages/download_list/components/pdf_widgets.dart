@@ -59,7 +59,7 @@ class PdfWidgets {
   /// Takes a the district property from "Property" and returns a pill shaped
   /// container on top of the pdf pictures
   pdfAddressContainer({
-    required String? district,
+    required String? text,
   }) {
     return pw.Container(
       padding: pw.EdgeInsets.symmetric(vertical: 15),
@@ -76,7 +76,7 @@ class PdfWidgets {
       ),
       child: pw.Center(
         child: pw.Text(
-          district == null ? 'Test' : district,
+          text == null ? 'Test' : text,
           style: pw.TextStyle(
             color: PdfColors.white,
             fontWeight: pw.FontWeight.bold,

@@ -10,11 +10,10 @@ import 'package:dazle/app/widgets/form_fields/custom_upload_field.dart';
 import 'package:dazle/data/repositories/data_listing_repository.dart';
 import 'package:dazle/domain/entities/property.dart';
 import 'package:flutter/material.dart';
+import 'package:pattern_formatter/pattern_formatter.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 
 import '../../widgets/form_fields/amenities_field.dart';
-
-
 
 class CreateListingPage extends View {
   final Property? property;
@@ -24,11 +23,13 @@ class CreateListingPage extends View {
   _CreateListingPageState createState() => _CreateListingPageState(property);
 }
 
-
-class _CreateListingPageState extends ViewState<CreateListingPage, CreateListingController> {
-  _CreateListingPageState(property) : 
-    appBarTitle = (property!=null && property.id!=null) ? "Update Listing" : 'Create Listing',
-    super(CreateListingController(DataListingRepository(), property));
+class _CreateListingPageState
+    extends ViewState<CreateListingPage, CreateListingController> {
+  _CreateListingPageState(property)
+      : appBarTitle = (property != null && property.id != null)
+            ? "Update Listing"
+            : 'Create Listing',
+        super(CreateListingController(DataListingRepository(), property));
   String appBarTitle = 'Create Listing';
   List<Widget> createListingList = [];
   int currentPage = 1;
@@ -37,44 +38,34 @@ class _CreateListingPageState extends ViewState<CreateListingPage, CreateListing
   @override
   Widget get view {
     return Scaffold(
-      key: globalKey,
-      appBar: CustomAppBar(
-        title: appBarTitle,
-        actions: [
-          ControlledWidgetBuilder<CreateListingController>(
-            builder: (context, controller) {
+        key: globalKey,
+        appBar: CustomAppBar(
+          title: appBarTitle,
+          actions: [
+            ControlledWidgetBuilder<CreateListingController>(
+                builder: (context, controller) {
               return Container(
                 alignment: Alignment.center,
                 padding: EdgeInsets.only(right: 10.0),
                 child: Text.rich(
-                  TextSpan(
-                    children: [
+                    TextSpan(children: [
+                      TextSpan(text: "Step $currentPage "),
                       TextSpan(
-                        text: "Step $currentPage "
-                      ),
-                      TextSpan(
-                        text: "of $totalPage",
-                        style: App.textStyle(
-                          fontSize: 12,
-                          color: App.hintColor,
-                          fontWeight: FontWeight.w600
-                        )
-                      ),
-                    ]
-                  ),
-                  style: App.textStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.w600
-                  )
-                ),
+                          text: "of $totalPage",
+                          style: App.textStyle(
+                              fontSize: 12,
+                              color: App.hintColor,
+                              fontWeight: FontWeight.w600)),
+                    ]),
+                    style: App.textStyle(
+                        fontSize: 12, fontWeight: FontWeight.w600)),
               );
-            }
-          )
-        ],
-      ),
-      backgroundColor: Colors.white,
-      body: ControlledWidgetBuilder<CreateListingController>(
-        builder: (context, controller) {
+            })
+          ],
+        ),
+        backgroundColor: Colors.white,
+        body: ControlledWidgetBuilder<CreateListingController>(
+            builder: (context, controller) {
           var _pageController = controller.createListingPageController;
 
           createListingList = [
@@ -83,9 +74,7 @@ class _CreateListingPageState extends ViewState<CreateListingPage, CreateListing
               padding: EdgeInsets.only(bottom: 20),
               children: [
                 AppConstant.customTitleField(
-                  padding: EdgeInsets.only(left: 18),
-                  title: 'Property Type'
-                ),
+                    padding: EdgeInsets.only(left: 18), title: 'Property Type'),
                 CustomRadioGroupButton(
                   radioWidth: 120,
                   buttonLables: [
@@ -115,9 +104,7 @@ class _CreateListingPageState extends ViewState<CreateListingPage, CreateListing
                   },
                   defaultSelected: controller.propertyType,
                 ),
-                AppConstant.customTitleField(
-                  title: 'Property For'
-                ),
+                AppConstant.customTitleField(title: 'Property For'),
                 Container(
                   alignment: Alignment.centerLeft,
                   child: CustomRadioGroupButton(
@@ -136,33 +123,24 @@ class _CreateListingPageState extends ViewState<CreateListingPage, CreateListing
                     defaultSelected: controller.propertyFor,
                   ),
                 ),
-                AppConstant.customTitleField(
-                  title: 'Time Period'
-                ),
+                AppConstant.customTitleField(title: 'Time Period'),
                 CustomRadioGroupButton(
                   radioPadding: 15,
-                  buttonLables: [
-                    "Yearly",
-                    "Monthly"
-                  ],
-                  buttonValues: [
-                    "Year",
-                    "Month"
-                  ],
+                  buttonLables: ["Yearly", "Monthly"],
+                  buttonValues: ["Year", "Month"],
                   radioButtonValue: (value) {
                     controller.timePeriod = value;
                   },
                   defaultSelected: controller.timePeriod,
                 ),
-                AppConstant.customTitleField(
-                  title: 'Price'
-                ),
+                AppConstant.customTitleField(title: 'Price'),
                 Container(
                   padding: EdgeInsets.symmetric(horizontal: 20),
                   child: CustomTextField(
                     controller: controller.priceTextController,
                     keyboardType: const TextInputType.numberWithOptions(),
                     hintText: 'Price (PHP)',
+                    inputFormatters: [ThousandsFormatter(allowFraction: true)],
                   ),
                 ),
                 SizedBox(height: 20.0),
@@ -172,11 +150,10 @@ class _CreateListingPageState extends ViewState<CreateListingPage, CreateListing
                     onPressed: () {
                       FocusScope.of(context).unfocus();
 
-                      if ( controller.validatePage1() ) {
+                      if (controller.validatePage1()) {
                         _pageController.nextPage(
-                          duration: Duration(milliseconds: 500),
-                          curve: Curves.ease
-                        );
+                            duration: Duration(milliseconds: 500),
+                            curve: Curves.ease);
                       }
                     },
                   ),
@@ -188,9 +165,8 @@ class _CreateListingPageState extends ViewState<CreateListingPage, CreateListing
               padding: EdgeInsets.only(bottom: 20),
               children: [
                 AppConstant.customTitleField(
-                  padding: EdgeInsets.only(left: 18),
-                  title: 'Number of Bedrooms'
-                ),
+                    padding: EdgeInsets.only(left: 18),
+                    title: 'Number of Bedrooms'),
                 CustomRadioGroupButton(
                   radioWidth: 70,
                   buttonLables: [
@@ -212,45 +188,84 @@ class _CreateListingPageState extends ViewState<CreateListingPage, CreateListing
                   },
                   defaultSelected: controller.numberOfBedRooms,
                 ),
-                AppConstant.customTitleField(
-                  title: 'Number of Bathrooms'
-                ),
+                AppConstant.customTitleField(title: 'Number of Bathrooms'),
                 CustomRadioGroupButton(
                   radioWidth: 55,
-                  buttonLables: ["1","2","3","4","5","6","7","8","9","10"],
-                  buttonValues: ["1","2","3","4","5","6","7","8","9","10"],
+                  buttonLables: [
+                    "1",
+                    "2",
+                    "3",
+                    "4",
+                    "5",
+                    "6",
+                    "7",
+                    "8",
+                    "9",
+                    "10"
+                  ],
+                  buttonValues: [
+                    "1",
+                    "2",
+                    "3",
+                    "4",
+                    "5",
+                    "6",
+                    "7",
+                    "8",
+                    "9",
+                    "10"
+                  ],
                   radioButtonValue: (value) {
                     controller.numberOfBathRooms = value;
                   },
                   defaultSelected: controller.numberOfBathRooms,
                 ),
-                AppConstant.customTitleField(
-                  title: 'Number of Parking'
-                ),
+                AppConstant.customTitleField(title: 'Number of Parking'),
                 CustomRadioGroupButton(
                   radioWidth: 55,
-                  buttonLables: ["1","2","3","4","5","6","7","8","9","10"],
-                  buttonValues: ["1","2","3","4","5","6","7","8","9","10"],
+                  buttonLables: [
+                    "1",
+                    "2",
+                    "3",
+                    "4",
+                    "5",
+                    "6",
+                    "7",
+                    "8",
+                    "9",
+                    "10"
+                  ],
+                  buttonValues: [
+                    "1",
+                    "2",
+                    "3",
+                    "4",
+                    "5",
+                    "6",
+                    "7",
+                    "8",
+                    "9",
+                    "10"
+                  ],
                   radioButtonValue: (value) {
                     controller.numberOfParking = value;
                   },
                   defaultSelected: controller.numberOfParking,
                 ),
-                AppConstant.customTitleField(
-                  title: 'Area'
-                ),
+                AppConstant.customTitleField(title: 'Area'),
                 Container(
                   padding: EdgeInsets.symmetric(horizontal: 20),
                   child: CustomTextField(
                     controller: controller.areaTextController,
-                    keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                    keyboardType:
+                        const TextInputType.numberWithOptions(decimal: true),
                     hintText: 'Area (sqft)',
+                    inputFormatters: [ThousandsFormatter(allowFraction: true)],
                   ),
                 ),
                 AppConstant.customTitleField(
-                  padding: EdgeInsets.only(left: 18),
-                  title: 'Is your Property'
-                ),
+                    padding: EdgeInsets.only(left: 18),
+                    title: 'Is your Property'),
                 CustomRadioGroupButton(
                   radioWidth: 120,
                   buttonLables: [
@@ -266,9 +281,7 @@ class _CreateListingPageState extends ViewState<CreateListingPage, CreateListing
                   },
                   defaultSelected: controller.isYourProperty,
                 ),
-                AppConstant.customTitleField(
-                  title: 'Description'
-                ),
+                AppConstant.customTitleField(title: 'Description'),
                 Container(
                   padding: EdgeInsets.symmetric(horizontal: 20),
                   child: CustomTextField(
@@ -292,9 +305,8 @@ class _CreateListingPageState extends ViewState<CreateListingPage, CreateListing
                           FocusScope.of(context).unfocus();
 
                           _pageController.previousPage(
-                            duration: Duration(milliseconds: 500),
-                            curve: Curves.ease
-                          );
+                              duration: Duration(milliseconds: 500),
+                              curve: Curves.ease);
                         },
                       ),
                       CustomIconButton(
@@ -302,11 +314,10 @@ class _CreateListingPageState extends ViewState<CreateListingPage, CreateListing
                         onPressed: () {
                           FocusScope.of(context).unfocus();
 
-                          if ( controller.validatePage2() ) {
+                          if (controller.validatePage2()) {
                             _pageController.nextPage(
-                              duration: Duration(milliseconds: 500),
-                              curve: Curves.ease
-                            );
+                                duration: Duration(milliseconds: 500),
+                                curve: Curves.ease);
                           }
                         },
                       )
@@ -319,9 +330,7 @@ class _CreateListingPageState extends ViewState<CreateListingPage, CreateListing
             ListView(
               padding: EdgeInsets.only(bottom: 20),
               children: [
-                AppConstant.customTitleField(
-                  title: 'Street Address'
-                ),
+                AppConstant.customTitleField(title: 'Street Address'),
                 Container(
                   padding: EdgeInsets.symmetric(horizontal: 20),
                   child: CustomTextField(
@@ -329,9 +338,7 @@ class _CreateListingPageState extends ViewState<CreateListingPage, CreateListing
                     hintText: 'Street Address',
                   ),
                 ),
-                AppConstant.customTitleField(
-                  title: 'Landmark'
-                ),
+                AppConstant.customTitleField(title: 'Landmark'),
                 Container(
                   padding: EdgeInsets.symmetric(horizontal: 20),
                   child: CustomTextField(
@@ -339,9 +346,7 @@ class _CreateListingPageState extends ViewState<CreateListingPage, CreateListing
                     hintText: 'Landmark',
                   ),
                 ),
-                AppConstant.customTitleField(
-                  title: 'City'
-                ),
+                AppConstant.customTitleField(title: 'City'),
                 Container(
                   padding: EdgeInsets.symmetric(horizontal: 20),
                   child: CustomTextField(
@@ -362,9 +367,8 @@ class _CreateListingPageState extends ViewState<CreateListingPage, CreateListing
                           FocusScope.of(context).unfocus();
 
                           _pageController.previousPage(
-                            duration: Duration(milliseconds: 500),
-                            curve: Curves.ease
-                          );
+                              duration: Duration(milliseconds: 500),
+                              curve: Curves.ease);
                         },
                       ),
                       CustomIconButton(
@@ -372,11 +376,10 @@ class _CreateListingPageState extends ViewState<CreateListingPage, CreateListing
                         onPressed: () {
                           FocusScope.of(context).unfocus();
 
-                          if ( controller.validatePage3() ) {
+                          if (controller.validatePage3()) {
                             _pageController.nextPage(
-                              duration: Duration(milliseconds: 500),
-                              curve: Curves.ease
-                            );
+                                duration: Duration(milliseconds: 500),
+                                curve: Curves.ease);
                           }
                         },
                       )
@@ -398,7 +401,7 @@ class _CreateListingPageState extends ViewState<CreateListingPage, CreateListing
                     // controller.amenities = values;
                   },
                   onPressed: (String? value) {
-                    if (value!=null && value.isNotEmpty)
+                    if (value != null && value.isNotEmpty)
                       controller.updateAmenitiesSelection(amenities: [value]);
                   },
                   defaultSelected: controller.amenities,
@@ -410,7 +413,7 @@ class _CreateListingPageState extends ViewState<CreateListingPage, CreateListing
                   checkBoxButtonValues: (values) {
                     controller.amenities = values;
                     print(values);
-                  } ,
+                  },
                 ),
                 SizedBox(height: 20.0),
                 Container(
@@ -425,9 +428,8 @@ class _CreateListingPageState extends ViewState<CreateListingPage, CreateListing
                           FocusScope.of(context).unfocus();
 
                           _pageController.previousPage(
-                            duration: Duration(milliseconds: 500),
-                            curve: Curves.ease
-                          );
+                              duration: Duration(milliseconds: 500),
+                              curve: Curves.ease);
                         },
                       ),
                       CustomIconButton(
@@ -435,13 +437,14 @@ class _CreateListingPageState extends ViewState<CreateListingPage, CreateListing
                         onPressed: () {
                           FocusScope.of(context).unfocus();
 
-                          if ( controller.validatePage4() ) {
-                            if (widget.property!=null && widget.property!.id!=null) {
+                          if (controller.validatePage4()) {
+                            if (widget.property != null &&
+                                widget.property!.id != null) {
                               controller.updateListing();
-                            } else _pageController.nextPage(
-                              duration: Duration(milliseconds: 500),
-                              curve: Curves.ease
-                            );
+                            } else
+                              _pageController.nextPage(
+                                  duration: Duration(milliseconds: 500),
+                                  curve: Curves.ease);
                           }
                         },
                       )
@@ -474,9 +477,8 @@ class _CreateListingPageState extends ViewState<CreateListingPage, CreateListing
                           FocusScope.of(context).unfocus();
 
                           _pageController.previousPage(
-                            duration: Duration(milliseconds: 500),
-                            curve: Curves.ease
-                          );
+                              duration: Duration(milliseconds: 500),
+                              curve: Curves.ease);
                         },
                       ),
                       CustomIconButton(
@@ -484,7 +486,7 @@ class _CreateListingPageState extends ViewState<CreateListingPage, CreateListing
                         onPressed: () async {
                           FocusScope.of(context).unfocus();
 
-                          if ( await controller.validatePage5() ) {
+                          if (await controller.validatePage5()) {
                             controller.createListing();
                           }
                         },
@@ -500,38 +502,44 @@ class _CreateListingPageState extends ViewState<CreateListingPage, CreateListing
           totalPage = createListingList.length;
 
           return PageView(
-            physics: NeverScrollableScrollPhysics(),
-            controller: _pageController,
-            onPageChanged: (i) {
-              setState(() {
-                currentPage = i+1;
-              });
+              physics: NeverScrollableScrollPhysics(),
+              controller: _pageController,
+              onPageChanged: (i) {
+                setState(() {
+                  currentPage = i + 1;
+                });
 
-              if ( i == 0 || i == 1 ) {
-                setState(() {
-                  appBarTitle = (widget.property!=null && widget.property!.id!=null) ? "Update Listing" : 'Create Listing';
-                });
-              }
-              else if ( i == 2 ) {
-                setState(() {
-                  appBarTitle = (widget.property!=null && widget.property!.id!=null) ? "Update Location" : 'Location';
-                });
-              }
-              else if ( i == 3 ) {
-                setState(() {
-                  appBarTitle = (widget.property!=null && widget.property!.id!=null) ? "Update Amenities" : 'Amenities';
-                });
-              }
-              else if ( i == 4 ) {
-                setState(() {
-                  appBarTitle = (widget.property!=null && widget.property!.id!=null) ? "Update Photos" : 'Photos';
-                });
-              }
-            },
-            children: createListingList
-          );
-        }
-      )
-    );
+                if (i == 0 || i == 1) {
+                  setState(() {
+                    appBarTitle =
+                        (widget.property != null && widget.property!.id != null)
+                            ? "Update Listing"
+                            : 'Create Listing';
+                  });
+                } else if (i == 2) {
+                  setState(() {
+                    appBarTitle =
+                        (widget.property != null && widget.property!.id != null)
+                            ? "Update Location"
+                            : 'Location';
+                  });
+                } else if (i == 3) {
+                  setState(() {
+                    appBarTitle =
+                        (widget.property != null && widget.property!.id != null)
+                            ? "Update Amenities"
+                            : 'Amenities';
+                  });
+                } else if (i == 4) {
+                  setState(() {
+                    appBarTitle =
+                        (widget.property != null && widget.property!.id != null)
+                            ? "Update Photos"
+                            : 'Photos';
+                  });
+                }
+              },
+              children: createListingList);
+        }));
   }
 }

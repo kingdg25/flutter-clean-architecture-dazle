@@ -28,13 +28,13 @@ class PropertyListTile extends StatelessWidget {
             padding: EdgeInsets.only(top: 8, bottom: 8, right: 10),
             child: GestureDetector(
               onTap: () {
-                // TODO: Gio - 1. Navigate to Listing Details
                 print('click property $index');
+                print(items[index].id);
                 Navigator.push(
                     context,
                     MaterialPageRoute(
                       builder: (buildContext) => ListingDetailsPage(
-                        property: items[index],
+                        listingId: items[index].id,
                       ),
                     ));
               },

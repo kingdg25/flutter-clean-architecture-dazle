@@ -31,7 +31,8 @@ class DataHomeRepository extends HomeRepository {
       "user": {"email": email, "is_new_user": isNewUser}
     };
 
-    var response = await http.post(Uri.parse("${Constants.siteURL}/api/users/is-new-user"),
+    var response = await http.post(
+        Uri.parse("${Constants.siteURL}/api/users/is-new-user"),
         body: convert.jsonEncode(params),
         headers: {
           'Authorization': 'Bearer ${prefs.getString("accessToken")}',
@@ -90,31 +91,31 @@ class DataHomeRepository extends HomeRepository {
         coverPhoto: 'https://picsum.photos/200/300',
         photos: ['https://picsum.photos/200/300'],
         keywords: ['keywords1', 'keywords2'],
-        price: '1,500,000.00',
+        price: 1500000.00,
         totalBedRoom: '99',
         totalBathRoom: '3',
         totalParkingSpace: '1',
-        totalArea: '1200',
+        totalArea: 1200,
       ),
       Property(
         coverPhoto: 'https://picsum.photos/200/300',
         photos: ['https://picsum.photos/200/300'],
         keywords: ['one', 'two'],
-        price: '8,786,123.00',
+        price: 8786123.00,
         totalBedRoom: '1',
         totalBathRoom: '2',
         totalParkingSpace: '3',
-        totalArea: '500',
+        totalArea: 500,
       ),
       Property(
         coverPhoto: 'https://picsum.photos/200/300',
         photos: ['https://picsum.photos/200/300'],
         keywords: ['qwe', 'asd'],
-        price: '300,123.12',
+        price: 300123.12,
         totalBedRoom: '9',
         totalBathRoom: '8',
         totalParkingSpace: '7',
-        totalArea: '654',
+        totalArea: 654,
       )
     ];
   }
@@ -135,31 +136,31 @@ class DataHomeRepository extends HomeRepository {
         coverPhoto: 'https://picsum.photos/id/237/200/300',
         photos: ['https://picsum.photos/id/237/200/300'],
         keywords: ['qqq', 'www'],
-        price: '9,999,999.99',
+        price: 9999999.99,
         totalBedRoom: '81',
         totalBathRoom: '41',
         totalParkingSpace: '0',
-        totalArea: '100',
+        totalArea: 100,
       ),
       Property(
         coverPhoto: 'https://picsum.photos/id/132/200/300',
         photos: ['https://picsum.photos/id/237/200/300'],
         keywords: ['aaa', 'ssss'],
-        price: '1,234,567.00',
+        price: 1234567.00,
         totalBedRoom: '9',
         totalBathRoom: '42',
         totalParkingSpace: '16',
-        totalArea: '1,000',
+        totalArea: 1000,
       ),
       Property(
         coverPhoto: 'https://picsum.photos/id/456/200/300',
         photos: ['https://picsum.photos/id/237/200/300'],
         keywords: ['ddd', 'dddd'],
-        price: '540,735.12',
+        price: 540735.12,
         totalBedRoom: '88',
         totalBathRoom: '51',
         totalParkingSpace: '90',
-        totalArea: '987',
+        totalArea: 987,
       )
     ];
   }
