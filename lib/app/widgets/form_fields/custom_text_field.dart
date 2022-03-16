@@ -63,19 +63,11 @@ class CustomTextField extends StatelessWidget {
       maxLines: maxLines,
       validator: (isRequired && validator == null)
           ? (val) {
-<<<<<<< HEAD
-              if (val.length == 0) {
-                return "Required field.";
-              }
-              return null;
-            } as String? Function(String?)?
-=======
               if (val?.length == 0) {
                 return "Required field.";
               }
               return null;
             }
->>>>>>> 7822657e9641eff30da853e5dd7d07ae69b64212
           : validator as String? Function(String?)?,
       onTap: onTap as void Function()?,
       keyboardType: keyboardType,
