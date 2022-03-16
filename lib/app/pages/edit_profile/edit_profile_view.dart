@@ -144,6 +144,24 @@ class _EditProfilePageState
                                     controller:
                                         controller.firstNameTextController,
                                     hintText: 'First Name',
+                                    validator: (val) {
+                                      final namePattern = r'^[a-zA-Z_ ]*$';
+                                      final regExp = RegExp(namePattern);
+
+                                      if (val.length == 0) {
+                                        return "Required field.";
+                                      }
+                                      if (!regExp.hasMatch(val)) {
+                                        return "Letters only";
+                                      }
+                                      if (val.length < 2) {
+                                        return "Min 2 Letters Only";
+                                      }
+                                      if (val.length >= 50) {
+                                        return "Max 50 Letters Only";
+                                      }
+                                      return null;
+                                    },
                                     isRequired: true,
                                     textCapitalization:
                                         TextCapitalization.sentences,
@@ -154,6 +172,24 @@ class _EditProfilePageState
                                   child: CustomTextField(
                                     controller:
                                         controller.lastNameTextController,
+                                    validator: (val) {
+                                      final namePattern = r'^[a-zA-Z_ ]*$';
+                                      final regExp = RegExp(namePattern);
+
+                                      if (val.length == 0) {
+                                        return "Required field.";
+                                      }
+                                      if (!regExp.hasMatch(val)) {
+                                        return "Letters only";
+                                      }
+                                      if (val.length < 2) {
+                                        return "Min 2 Letters Only";
+                                      }
+                                      if (val.length >= 50) {
+                                        return "Max 50 Letters Only";
+                                      }
+                                      return null;
+                                    },
                                     hintText: 'Last Name',
                                     isRequired: true,
                                     textCapitalization:
@@ -214,10 +250,10 @@ class _EditProfilePageState
                                 return null;
                               }
                               if (val.length < 2) {
-                                return "Min 2 Letters Only";
+                                return "Min 2 Letters";
                               }
                               if (val.length >= 50) {
-                                return "Max 50 Letters Only";
+                                return "Max 50 Letters";
                               }
                             },
                           ),
