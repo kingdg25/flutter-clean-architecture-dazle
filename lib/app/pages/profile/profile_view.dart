@@ -184,7 +184,7 @@ class _ProfilePageState extends ViewState<ProfilePage, ProfileController> {
                     Column(
                       children: [
                         CustomText(
-                          text: '25',
+                          text: '${controller.listings?.length}',
                           fontSize: 18,
                           fontWeight: FontWeight.w600,
                         ),
@@ -206,7 +206,7 @@ class _ProfilePageState extends ViewState<ProfilePage, ProfileController> {
                     Column(
                       children: [
                         CustomText(
-                          text: '125',
+                          text: '0',
                           fontSize: 18,
                           fontWeight: FontWeight.w600,
                         ),
@@ -228,7 +228,7 @@ class _ProfilePageState extends ViewState<ProfilePage, ProfileController> {
                     Column(
                       children: [
                         CustomText(
-                          text: '250',
+                          text: '0',
                           fontSize: 18,
                           fontWeight: FontWeight.w600,
                         ),
