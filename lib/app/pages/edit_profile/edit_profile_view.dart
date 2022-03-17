@@ -155,10 +155,10 @@ class _EditProfilePageState
                                         return "Letters only";
                                       }
                                       if (val.length < 2) {
-                                        return "Min 2 Letters Only";
+                                        return "Min 2 Letters";
                                       }
                                       if (val.length >= 50) {
-                                        return "Max 50 Letters Only";
+                                        return "Max 50 Letters";
                                       }
                                       return null;
                                     },
@@ -183,10 +183,10 @@ class _EditProfilePageState
                                         return "Letters only";
                                       }
                                       if (val.length < 2) {
-                                        return "Min 2 Letters Only";
+                                        return "Min 2 Letters";
                                       }
                                       if (val.length >= 50) {
-                                        return "Max 50 Letters Only";
+                                        return "Max 50 Letters";
                                       }
                                       return null;
                                     },
