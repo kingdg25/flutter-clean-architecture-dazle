@@ -350,7 +350,16 @@ class DataListingRepository extends ListingRepository {
         };
       }
       final Map property = jsonResponse["listing"];
-      property['price'] = jsonResponse["listing"]['price'].toString();
+
+      // converts int to double
+      final price = property['price'];
+      final area = property['total_area'];
+      String priceVar = '$price';
+      String areaVar = '$area';
+      double parsedPrice = double.parse(priceVar);
+      double parsedArea = double.parse(areaVar);
+      property['price'] = parsedPrice;
+      property['total_area'] = parsedArea;
 
       final Property propertyInstance =
           Property.fromJson(property as Map<String, dynamic>);

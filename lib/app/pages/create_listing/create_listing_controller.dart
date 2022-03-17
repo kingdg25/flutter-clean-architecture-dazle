@@ -291,17 +291,21 @@ class CreateListingController extends Controller {
 
     AppConstant.showLoader(getContext(), true);
 
+    //TODO: Convert price and area to double
+    double price = double.parse(priceTextController.text.replaceAll(',', ''));
+    double area = double.parse(areaTextController.text.replaceAll(',', ''));
+
     Map data = {
       "id": this.property!.id,
       "cover_photo": 'https://picsum.photos/id/73/200/300',
       "property_type": propertyType,
       "property_for": propertyFor,
       "time_period": timePeriod,
-      "price": priceTextController.text,
+      "price": price,
       "number_of_bedrooms": numberOfBedRooms,
       "number_of_bathrooms": numberOfBathRooms,
       "number_of_parking_space": numberOfParking,
-      "total_area": areaTextController.text,
+      "total_area": area,
       "is_your_property": isYourProperty,
       "description": descriptionTextController.text,
       "street": streetTextController.text,
