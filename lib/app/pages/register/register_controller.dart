@@ -124,6 +124,9 @@ class RegisterController extends Controller {
           registerPageController.nextPage(
               duration: Duration(milliseconds: 500), curve: Curves.ease);
         }
+      } else {
+        registerPageController.nextPage(
+            duration: Duration(milliseconds: 500), curve: Curves.ease);
       }
     };
 

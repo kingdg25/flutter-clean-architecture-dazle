@@ -48,10 +48,10 @@ class ProfileController extends Controller {
     };
     profilePresenter.getUserListingOnError = () {
       print("On error profile presenter");
-      AppConstant.statusDialog(
-          context: getContext(),
-          text: "Can't fetch listings for this time.",
-          title: "Can't fetch listings");
+      // AppConstant.statusDialog(
+      //     context: getContext(),
+      //     text: "Can't fetch listings for this time.",
+      //     title: "Can't fetch listings");
     };
   }
 
