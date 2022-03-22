@@ -47,13 +47,15 @@ class EditProfileController extends Controller {
       print('update user on next');
     };
 
-    editProfilePresenter.updateUserOnComplete = () {
+    editProfilePresenter.updateUserOnComplete = () async {
       print('update user on complete');
       AppConstant.showLoader(getContext(), false);
 
-      _statusDialog('Success!', 'Updated Successfully');
+      await _statusDialog('Success!', 'Updated Successfully',
+        onPressed: () {
+          Navigator.pop(getContext());
+    });
     };
-
     editProfilePresenter.updateUserOnError = (e) {
       print('update user on error $e');
       AppConstant.showLoader(getContext(), false);
