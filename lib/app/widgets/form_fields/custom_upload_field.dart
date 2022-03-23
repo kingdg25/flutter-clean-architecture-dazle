@@ -7,6 +7,7 @@ import 'package:wechat_assets_picker/wechat_assets_picker.dart';
 
 class CustomUploadField extends StatefulWidget {
   final String? text;
+  final int? maxImages;
 
   /// default selected list of assets
   final List<AssetEntity>? defaultSelected;
@@ -14,19 +15,20 @@ class CustomUploadField extends StatefulWidget {
   /// on change value for asset image.
   final ValueChanged onAssetValue;
 
-  const CustomUploadField({
-    Key? key,
-    this.text,
-    required this.onAssetValue,
-    this.defaultSelected
-  }) : super(key: key);
+  const CustomUploadField(
+      {Key? key,
+      this.text,
+      this.maxImages,
+      required this.onAssetValue,
+      this.defaultSelected})
+      : super(key: key);
 
   @override
   _CustomUploadFieldState createState() => _CustomUploadFieldState();
 }
 
 class _CustomUploadFieldState extends State<CustomUploadField> {
-  List<AssetEntity> selectedAssets =[];
+  List<AssetEntity> selectedAssets = [];
 
   @override
   void initState() {
@@ -35,9 +37,13 @@ class _CustomUploadFieldState extends State<CustomUploadField> {
       selectedAssets.add(e);
     });
   }
-  
+
   @override
   Widget build(BuildContext context) {
+    bool isUpdating = false;
+    if (widget.maxImages != null) {
+      isUpdating = true;
+    }
     return CustomFieldLayout(
       child: Column(
         children: [
@@ -45,20 +51,45 @@ class _CustomUploadFieldState extends State<CustomUploadField> {
             alignment: Alignment.centerLeft,
             padding: EdgeInsets.only(left: 20, right: 20, top: 20),
             child: CustomButton(
-              text: widget.text ?? '',
-              textColor: App.hintColor,
-              backgroudColor: App.hintColor,
-              main: false,
-              onPressed: () async {
-                var result = await AppConstant.loadAssets(context: context, selectedAssets: selectedAssets, maxAssets: 5);
-                
-                setState(() {
-                  selectedAssets = result;
-                });
+                text: widget.text ?? '',
+                textColor: App.hintColor,
+                backgroudColor: App.hintColor,
+                main: false,
+                onPressed: () async {
+                  if (widget.maxImages != null) {
+                    if (widget.maxImages! > 0) {
+                      print('Maximage: ${widget.maxImages}');
+                      var result = await AppConstant.loadAssets(
+                          context: context,
+                          selectedAssets: selectedAssets,
+                          maxAssets: widget.maxImages ?? 5);
 
-                widget.onAssetValue(selectedAssets);
-              }
-            ),
+                      setState(() {
+                        selectedAssets = result;
+                      });
+
+                      widget.onAssetValue(selectedAssets);
+                    } else {
+                      //TODO: Add a status dialog saying user needs to delete photos to upload additional images
+                      AppConstant.statusDialog(
+                          success: false,
+                          title: 'Connot upload more than 5 photos.',
+                          text: 'Delete some photos to upload more.',
+                          context: context);
+                    }
+                  } else {
+                    var result = await AppConstant.loadAssets(
+                        context: context,
+                        selectedAssets: selectedAssets,
+                        maxAssets: 5);
+
+                    setState(() {
+                      selectedAssets = result;
+                    });
+
+                    widget.onAssetValue(selectedAssets);
+                  }
+                }),
           ),
           Container(
             margin: EdgeInsets.only(left: 20, right: 20, top: 20),
@@ -72,63 +103,64 @@ class _CustomUploadFieldState extends State<CustomUploadField> {
               shrinkWrap: true,
               itemCount: selectedAssets.length,
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: MediaQuery.of(context).orientation == Orientation.landscape ? 5 : 4,
+                crossAxisCount:
+                    MediaQuery.of(context).orientation == Orientation.landscape
+                        ? 5
+                        : 4,
                 crossAxisSpacing: 8,
                 mainAxisSpacing: 8,
               ),
               itemBuilder: (context, index) {
                 return ClipRRect(
-                  borderRadius: BorderRadius.circular(5),
-                  child: FutureBuilder<dynamic>(
-                    future: selectedAssets[index].thumbDataWithSize(200, 200, format: ThumbFormat.png),
-                    builder: (BuildContext context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.done){
-                        return Stack(
-                          // TODO: recheck changes in here
-                          clipBehavior: Clip.none, children: [
-                            Positioned.fill(
-                              child: Image.memory(
-                                snapshot.data,
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                            Positioned(
-                              right: 0,
-                              top: 0,
-                              child: InkWell(
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    color: App.hintColor,
-                                    shape: BoxShape.circle,
-                                    boxShadow: [
-                                      AppConstant.boxShadow
-                                    ]
-                                  ),
-                                  child: Icon(
-                                    Icons.cancel,
-                                    color: Colors.white,
-                                    size: 20,
-                                  ),
+                    borderRadius: BorderRadius.circular(5),
+                    child: FutureBuilder<dynamic>(
+                      future: selectedAssets[index]
+                          .thumbDataWithSize(200, 200, format: ThumbFormat.png),
+                      builder: (BuildContext context, snapshot) {
+                        if (snapshot.connectionState == ConnectionState.done) {
+                          return Stack(
+                            // TODO: recheck changes in here
+                            clipBehavior: Clip.none,
+                            children: [
+                              Positioned.fill(
+                                child: Image.memory(
+                                  snapshot.data,
+                                  fit: BoxFit.cover,
                                 ),
-                                onTap: () {
-                                  selectedAssets.removeAt(index);
-
-                                  widget.onAssetValue(selectedAssets);
-                                  // update photo container data
-                                  setState(() { });
-                                },
                               ),
-                            )
-                          ],
+                              Positioned(
+                                right: 0,
+                                top: 0,
+                                child: InkWell(
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                        color: App.hintColor,
+                                        shape: BoxShape.circle,
+                                        boxShadow: [AppConstant.boxShadow]),
+                                    child: Icon(
+                                      Icons.cancel,
+                                      color: Colors.white,
+                                      size: 20,
+                                    ),
+                                  ),
+                                  onTap: () {
+                                    selectedAssets.removeAt(index);
+
+                                    widget.onAssetValue(selectedAssets);
+                                    // update photo container data
+                                    setState(() {});
+                                  },
+                                ),
+                              )
+                            ],
+                          );
+                        }
+
+                        return Center(
+                          child: CircularProgressIndicator(),
                         );
-                      }
-                        
-                      return Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    },
-                  )
-                );
+                      },
+                    ));
               },
             ),
           ),

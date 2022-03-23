@@ -47,6 +47,9 @@ class CreateListingController extends Controller {
   // page 5
   List<AssetEntity> assets;
   String? viewType;
+  int currentPhotosCount;
+  bool isUpdating;
+  List<String>? currentPhotos;
 
   CreateListingController(userRepo, this.property)
       : createListingPresenter = CreateListingPresenter(userRepo),
@@ -72,6 +75,8 @@ class CreateListingController extends Controller {
         amenities = [],
         assets = <AssetEntity>[],
         viewType = "public",
+        currentPhotosCount = 0,
+        isUpdating = false,
         super();
 
   @override
@@ -250,31 +255,46 @@ class CreateListingController extends Controller {
 
   validatePage5() async {
     bool isValidated = false;
+    // === Creating list
+    if (isUpdating = false) {
+      if (assets.length >= 4) {
+        isValidated = true;
+      } else {
+        await AppConstant.statusDialog(
+            context: getContext(),
+            text: "Upload files at least 4 photos.",
+            title: "Upload Photos.");
+        return false;
+      }
 
-    if (assets.length >= 4) {
-      isValidated = true;
-    } else {
+      final confirmViewType = await _viewType(getContext());
+
+      if (confirmViewType == null) {
+        AppConstant.statusDialog(
+            context: getContext(),
+            text: "Please confirm the view type of your list.",
+            title: "Confirm");
+        return false;
+      }
+
       await AppConstant.statusDialog(
           context: getContext(),
-          text: "Upload files at least 4 photos.",
-          title: "Upload Photos.");
-      return false;
+          text: "Your listing will view as $confirmViewType",
+          title: "View Type");
+      // === Updating list
+    } else {
+      int? totalPhotos = assets.length + currentPhotosCount;
+      if (totalPhotos >= 4) {
+        isValidated = true;
+      } else {
+        int neededPhotos = 5 - (totalPhotos + 1);
+        await AppConstant.statusDialog(
+            context: getContext(),
+            text: "Upload at least $neededPhotos more photo/s.",
+            title: "Upload Photos.");
+        return false;
+      }
     }
-
-    final confirmViewType = await _viewType(getContext());
-
-    if (confirmViewType == null) {
-      AppConstant.statusDialog(
-          context: getContext(),
-          text: "Please confirm the view type of your list.",
-          title: "Confirm");
-      return false;
-    }
-
-    await AppConstant.statusDialog(
-        context: getContext(),
-        text: "Your listing will view as $confirmViewType",
-        title: "View Type");
 
     return isValidated;
   }
@@ -291,13 +311,20 @@ class CreateListingController extends Controller {
 
     AppConstant.showLoader(getContext(), true);
 
-    //TODO: Convert price and area to double
+    // Converts price and area to double
     double price = double.parse(priceTextController.text.replaceAll(',', ''));
     double area = double.parse(areaTextController.text.replaceAll(',', ''));
+    final assetsBased64;
+    if (assets.length > 0) {
+      assetsBased64 = await AppConstant.initializeAssetImages(images: assets);
+    } else {
+      assetsBased64 = null;
+    }
 
     Map data = {
       "id": this.property!.id,
       "cover_photo": 'https://picsum.photos/id/73/200/300',
+      "photos": currentPhotos,
       "property_type": propertyType,
       "property_for": propertyFor,
       "time_period": timePeriod,
@@ -312,7 +339,8 @@ class CreateListingController extends Controller {
       "landmark": landmarkTextController.text,
       "city": cityTextController.text,
       "amenities": amenities,
-      "view_type": viewType
+      "view_type": viewType,
+      "assets": assetsBased64
     };
 
     createListingPresenter.updateListing(data);

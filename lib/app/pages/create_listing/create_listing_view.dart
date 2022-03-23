@@ -13,7 +13,9 @@ import 'package:flutter/material.dart';
 import 'package:pattern_formatter/pattern_formatter.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 
+import '../../widgets/custom_text.dart';
 import '../../widgets/form_fields/amenities_field.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 
 class CreateListingPage extends View {
   final Property? property;
@@ -35,8 +37,33 @@ class _CreateListingPageState
   int currentPage = 1;
   int totalPage = 0;
 
+  final CarouselController _carouselController = CarouselController();
+  int _currentImage = 0;
+
   @override
   Widget get view {
+    String photoCounter = (_currentImage + 1).toString().padLeft(2, '0');
+    String? totalPhoto =
+        widget.property?.photos?.length.toString().padLeft(2, '0');
+    List _currentPhotos = widget.property?.photos ?? [];
+
+    /// Converts the list property.photos to a list of widgets to be used
+    /// by the CarouselSlider widget
+    final List<Widget>? imageSliders = _currentPhotos
+        .map((item) => Container(
+              child: Container(
+                // margin: EdgeInsets.all(5.0),
+                child: ClipRRect(
+                    borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                    child: Stack(
+                      children: <Widget>[
+                        Image.network(item, fit: BoxFit.cover, width: 1000.0),
+                      ],
+                    )),
+              ),
+            ))
+        .toList();
+
     return Scaffold(
         key: globalKey,
         appBar: CustomAppBar(
@@ -44,6 +71,11 @@ class _CreateListingPageState
           actions: [
             ControlledWidgetBuilder<CreateListingController>(
                 builder: (context, controller) {
+              // Check if its updating
+              if (widget.property != null) {
+                controller.isUpdating = true;
+                controller.currentPhotosCount = widget.property!.photos!.length;
+              }
               return Container(
                 alignment: Alignment.center,
                 padding: EdgeInsets.only(right: 10.0),
@@ -438,13 +470,13 @@ class _CreateListingPageState
                           FocusScope.of(context).unfocus();
 
                           if (controller.validatePage4()) {
-                            if (widget.property != null &&
-                                widget.property!.id != null) {
-                              controller.updateListing();
-                            } else
-                              _pageController.nextPage(
-                                  duration: Duration(milliseconds: 500),
-                                  curve: Curves.ease);
+                            // if (widget.property != null &&
+                            //     widget.property!.id != null) {
+                            //   controller.updateListing();
+                            // } else
+                            _pageController.nextPage(
+                                duration: Duration(milliseconds: 500),
+                                curve: Curves.ease);
                           }
                         },
                       )
@@ -455,10 +487,143 @@ class _CreateListingPageState
             ),
             // page 5
             ListView(
-              padding: EdgeInsets.only(bottom: 20),
+              padding: EdgeInsets.symmetric(vertical: 20),
               children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Color.fromRGBO(51, 212, 157, 0.5),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    padding: EdgeInsets.all(20.0),
+                    child: CustomText(
+                      text:
+                          'You can only upload up to 5 photos. The first photo that you will select will be the cover photo of the listing.',
+                      textAlign: TextAlign.justify,
+                    ),
+                  ),
+                ),
+                SizedBox(height: 20),
+                widget.property != null
+                    ? Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                        child: Stack(
+                          alignment: Alignment.center,
+                          children: [
+                            CarouselSlider(
+                              items: imageSliders,
+                              carouselController: _carouselController,
+                              options: CarouselOptions(
+                                  autoPlay: false,
+                                  enableInfiniteScroll: false,
+                                  viewportFraction: 1,
+                                  aspectRatio: 2.0,
+                                  onPageChanged: (index, reason) {
+                                    setState(() {
+                                      _currentImage = index;
+                                    });
+                                  }),
+                            ),
+                            //======================================= image paging
+                            Positioned(
+                              bottom: 5,
+                              right: 10,
+                              child: Container(
+                                padding: EdgeInsets.all(7),
+                                decoration: BoxDecoration(
+                                    shape: BoxShape.rectangle,
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(15)),
+                                    color: Colors.black.withOpacity(.6)),
+                                child: Center(
+                                  child: Text(
+                                    '$photoCounter/$totalPhoto',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            //======================================= Delete img
+                            Positioned(
+                                top: 5,
+                                right: 10,
+                                child: CircleAvatar(
+                                  backgroundColor: Colors.grey[200],
+                                  radius: 18,
+                                  child: IconButton(
+                                    icon: Icon(
+                                      Icons.delete,
+                                      color: App.textColor,
+                                      size: 20,
+                                    ),
+                                    onPressed: () {
+                                      print(_currentImage);
+                                      AppConstant.deleteDialog(
+                                          context: context,
+                                          title: 'Confim',
+                                          text:
+                                              'Are you sure you want to delete this photo?',
+                                          onConfirm: () {
+                                            setState(() {
+                                              _currentPhotos
+                                                  .removeAt(_currentImage);
+                                              controller.currentPhotosCount =
+                                                  _currentPhotos.length;
+                                              Navigator.pop(context);
+                                            });
+                                          });
+
+                                      print(
+                                          'LENGTH of photos:${controller.currentPhotosCount}');
+                                    },
+                                  ),
+                                )),
+                            //======================================= Img indicator
+                            Positioned(
+                              bottom: 0,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: widget.property!.photos!
+                                    .asMap()
+                                    .entries
+                                    .map(
+                                  (entry) {
+                                    return GestureDetector(
+                                      onTap: () => _carouselController
+                                          .animateToPage(entry.key),
+                                      child: Container(
+                                        width: _currentImage == entry.key
+                                            ? 10.0
+                                            : 5.0,
+                                        height: _currentImage == entry.key
+                                            ? 10.0
+                                            : 5.0,
+                                        margin: EdgeInsets.symmetric(
+                                            vertical: 8.0, horizontal: 4.0),
+                                        decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                ).toList(),
+                              ),
+                            ),
+                          ],
+                        ),
+                      )
+                    : Container(),
                 CustomUploadField(
-                  text: 'Upload Image',
+                  text: widget.property == null
+                      ? 'Upload Image'
+                      : 'Add more Images',
+                  maxImages: widget.property == null
+                      ? null
+                      : (5 - _currentPhotos.length),
                   onAssetValue: (result) {
                     controller.assets = result;
                   },
@@ -487,7 +652,13 @@ class _CreateListingPageState
                           FocusScope.of(context).unfocus();
 
                           if (await controller.validatePage5()) {
-                            controller.createListing();
+                            if (widget.property == null) {
+                              controller.createListing();
+                            } else {
+                              controller.currentPhotos =
+                                  _currentPhotos.cast<String>();
+                              controller.updateListing();
+                            }
                           }
                         },
                       )

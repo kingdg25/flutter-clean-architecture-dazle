@@ -328,6 +328,20 @@ class DataListingRepository extends ListingRepository {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final userToken = prefs.getString("accessToken");
     final listingId = data!['id'];
+    List<String?> imageUrls;
+
+    if (data['assets'] != null) {
+      imageUrls = await _getFileUrls(assetsBase64: data['assets']);
+      data.remove("assets");
+      List<String?> photos = data['photos'];
+      data['photos'] = [];
+      List<String?> updatedPhotos = new List.from(photos)..addAll(imageUrls);
+      print('updated photos : $updatedPhotos');
+      data['photos'] = updatedPhotos;
+    } else {
+      data.remove("assets");
+    }
+
     Map params = {"data": data};
     var response = await http.put(
         Uri.parse(

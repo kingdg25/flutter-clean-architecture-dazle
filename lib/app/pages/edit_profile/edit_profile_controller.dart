@@ -51,10 +51,10 @@ class EditProfileController extends Controller {
       print('update user on complete');
       AppConstant.showLoader(getContext(), false);
 
-      await _statusDialog('Success!', 'Updated Successfully',
-        onPressed: () {
-          Navigator.pop(getContext());
-    });
+      await _statusDialog('Success!', 'Updated Successfully', onPressed: () {
+        Navigator.pop(getContext());
+        Navigator.pop(getContext());
+      });
     };
     editProfilePresenter.updateUserOnError = (e) {
       print('update user on error $e');
