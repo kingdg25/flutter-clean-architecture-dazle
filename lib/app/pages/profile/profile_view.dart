@@ -184,7 +184,9 @@ class _ProfilePageState extends ViewState<ProfilePage, ProfileController> {
                     Column(
                       children: [
                         CustomText(
-                          text: '${controller.listings?.length}',
+                          text: controller.listings == null
+                              ? ''
+                              : '${controller.listings?.length}',
                           fontSize: 18,
                           fontWeight: FontWeight.w600,
                         ),
