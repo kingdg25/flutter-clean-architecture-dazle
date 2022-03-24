@@ -20,10 +20,10 @@ class MyListingController extends Controller {
   @override
   void initListeners() {
     getData();
-    const oneSec = Duration(seconds: 1);
-    _timer = Timer.periodic(oneSec, (Timer t) {
-      getData();
-    });
+    // const oneSec = Duration(seconds: 1);
+    // _timer = Timer.periodic(oneSec, (Timer t) {
+    //   getData();
+    // });
 
     // get my listing
     myListingPresenter.getMyListingOnNext = (List<Property> res) {

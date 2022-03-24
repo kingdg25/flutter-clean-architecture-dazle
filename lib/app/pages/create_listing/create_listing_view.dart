@@ -151,20 +151,28 @@ class _CreateListingPageState
                     ],
                     radioButtonValue: (value) {
                       controller.propertyFor = value;
+                      setState(() {});
                     },
                     defaultSelected: controller.propertyFor,
                   ),
                 ),
-                AppConstant.customTitleField(title: 'Time Period'),
-                CustomRadioGroupButton(
-                  radioPadding: 15,
-                  buttonLables: ["Yearly", "Monthly"],
-                  buttonValues: ["Year", "Month"],
-                  radioButtonValue: (value) {
-                    controller.timePeriod = value;
-                  },
-                  defaultSelected: controller.timePeriod,
-                ),
+                controller.propertyFor == 'Rent' ||
+                        controller.propertyFor == null
+                    ? AppConstant.customTitleField(title: 'Time Period')
+                    : Container(),
+                controller.propertyFor == 'Rent' ||
+                        controller.propertyFor == null
+                    ? CustomRadioGroupButton(
+                        radioPadding: 15,
+                        buttonLables: ["Yearly", "Monthly"],
+                        buttonValues: ["Year", "Month"],
+                        radioButtonValue: (value) {
+                          controller.timePeriod = value;
+                        },
+                        defaultSelected: controller.timePeriod == ''
+                            ? null
+                            : controller.timePeriod)
+                    : Container(),
                 AppConstant.customTitleField(title: 'Price'),
                 Container(
                   padding: EdgeInsets.symmetric(horizontal: 20),

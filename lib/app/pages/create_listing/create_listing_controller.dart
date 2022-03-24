@@ -188,7 +188,7 @@ class CreateListingController extends Controller {
 
     if (propertyType != null &&
         propertyFor != null &&
-        timePeriod != null &&
+        // timePeriod != null &&
         priceTextController.text.isNotEmpty &&
         numberFound == true &&
         priceTextController.text != '0') {

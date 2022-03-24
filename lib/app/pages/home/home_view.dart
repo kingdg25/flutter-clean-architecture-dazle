@@ -169,7 +169,7 @@ class _HomePageState extends ViewState<HomePage, HomeController> {
                 },
               ),
               HeaderHomeTile(
-                title: 'Why Brooky?',
+                title: 'Why Dazle?',
                 subTitle: 'Take control of the deal, Here’s how',
                 child: PhotoListTile(items: controller.spotLight),
                 viewAllOnTap: () {
