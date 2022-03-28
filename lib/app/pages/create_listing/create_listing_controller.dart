@@ -186,18 +186,33 @@ class CreateListingController extends Controller {
     bool isValidated = false;
     bool numberFound = priceTextController.text.contains(new RegExp(r'[0-9]'));
 
-    if (propertyType != null &&
-        propertyFor != null &&
-        // timePeriod != null &&
-        priceTextController.text.isNotEmpty &&
-        numberFound == true &&
-        priceTextController.text != '0') {
-      isValidated = true;
-    } else
-      AppConstant.statusDialog(
-          context: getContext(),
-          text: "All inputs in this section are required.",
-          title: "Values missing.");
+    if (propertyFor == 'Rent') {
+      if (propertyType != null &&
+          propertyFor != null &&
+          timePeriod != null &&
+          priceTextController.text.isNotEmpty &&
+          numberFound == true &&
+          priceTextController.text != '0') {
+        isValidated = true;
+      } else
+        AppConstant.statusDialog(
+            context: getContext(),
+            text: "All inputs in this section are required.",
+            title: "Values missing.");
+    } else {
+      if (propertyType != null &&
+          propertyFor != null &&
+          // timePeriod != null &&
+          priceTextController.text.isNotEmpty &&
+          numberFound == true &&
+          priceTextController.text != '0') {
+        isValidated = true;
+      } else
+        AppConstant.statusDialog(
+            context: getContext(),
+            text: "All inputs in this section are required.",
+            title: "Values missing.");
+    }
 
     return isValidated;
   }
