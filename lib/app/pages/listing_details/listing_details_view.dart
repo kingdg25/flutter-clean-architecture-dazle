@@ -68,7 +68,7 @@ class _ListingDetailsPageState
                         )
                       : Container(),
                   ListingDetailsIconButton(
-                    iconData: Icons.file_download,
+                    iconData: Icons.share,
                     tooltip: "Download/Share",
                     onPressed: () {
                       Navigator.push(
@@ -199,7 +199,9 @@ class _ListingDetailsPageState
                               style: App.textStyle(
                                   fontSize: 20, fontWeight: FontWeight.w800)),
                           TextSpan(
-                              text: "/${selectedListing.timePeriod}",
+                              text: selectedListing.timePeriod == null
+                                  ? ''
+                                  : "/${selectedListing.timePeriod}",
                               style: App.textStyle(
                                   fontSize: 13, fontWeight: FontWeight.w700)),
                         ]),

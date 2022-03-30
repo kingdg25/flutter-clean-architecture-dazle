@@ -200,6 +200,7 @@ class CreateListingController extends Controller {
             text: "All inputs in this section are required.",
             title: "Values missing.");
     } else {
+      timePeriod = null;
       if (propertyType != null &&
           propertyFor != null &&
           // timePeriod != null &&

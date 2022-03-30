@@ -10,17 +10,25 @@ class MyListingController extends Controller {
 
   List<Property> _myListing;
   List<Property> get myListing => _myListing;
+  List<Property> _suggestionListing;
+  List<Property> get suggestionListing => _suggestionListing;
+  List<Property>? searchResultListing;
+  // List<Property>? get searchResultListing => _searchResultListing;
+  //TODO: Separate suggestions and search results
+
   Timer? _timer;
 
   MyListingController(userRepo)
       : myListingPresenter = MyListingPresenter(userRepo),
         _myListing = <Property>[],
+        _suggestionListing = <Property>[],
+        // _searchResultListing = <Property>[],
         super();
 
   @override
   void initListeners() {
     getData();
-    const oneSec = Duration(seconds: 1);
+    const oneSec = Duration(seconds: 10);
     _timer = Timer.periodic(oneSec, (Timer t) {
       getData();
     });
@@ -54,6 +62,48 @@ class MyListingController extends Controller {
 
   void getData() {
     myListingPresenter.getMyListing();
+  }
+
+  void getSuggestionListings(String keyword) {
+    _suggestionListing = _myListing
+        .where((element) =>
+            element.amenities!.contains(keyword) ||
+            element.city!.contains(keyword) ||
+            element.propertyType!.contains(keyword) ||
+            element.propertyFor!.contains(keyword) ||
+            element.timePeriod!.contains(keyword) ||
+            element.totalBathRoom!.contains(keyword) ||
+            element.totalBedRoom!.contains(keyword) ||
+            element.totalParkingSpace!.contains(keyword) ||
+            element.isYourProperty!.contains(keyword) ||
+            element.street!.contains(keyword) ||
+            element.description!.contains(keyword) ||
+            element.viewType!.contains(keyword))
+        .toList();
+  }
+
+  void getSearchResultListing(String keyword) {
+    if (keyword != '') {
+      searchResultListing = _myListing
+          .where((element) =>
+              element.amenities!.contains(keyword) ||
+              element.city!.contains(keyword) ||
+              element.propertyType!.contains(keyword) ||
+              element.propertyFor!.contains(keyword) ||
+              element.timePeriod!.contains(keyword) ||
+              element.totalBathRoom!.contains(keyword) ||
+              element.totalBedRoom!.contains(keyword) ||
+              element.totalParkingSpace!.contains(keyword) ||
+              element.isYourProperty!.contains(keyword) ||
+              element.street!.contains(keyword) ||
+              element.description!.contains(keyword) ||
+              element.viewType!.contains(keyword))
+          .toList();
+    } else {
+      searchResultListing = null;
+    }
+
+    refreshUI();
   }
 
   @override

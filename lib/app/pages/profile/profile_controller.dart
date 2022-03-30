@@ -31,8 +31,9 @@ class ProfileController extends Controller {
   void initListeners() async {
     await getCurrentUser();
     await getUserToDisplay();
+    await getListings();
 
-    const oneSec = Duration(seconds: 1);
+    const oneSec = Duration(seconds: 10);
     _timer = Timer.periodic(oneSec, (Timer t) async {
       await getListings();
     });

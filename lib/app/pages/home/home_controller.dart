@@ -90,7 +90,8 @@ class HomeController extends Controller {
       }
     };
 
-    const oneSec = Duration(seconds: 1);
+    getData();
+    const oneSec = Duration(seconds: 10);
     _timer = Timer.periodic(oneSec, (Timer t) {
       getData();
     });

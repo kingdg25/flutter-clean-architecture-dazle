@@ -81,7 +81,7 @@ class PdfGenerator {
                               height: 10,
                             ),
                             PdfWidgets().pdfCustomRichText(
-                              mainText: 'Lcoation: ',
+                              mainText: 'Location: ',
                               valueText: '${property.city}',
                             ),
                             pw.SizedBox(
