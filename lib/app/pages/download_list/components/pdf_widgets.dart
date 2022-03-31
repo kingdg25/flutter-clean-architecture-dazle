@@ -15,9 +15,11 @@ class PdfWidgets {
     required String text,
     double fontSize = 13,
     pw.FontWeight? fontWeight,
+    pw.TextAlign? textAlign,
   }) {
     return pw.Text(
       text,
+      textAlign: textAlign ?? pw.TextAlign.left,
       style: pw.TextStyle(
         color: _textColor,
         fontWeight: fontWeight,
@@ -62,7 +64,7 @@ class PdfWidgets {
     required String? text,
   }) {
     return pw.Container(
-      padding: pw.EdgeInsets.symmetric(vertical: 15),
+      // padding: pw.EdgeInsets.symmetric(vertical: 15),
       width: 180,
       height: 50,
       decoration: pw.BoxDecoration(
@@ -77,6 +79,7 @@ class PdfWidgets {
       child: pw.Center(
         child: pw.Text(
           text == null ? 'Test' : text,
+          textAlign: pw.TextAlign.center,
           style: pw.TextStyle(
             color: PdfColors.white,
             fontWeight: pw.FontWeight.bold,
@@ -116,7 +119,6 @@ class PdfWidgets {
             ),
           ),
           pw.Text(
-            // TODO: Finalize where/how to compute this data.
             '20,000/sqm',
             style: pw.TextStyle(
               color: PdfColors.white,

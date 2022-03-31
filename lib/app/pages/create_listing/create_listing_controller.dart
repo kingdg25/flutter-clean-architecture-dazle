@@ -368,7 +368,6 @@ class CreateListingController extends Controller {
     final assetsBased64 =
         await AppConstant.initializeAssetImages(images: assets);
 
-    //TODO: Convert price and area to double
     double price = double.parse(priceTextController.text.replaceAll(',', ''));
     double area = double.parse(areaTextController.text.replaceAll(',', ''));
     print('----------------------------------------------------------------');

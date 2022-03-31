@@ -42,17 +42,28 @@ class PdfGenerator {
             child: pw.Column(
                 crossAxisAlignment: pw.CrossAxisAlignment.start,
                 children: [
-                  // changed from pw.Image.provider() to pw.Image()
-                  pw.Image(
-                    pw.MemoryImage(image),
-                    height: 50,
-                  ),
+                  //*======== PDF Title [start]
+                  pw.Center(
+                      child: PdfWidgets().pdfCustomText(
+                          text: property.propertyFor == 'Sell'
+                              ? '${property.propertyType} for Sale at ${property.street}, ${property.city}'
+                              : '${property.propertyType} for ${property.propertyFor} at ${property.street}, ${property.city} ',
+                          fontSize: 27,
+                          fontWeight: pw.FontWeight.bold,
+                          textAlign: pw.TextAlign.center)),
+                  pw.SizedBox(height: 30),
+                  //*======== PDF Title [end]
+                  // TODO: Move image below the pdf page
+                  // pw.Image(
+                  //   pw.MemoryImage(image),
+                  //   height: 50,
+                  // ),
                   pw.Row(
                     crossAxisAlignment: pw.CrossAxisAlignment.start,
                     children: [
                       pw.Expanded(
                         flex: 4,
-                        //* First/Left Column of the pdf File
+                        //*===== Pdf Property Details Column [start]
                         child: pw.Column(
                           crossAxisAlignment: pw.CrossAxisAlignment.start,
                           children: [
@@ -129,7 +140,9 @@ class PdfGenerator {
                           ],
                         ),
                       ),
-                      //* Second/Right Column of the Pdf Page
+                      //*===== Pdf Property Details Column [end]
+                      //------------------------------------------------------
+                      //*===== Pdf Property Photos Column [start]
                       pw.Expanded(
                         flex: 6,
                         child: pw.Padding(
@@ -143,15 +156,17 @@ class PdfGenerator {
                                     pw.CrossAxisAlignment.stretch,
                                 children: pdfImages,
                               ),
+                              // pw.Positioned(
+                              //   top: -20,
+                              //   child: PdfWidgets().pdfAddressContainer(
+                              //       text: '${property.city} '),
+                              // ),
                               pw.Positioned(
                                 top: -20,
                                 child: PdfWidgets().pdfAddressContainer(
-                                    text: '${property.city} '),
-                              ),
-                              pw.Positioned(
-                                bottom: -20,
-                                child: PdfWidgets().pdfAddressContainer(
-                                    text: property.formatPrice),
+                                    text: property.propertyFor == 'Sell'
+                                        ? '${property.formatPrice} PHP'
+                                        : '${property.formatPrice} PHP /${property.timePeriod}'),
                               ),
                               // pw.Positioned(
                               //   bottom: -18,
@@ -162,35 +177,55 @@ class PdfGenerator {
                           ),
                         ),
                       ),
+                      //*===== Pdf Property Photos Column [end]
                     ],
                   ),
                 ]),
           ),
         ],
+        //*===== Pdf Property Footer [start]
         footer: (pw.Context context) {
-          return pw.Container(
-            alignment: pw.Alignment.centerRight,
-            margin: pw.EdgeInsets.only(top: 1 * PdfPageFormat.cm),
-            child: pw.Column(
-              crossAxisAlignment: pw.CrossAxisAlignment.end,
-              children: [
-                PdfWidgets().pdfCustomRichText(
-                  mainText: 'Selling Agent: ',
-                  valueText: currentUser.displayName,
-                ),
-                pw.Row(mainAxisAlignment: pw.MainAxisAlignment.end, children: [
-                  pw.Icon(pw.IconData(0xe0cd), size: 13),
-                  PdfWidgets()
-                      .pdfCustomText(text: ' ${currentUser.mobileNumber}')
-                ]),
-                pw.Row(mainAxisAlignment: pw.MainAxisAlignment.end, children: [
-                  pw.Icon(pw.IconData(0xe0be), size: 13),
-                  PdfWidgets().pdfCustomText(text: ' ${currentUser.email}')
-                ]),
-              ],
+          return pw.Row(children: [
+            pw.Expanded(
+              flex: 2,
+              child: pw.Image(
+                pw.MemoryImage(image),
+                height: 40,
+              ),
             ),
-          );
+            pw.Expanded(
+              flex: 5,
+              child: pw.Container(
+                alignment: pw.Alignment.centerRight,
+                margin: pw.EdgeInsets.only(top: 1 * PdfPageFormat.cm),
+                child: pw.Column(
+                  crossAxisAlignment: pw.CrossAxisAlignment.end,
+                  children: [
+                    PdfWidgets().pdfCustomRichText(
+                      mainText: 'Selling Agent: ',
+                      valueText: currentUser.displayName,
+                    ),
+                    pw.Row(
+                        mainAxisAlignment: pw.MainAxisAlignment.end,
+                        children: [
+                          pw.Icon(pw.IconData(0xe0cd), size: 13),
+                          PdfWidgets().pdfCustomText(
+                              text: ' ${currentUser.mobileNumber}')
+                        ]),
+                    pw.Row(
+                        mainAxisAlignment: pw.MainAxisAlignment.end,
+                        children: [
+                          pw.Icon(pw.IconData(0xe0be), size: 13),
+                          PdfWidgets()
+                              .pdfCustomText(text: ' ${currentUser.email}')
+                        ]),
+                  ],
+                ),
+              ),
+            ),
+          ]);
         },
+        //*===== Pdf Property Footer [start]
       ),
     );
 
@@ -261,7 +296,7 @@ class PdfGenerator {
     //* First/cover image
     pdfImages.add(
       pw.Container(
-        margin: pw.EdgeInsets.all(5),
+        margin: pw.EdgeInsets.fromLTRB(5, 0, 5, 5),
         child: pw.ClipRRect(
           horizontalRadius: 5.0,
           verticalRadius: 5.0,

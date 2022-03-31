@@ -13,8 +13,6 @@ class MyListingController extends Controller {
   List<Property> _suggestionListing;
   List<Property> get suggestionListing => _suggestionListing;
   List<Property>? searchResultListing;
-  // List<Property>? get searchResultListing => _searchResultListing;
-  //TODO: Separate suggestions and search results
 
   Timer? _timer;
 

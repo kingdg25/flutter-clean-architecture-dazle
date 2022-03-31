@@ -199,7 +199,8 @@ class _ListingDetailsPageState
                               style: App.textStyle(
                                   fontSize: 20, fontWeight: FontWeight.w800)),
                           TextSpan(
-                              text: selectedListing.timePeriod == null
+                              text: selectedListing.timePeriod == null ||
+                                      selectedListing.timePeriod == ''
                                   ? ''
                                   : "/${selectedListing.timePeriod}",
                               style: App.textStyle(

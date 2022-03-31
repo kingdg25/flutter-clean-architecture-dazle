@@ -23,7 +23,6 @@ class DataHomeRepository extends HomeRepository {
   factory DataHomeRepository() => _instance;
 
   @override
-  //TODO: Gio - 2. Add validation for token expiration on user login
   Future<void> isNewUser({String? email, bool? isNewUser}) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
