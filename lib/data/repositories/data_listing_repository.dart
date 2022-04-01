@@ -2,16 +2,19 @@ import 'package:dazle/app/utils/app.dart';
 import 'package:dazle/data/constants.dart';
 import 'package:dazle/domain/entities/property.dart';
 import 'package:dazle/domain/repositories/listing_repository.dart';
+import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'dart:convert' as convert;
 import 'package:http/http.dart' as http;
 import 'dart:typed_data';
 
+import '../../app/utils/app_constant.dart';
+
 class DataListingRepository extends ListingRepository {
   List<Property>? myListing;
   List<Property>? myCollection;
-  final double maxFileSize = 5.0;
+  final double maxFileSize = 10.0;
 
   static DataListingRepository _instance = DataListingRepository._internal();
   DataListingRepository._internal() {
@@ -285,11 +288,20 @@ class DataListingRepository extends ListingRepository {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
     await Future.forEach(assetsBase64, (dynamic d) async {
+      print('Asset: $d');
       _checkFileSize(base64: d['image'], fileName: d['name']);
+
+      //===Compress image size [start]
+      Uint8List bytes = convert.base64Decode(d['image']);
+      Uint8List compressedImageBytes = await _compressAsset(bytes);
+      //===Compress image size [end]
+
+      print('Compressed Asset: $compressedImageBytes');
+      String compressedBase64Asset = convert.base64Encode(compressedImageBytes);
       var response = await http.post(
           Uri.parse("${Constants.siteURL}/api/s3/upload-file-from-base64"),
-          body:
-              convert.jsonEncode({"filename": d['name'], "base64": d['image']}),
+          body: convert.jsonEncode(
+              {"filename": d['name'], "base64": compressedBase64Asset}),
           headers: {
             'Authorization': 'Bearer ${prefs.getString("accessToken")}',
             'Content-Type': 'application/json',
@@ -321,6 +333,16 @@ class DataListingRepository extends ListingRepository {
             "File size must not exceed ${this.maxFileSize}mb. A file $fileName has a size of ${sizeInMB.toStringAsFixed(2)} MB."
       };
     }
+  }
+
+  Future<Uint8List> _compressAsset(Uint8List list) async {
+    var result = await FlutterImageCompress.compressWithList(
+      list,
+      quality: 90,
+    );
+    print('Before compression: ${list.length / 1000000}mb ');
+    print('After compression: ${result.length / 1000000}mb');
+    return result;
   }
 
   @override

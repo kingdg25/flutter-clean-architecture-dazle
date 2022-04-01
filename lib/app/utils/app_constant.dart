@@ -14,6 +14,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_overlay_loader/flutter_overlay_loader.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wechat_assets_picker/wechat_assets_picker.dart';
+import 'package:flutter_image_compress/flutter_image_compress.dart';
 
 class AppConstant {
   static showLoader(BuildContext context, bool show) {
@@ -198,9 +199,18 @@ class AppConstant {
     String fileName = basename(attachment.path);
 
     _checkFileSize(base64: base64Asset, fileName: fileName);
+
+    //* Image Compress
+    Uint8List compressedImageBytes =
+        await AppConstant().compressImage(attachment);
+    String compressedBase64Asset = convert.base64Encode(compressedImageBytes);
+    print('Printing Compressed File size:');
+    print(compressedImageBytes.length / 1000000);
+
     var response = await http.post(
         Uri.parse("${Constants.siteURL}/api/s3/upload-file-from-base64"),
-        body: convert.jsonEncode({"filename": fileName, "base64": base64Asset}),
+        body: convert.jsonEncode(
+            {"filename": fileName, "base64": compressedBase64Asset}),
         headers: {
           'Authorization': 'Bearer ${prefs.getString("accessToken")}',
           'Content-Type': 'application/json',
@@ -214,7 +224,7 @@ class AppConstant {
       throw {
         "error": true,
         "error_type": "server_error",
-        "status": "Upload image failed."
+        "status": "Request Verificaiton not created."
       };
     }
 
@@ -224,9 +234,9 @@ class AppConstant {
   void _checkFileSize({required String base64, String? fileName}) {
     Uint8List bytes = convert.base64Decode(base64);
     double sizeInMB = bytes.length / 1000000;
-    double maxFileSize = 5.0;
+    double maxFileSize = 10.0;
 
-    print(maxFileSize);
+    print('Max file size: $maxFileSize mb');
     if (sizeInMB > maxFileSize) {
       throw {
         "error": false,
@@ -235,5 +245,15 @@ class AppConstant {
             "File size must not exceed ${maxFileSize}mb. A file $fileName has a size of ${sizeInMB.toStringAsFixed(2)} MB."
       };
     }
+  }
+
+  Future<Uint8List> compressImage(File file) async {
+    var compressedResult = await FlutterImageCompress.compressWithFile(
+      file.absolute.path,
+      quality: 90,
+    );
+    print(file.lengthSync());
+    print(compressedResult!.length);
+    return compressedResult;
   }
 }

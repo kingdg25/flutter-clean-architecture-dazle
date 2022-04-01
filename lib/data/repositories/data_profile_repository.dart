@@ -10,9 +10,10 @@ import 'package:dazle/app/utils/app.dart';
 import 'package:dazle/domain/entities/user.dart';
 import 'package:dazle/domain/repositories/profile_repository.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:dazle/app/utils/app_constant.dart';
 
 class DataProfileRepository extends ProfileRepository {
-  final double maxFileSize = 5.0;
+  final double maxFileSize = 12.0;
 
   static DataProfileRepository _instance = DataProfileRepository._internal();
   DataProfileRepository._internal();
@@ -65,7 +66,7 @@ class DataProfileRepository extends ProfileRepository {
   Future<Verification> requestVerification({File? attachment}) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    String? imageUrl = await _getFileUrl(attachment: attachment!);
+    String? imageUrl = await AppConstant().getFileUrl(attachment: attachment!);
 
     final user = await App.getUser();
     final uid = user.id;
@@ -113,52 +114,6 @@ class DataProfileRepository extends ProfileRepository {
         "error": false,
         "error_type": "dynamic",
         "status": "Has no user _id"
-      };
-    }
-  }
-
-  Future<String?> _getFileUrl({required File attachment}) async {
-    String? imageUrl;
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-
-    Uint8List imageBytes = await attachment.readAsBytes();
-    String base64Asset = convert.base64Encode(imageBytes);
-    String fileName = basename(attachment.path);
-
-    _checkFileSize(base64: base64Asset, fileName: fileName);
-    var response = await http.post(
-        Uri.parse("${Constants.siteURL}/api/s3/upload-file-from-base64"),
-        body: convert.jsonEncode({"filename": fileName, "base64": base64Asset}),
-        headers: {
-          'Authorization': 'Bearer ${prefs.getString("accessToken")}',
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-        });
-    var jsonResponse = await convert.jsonDecode(response.body);
-
-    if (response.statusCode == 200) {
-      imageUrl = jsonResponse['data']['file_url'];
-    } else {
-      throw {
-        "error": true,
-        "error_type": "server_error",
-        "status": "Request Verificaiton not created."
-      };
-    }
-
-    return imageUrl;
-  }
-
-  void _checkFileSize({required String base64, String? fileName}) {
-    Uint8List bytes = convert.base64Decode(base64);
-    double sizeInMB = bytes.length / 1000000;
-    print(maxFileSize);
-    if (sizeInMB > this.maxFileSize) {
-      throw {
-        "error": false,
-        "error_type": "filesize_error",
-        "status":
-            "File size must not exceed ${this.maxFileSize}mb. A file $fileName has a size of ${sizeInMB.toStringAsFixed(2)} MB."
       };
     }
   }
