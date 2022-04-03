@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dazle/app/pages/create_listing/create_listing_controller.dart';
 import 'package:dazle/app/utils/app.dart';
 import 'package:dazle/app/utils/app_constant.dart';
@@ -16,6 +17,8 @@ import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import '../../widgets/custom_text.dart';
 import '../../widgets/form_fields/amenities_field.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+
+import '../map_location_picker/map_location_picker_view.dart';
 
 class CreateListingPage extends View {
   final Property? property;
@@ -370,6 +373,44 @@ class _CreateListingPageState
             ListView(
               padding: EdgeInsets.only(bottom: 20),
               children: [
+                AppConstant.customTitleField(title: 'Map Location (In Development)'),
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 20),
+                  child: GestureDetector(
+                    child: CachedNetworkImage(
+                      imageUrl: "https://maps.googleapis.com/maps/api/staticmap?center=8.482298546726664,%20124.64927255100129&zoom=12&size=400x400&key=AIzaSyCSacvsau8vEncNbORdwU0buakm7Mx2rbE",
+                      imageBuilder: (context, imageProvider) => Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          image: DecorationImage(
+                              image: imageProvider, fit: BoxFit.cover),
+                        ),
+                      ),
+                      height: 150.0,
+                      progressIndicatorBuilder: (context, url, progress) =>
+                          Center(
+                        child: CircularProgressIndicator(
+                          valueColor: AlwaysStoppedAnimation<Color?>(
+                              Colors.indigo[900]),
+                          value: progress.progress,
+                        ),
+                      ),
+                      errorWidget: (context, url, error) => Image.asset(
+                        'assets/brooky_logo.png',
+                        fit: BoxFit.scaleDown,
+                      ),
+                    ),
+                    onTap: () async {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (buildContext) => MapLocationPicker()
+                        )
+                      );
+                    },
+                  ),
+                ),
+                SizedBox(height: 12.0),
                 AppConstant.customTitleField(title: 'Street Address'),
                 Container(
                   padding: EdgeInsets.symmetric(horizontal: 20),
