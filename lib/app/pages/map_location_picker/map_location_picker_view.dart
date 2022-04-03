@@ -1,9 +1,11 @@
 
 
 
+import 'package:dazle/app/widgets/custom_text.dart';
 import 'package:dazle/app/widgets/form_fields/custom_button.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import '../../utils/app.dart';
 import './map_location_picker_view_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
@@ -31,6 +33,22 @@ class _MapLocationPickerState extends ViewState<MapLocationPicker, MapLocationPi
         print(controller.propertyCameraPosition?.latitude);
         print(controller.propertyCameraPosition?.longitude);
         return Scaffold(
+          appBar: AppBar(
+            title: CustomText(text: "Property Map Location", fontWeight: FontWeight.bold),
+            automaticallyImplyLeading: false,
+            backgroundColor: Colors.white,
+            actions: [
+              Container(
+                padding: EdgeInsets.only(right: 10.0),
+                child: IconButton(
+                    icon: Icon(Icons.location_searching, color: App.mainColor),
+                    iconSize: 30,
+                    onPressed: () {
+                      controller.goToCurrentLocation();
+                    }),
+              )
+            ],
+          ),
           body: Stack(
             children: [
               GoogleMap(
