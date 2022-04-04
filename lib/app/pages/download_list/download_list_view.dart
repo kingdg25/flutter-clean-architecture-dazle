@@ -19,7 +19,6 @@ import 'package:flutter_overlay_loader/flutter_overlay_loader.dart';
 import 'package:open_file/open_file.dart';
 import './components/pdf_generator.dart';
 import 'package:share_plus/share_plus.dart';
-import 'package:share_files_and_screenshot_widgets/share_files_and_screenshot_widgets.dart';
 
 class DownloadListPage extends View {
   DownloadListPage({Key? key, required this.property}) : super(key: key);
