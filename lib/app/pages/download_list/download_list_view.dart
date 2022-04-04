@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dazle/app/pages/download_list/download_list_controller.dart';
@@ -12,11 +13,13 @@ import 'package:dazle/app/widgets/form_fields/custom_button_reverse.dart';
 import 'package:dazle/data/repositories/data_listing_repository.dart';
 import 'package:dazle/domain/entities/property.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:flutter_overlay_loader/flutter_overlay_loader.dart';
 import 'package:open_file/open_file.dart';
 import './components/pdf_generator.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:share_files_and_screenshot_widgets/share_files_and_screenshot_widgets.dart';
 
 class DownloadListPage extends View {
   DownloadListPage({Key? key, required this.property}) : super(key: key);
@@ -278,15 +281,15 @@ class _DownloadListPageState
                         String? pdfFilePath = await PdfGenerator()
                             .sharePdf(property: widget.property);
                         Loader.hide();
-                        if (pdfFilePath != null) {
-                          await Share.shareFiles(
-                            [pdfFilePath],
-                            subject:
-                                'Dazle Property Listing-${widget.property.id}',
-                            text:
-                                'Dazle Property Listing-${widget.property.id}',
-                          );
-                        }
+                        List<String> filePaths = [];
+                        filePaths.add(pdfFilePath!);
+                        await Share.shareFiles(
+                          filePaths,
+                          mimeTypes: ["image/jpg"],
+                          subject:
+                              'Dazle Property Listing-${widget.property.id}',
+                          text: 'Dazle Property Listing-${widget.property.id}',
+                        );
                       },
                       backgroudColor: Colors.white,
                       textColor: App.mainColor,
