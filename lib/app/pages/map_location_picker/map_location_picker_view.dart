@@ -12,17 +12,18 @@ import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 
 class MapLocationPicker extends View {
   final CameraPosition? initialCameraPosition;
+  final bool viewOnly;
 
-  MapLocationPicker({this.initialCameraPosition});
+  MapLocationPicker({this.initialCameraPosition, this.viewOnly = false});
 
   @override
-  _MapLocationPickerState createState() => _MapLocationPickerState(initialCameraPosition: initialCameraPosition);
+  _MapLocationPickerState createState() => _MapLocationPickerState(initialCameraPosition: initialCameraPosition, viewOnly: this.viewOnly);
   
 }
 
 class _MapLocationPickerState extends ViewState<MapLocationPicker, MapLocationPickerController> {
-  _MapLocationPickerState({CameraPosition? initialCameraPosition})
-    : super(MapLocationPickerController(initialCameraPosition: initialCameraPosition));
+  _MapLocationPickerState({CameraPosition? initialCameraPosition, bool viewOnly = false})
+    : super(MapLocationPickerController(initialCameraPosition: initialCameraPosition, viewOnly: viewOnly));
 
 
   @override
@@ -30,8 +31,8 @@ class _MapLocationPickerState extends ViewState<MapLocationPicker, MapLocationPi
     return ControlledWidgetBuilder<MapLocationPickerController>(
       builder: (context, controller) {
         print("controller.propertyCameraPosition");
-        print(controller.propertyCameraPosition?.latitude);
-        print(controller.propertyCameraPosition?.longitude);
+        print(controller.propertyCameraPositionTarget?.latitude);
+        print(controller.propertyCameraPositionTarget?.longitude);
         return Scaffold(
           appBar: AppBar(
             title: CustomText(text: "Property Map Location", fontWeight: FontWeight.bold),
@@ -51,24 +52,40 @@ class _MapLocationPickerState extends ViewState<MapLocationPicker, MapLocationPi
           ),
           body: Stack(
             children: [
-              GoogleMap(
-                mapType: MapType.hybrid,
-                myLocationEnabled: true,
-                initialCameraPosition: widget.initialCameraPosition ?? CameraPosition(
-                  // bearing: 192.8334901395799,
-                  target: LatLng(8.482298546726664, 124.64927255100129),
-                  tilt: 25.0,
-                  zoom: 19.151926040649414),
-                onMapCreated: (GoogleMapController googleMapController) => controller.onMapCreated(googleMapController),
-                markers: controller.propertyCameraPosition!=null ? {
-                  Marker(position: controller.propertyCameraPosition as LatLng, markerId: MarkerId("property_position"))
-                } : {},
-                onCameraMove: (CameraPosition cameraPosition) {
-                  // controller.changePropertyMarker(LatLng(cameraPosition.target.latitude, cameraPosition.target.longitude));
-                },
-                onTap: (LatLng target) {
-                  controller.changePropertyMarker(target);
-                },
+              Stack(
+                children: [
+                  GoogleMap(
+                    mapType: MapType.hybrid,
+                    myLocationEnabled: true,
+                    initialCameraPosition: widget.initialCameraPosition ?? CameraPosition(
+                      // bearing: 192.8334901395799,
+                      target: LatLng(8.482298546726664, 124.64927255100129),
+                      tilt: 25.0,
+                      zoom: 19.151926040649414),
+                    onMapCreated: (GoogleMapController googleMapController) => controller.onMapCreated(googleMapController),
+                    markers: controller.markers
+                    // controller.propertyCameraPositionTarget!=null ? {
+                    //   Marker(position: controller.propertyCameraPositionTarget as LatLng, markerId: MarkerId("property_position"))
+                    // } : {}
+                    ,
+                    onCameraMove: (CameraPosition cameraPosition) {
+                      if (!widget.viewOnly) {print("UPDATETIN ONCAMERAOs");controller.changePropertyCameraPositionTarget(LatLng(cameraPosition.target.latitude, cameraPosition.target.longitude));}
+                    },
+                    onTap: (LatLng target) {
+                      if (!widget.viewOnly) {print("UPDATETIN ONTAP");controller.changePropertyMarker(target);}
+                    },
+                  ),
+                  !widget.viewOnly ? Center(
+                    child: Padding(
+                      padding: EdgeInsets.only(bottom: controller.propertyPositionTargetIconSize * 0.80),
+                      child: Icon(
+                        Icons.location_on,
+                        color: Colors.blue[300],
+                        size: controller.propertyPositionTargetIconSize,
+                      ),
+                    ),
+                  ) : Container()
+                ]
               ),
               Align(
                 alignment: Alignment.bottomCenter,
@@ -77,7 +94,7 @@ class _MapLocationPickerState extends ViewState<MapLocationPicker, MapLocationPi
                   child: CustomButton(
                     text: "Confirm Location",
                     onPressed: (){
-                      Navigator.pop(context, controller.propertyCameraPosition);
+                      Navigator.pop(context, controller.propertyCameraPositionTarget);
                     },
                     backgroudColor: Color(0xFF0D47A1)
                   )

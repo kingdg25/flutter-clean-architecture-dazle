@@ -7,24 +7,30 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class MapLocationPickerController extends Controller {
   final CameraPosition? initialCameraPosition;
+  final bool viewOnly;
 
-  MapLocationPickerController({this.initialCameraPosition});
+  MapLocationPickerController({this.initialCameraPosition, this.viewOnly = false})
+    : propertyCameraPositionTarget = initialCameraPosition!=null ? LatLng(initialCameraPosition.target.latitude, initialCameraPosition.target.longitude) : null,
+    markers = (initialCameraPosition!=null && viewOnly) ? {Marker(position: LatLng(initialCameraPosition.target.latitude, initialCameraPosition.target.longitude), markerId: MarkerId("property_position"))} : {};
 
   Completer<GoogleMapController> googleMapFuture = Completer();
 
 
-  late LatLng? propertyCameraPosition;
+  late LatLng? propertyCameraPositionTarget;
+  double propertyPositionTargetIconSize = 50.0;
+
+  Set<Marker> markers = <Marker>{};
 
   @override
   void initListeners() {
-    initPropertyCameraPosition();
+    // initPropertyCameraPosition();
   }
 
   initPropertyCameraPosition() async {
-    // if (initialCameraPosition!=null) {
-      propertyCameraPosition = LatLng(initialCameraPosition?.target.latitude ?? 8.482298546726664, initialCameraPosition?.target.longitude ?? 124.64927255100129);
-      refreshUI();
-    // }
+    if (initialCameraPosition!=null) {
+      propertyCameraPositionTarget = LatLng(initialCameraPosition?.target.latitude ?? 8.482298546726664, initialCameraPosition?.target.longitude ?? 124.64927255100129);
+      // refreshUI();
+    }
   }
 
   onMapCreated(GoogleMapController controller) {
@@ -37,13 +43,17 @@ class MapLocationPickerController extends Controller {
     controller.animateCamera(CameraUpdate.newCameraPosition(
       CameraPosition(target: position,
       tilt: 25.0,
-      zoom: 19.151926040649414
+      zoom: await controller.getZoomLevel()
     )));
+  }
+
+  changePropertyCameraPositionTarget(LatLng position) async {
+    propertyCameraPositionTarget = LatLng(position.latitude, position.longitude);
   }
 
   changePropertyMarker(LatLng position) async {
     await moveMapCamera(LatLng(position.latitude, position.longitude));
-    propertyCameraPosition = LatLng(position.latitude, position.longitude);
+    propertyCameraPositionTarget = LatLng(position.latitude, position.longitude);
     refreshUI();
   }
   
