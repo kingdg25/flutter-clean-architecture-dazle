@@ -218,6 +218,8 @@ class _CreateListingPageState
                     "1BR",
                     "2BR",
                     "3BR",
+                    "4BR",
+                    "5BR",
                   ],
                   buttonValues: [
                     "Any",
@@ -225,6 +227,8 @@ class _CreateListingPageState
                     "1BR",
                     "2BR",
                     "3BR",
+                    "4BR",
+                    "5BR",
                   ],
                   radioButtonValue: (value) {
                     controller.numberOfBedRooms = value;

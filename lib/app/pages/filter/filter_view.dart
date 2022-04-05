@@ -132,18 +132,20 @@ class _FilterPageState extends ViewState<FilterPage, FilterController> {
               CustomCheckBoxGroupButton(
                 checkBoxWidth: 70,
                 buttonLables: [
-                  "Any",
                   "Studio",
                   "1BR",
                   "2BR",
                   "3BR",
+                  "4BR",
+                  "5BR",
                 ],
                 buttonValuesList: [
-                  "Any",
                   "Studio",
                   "1BR",
                   "2BR",
                   "3BR",
+                  "4BR",
+                  "5BR",
                 ],
                 checkBoxButtonValues: (values) {
                   print(values);
@@ -155,24 +157,18 @@ class _FilterPageState extends ViewState<FilterPage, FilterController> {
               CustomCheckBoxGroupButton(
                 checkBoxWidth: 55,
                 buttonLables: [
-                  "Any",
-                  "1",
-                  "2",
-                  "3",
-                  "4",
-                  "5",
-                  "6",
-                  "7",
+                  "1+",
+                  "2+",
+                  "3+",
+                  "4+",
+                  "5+",
                 ],
                 buttonValuesList: [
-                  "Any",
-                  "1",
-                  "2",
-                  "3",
-                  "4",
-                  "5",
-                  "6",
-                  "7",
+                  "1+",
+                  "2+",
+                  "3+",
+                  "4+",
+                  "5+",
                 ],
                 checkBoxButtonValues: (values) {
                   print(values);
