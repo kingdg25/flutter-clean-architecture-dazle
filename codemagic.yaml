@@ -1,5 +1,5 @@
 workflows:
-  my-workflow:
+  flutter-android:
     environment:
       flutter: stable
     scripts:
