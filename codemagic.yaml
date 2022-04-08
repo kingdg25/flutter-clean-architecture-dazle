@@ -28,7 +28,7 @@ workflows:
           ls
           echo $ANDROID_KEYSTORE_FILE_PATH
           ls $ANDROID_KEYSTORE_FILE_PATH
-          cd . && flutter build apk --release --target-platform=android-arm --build-name=1.0.0.staging --build-number=16
+          cd . && flutter build apk --release --target-platform=android-arm --build-name=1.0.17.staging --build-number=17
     artifacts:
       - build/**/outputs/**/*.apk
       - flutter_drive.log
