@@ -3,11 +3,11 @@ workflows:
     environment:
       groups:
         - keystore_credentials
-          ANDROID_KEYSTORE_FILE_PATH
-          ANDROID_KEY_ALIAS
-          ANDROID_KEY_PASS
-          ANDROID_KEYSTORE_PASS
-          ANDROID_KEYSTORE_FILE
+          # ANDROID_KEYSTORE_FILE_PATH
+          # ANDROID_KEY_ALIAS
+          # ANDROID_KEY_PASS
+          # ANDROID_KEYSTORE_PASS
+          # ANDROID_KEYSTORE_FILE
       flutter: stable
     triggering:
       events:
