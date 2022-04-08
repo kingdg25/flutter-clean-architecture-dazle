@@ -2,6 +2,16 @@ workflows:
   flutter-android:
     environment:
       flutter: stable
+    triggering:
+      events:
+        - push
+      branch_patterns:
+        - pattern: '*staging*'
+          include: true
+          source: true
+      tag_patterns:
+        - pattern: '*'
+          include: true
     scripts:
       - name: say hello
         script: echo "Hello Codemagician!"
