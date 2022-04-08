@@ -4,6 +4,8 @@ import 'package:dazle/app/pages/main/components/triangle_painter.dart';
 import 'package:dazle/app/pages/profile/profile_view.dart';
 import 'package:flutter/material.dart';
 
+import '../connection/connection_view.dart';
+
 class MainPage extends StatefulWidget {
   static const String id = 'main_page';
 
@@ -17,7 +19,7 @@ class _MainPageState extends State<MainPage> {
   int _currentIndex = 0;
   final List<Widget> _navs = [
     HomePage(),
-    // ConnectionPage(),
+    ConnectionPage(),
     ListingPage(),
     // MessagePage(),
     ProfilePage(),
@@ -58,10 +60,10 @@ class _MainPageState extends State<MainPage> {
             label: 'home',
           ),
 
-          // customBottomNavigationBarItem(
-          //   asset: 'assets/icons/tab_bar/connection.png',
-          //   label: 'connection',
-          // ),
+          customBottomNavigationBarItem(
+            asset: 'assets/icons/tab_bar/connection.png',
+            label: 'connection',
+          ),
 
           customBottomNavigationBarItem(
             asset: 'assets/icons/tab_bar/listing.png',

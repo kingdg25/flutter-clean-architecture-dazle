@@ -1,6 +1,13 @@
 workflows:
   flutter-android:
     environment:
+      groups:
+        - keystore_credentials
+          ANDROID_KEYSTORE_FILE_PATH
+          ANDROID_KEY_ALIAS
+          ANDROID_KEY_PASS
+          ANDROID_KEYSTORE_PASS
+          ANDROID_KEYSTORE_FILE
       flutter: stable
     triggering:
       events:
@@ -15,4 +22,20 @@ workflows:
     scripts:
       - name: say hello
         script: echo "Hello Codemagician!"
-
+      - name: Build Android APK
+        script: |
+          echo $ANDROID_KEYSTORE_FILE | base64 --decode > $ANDROID_KEYSTORE_FILE_PATH
+          ls
+          echo $ANDROID_KEYSTORE_FILE_PATH
+          ls $ANDROID_KEYSTORE_FILE_PATH
+          cd . && flutter build apk --release --target-platform=android-arm --build-name=1.0.0.staging --build-number=16
+    artifacts:
+      - build/**/outputs/**/*.apk
+      - flutter_drive.log
+    publishing:
+      email:
+        recipients:
+          - kingie@brooky.io
+        notify:
+          success: true     # To not receive a notification when a build succeeds
+          failure: true
