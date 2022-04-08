@@ -35,7 +35,7 @@ workflows:
     publishing:
       email:
         recipients:
-          - kingie@brooky.io
+          - brooky.developers@brooky.io
         notify:
           success: true     # To not receive a notification when a build succeeds
           failure: true
