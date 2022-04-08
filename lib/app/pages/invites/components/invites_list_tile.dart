@@ -1,33 +1,40 @@
-import 'package:dazle/app/pages/invites/invites_controller.dart';
-import 'package:dazle/app/utils/app.dart';
-import 'package:dazle/app/widgets/custom_text.dart';
-import 'package:dazle/app/widgets/form_fields/custom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 
-class InvitesListTile extends StatelessWidget {
+import '../../../utils/app.dart';
+import '../../../widgets/custom_text.dart';
+import '../../../widgets/form_fields/custom_button.dart';
+import '../invites_controller.dart';
 
+class InvitesListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    InvitesController controller = FlutterCleanArchitecture.getController<InvitesController>(context);
-
+    InvitesController controller =
+        FlutterCleanArchitecture.getController<InvitesController>(context);
+    if (controller.invites.isEmpty) {
+      return Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Center(
+          child: CircularProgressIndicator(),
+        ),
+      );
+    }
     return ListView.builder(
       shrinkWrap: true,
       physics: NeverScrollableScrollPhysics(),
       // padding: EdgeInsets.symmetric(horizontal: 10.0),
       itemCount: controller.invites.length,
-      itemBuilder: (BuildContext context, int index){
+      itemBuilder: (BuildContext context, int index) {
         return Container(
           decoration: BoxDecoration(
-            border: Border(
-              bottom: BorderSide(
-                color: App.hintColor,
-                width: 0.3,
-              )
-            )
-          ),
+              border: Border(
+                  bottom: BorderSide(
+            color: App.hintColor,
+            width: 0.3,
+          ))),
           child: ListTile(
-            contentPadding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 8.0),
+            contentPadding:
+                EdgeInsets.symmetric(horizontal: 20.0, vertical: 8.0),
             leading: Image.asset(
               'assets/icons/user.png',
               height: 40,
@@ -38,7 +45,8 @@ class InvitesListTile extends StatelessWidget {
               fontWeight: FontWeight.w600,
             ),
             subtitle: CustomText(
-              text: '${controller.invites[index].totalConnection} connections on ${App.name}',
+              text:
+                  '${controller.invites[index].totalConnection} connections on ${App.name}',
               fontSize: 11,
             ),
             trailing: Container(
