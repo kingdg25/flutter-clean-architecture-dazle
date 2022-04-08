@@ -1,0 +1,8 @@
+workflows:
+  flutter-android:
+    environment:
+      flutter: stable
+    scripts:
+      - name: say hello
+        script: echo "Hello Codemagician!"
+
