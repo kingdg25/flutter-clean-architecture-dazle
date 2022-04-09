@@ -19,7 +19,7 @@ class _MainPageState extends State<MainPage> {
   int _currentIndex = 0;
   final List<Widget> _navs = [
     HomePage(),
-    // ConnectionPage(),
+    ConnectionPage(),
     ListingPage(),
     // MessagePage(),
     ProfilePage(),
@@ -60,10 +60,10 @@ class _MainPageState extends State<MainPage> {
             label: 'home',
           ),
 
-          // customBottomNavigationBarItem(
-          //   asset: 'assets/icons/tab_bar/connection.png',
-          //   label: 'connection',
-          // ),
+          customBottomNavigationBarItem(
+            asset: 'assets/icons/tab_bar/connection.png',
+            label: 'connection',
+          ),
 
           customBottomNavigationBarItem(
             asset: 'assets/icons/tab_bar/listing.png',
