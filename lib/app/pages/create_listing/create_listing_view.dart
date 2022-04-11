@@ -377,8 +377,8 @@ class _CreateListingPageState
             ListView(
               padding: EdgeInsets.only(bottom: 20),
               children: [
-                true ? Container() : AppConstant.customTitleField(title: 'Map Location (In Development)'),
-                true ? Container() : Container(
+                false ? Container() : AppConstant.customTitleField(title: 'Map Location (In Development)'),
+                false ? Container() : Container(
                   padding: EdgeInsets.symmetric(horizontal: 20),
                   child: GestureDetector(
                     child: CachedNetworkImage(

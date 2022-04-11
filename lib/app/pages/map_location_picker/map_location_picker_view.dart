@@ -34,18 +34,28 @@ class _MapLocationPickerState extends ViewState<MapLocationPicker, MapLocationPi
         print(controller.propertyCameraPositionTarget?.latitude);
         print(controller.propertyCameraPositionTarget?.longitude);
         return Scaffold(
+          key: globalKey,
           appBar: AppBar(
             title: CustomText(text: "Property Map Location", fontWeight: FontWeight.bold),
             automaticallyImplyLeading: false,
             backgroundColor: Colors.white,
             actions: [
-              Container(
+              true ? Container() : Container(
                 padding: EdgeInsets.only(right: 10.0),
                 child: IconButton(
                     icon: Icon(Icons.location_searching, color: App.mainColor),
                     iconSize: 30,
                     onPressed: () {
                       controller.goToCurrentLocation();
+                    }),
+              ),
+              Container(
+                padding: EdgeInsets.only(right: 10.0),
+                child: IconButton(
+                    icon: Icon(Icons.search, color: Colors.blue),
+                    iconSize: 30,
+                    onPressed: () {
+                      controller.inputPlace();
                     }),
               )
             ],
