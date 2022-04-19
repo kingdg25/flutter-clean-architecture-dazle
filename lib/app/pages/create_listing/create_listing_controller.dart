@@ -15,6 +15,8 @@ import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:flutter_overlay_loader/flutter_overlay_loader.dart';
 import 'package:wechat_assets_picker/wechat_assets_picker.dart';
 
+import '../map_location_picker/map_location_picker_view.dart';
+
 class CreateListingController extends Controller {
   final CreateListingPresenter createListingPresenter;
   final Property? property;
@@ -39,6 +41,10 @@ class CreateListingController extends Controller {
   final TextEditingController streetTextController;
   final TextEditingController landmarkTextController;
   final TextEditingController cityTextController;
+  bool mapSwitch;
+  double? latitude;
+  double? longitude;
+  Map<dynamic, dynamic>? propertyCoordinates;
 
   // page 4
   List<String> amenitiesSelection;
@@ -77,6 +83,7 @@ class CreateListingController extends Controller {
         viewType = "public",
         currentPhotosCount = 0,
         isUpdating = false,
+        mapSwitch = false,
         super();
 
   @override
@@ -159,7 +166,23 @@ class CreateListingController extends Controller {
       updateAmenitiesSelection(amenities: this.property?.amenities ?? []);
       await setValues();
       createListingPresenter.fetchListingDetails(id: this.property!.id);
+
+      // Initializing map coordinates for updating
+      if (propertyCoordinates != null && propertyCoordinates!.isNotEmpty) {
+        mapSwitch = true;
+        refreshUI();
+      }
     }
+  }
+
+  void switchHandler() async {
+    if (mapSwitch == true) {
+      propertyCoordinates = {};
+      mapSwitch = false;
+    } else {
+      mapSwitch = true;
+    }
+    refreshUI();
   }
 
   // initialize values on updating
@@ -179,6 +202,14 @@ class CreateListingController extends Controller {
     isYourProperty = this.property!.isYourProperty;
     amenities = this.property!.amenities;
     viewType = this.property!.viewType;
+    propertyCoordinates = this.property?.coordinates;
+
+    if (propertyCoordinates != null) {
+      latitude = propertyCoordinates!["Latitude"];
+      longitude = propertyCoordinates!["Longitude"];
+    }
+    print('LatLong on update: $latitude , $longitude');
+
     refreshUI();
   }
 
@@ -270,8 +301,10 @@ class CreateListingController extends Controller {
   }
 
   validatePage5() async {
+    print('INSIDE PAGE 5 VALIDATION');
     bool isValidated = false;
-    // === Creating list
+
+    // === Create listing Photo Validation
     if (isUpdating = false) {
       if (assets.length >= 4) {
         isValidated = true;
@@ -283,7 +316,9 @@ class CreateListingController extends Controller {
         return false;
       }
 
-      final confirmViewType = await _viewType(getContext());
+      final confirmViewType =
+          await _viewType(getContext()); //select porperty view type
+      print('AFTER VIEW TYPE');
 
       if (confirmViewType == null) {
         AppConstant.statusDialog(
@@ -297,8 +332,8 @@ class CreateListingController extends Controller {
           context: getContext(),
           text: "Your listing will view as $confirmViewType",
           title: "View Type");
-      // === Updating list
     } else {
+      // === Updating list Photo validation
       int? totalPhotos = assets.length + currentPhotosCount;
       if (totalPhotos >= 4) {
         isValidated = true;
@@ -356,6 +391,7 @@ class CreateListingController extends Controller {
       "city": cityTextController.text,
       "amenities": amenities,
       "view_type": viewType,
+      "coordinates": propertyCoordinates,
       "assets": assetsBased64
     };
 
@@ -368,12 +404,9 @@ class CreateListingController extends Controller {
     final assetsBased64 =
         await AppConstant.initializeAssetImages(images: assets);
 
+    //=== Converting price and area to double
     double price = double.parse(priceTextController.text.replaceAll(',', ''));
     double area = double.parse(areaTextController.text.replaceAll(',', ''));
-    print('----------------------------------------------------------------');
-    print('price: $price');
-    print('area: $area');
-    print('----------------------------------------------------------------');
 
     var listing = {
       "cover_photo": 'https://picsum.photos/id/73/200/300',
@@ -397,6 +430,8 @@ class CreateListingController extends Controller {
       "amenities": amenities,
 
       "assets": assetsBased64, // for photos
+
+      "coordinates": propertyCoordinates,
 
       "view_type": viewType
     };

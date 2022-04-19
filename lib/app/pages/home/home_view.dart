@@ -1,3 +1,4 @@
+import 'package:dazle/app/pages/create_listing/create_listing_view.dart';
 import 'package:dazle/app/pages/filter/filter_view.dart';
 import 'package:dazle/app/pages/find_match/find_match_view.dart';
 import 'package:dazle/app/pages/home/components/header_home_tile.dart';
@@ -48,6 +49,24 @@ class _HomePageState extends ViewState<HomePage, HomeController> {
             )
           ],
         ),
+        floatingActionButton: FractionallySizedBox(
+          widthFactor: 0.90,
+          child: FloatingActionButton.extended(
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (buildContext) => CreateListingPage()));
+              },
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(10.0))),
+              tooltip: 'Create listing',
+              backgroundColor: App.mainColor,
+              label: const Text('Add New Listing')
+              // child: Icon(Icons.add)
+              ),
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         body: ControlledWidgetBuilder<HomeController>(
             builder: (context, controller) {
           final double screenHeight = MediaQuery.of(context).size.height;

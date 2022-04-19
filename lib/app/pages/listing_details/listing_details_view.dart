@@ -12,6 +12,7 @@ import 'package:dazle/domain/entities/property.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:dazle/app/pages/download_list/download_list_view.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class ListingDetailsPage extends View {
   ListingDetailsPage({Key? key, required this.listingId}) : super(key: key);
@@ -38,8 +39,18 @@ class _ListingDetailsPageState
         body: ControlledWidgetBuilder<ListingDetailsController>(
             builder: (context, controller) {
           Property? selectedListing = controller.selectedListing;
+          Map<dynamic, dynamic>? coordinates = selectedListing?.coordinates;
+          var latitude;
+          var longitude;
 
-          print('inside listing details view:  ${selectedListing.toString()}');
+          if (coordinates != null) {
+            latitude = coordinates["Latitude"];
+            longitude = coordinates["Longitude"];
+          }
+
+          print(
+              'inside listing details view:  ${selectedListing?.coordinates}');
+          print('printing latitude $latitude');
 
           if (selectedListing == null) {
             return Center(
@@ -300,6 +311,57 @@ class _ListingDetailsPageState
                           ],
                         ),
                       ),
+                      SizedBox(height: 10),
+                      latitude != null
+                          ? Container(
+                              // padding: EdgeInsets.symmetric(horizontal: 20),
+                              child: GestureDetector(
+                                child: CachedNetworkImage(
+                                  imageUrl:
+                                      // "https://maps.googleapis.com/maps/api/staticmap?center=8.482298546726664,%20124.64927255100129&zoom=19&size=400x400&key=AIzaSyCSacvsau8vEncNbORdwU0buakm7Mx2rbE",
+                                      "https://maps.googleapis.com/maps/api/staticmap?center=$latitude,%20$longitude&zoom=16&size=400x400&markers=color:0x33D49D|$latitude,$longitude&key=AIzaSyCSacvsau8vEncNbORdwU0buakm7Mx2rbE",
+                                  imageBuilder: (context, imageProvider) =>
+                                      Container(
+                                    decoration: BoxDecoration(
+                                      // borderRadius: BorderRadius.circular(10),
+                                      image: DecorationImage(
+                                          image: imageProvider,
+                                          fit: BoxFit.cover),
+                                    ),
+                                  ),
+                                  height: 200.0,
+                                  progressIndicatorBuilder:
+                                      (context, url, progress) => Center(
+                                    child: CircularProgressIndicator(
+                                      valueColor:
+                                          AlwaysStoppedAnimation<Color?>(
+                                              Colors.indigo[900]),
+                                      value: progress.progress,
+                                    ),
+                                  ),
+                                  errorWidget: (context, url, error) =>
+                                      Image.asset(
+                                    'assets/brooky_logo.png',
+                                    fit: BoxFit.scaleDown,
+                                  ),
+                                ),
+                                onTap: () async {
+                                  // CameraPosition initialCamPos = CameraPosition(
+                                  //     target: LatLng(controller.latitude!,
+                                  //         controller.longitude!),
+                                  //     tilt: 25.0,
+                                  //     zoom: 19.151926040649414);
+                                  // LatLng mapCoordinates = await Navigator.push(
+                                  //     context,
+                                  //     MaterialPageRoute(
+                                  //         builder: (buildContext) =>
+                                  //             MapLocationPicker(
+                                  //               initialCameraPosition: initialCamPos,
+                                  //             )));
+                                },
+                              ),
+                            )
+                          : Text('No Map Location provided.'),
                       SizedBox(height: 20),
                       Divider(
                         color: App.hintColor,
