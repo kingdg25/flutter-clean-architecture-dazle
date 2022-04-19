@@ -40,6 +40,8 @@ dependencies:
     flutter_image_compress: ^1.1.0
     google_maps_flutter:
     geolocator: ^8.2.0
+    flutter_google_places: ^0.3.0
+    flutter_switch: ^0.3.2
 
 
 dev_dependencies:

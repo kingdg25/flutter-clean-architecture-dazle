@@ -24,6 +24,7 @@ class DataListingRepository extends ListingRepository {
   factory DataListingRepository() => _instance;
 
   @override
+  //======================= CREATE LISTING[START]
   Future<Property> create({Map? listing}) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
@@ -89,7 +90,7 @@ class DataListingRepository extends ListingRepository {
         "status": "Has no user _id"
       };
     }
-  }
+  } //======================= CREATE LISTING[END]
 
   @override
   Future<List<Property>> getMyListing() async {
@@ -117,11 +118,8 @@ class DataListingRepository extends ListingRepository {
     var jsonResponse = await convert.jsonDecode(response.body);
     print("LISTING YOW");
     if (response.statusCode == 200) {
-      print(jsonResponse['listings'].length);
+      print('Listing length: ${jsonResponse['listings'].length}');
       jsonResponse['listings'].forEach((val) {
-        // val['price'] = "${val['price'] ?? 0}";
-        // val['time_period'] = "${val['time_period'] ?? 0}";
-        // val['total_area'] = "${val['total_area'] ?? 0}";
         final price = val['price'];
         final area = val['total_area'];
         String priceVar = '$price';

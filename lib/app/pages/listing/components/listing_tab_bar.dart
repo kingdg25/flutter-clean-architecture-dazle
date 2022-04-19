@@ -7,13 +7,14 @@ import 'package:dazle/app/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 
 class ListingTabBar extends StatefulWidget {
-  const ListingTabBar({ Key? key }) : super(key: key);
+  const ListingTabBar({Key? key}) : super(key: key);
 
   @override
   _ListingTabBarState createState() => _ListingTabBarState();
 }
 
-class _ListingTabBarState extends State<ListingTabBar> with SingleTickerProviderStateMixin {
+class _ListingTabBarState extends State<ListingTabBar>
+    with SingleTickerProviderStateMixin {
   TabController? _tabcontroller;
 
   final List myTabs = <Widget>[
@@ -22,13 +23,13 @@ class _ListingTabBarState extends State<ListingTabBar> with SingleTickerProvider
   ];
 
   @override
-  void initState(){
+  void initState() {
     super.initState();
     _tabcontroller = TabController(vsync: this, length: myTabs.length);
   }
 
   @override
-  void dispose(){
+  void dispose() {
     _tabcontroller!.dispose();
     super.dispose();
   }
@@ -50,19 +51,24 @@ class _ListingTabBarState extends State<ListingTabBar> with SingleTickerProvider
         backgroundColor: Colors.white,
       ),
       backgroundColor: Colors.white,
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (buildContext) => CreateListingPage()
-            )
-          );
-        },
-        tooltip: 'Create listing',
-        backgroundColor: App.mainColor,
-        child: Icon(Icons.add),
+      floatingActionButton: FractionallySizedBox(
+        widthFactor: 0.90,
+        child: FloatingActionButton.extended(
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (buildContext) => CreateListingPage()));
+            },
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(10.0))),
+            tooltip: 'Create listing',
+            backgroundColor: App.mainColor,
+            label: const Text('Add New Listing')
+            // child: Icon(Icons.add)
+            ),
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       body: TabBarView(
         controller: _tabcontroller,
         physics: NeverScrollableScrollPhysics(),

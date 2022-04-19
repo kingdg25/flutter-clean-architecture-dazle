@@ -63,7 +63,12 @@ class DataConnectionRepository extends ConnectionRepository {
           'Authorization': 'Bearer ${prefs.getString("accessToken")}',
           'Content-Type': 'application/json',
           'Accept': 'application/json'
-        });
+        }).timeout(
+      const Duration(seconds: 20),
+      onTimeout: () {
+        throw {"error": true, "error_type": "dynamic", "status": "Timeout"};
+      },
+    );
 
     var jsonResponse = await convert.jsonDecode(response.body);
     if (response.statusCode == 200) {
@@ -101,7 +106,12 @@ class DataConnectionRepository extends ConnectionRepository {
           'Authorization': 'Bearer ${prefs.getString("accessToken")}',
           'Content-Type': 'application/json',
           'Accept': 'application/json'
-        });
+        }).timeout(
+      const Duration(seconds: 20),
+      onTimeout: () {
+        throw {"error": true, "error_type": "dynamic", "status": "Timeout"};
+      },
+    );
 
     var jsonResponse = await convert.jsonDecode(response.body);
     if (response.statusCode == 200) {
