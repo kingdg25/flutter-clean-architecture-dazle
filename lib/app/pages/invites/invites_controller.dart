@@ -4,23 +4,23 @@ import 'package:dazle/domain/entities/invite_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 
-
 class InvitesController extends Controller {
   final InvitesPresenter invitesPresenter;
 
   List<InviteTile> _invites;
   List<InviteTile> get invites => _invites;
+  var isLoading = true;
+  var error = false;
 
   final TextEditingController searchTextController;
   List<String> suggestionsCallback;
 
   InvitesController(userRepo)
-    : invitesPresenter = InvitesPresenter(userRepo),
-      _invites = <InviteTile>[],
-      searchTextController = TextEditingController(),
-      suggestionsCallback = <String>[],
-      super();
-
+      : invitesPresenter = InvitesPresenter(userRepo),
+        _invites = <InviteTile>[],
+        searchTextController = TextEditingController(),
+        suggestionsCallback = <String>[],
+        super();
 
   @override
   void initListeners() {
@@ -29,22 +29,21 @@ class InvitesController extends Controller {
 
     invitesPresenter.readInvitesOnNext = (List<InviteTile> res) {
       print('read invites on next $res');
-      if (res != null){
-        _invites = res;
-      }
+      _invites = res;
     };
 
     invitesPresenter.readInvitesOnComplete = () {
       print('read invites on complete');
-      AppConstant.showLoader(getContext(), false);
       refreshUI();
+      isLoading = false;
     };
 
     invitesPresenter.readInvitesOnError = (e) {
+      isLoading = false;
+      error = true;
       print('read invites on error $e');
-      AppConstant.showLoader(getContext(), false);
+      refreshUI();
     };
-
 
     // add connection
     invitesPresenter.addConnectionOnNext = (res) {
@@ -53,7 +52,11 @@ class InvitesController extends Controller {
 
     invitesPresenter.addConnectionOnComplete = () {
       print('add connection on complete');
-      AppConstant.showLoader(getContext(), false);
+      AppConstant.statusDialog(
+        context: getContext(),
+        text: "Successfully Invited",
+        title: "",
+      );
       refreshUI();
     };
 
@@ -71,6 +74,7 @@ class InvitesController extends Controller {
 
     invitesPresenter.searchUserOnComplete = () {
       print('search invite on complete');
+
       refreshUI();
     };
 
@@ -83,23 +87,28 @@ class InvitesController extends Controller {
     invitesPresenter.readInvites(filterByName: filterByName);
   }
 
-  void addConnection(InviteTile res){
+  void addConnection(InviteTile res) {
     print(res.displayName);
     invitesPresenter.addConnection(invitedId: res.id);
   }
 
-  void searchUser(){
+  void refreshUi() {
+    error = false;
+    isLoading = true;
+    refreshUI();
+    initListeners();
+  }
+
+  void searchUser() {
     String text = searchTextController.text;
     print('searchTextController $text');
-    
-    if ( text == "" || text == null || text.isEmpty ) {
+
+    if (text == "" || text.isEmpty) {
       getInvites();
-    }
-    else {
+    } else {
       invitesPresenter.searchUser(pattern: searchTextController.text);
     }
   }
-
 
   @override
   void onResumed() => print('On resumed');
@@ -116,5 +125,4 @@ class InvitesController extends Controller {
     searchTextController.dispose();
     super.onDisposed();
   }
-  
 }
