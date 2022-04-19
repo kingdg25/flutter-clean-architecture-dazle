@@ -20,6 +20,9 @@ import 'package:carousel_slider/carousel_slider.dart';
 
 import '../map_location_picker/map_location_picker_view.dart';
 
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:flutter_switch/flutter_switch.dart';
+
 class CreateListingPage extends View {
   final Property? property;
   CreateListingPage({Key? key, this.property}) : super(key: key);
@@ -42,6 +45,7 @@ class _CreateListingPageState
 
   final CarouselController _carouselController = CarouselController();
   int _currentImage = 0;
+  bool status1 = false;
 
   @override
   Widget get view {
@@ -377,43 +381,106 @@ class _CreateListingPageState
             ListView(
               padding: EdgeInsets.only(bottom: 20),
               children: [
-                false ? Container() : AppConstant.customTitleField(title: 'Map Location (In Development)'),
-                false ? Container() : Container(
-                  padding: EdgeInsets.symmetric(horizontal: 20),
-                  child: GestureDetector(
-                    child: CachedNetworkImage(
-                      imageUrl: "https://maps.googleapis.com/maps/api/staticmap?center=8.482298546726664,%20124.64927255100129&zoom=12&size=400x400&key=AIzaSyCSacvsau8vEncNbORdwU0buakm7Mx2rbE",
-                      imageBuilder: (context, imageProvider) => Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          image: DecorationImage(
-                              image: imageProvider, fit: BoxFit.cover),
-                        ),
+                false
+                    ? Container()
+                    : AppConstant.customTitleField(title: 'Display Map:'),
+                Container(
+                  padding: EdgeInsets.only(left: 18, bottom: 12),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      FlutterSwitch(
+                        showOnOff: true,
+                        activeColor: App.mainColor,
+                        activeTextColor: App.textColor,
+                        inactiveColor: App.textColor,
+                        width: 60,
+                        height: 30,
+                        value: controller.mapSwitch,
+                        onToggle: (val) async {
+                          // setState(() {
+                          controller.switchHandler();
+                          // });
+                          if (controller.mapSwitch == true) {
+                            LatLng mapCoordinates = await Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (buildContext) =>
+                                        MapLocationPicker()));
+                            // setting propertyCoordinates
+                            controller.latitude = mapCoordinates.latitude;
+                            controller.longitude = mapCoordinates.longitude;
+
+                            controller.propertyCoordinates = {
+                              'Latitude': mapCoordinates.latitude,
+                              'Longitude': mapCoordinates.longitude
+                            };
+                          }
+                          setState(() {});
+                        },
                       ),
-                      height: 150.0,
-                      progressIndicatorBuilder: (context, url, progress) =>
-                          Center(
-                        child: CircularProgressIndicator(
-                          valueColor: AlwaysStoppedAnimation<Color?>(
-                              Colors.indigo[900]),
-                          value: progress.progress,
-                        ),
-                      ),
-                      errorWidget: (context, url, error) => Image.asset(
-                        'assets/brooky_logo.png',
-                        fit: BoxFit.scaleDown,
-                      ),
-                    ),
-                    onTap: () async {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (buildContext) => MapLocationPicker()
-                        )
-                      );
-                    },
+                      SizedBox(width: 10),
+                      controller.mapSwitch
+                          ? Text('(Tap map to update Property Location.)')
+                          : Container(),
+                    ],
                   ),
                 ),
+                controller.mapSwitch
+                    ? Container(
+                        padding: EdgeInsets.symmetric(horizontal: 20),
+                        child: GestureDetector(
+                          child: CachedNetworkImage(
+                            imageUrl:
+                                // "https://maps.googleapis.com/maps/api/staticmap?center=8.482298546726664,%20124.64927255100129&zoom=19&size=400x400&key=AIzaSyCSacvsau8vEncNbORdwU0buakm7Mx2rbE",
+                                "https://maps.googleapis.com/maps/api/staticmap?center=${controller.latitude},%20${controller.longitude}&zoom=16&size=400x400&markers=color:0x33D49D|${controller.latitude},${controller.longitude}&key=AIzaSyCSacvsau8vEncNbORdwU0buakm7Mx2rbE",
+                            imageBuilder: (context, imageProvider) => Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                image: DecorationImage(
+                                    image: imageProvider, fit: BoxFit.cover),
+                              ),
+                            ),
+                            height: 200.0,
+                            progressIndicatorBuilder:
+                                (context, url, progress) => Center(
+                              child: CircularProgressIndicator(
+                                valueColor: AlwaysStoppedAnimation<Color?>(
+                                    Colors.indigo[900]),
+                                value: progress.progress,
+                              ),
+                            ),
+                            errorWidget: (context, url, error) => Image.asset(
+                              'assets/brooky_logo.png',
+                              fit: BoxFit.scaleDown,
+                            ),
+                          ),
+                          onTap: () async {
+                            CameraPosition initialCamPos = CameraPosition(
+                                target: LatLng(controller.latitude!,
+                                    controller.longitude!),
+                                tilt: 25.0,
+                                zoom: 19.151926040649414);
+                            LatLng mapCoordinates = await Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (buildContext) =>
+                                        MapLocationPicker(
+                                          initialCameraPosition: initialCamPos,
+                                        )));
+                            // setting propertyCoordinates after picking in google map
+                            controller.latitude = mapCoordinates.latitude;
+                            controller.longitude = mapCoordinates.longitude;
+
+                            controller.propertyCoordinates = {
+                              'Latitude': mapCoordinates.latitude,
+                              'Longitude': mapCoordinates.longitude
+                            };
+                            setState(() {});
+                          },
+                        ),
+                      )
+                    : Container(),
                 SizedBox(height: 12.0),
                 AppConstant.customTitleField(title: 'Street Address'),
                 Container(

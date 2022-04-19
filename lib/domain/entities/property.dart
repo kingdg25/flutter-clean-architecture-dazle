@@ -28,6 +28,7 @@ class Property {
   final String? updatedAt;
   final String? viewType;
   final String? id;
+  var coordinates;
 
   NumberFormat numberFormat = NumberFormat('##,###.00');
 
@@ -62,7 +63,8 @@ class Property {
       this.createdAt,
       this.updatedAt,
       this.viewType,
-      this.id});
+      this.id,
+      this.coordinates});
 
   Property.fromJson(Map<String, dynamic> json)
       : coverPhoto = json['cover_photo'],
@@ -89,7 +91,8 @@ class Property {
         createdAt = json['createdAt'].toString(),
         updatedAt = json['updatedAt'].toString(),
         viewType = json['view_type'],
-        id = json['_id'];
+        id = json['_id'],
+        coordinates = json['coordinates'];
 
   Map<String, dynamic> toJson() => {
         'cover_photo': coverPhoto ?? "",
@@ -110,6 +113,7 @@ class Property {
         'description': description ?? "",
         'create_by': createdBy,
         'view_type': viewType,
-        'id': id
+        'id': id,
+        'coordinates': coordinates
       };
 }
