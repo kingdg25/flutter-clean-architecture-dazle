@@ -30,7 +30,7 @@ class ProfileWidget extends StatelessWidget {
             ),
             progressIndicatorBuilder: (context, url, progress) => Center(
               child: CircularProgressIndicator(
-                valueColor: AlwaysStoppedAnimation<Color?>(Colors.indigo[900]),
+                valueColor: AlwaysStoppedAnimation<Color?>(App.mainColor),
                 value: progress.progress,
               ),
             ),
