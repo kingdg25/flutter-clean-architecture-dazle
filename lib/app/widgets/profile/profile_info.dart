@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 import '../../../domain/entities/property.dart';
@@ -20,13 +21,25 @@ class ProfileWidget extends StatelessWidget {
       padding: EdgeInsets.only(left: 20, right: 20, bottom: 20, top: 20),
       child: Column(children: [
         Center(
-          child: CircleAvatar(
-            radius: 95,
-            backgroundImage: user.profilePicture == null ||
-                    user.profilePicture == ""
-                ? AssetImage('assets/user_profile.png') as ImageProvider<Object>
-                : NetworkImage(user.profilePicture!),
-            backgroundColor: App.mainColor,
+          child: CachedNetworkImage(
+            imageUrl: user.profilePicture.toString(),
+            imageBuilder: (context, imageProvider) => CircleAvatar(
+              radius: 95,
+              backgroundImage: imageProvider,
+              backgroundColor: App.mainColor,
+            ),
+            progressIndicatorBuilder: (context, url, progress) => Center(
+              child: CircularProgressIndicator(
+                valueColor: AlwaysStoppedAnimation<Color?>(Colors.indigo[900]),
+                value: progress.progress,
+              ),
+            ),
+            errorWidget: (context, url, error) => Center(
+              child: Image.asset(
+                'assets/user_profile.png',
+                fit: BoxFit.scaleDown,
+              ),
+            ),
           ),
         ),
         CustomText(
@@ -60,12 +73,13 @@ class ProfileWidget extends StatelessWidget {
                 borderRadius: 30,
                 onPressed: () async {
                   await Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (buildContext) => EditProfilePage(
-                                user: user,
-                              )));
-
+                    context,
+                    MaterialPageRoute(
+                      builder: (buildContext) => EditProfilePage(
+                        user: user,
+                      ),
+                    ),
+                  );
                   // await controller.getCurrentUser();
                   // await controller.getUserToDisplay();
                 }),
