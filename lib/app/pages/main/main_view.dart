@@ -9,14 +9,22 @@ import '../connection/connection_view.dart';
 class MainPage extends StatefulWidget {
   static const String id = 'main_page';
 
-  const MainPage({Key? key}) : super(key: key);
+  final int backCurrentIndex;
+
+  MainPage({this.backCurrentIndex = 0, Key? key}) : super(key: key);
 
   @override
   _MainPageState createState() => _MainPageState();
 }
 
 class _MainPageState extends State<MainPage> {
-  int _currentIndex = 0;
+  late int _currentIndex;
+
+  void initState() {
+    _currentIndex = widget.backCurrentIndex != 0 ? widget.backCurrentIndex : 0;
+    super.initState();
+  }
+
   final List<Widget> _navs = [
     HomePage(),
     // ConnectionPage(),
