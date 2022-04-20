@@ -60,7 +60,7 @@ class EditProfileController extends Controller {
             getContext(),
             MaterialPageRoute(
               builder: (context) => MainPage(
-                backCurrentIndex: 2,
+                backCurrentIndex: "ProfilePage",
               ),
             ));
       });
