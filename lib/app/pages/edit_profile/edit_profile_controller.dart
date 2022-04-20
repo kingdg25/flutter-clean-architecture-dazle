@@ -53,6 +53,7 @@ class EditProfileController extends Controller {
 
       await _statusDialog('Success!', 'Updated Successfully', onPressed: () {
         Navigator.pop(getContext());
+
         Navigator.pop(getContext());
       });
     };
@@ -143,7 +144,6 @@ class EditProfileController extends Controller {
     mobileNumberTextController.dispose();
     brokerLicenseNumberTextController.dispose();
     aboutMeTextController.dispose();
-
     Loader.hide();
     super.onDisposed();
   }

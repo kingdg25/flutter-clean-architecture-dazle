@@ -252,8 +252,8 @@ class _EditProfilePageState
                               if (val.length < 2) {
                                 return "Min 2 Letters";
                               }
-                              if (val.length >= 50) {
-                                return "Max 50 Letters";
+                              if (val.length >= 120) {
+                                return "Max 120 Letters";
                               }
                             },
                           ),
