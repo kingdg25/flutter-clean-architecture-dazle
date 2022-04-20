@@ -1,22 +1,21 @@
 import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:dazle/app/pages/edit_profile/edit_profile_controller.dart';
-import 'package:dazle/app/utils/app.dart';
-import 'package:dazle/app/widgets/custom_appbar.dart';
-import 'package:dazle/data/repositories/data_profile_repository.dart';
-import 'package:dazle/domain/entities/user.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 
+import '../../../data/repositories/data_profile_repository.dart';
+import '../../../domain/entities/user.dart';
+import '../../utils/app.dart';
+import '../../widgets/custom_appbar.dart';
 import '../../widgets/custom_text.dart';
 import '../../widgets/form_fields/custom_button.dart';
 import '../../widgets/form_fields/custom_field_layout.dart';
 import '../../widgets/form_fields/custom_text_field.dart';
 import '../../widgets/form_fields/title_field.dart';
+import 'edit_profile_controller.dart';
 
 class EditProfilePage extends View {
   final User? user;
