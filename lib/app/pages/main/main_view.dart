@@ -61,7 +61,6 @@ class _MainPageState extends State<MainPage> {
         _currentIndex = key;
         return;
       }
-      _currentIndex = 0;
     });
     super.initState();
   }
