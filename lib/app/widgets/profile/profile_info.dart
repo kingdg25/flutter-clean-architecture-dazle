@@ -164,14 +164,14 @@ class ProfileWidget extends StatelessWidget {
             ],
           ),
         ),
-        Container(
-          width: double.infinity,
-          child: ListingPropertyListTile(
-            items: listings,
-            height: 300.0,
-            padding: EdgeInsets.symmetric(vertical: 10.0),
-          ),
-        )
+        // Container(
+        //   width: double.infinity,
+        //   child: ListingPropertyListTile(
+        //     items: listings,
+        //     height: 300.0,
+        //     padding: EdgeInsets.symmetric(vertical: 10.0),
+        //   ),
+        // )
       ]),
     );
   }

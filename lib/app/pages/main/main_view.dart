@@ -18,12 +18,12 @@ class MainPage extends StatefulWidget {
         {"asset": 'assets/icons/tab_bar/home.png', "label": "Home"}
       ]
     },
-    // {
-    //   "ConnectionPage": ConnectionPage(),
-    //   "items": [
-    //     {"asset": 'assets/icons/tab_bar/connection.png', "label": "connection"}
-    //   ]
-    // },
+    {
+      "ConnectionPage": ConnectionPage(),
+      "items": [
+        {"asset": 'assets/icons/tab_bar/connection.png', "label": "connection"}
+      ]
+    },
     {
       "ListingPage": ListingPage(),
       "items": [

@@ -1,9 +1,12 @@
 import 'dart:convert' as convert;
 import 'dart:math';
 
+import 'package:dazle/domain/entities/property.dart';
+import 'package:dazle/domain/entities/user.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../app/utils/app.dart';
 import '../../domain/entities/connections.dart';
 import '../../domain/entities/invite_tile.dart';
 import '../../domain/entities/my_connection_tile.dart';
@@ -15,6 +18,8 @@ class DataConnectionRepository extends ConnectionRepository {
   List<MyConnectionTile>? myConnection;
   List<Connections>? connections;
   List<String>? userSearch;
+
+  late User userInfo;
 
   List<Connections> shuffle(List<Connections> brokers) {
     var rand = new Random();
@@ -311,5 +316,70 @@ class DataConnectionRepository extends ConnectionRepository {
     }
 
     return shuffle(connections!);
+  }
+
+  @override
+  Future<List<Property>> getUserListings({uid}) async {
+    final List<Property> listings = <Property>[];
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var response = await http.get(
+        Uri.parse("${Constants.siteURL}/api/listings/my-listings?user_id=$uid"),
+        headers: {
+          'Authorization': 'Bearer ${prefs.getString("accessToken")}',
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        });
+    var jsonResponse = await convert.jsonDecode(response.body);
+    if (response.statusCode == 200) {
+      jsonResponse['listings'].forEach((val) {
+        final price = val['price'];
+        final area = val['total_area'];
+        String priceVar = '$price';
+        String areaVar = '$area';
+        double parsedPrice = double.parse(priceVar);
+        double parsedArea = double.parse(areaVar);
+        val['price'] = parsedPrice;
+        val['total_area'] = parsedArea;
+        print(val);
+        listings.add(Property.fromJson(val));
+      });
+    } else {
+      throw {"error": true, "error_type": "dynamic", "status": "$jsonResponse"};
+    }
+    return listings;
+  }
+
+  @override
+  Future<User> getUserInfo(String uid) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var response = await http
+        .get(Uri.parse("${Constants.siteURL}/api/users/$uid"), headers: {
+      'Authorization': 'Bearer ${prefs.getString("accessToken")}',
+      'Content-Type': 'application/json',
+      'Accept': 'application/json'
+    });
+    var jsonResponse = await convert.jsonDecode(response.body);
+
+    if (response.statusCode == 200) {
+      var user = jsonResponse;
+
+      if (user is Map && user.containsKey("_id")) {
+        await prefs.setString('user', convert.jsonEncode(user));
+
+        return User.fromJson(user as Map<String, dynamic>);
+      } else {
+        throw {
+          "error": false,
+          "error_type": "error_fetching_profile",
+          "status": jsonResponse['status']
+        };
+      }
+    } else {
+      throw {
+        "error": false,
+        "error_type": "dynamic",
+        "status": "$jsonResponse"
+      };
+    }
   }
 }
