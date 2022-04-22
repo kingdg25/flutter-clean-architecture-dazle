@@ -8,12 +8,11 @@ import '../../utils/app.dart';
 import '../custom_text.dart';
 import '../form_fields/custom_button.dart';
 import '../form_fields/custom_field_layout.dart';
-import '../listing/listing_property_list_tile.dart';
 
-class ProfileWidget extends StatelessWidget {
+class ProfileInfo extends StatelessWidget {
   final User user;
-  final List<Property> listings;
-  const ProfileWidget(this.user, this.listings, {Key? key}) : super(key: key);
+  // final List<Property> listings;
+  const ProfileInfo(this.user, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -98,72 +97,72 @@ class ProfileWidget extends StatelessWidget {
           ],
         ),
         SizedBox(height: 20),
-        CustomFieldLayout(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Column(
-                children: [
-                  CustomText(
-                    text: listings.isEmpty ? '' : '${listings.length}',
-                    fontSize: 18,
-                    fontWeight: FontWeight.w600,
-                  ),
-                  CustomText(
-                    text: 'LISTING',
-                    fontSize: 10,
-                    color: App.hintColor,
-                    fontWeight: FontWeight.w400,
-                  )
-                ],
-              ),
-              SizedBox(
-                height: 25,
-                child: VerticalDivider(
-                  color: App.hintColor,
-                  thickness: 1,
-                ),
-              ),
-              Column(
-                children: [
-                  CustomText(
-                    text: '0',
-                    fontSize: 18,
-                    fontWeight: FontWeight.w600,
-                  ),
-                  CustomText(
-                    text: 'CONNECTIONS',
-                    fontSize: 10,
-                    color: App.hintColor,
-                    fontWeight: FontWeight.w400,
-                  )
-                ],
-              ),
-              SizedBox(
-                height: 25,
-                child: VerticalDivider(
-                  color: App.hintColor,
-                  thickness: 1,
-                ),
-              ),
-              Column(
-                children: [
-                  CustomText(
-                    text: '0',
-                    fontSize: 18,
-                    fontWeight: FontWeight.w600,
-                  ),
-                  CustomText(
-                    text: 'FOLLOWING',
-                    fontSize: 10,
-                    color: App.hintColor,
-                    fontWeight: FontWeight.w400,
-                  )
-                ],
-              )
-            ],
-          ),
-        ),
+        // CustomFieldLayout(
+        //   child: Row(
+        //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        //     children: [
+        //       Column(
+        //         children: [
+        //           CustomText(
+        //             text: listings.isEmpty ? '' : '${listings.length}',
+        //             fontSize: 18,
+        //             fontWeight: FontWeight.w600,
+        //           ),
+        //           CustomText(
+        //             text: 'LISTING',
+        //             fontSize: 10,
+        //             color: App.hintColor,
+        //             fontWeight: FontWeight.w400,
+        //           )
+        //         ],
+        //       ),
+        //       SizedBox(
+        //         height: 25,
+        //         child: VerticalDivider(
+        //           color: App.hintColor,
+        //           thickness: 1,
+        //         ),
+        //       ),
+        //       Column(
+        //         children: [
+        //           CustomText(
+        //             text: '0',
+        //             fontSize: 18,
+        //             fontWeight: FontWeight.w600,
+        //           ),
+        //           CustomText(
+        //             text: 'CONNECTIONS',
+        //             fontSize: 10,
+        //             color: App.hintColor,
+        //             fontWeight: FontWeight.w400,
+        //           )
+        //         ],
+        //       ),
+        //       SizedBox(
+        //         height: 25,
+        //         child: VerticalDivider(
+        //           color: App.hintColor,
+        //           thickness: 1,
+        //         ),
+        //       ),
+        //       Column(
+        //         children: [
+        //           CustomText(
+        //             text: '0',
+        //             fontSize: 18,
+        //             fontWeight: FontWeight.w600,
+        //           ),
+        //           CustomText(
+        //             text: 'FOLLOWING',
+        //             fontSize: 10,
+        //             color: App.hintColor,
+        //             fontWeight: FontWeight.w400,
+        //           )
+        //         ],
+        //       )
+        //     ],
+        //   ),
+        // ),
         // Container(
         //   width: double.infinity,
         //   child: ListingPropertyListTile(

@@ -16,7 +16,7 @@ class GetUserInfoUseCase
     final controller = StreamController<GetUserInfoUseCaseResponse>();
     try {
       //  implementation from repo
-      final user = await _userRepository.getUserInfo(params!.uid);
+      final user = await _userRepository.getUserInfo(uid: params!.uid);
       //  add to controller
 
       controller.add(GetUserInfoUseCaseResponse(user));

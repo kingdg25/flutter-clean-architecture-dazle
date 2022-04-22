@@ -1,9 +1,8 @@
-import 'package:dazle/app/pages/agent_profile/agent_profile_presenter.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:flutter_overlay_loader/flutter_overlay_loader.dart';
 
 import '../../../domain/entities/user.dart';
-import '../../utils/app_constant.dart';
+import 'agent_profile_presenter.dart';
 
 class AgentProfileController extends Controller {
   final AgentProfilePresenter agentProfilePresenter;
@@ -40,7 +39,7 @@ class AgentProfileController extends Controller {
     Loader.hide();
   }
 
-  getUserInfo({String uid = ""}) {
-    agentProfilePresenter.getUser(uid);
+  getUserInfo({uid}) {
+    agentProfilePresenter.getUserInfo(uid);
   }
 }

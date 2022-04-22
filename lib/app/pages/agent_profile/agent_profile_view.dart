@@ -1,13 +1,10 @@
-import 'package:dazle/app/pages/agent_profile/agent_profile_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 
 import '../../../data/repositories/data_connection_repository.dart';
-import '../../../domain/entities/user.dart';
-import '../../utils/app.dart';
 import '../../widgets/custom_appbar.dart';
-import '../../widgets/custom_text.dart';
 import '../../widgets/profile/profile_info.dart';
+import 'agent_profile_controller.dart';
 
 class AgentProfilePage extends View {
   final String? uid;
@@ -35,12 +32,9 @@ class _AgentProfilePageState
             builder: (context, controller) {
               controller.getUserInfo(uid: uid!);
 
-              var user;
-
-              user = controller.user ?? User();
-
               return Container(
-                child: SingleChildScrollView(child: ProfileWidget(user, [])),
+                child:
+                    SingleChildScrollView(child: ProfileInfo(controller.user!)),
               );
             },
           ),

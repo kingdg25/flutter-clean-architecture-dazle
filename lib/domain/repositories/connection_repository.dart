@@ -1,9 +1,8 @@
-import 'package:dazle/domain/entities/invite_tile.dart';
-import 'package:dazle/domain/entities/my_connection_tile.dart';
-import 'package:dazle/domain/entities/user.dart';
-
 import '../entities/connections.dart';
+import '../entities/invite_tile.dart';
+import '../entities/my_connection_tile.dart';
 import '../entities/property.dart';
+import '../entities/user.dart';
 
 abstract class ConnectionRepository {
   Future<void> notifyUser({String? email, String? mobileNumber});
@@ -22,7 +21,7 @@ abstract class ConnectionRepository {
 
   Future<List<Property>> getUserListings({String? uid});
 
-  Future<User> getUserInfo(String uid);
+  Future<User> getUserInfo({String? uid});
 
   Future<List<String>?> searchUser(
       {String? userId, String? pattern, bool? invited});

@@ -1,7 +1,6 @@
-import 'package:dazle/domain/usecases/connection/get_user_info_usecase.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 
-import '../../../domain/entities/user.dart';
+import '../../../domain/usecases/connection/get_user_info_usecase.dart';
 
 class AgentProfilePresenter extends Presenter {
   Function? getUserInfoOnNext;
@@ -18,7 +17,7 @@ class AgentProfilePresenter extends Presenter {
     getUserInfoUseCase.dispose();
   }
 
-  getUser(String uid) {
+  getUserInfo(String uid) {
     getUserInfoUseCase.execute(
         _GetUserInfoUseCaseObserver(this), GetUserInfoUseCaseParams(uid));
   }

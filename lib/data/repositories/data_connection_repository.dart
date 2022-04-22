@@ -1,15 +1,14 @@
 import 'dart:convert' as convert;
 import 'dart:math';
 
-import 'package:dazle/domain/entities/property.dart';
-import 'package:dazle/domain/entities/user.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../app/utils/app.dart';
 import '../../domain/entities/connections.dart';
 import '../../domain/entities/invite_tile.dart';
 import '../../domain/entities/my_connection_tile.dart';
+import '../../domain/entities/property.dart';
+import '../../domain/entities/user.dart';
 import '../../domain/repositories/connection_repository.dart';
 import '../constants.dart';
 
@@ -19,7 +18,7 @@ class DataConnectionRepository extends ConnectionRepository {
   List<Connections>? connections;
   List<String>? userSearch;
 
-  late User userInfo;
+  late User agentInfo;
 
   List<Connections> shuffle(List<Connections> brokers) {
     var rand = new Random();
@@ -350,11 +349,11 @@ class DataConnectionRepository extends ConnectionRepository {
   }
 
   @override
-  Future<User> getUserInfo(String uid) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
+  Future<User> getUserInfo({uid}) async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
     var response = await http
         .get(Uri.parse("${Constants.siteURL}/api/users/$uid"), headers: {
-      'Authorization': 'Bearer ${prefs.getString("accessToken")}',
+      'Authorization': 'Bearer ${pref.getString("accessToken")}',
       'Content-Type': 'application/json',
       'Accept': 'application/json'
     });
@@ -364,9 +363,12 @@ class DataConnectionRepository extends ConnectionRepository {
       var user = jsonResponse;
 
       if (user is Map && user.containsKey("_id")) {
-        await prefs.setString('user', convert.jsonEncode(user));
-
-        return User.fromJson(user as Map<String, dynamic>);
+        await pref.setString('agent', convert.jsonEncode(user));
+        agentInfo = User.fromJson(user as Map<String, dynamic>);
+        // print(
+        //     "=============================**********************************");
+        // print(agentInfo.displayName);
+        return agentInfo;
       } else {
         throw {
           "error": false,
