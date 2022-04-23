@@ -1,4 +1,3 @@
-import 'package:avatar_view/avatar_view.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
@@ -36,11 +35,10 @@ class ProfileInfo extends StatelessWidget {
                   value: progress.progress,
                 ),
               ),
-              errorWidget: (context, url, error) => AvatarView(
-                radius: 95,
-                avatarType: AvatarType.CIRCLE,
+              errorWidget: (context, url, error) => CircleAvatar(
                 backgroundColor: App.mainColor,
-                imagePath: "assets/user_profile.png",
+                radius: 95,
+                backgroundImage: AssetImage('assets/user_profile.png'),
               ),
             ),
           ),
