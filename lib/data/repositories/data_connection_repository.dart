@@ -318,7 +318,7 @@ class DataConnectionRepository extends ConnectionRepository {
   }
 
   @override
-  Future<List<Property>> getUserListings({uid}) async {
+  Future<List<Property>> getAgentListings({uid}) async {
     final List<Property> listings = <Property>[];
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var response = await http.get(
@@ -339,7 +339,7 @@ class DataConnectionRepository extends ConnectionRepository {
         double parsedArea = double.parse(areaVar);
         val['price'] = parsedPrice;
         val['total_area'] = parsedArea;
-        print(val);
+
         listings.add(Property.fromJson(val));
       });
     } else {
@@ -349,7 +349,7 @@ class DataConnectionRepository extends ConnectionRepository {
   }
 
   @override
-  Future<User> getUserInfo({uid}) async {
+  Future<User> getAgentInfo({uid}) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     var response = await http
         .get(Uri.parse("${Constants.siteURL}/api/users/$uid"), headers: {
@@ -365,9 +365,7 @@ class DataConnectionRepository extends ConnectionRepository {
       if (user is Map && user.containsKey("_id")) {
         await pref.setString('agent', convert.jsonEncode(user));
         agentInfo = User.fromJson(user as Map<String, dynamic>);
-        // print(
-        //     "=============================**********************************");
-        // print(agentInfo.displayName);
+
         return agentInfo;
       } else {
         throw {

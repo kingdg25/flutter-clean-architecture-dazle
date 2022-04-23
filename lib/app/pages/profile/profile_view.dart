@@ -109,7 +109,7 @@ class _ProfilePageState extends ViewState<ProfilePage, ProfileController> {
                 //         ))
                 //       ]),
                 // ),
-                ProfileInfo(user!),
+                ProfileInfo(user!, listings!),
               ],
             ),
           );

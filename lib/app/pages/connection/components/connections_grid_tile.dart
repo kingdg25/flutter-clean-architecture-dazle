@@ -1,12 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:dazle/app/pages/agent_profile/agent_profile_view.dart';
-import 'package:dazle/app/pages/connection/connection_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 
 import '../../../utils/app.dart';
 import '../../../widgets/custom_text.dart';
 import '../../../widgets/form_fields/custom_button.dart';
+import '../../agent_profile/agent_profile_view.dart';
+import '../connection_controller.dart';
 
 class ConnectionsGridTile extends StatelessWidget {
   const ConnectionsGridTile({Key? key}) : super(key: key);
@@ -76,7 +76,9 @@ class ConnectionsGridTile extends StatelessWidget {
                         context,
                         MaterialPageRoute(
                             builder: (buildContext) => AgentProfilePage(
-                                controller.connections[index].id)));
+                                controller.connections[index].id,
+                                controller
+                                    .connections[index].connectionsFullName)));
                   },
                   splashColor: App.mainColor,
                   child: Stack(

@@ -1,26 +1,52 @@
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:flutter_overlay_loader/flutter_overlay_loader.dart';
 
+import '../../../domain/entities/property.dart';
 import '../../../domain/entities/user.dart';
 import 'agent_profile_presenter.dart';
 
 class AgentProfileController extends Controller {
   final AgentProfilePresenter agentProfilePresenter;
-  User? _user;
-  User? get user => _user;
+  User? _agent;
+  User? get agent => _agent;
+  List<Property>? _agentListings;
+  List<Property>? get agentListings => _agentListings;
 
-  AgentProfileController(userRepo)
-      : agentProfilePresenter = AgentProfilePresenter(userRepo);
+  AgentProfileController(agentRepo)
+      : agentProfilePresenter = AgentProfilePresenter(agentRepo);
 
   @override
   void initListeners() {
-    agentProfilePresenter.getUserInfoOnNext = (User user) {
-      _user = user;
+    agentProfilePresenter.getAgentInfoOnNext = (User agent) {
+      if (_agent == null) {
+        print("getting agent info(on next) ....");
+        refreshUI();
+      }
+      _agent = agent;
     };
 
-    agentProfilePresenter.getUserInfoOnComplete = () {};
+    agentProfilePresenter.getAgentInfoOnComplete = () {
+      print("getting agent info(on complete) ....");
+      // AppConstant.showLoader(getContext(), false);
+    };
 
-    agentProfilePresenter.getUserInfoOnError = (e) {};
+    agentProfilePresenter.getAgentInfoOnError = (e) {
+      print("getting agent info(on error) ....");
+    };
+    // ================== AGENT LISTING ====================================
+    agentProfilePresenter.getAgentListingOnNext = (List<Property>? listing) {
+      print("getting agent listing(on next) ....");
+      if (_agentListings == null) {
+        refreshUI();
+      }
+      _agentListings = listing;
+    };
+    agentProfilePresenter.getAgentListingOnError = (e) {
+      print("getting agent listing(ERROR=>) ...." + e);
+    };
+    agentProfilePresenter.getAgentListingOnComplete = () {
+      print("getting agent listing(on complete) ....");
+    };
   }
 
   @override
@@ -39,7 +65,11 @@ class AgentProfileController extends Controller {
     Loader.hide();
   }
 
-  getUserInfo({uid}) {
-    agentProfilePresenter.getUserInfo(uid);
+  getAgentInfo({uid}) {
+    agentProfilePresenter.getAgentInfo(uid);
+  }
+
+  getAgentListings({uid}) {
+    agentProfilePresenter.getAgentListing(uid);
   }
 }

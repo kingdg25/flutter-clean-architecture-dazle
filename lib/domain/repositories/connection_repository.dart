@@ -19,9 +19,9 @@ abstract class ConnectionRepository {
 
   Future<void> removeConnection({String? userId, String? invitedId});
 
-  Future<List<Property>> getUserListings({String? uid});
+  Future<List<Property>> getAgentListings({String? uid});
 
-  Future<User> getUserInfo({String? uid});
+  Future<User> getAgentInfo({String? uid});
 
   Future<List<String>?> searchUser(
       {String? userId, String? pattern, bool? invited});

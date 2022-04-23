@@ -1,7 +1,7 @@
-import 'package:dazle/domain/usecases/connection/get_user_info_usecase.dart';
-import 'package:dazle/domain/usecases/connection/read_connections_usecase.dart';
-import 'package:dazle/domain/usecases/get_user_usecase.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
+
+import '../../../domain/usecases/connection/read_connections_usecase.dart';
+import '../../../domain/usecases/get_user_usecase.dart';
 
 class ConnectionPresenter extends Presenter {
   Function? getUserOnNext;
