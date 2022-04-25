@@ -1,8 +1,10 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:flutter_overlay_loader/flutter_overlay_loader.dart';
 
 import '../../../domain/entities/property.dart';
 import '../../../domain/entities/user.dart';
+import '../../utils/app.dart';
 import 'agent_profile_presenter.dart';
 
 class AgentProfileController extends Controller {
@@ -65,11 +67,8 @@ class AgentProfileController extends Controller {
     Loader.hide();
   }
 
-  getAgentInfo({uid}) {
+  getAgentInfoAndListing({uid}) {
     agentProfilePresenter.getAgentInfo(uid);
-  }
-
-  getAgentListings({uid}) {
     agentProfilePresenter.getAgentListing(uid);
   }
 }

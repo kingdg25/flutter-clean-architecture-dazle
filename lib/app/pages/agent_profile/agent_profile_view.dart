@@ -33,8 +33,7 @@ class _AgentProfilePageState
         body: Container(
           child: ControlledWidgetBuilder<AgentProfileController>(
             builder: (context, controller) {
-              controller.getAgentInfo(uid: uid!);
-              controller.getAgentListings(uid: uid);
+              controller.getAgentInfoAndListing(uid: uid!);
               if (controller.agent == null ||
                   controller.agentListings == null) {
                 return Center(
@@ -45,7 +44,9 @@ class _AgentProfilePageState
               return Container(
                 child: SingleChildScrollView(
                     child: ProfileInfo(
-                        controller.agent!, controller.agentListings!)),
+                  controller.agent!,
+                  controller.agentListings!,
+                )),
               );
             },
           ),
