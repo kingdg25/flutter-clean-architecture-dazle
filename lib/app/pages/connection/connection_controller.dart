@@ -1,11 +1,10 @@
 import 'dart:math';
 
-import 'package:dazle/app/pages/connection/connection_presenter.dart';
-import 'package:dazle/domain/entities/connections.dart';
-import 'package:dazle/domain/entities/user.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 
-import '../../utils/app_constant.dart';
+import '../../../domain/entities/connections.dart';
+import '../../../domain/entities/user.dart';
+import 'connection_presenter.dart';
 
 class ConnectionController extends Controller {
   final ConnectionPresenter connectionPresenter;
@@ -49,7 +48,6 @@ class ConnectionController extends Controller {
     };
 
     connectionPresenter.readConnectionOnComplete = () {
-      AppConstant.showLoader(getContext(), false);
       refreshUI();
     };
 
