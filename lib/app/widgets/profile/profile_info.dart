@@ -33,6 +33,8 @@ class _ProfileInfoState extends State<ProfileInfo> {
     setState(() {});
   }
 
+  bool get isCurrentUser => _currentUser!.id == widget.user.id;
+
   @override
   Widget build(BuildContext context) {
     return _currentUser == null
@@ -86,7 +88,7 @@ class _ProfileInfoState extends State<ProfileInfo> {
                   ),
                 ),
                 SizedBox(height: 20),
-                _currentUser!.id == widget.user.id
+                isCurrentUser
                     ? CustomButton(
                         text: 'Edit Profile',
                         width: 120,
@@ -193,6 +195,7 @@ class _ProfileInfoState extends State<ProfileInfo> {
                     items: widget.listings,
                     height: 300.0,
                     padding: EdgeInsets.symmetric(vertical: 10.0),
+                    isCurrentUser: isCurrentUser,
                   ),
                 )
               ],
