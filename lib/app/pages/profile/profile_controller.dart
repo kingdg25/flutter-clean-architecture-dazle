@@ -1,14 +1,12 @@
 import 'dart:async';
 
-import 'package:dazle/app/pages/login/login_view.dart';
-import 'package:dazle/app/pages/profile/profile_presenter.dart';
-import 'package:dazle/app/utils/app.dart';
-import 'package:dazle/app/utils/app_constant.dart';
-import 'package:dazle/data/repositories/data_profile_repository.dart';
-import 'package:dazle/domain/entities/property.dart';
-import 'package:dazle/domain/entities/user.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
+
+import '../../../data/repositories/data_profile_repository.dart';
+import '../../../domain/entities/property.dart';
+import '../../../domain/entities/user.dart';
+import '../../utils/app.dart';
+import 'profile_presenter.dart';
 
 class ProfileController extends Controller {
   final ProfilePresenter profilePresenter;
@@ -39,8 +37,8 @@ class ProfileController extends Controller {
     });
 
     profilePresenter.getUserListingOnNext = (listings) {
-      print("On nextttt profile presenter LISTINGSSSSS");
-      print(listings);
+      // print("On nextttt profile presenter LISTINGSSSSS");
+      // print(listings);
       _listings = listings;
       refreshUI();
     };
