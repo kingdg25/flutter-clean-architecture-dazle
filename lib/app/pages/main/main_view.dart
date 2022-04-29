@@ -1,6 +1,6 @@
 import 'package:dazle/app/pages/home/home_view.dart';
 import 'package:dazle/app/pages/listing/listing_view.dart';
-import 'package:dazle/app/pages/main/components/triangle_painter.dart';
+// import 'package:dazle/app/pages/main/components/triangle_painter.dart';
 import 'package:dazle/app/pages/profile/profile_view.dart';
 import 'package:flutter/material.dart';
 
@@ -71,9 +71,14 @@ class _MainPageState extends State<MainPage> {
       body: _navs[_currentIndex][_navs[_currentIndex].keys.first],
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
-        showSelectedLabels: false,
-        showUnselectedLabels: false,
+        selectedItemColor: Color.fromRGBO(51, 212, 157, 1),
         currentIndex: _currentIndex,
+        onTap: (index) {
+          setState(() {
+            _currentIndex = index;
+          });
+          print(index);
+        },
         items: [
           for (int indexPage = 0; indexPage < _navs.length; indexPage++) ...[
             ...(_navs[indexPage]['items'] as List<Map<String, String>>)
@@ -90,11 +95,6 @@ class _MainPageState extends State<MainPage> {
                 .toList()
           ]
         ],
-        onTap: (index) {
-          setState(() {
-            _currentIndex = index;
-          });
-        },
       ),
     );
   }
