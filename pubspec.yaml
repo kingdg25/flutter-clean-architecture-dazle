@@ -42,6 +42,7 @@ dependencies:
   geolocator: ^8.2.0
   flutter_google_places: ^0.3.0
   flutter_switch: ^0.3.2
+  shimmer: ^2.0.0
 
 dev_dependencies:
   device_preview: ^1.0.0
