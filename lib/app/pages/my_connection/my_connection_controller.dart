@@ -4,9 +4,10 @@ import 'package:dazle/domain/entities/my_connection_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 
-
 class MyConnectionController extends Controller {
   final MyConnectionPresenter myConnectionPresenter;
+  var isLoading = true;
+  var error = false;
 
   List<MyConnectionTile> _myConnection;
   List<MyConnectionTile> get myConnection => _myConnection;
@@ -17,37 +18,39 @@ class MyConnectionController extends Controller {
   List<String> suggestionsCallback;
 
   MyConnectionController(userRepo)
-    : myConnectionPresenter = MyConnectionPresenter(userRepo),
-      _myConnection = <MyConnectionTile>[],
-      popupMenuList = ['Remove'],
-      searchTextController = TextEditingController(),
-      suggestionsCallback = <String>[],
-      super();
-
+      : myConnectionPresenter = MyConnectionPresenter(userRepo),
+        _myConnection = <MyConnectionTile>[],
+        popupMenuList = ['Remove'],
+        searchTextController = TextEditingController(),
+        suggestionsCallback = <String>[],
+        super();
 
   @override
   void initListeners() {
     // read my connection
+
     getMyConnection();
 
-    myConnectionPresenter.readMyConnectionOnNext = (List<MyConnectionTile> res) {
+    myConnectionPresenter.readMyConnectionOnNext =
+        (List<MyConnectionTile> res) {
       print('read my connection on next $res');
-      if (res != null){
-        _myConnection = res;
-      }
+      _myConnection = res;
+      isLoading = false;
     };
 
     myConnectionPresenter.readMyConnectionOnComplete = () {
       print('read my connection on complete');
       AppConstant.showLoader(getContext(), false);
       refreshUI();
+      isLoading = false;
     };
 
     myConnectionPresenter.readMyConnectionOnError = (e) {
+      isLoading = false;
+      error = true;
       print('read my connection on error $e');
       AppConstant.showLoader(getContext(), false);
     };
-
 
     // remove my connection
     myConnectionPresenter.removeConnectionOnNext = (res) {
@@ -57,14 +60,17 @@ class MyConnectionController extends Controller {
     myConnectionPresenter.removeConnectionOnComplete = () {
       print('remove my connection on complete');
       AppConstant.showLoader(getContext(), false);
+      AppConstant.statusDialog(
+        context: getContext(),
+        text: "Successfully Removed",
+        title: "My Connection",
+      );
       refreshUI();
     };
 
     myConnectionPresenter.removeConnectionOnError = (e) {
       print('remove my connection on error $e');
-      AppConstant.showLoader(getContext(), false);
     };
-
 
     // search invite
     myConnectionPresenter.searchUserOnNext = (res) {
@@ -83,6 +89,12 @@ class MyConnectionController extends Controller {
     };
   }
 
+  void refreshUi() {
+    error = false;
+    isLoading = true;
+    refreshUI();
+    initListeners();
+  }
 
   void getMyConnection({String? filterByName}) {
     myConnectionPresenter.readMyConnection(filterByName: filterByName);
@@ -92,20 +104,16 @@ class MyConnectionController extends Controller {
     myConnectionPresenter.removeConnection(invitedId: res.id);
   }
 
-  void searchUser(){
+  void searchUser() {
     String text = searchTextController.text;
 
-    if ( text == "" || text == null || text.isEmpty ) {
+    if (text == "" || text == null || text.isEmpty) {
       myConnectionPresenter.searchUser(pattern: "");
       getMyConnection();
-    }
-    else {
+    } else {
       myConnectionPresenter.searchUser(pattern: searchTextController.text);
     }
-
   }
-
-
 
   @override
   void onResumed() => print('On resumed');
@@ -122,5 +130,4 @@ class MyConnectionController extends Controller {
     searchTextController.dispose();
     super.onDisposed();
   }
-  
 }
