@@ -1,11 +1,7 @@
 import 'package:dazle/app/pages/home/home_view.dart';
 import 'package:dazle/app/pages/listing/listing_view.dart';
-// import 'package:dazle/app/pages/main/components/triangle_painter.dart';
 import 'package:dazle/app/pages/profile/profile_view.dart';
 import 'package:flutter/material.dart';
-
-import '../connection/connection_view.dart';
-import '../message/message_view.dart';
 
 class MainPage extends StatefulWidget {
   static const String id = 'main_page';
@@ -85,7 +81,7 @@ class _MainPageState extends State<MainPage> {
                 .map(
                   (item) => BottomNavigationBarItem(
                     activeIcon: CustomPaint(
-                        painter: TrianglePainter(),
+                        // painter: TrianglePainter(),
                         child: Container(
                             child: Image.asset(item['asset']!, height: 30))),
                     icon: Image.asset(item['asset']!, height: 30),
