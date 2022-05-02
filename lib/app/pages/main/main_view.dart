@@ -3,6 +3,9 @@ import 'package:dazle/app/pages/listing/listing_view.dart';
 import 'package:dazle/app/pages/profile/profile_view.dart';
 import 'package:flutter/material.dart';
 
+import '../connection/connection_view.dart';
+import '../message/message_view.dart';
+
 class MainPage extends StatefulWidget {
   static const String id = 'main_page';
 
@@ -11,31 +14,51 @@ class MainPage extends StatefulWidget {
     {
       "HomePage": HomePage(),
       "items": [
-        {"asset": 'assets/icons/tab_bar/home.png', "label": "Home"}
+        {
+          "asset": 'assets/icons/tab_bar/clear_home.png',
+          "label": "Home",
+          "icon": "assets/icons/tab_bar/home.png"
+        }
       ]
     },
-    // {
-    //   "ConnectionPage": ConnectionPage(),
-    //   "items": [
-    //     {"asset": 'assets/icons/tab_bar/connection.png', "label": "connection"}
-    //   ]
-    // },
+    {
+      "ConnectionPage": ConnectionPage(),
+      "items": [
+        {
+          "asset": 'assets/icons/tab_bar/clear_connection.png',
+          "label": "Connection",
+          "icon": "assets/icons/tab_bar/connection.png"
+        }
+      ]
+    },
     {
       "ListingPage": ListingPage(),
       "items": [
-        {"asset": 'assets/icons/tab_bar/listing.png', "label": "listing"}
+        {
+          "asset": 'assets/icons/tab_bar/clear_listing.png',
+          "label": "New listing",
+          "icon": "assets/icons/tab_bar/listing.png"
+        }
       ]
     },
-    // {
-    //   "MessagePage": MessagePage(),
-    //   "items": [
-    //     {"asset": 'assets/icons/tab_bar/message.png', "label": "message"}
-    //   ]
-    // },
+    {
+      "MessagePage": MessagePage(),
+      "items": [
+        {
+          "asset": 'assets/icons/tab_bar/clear_message.png',
+          "label": "message",
+          "icon": "assets/icons/tab_bar/message.png"
+        }
+      ]
+    },
     {
       "ProfilePage": ProfilePage(),
       "items": [
-        {"asset": 'assets/icons/tab_bar/profile.png', "label": "profile"}
+        {
+          "asset": 'assets/icons/tab_bar/clear_profile.png',
+          "label": "profile",
+          "icon": "assets/icons/tab_bar/profile.png"
+        }
       ]
     },
   ];
@@ -84,7 +107,7 @@ class _MainPageState extends State<MainPage> {
                         // painter: TrianglePainter(),
                         child: Container(
                             child: Image.asset(item['asset']!, height: 30))),
-                    icon: Image.asset(item['asset']!, height: 30),
+                    icon: Image.asset(item['icon']!, height: 30),
                     label: item['label'],
                   ),
                 )
