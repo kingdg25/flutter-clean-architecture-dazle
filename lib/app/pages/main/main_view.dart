@@ -9,7 +9,61 @@ import '../connection/connection_view.dart';
 class MainPage extends StatefulWidget {
   static const String id = 'main_page';
 
-  const MainPage({Key? key}) : super(key: key);
+  final String backCurrentIndex;
+  final List<Map<String, dynamic>> _navs = [
+    {
+      "HomePage": HomePage(),
+      "items": [
+        {
+          "icon": 'assets/icons/tab_bar/clear_home.png',
+          "label": "Home",
+          "asset": "assets/icons/tab_bar/home.png"
+        }
+      ]
+    },
+    // {
+    //   "ConnectionPage": ConnectionPage(),
+    //   "items": [
+    //     {
+    //       "icon": 'assets/icons/tab_bar/clear_connection.png',
+    //       "label": "Connection",
+    //       "asset": "assets/icons/tab_bar/connection.png"
+    //     }
+    //   ]
+    // },
+    {
+      "ListingPage": ListingPage(),
+      "items": [
+        {
+          "icon": 'assets/icons/tab_bar/clear_listing.png',
+          "label": "New listing",
+          "asset": "assets/icons/tab_bar/listing.png"
+        }
+      ]
+    },
+    // {
+    //   "MessagePage": MessagePage(),
+    //   "items": [
+    //     {
+    //       "icon": 'assets/icons/tab_bar/clear_message.png',
+    //       "label": "message",
+    //       "asset": "assets/icons/tab_bar/message.png"
+    //     }
+    //   ]
+    // },
+    {
+      "ProfilePage": ProfilePage(),
+      "items": [
+        {
+          "icon": 'assets/icons/tab_bar/clear_profile.png',
+          "label": "profile",
+          "asset": "assets/icons/tab_bar/profile.png"
+        }
+      ]
+    },
+  ];
+
+  MainPage({this.backCurrentIndex = "HomePage", Key? key}) : super(key: key);
 
   @override
   _MainPageState createState() => _MainPageState();
@@ -61,32 +115,20 @@ class _MainPageState extends State<MainPage> {
           print(index);
         },
         items: [
-          //0
-          customBottomNavigationBarItem(
-            asset: 'assets/icons/tab_bar/clear_home.png',
-            label: 'Home',
-            icons: 'assets/icons/tab_bar/home.png',
-          ),
-          // customBottomNavigationBarItem(
-          //   asset: 'assets/icons/tab_bar/clear_connection.png',
-          //   label: 'Connections',
-          // icons: 'assets/icons/tab_bar/connection.png',
-          // ),
-          customBottomNavigationBarItem(
-            asset: 'assets/icons/tab_bar/clear_listing.png',
-            label: 'New Listing',
-            icons: 'assets/icons/tab_bar/listing.png',
-          ),
-          // customBottomNavigationBarItem(
-          //   asset: 'assets/icons/tab_bar/clear_message.png',
-          //   label: 'Message',
-          //   icon: 'assets/icons/tab_bar/message.png',
-          // ),
-          customBottomNavigationBarItem(
-            asset: 'assets/icons/tab_bar/clear_profile.png',
-            label: 'Profile',
-            icons: 'assets/icons/tab_bar/profile.png',
-          ),
+          for (int indexPage = 0; indexPage < _navs.length; indexPage++) ...[
+            ...(_navs[indexPage]['items'] as List<Map<String, String>>)
+                .map(
+                  (item) => BottomNavigationBarItem(
+                    activeIcon: CustomPaint(
+                        // painter: TrianglePainter(),
+                        child: Container(
+                            child: Image.asset(item['asset']!, height: 30))),
+                    icon: Image.asset(item['icon']!, height: 30),
+                    label: item['label'],
+                  ),
+                )
+                .toList()
+          ]
         ],
       ),
     );
