@@ -1,7 +1,10 @@
 import 'package:dazle/app/pages/home/home_view.dart';
 import 'package:dazle/app/pages/listing/listing_view.dart';
+// import 'package:dazle/app/pages/main/components/triangle_painter.dart';
 import 'package:dazle/app/pages/profile/profile_view.dart';
 import 'package:flutter/material.dart';
+
+import '../connection/connection_view.dart';
 
 class MainPage extends StatefulWidget {
   static const String id = 'main_page';
@@ -67,24 +70,40 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-  late int _currentIndex;
-  late List<Map<String, dynamic>> _navs;
+  int _currentIndex = 0;
+  final List<Widget> _navs = [
+    HomePage(),
+    // ConnectionPage(),
+    ListingPage(),
+    //MessagePage(),
+    ProfilePage(),
+  ];
 
-  void initState() {
-    _navs = widget._navs;
-    _navs.asMap().forEach((key, values) {
-      if (values[widget.backCurrentIndex] != null) {
-        _currentIndex = key;
-        return;
-      }
-    });
-    super.initState();
+  customBottomNavigationBarItem({
+    required String asset,
+    required String label,
+    required String icons,
+  }) {
+    print(icons);
+    return BottomNavigationBarItem(
+      activeIcon: Container(
+        child: Image.asset(
+          icons,
+          height: 30,
+        ),
+      ),
+      icon: Image.asset(
+        asset,
+        height: 30,
+      ),
+      label: label,
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _navs[_currentIndex][_navs[_currentIndex].keys.first],
+      body: _navs[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         selectedItemColor: Color.fromRGBO(51, 212, 157, 1),
