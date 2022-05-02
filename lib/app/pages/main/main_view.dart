@@ -3,9 +3,6 @@ import 'package:dazle/app/pages/listing/listing_view.dart';
 import 'package:dazle/app/pages/profile/profile_view.dart';
 import 'package:flutter/material.dart';
 
-import '../connection/connection_view.dart';
-import '../message/message_view.dart';
-
 class MainPage extends StatefulWidget {
   static const String id = 'main_page';
 
@@ -15,49 +12,49 @@ class MainPage extends StatefulWidget {
       "HomePage": HomePage(),
       "items": [
         {
-          "asset": 'assets/icons/tab_bar/clear_home.png',
+          "icon": 'assets/icons/tab_bar/clear_home.png',
           "label": "Home",
-          "icon": "assets/icons/tab_bar/home.png"
+          "asset": "assets/icons/tab_bar/home.png"
         }
       ]
     },
-    {
-      "ConnectionPage": ConnectionPage(),
-      "items": [
-        {
-          "asset": 'assets/icons/tab_bar/clear_connection.png',
-          "label": "Connection",
-          "icon": "assets/icons/tab_bar/connection.png"
-        }
-      ]
-    },
+    // {
+    //   "ConnectionPage": ConnectionPage(),
+    //   "items": [
+    //     {
+    //       "icon": 'assets/icons/tab_bar/clear_connection.png',
+    //       "label": "Connection",
+    //       "asset": "assets/icons/tab_bar/connection.png"
+    //     }
+    //   ]
+    // },
     {
       "ListingPage": ListingPage(),
       "items": [
         {
-          "asset": 'assets/icons/tab_bar/clear_listing.png',
+          "icon": 'assets/icons/tab_bar/clear_listing.png',
           "label": "New listing",
-          "icon": "assets/icons/tab_bar/listing.png"
+          "asset": "assets/icons/tab_bar/listing.png"
         }
       ]
     },
-    {
-      "MessagePage": MessagePage(),
-      "items": [
-        {
-          "asset": 'assets/icons/tab_bar/clear_message.png',
-          "label": "message",
-          "icon": "assets/icons/tab_bar/message.png"
-        }
-      ]
-    },
+    // {
+    //   "MessagePage": MessagePage(),
+    //   "items": [
+    //     {
+    //       "icon": 'assets/icons/tab_bar/clear_message.png',
+    //       "label": "message",
+    //       "asset": "assets/icons/tab_bar/message.png"
+    //     }
+    //   ]
+    // },
     {
       "ProfilePage": ProfilePage(),
       "items": [
         {
-          "asset": 'assets/icons/tab_bar/clear_profile.png',
+          "icon": 'assets/icons/tab_bar/clear_profile.png',
           "label": "profile",
-          "icon": "assets/icons/tab_bar/profile.png"
+          "asset": "assets/icons/tab_bar/profile.png"
         }
       ]
     },
