@@ -66,6 +66,11 @@ class ConnectionController extends Controller {
     initListeners();
   }
 
+  void removeAgent(int index) {
+    _connections.removeAt(index);
+    refreshUI();
+  }
+
   @override
   void onResumed() => print('On resumed');
 
