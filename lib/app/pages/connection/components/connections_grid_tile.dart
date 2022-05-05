@@ -84,26 +84,26 @@ class ConnectionsGridTile extends StatelessWidget {
                   child: Stack(
                     children: [
                       //** reserve for the future updates
-                      // Positioned(
-                      //   right: 0,
-                      //   child: GestureDetector(
-                      //     onTap: () {
-                      //       print("ok");
-                      //     },
-                      //     child: Container(
-                      //       margin: EdgeInsets.all(5),
-                      //       child: CircleAvatar(
-                      //         radius: 11.0,
-                      //         backgroundColor: Colors.black54,
-                      //         child: Icon(
-                      //           Icons.close,
-                      //           color: Colors.white,
-                      //           size: 18,
-                      //         ),
-                      //       ),
-                      //     ),
-                      //   ),
-                      // ),
+                      Positioned(
+                        right: 0,
+                        child: GestureDetector(
+                          onTap: () {
+                            controller.removeAgent(index);
+                          },
+                          child: Container(
+                            margin: EdgeInsets.all(5),
+                            child: CircleAvatar(
+                              radius: 11.0,
+                              backgroundColor: Colors.black54,
+                              child: Icon(
+                                Icons.close,
+                                color: Colors.white,
+                                size: 18,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
                       Container(
                         padding: EdgeInsets.only(
                             top: 10, bottom: 10, left: 5, right: 5),
