@@ -173,7 +173,7 @@ class _HomePageState extends ViewState<HomePage, HomeController> {
               ),
               HeaderHomeTile(
                 title: 'Spotlight',
-                subTitle: 'Most unique and exclusive properties',
+                subTitle: 'Properties you might be interested in',
                 child: PhotoListTile(items: controller.spotLight),
                 viewAllOnTap: () {
                   print('view all spot light');
@@ -181,7 +181,7 @@ class _HomePageState extends ViewState<HomePage, HomeController> {
               ),
               HeaderHomeTile(
                 title: 'Matched Properties',
-                subTitle: 'Just listed in the app',
+                subTitle: 'You\'ve got a match!',
                 child: PhotoListTile(items: controller.spotLight),
                 viewAllOnTap: () {
                   print('view all matched properties');

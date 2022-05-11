@@ -8,6 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:flutter_overlay_loader/flutter_overlay_loader.dart';
 
+import '../main/main_view.dart';
+
 class EditProfileController extends Controller {
   final EditProfilePresenter editProfilePresenter;
 
@@ -53,7 +55,14 @@ class EditProfileController extends Controller {
 
       await _statusDialog('Success!', 'Updated Successfully', onPressed: () {
         Navigator.pop(getContext());
-        Navigator.pop(getContext());
+
+        Navigator.pushReplacement(
+            getContext(),
+            MaterialPageRoute(
+              builder: (context) => MainPage(
+                backCurrentIndex: "ProfilePage",
+              ),
+            ));
       });
     };
     editProfilePresenter.updateUserOnError = (e) {
@@ -143,7 +152,6 @@ class EditProfileController extends Controller {
     mobileNumberTextController.dispose();
     brokerLicenseNumberTextController.dispose();
     aboutMeTextController.dispose();
-
     Loader.hide();
     super.onDisposed();
   }

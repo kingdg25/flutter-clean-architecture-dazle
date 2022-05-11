@@ -10,15 +10,16 @@ class CustomRadioGroupButton extends StatelessWidget {
   final List<String> buttonValues;
   final Function radioButtonValue;
   final String? defaultSelected;
+  bool autowidth;
 
-  CustomRadioGroupButton({
-    this.radioPadding = 6.0,
-    this.radioWidth = 100.0,
-    required this.buttonLables,
-    required this.buttonValues,
-    required this.radioButtonValue,
-    this.defaultSelected
-  });
+  CustomRadioGroupButton(
+      {this.radioPadding = 6.0,
+      this.radioWidth = 100.0,
+      required this.buttonLables,
+      required this.buttonValues,
+      required this.radioButtonValue,
+      this.defaultSelected,
+      this.autowidth = false});
 
   @override
   Widget build(BuildContext context) {
@@ -33,10 +34,7 @@ class CustomRadioGroupButton extends StatelessWidget {
         buttonTextStyle: ButtonTextStyle(
           unSelectedColor: App.textColor,
           selectedColor: App.textColor,
-          textStyle: App.textStyle(
-            fontSize: 12,
-            fontWeight: FontWeight.w600
-          ),
+          textStyle: App.textStyle(fontSize: 12, fontWeight: FontWeight.w600),
         ),
         padding: radioPadding,
         width: radioWidth,
@@ -44,6 +42,8 @@ class CustomRadioGroupButton extends StatelessWidget {
         buttonValues: buttonValues,
         radioButtonValue: radioButtonValue as void Function(String),
         defaultSelected: defaultSelected,
+        autoWidth: autowidth,
+        height: autowidth == true ? 50 : 35,
       ),
     );
   }

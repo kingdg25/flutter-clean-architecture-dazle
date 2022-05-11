@@ -60,12 +60,20 @@ class DataListingRepository extends ListingRepository {
         // converts int to double
         final price = property['price'];
         final area = property['total_area'];
+        final floorArea = property['floor_area'];
+        final frontageArea = property['frontage_area'];
         String priceVar = '$price';
         String areaVar = '$area';
+        String floorAreaVar = '$floorArea';
+        String frontageAreaVar = '$frontageArea';
         double parsedPrice = double.parse(priceVar);
         double parsedArea = double.parse(areaVar);
+        double parsedFloorArea = double.parse(floorAreaVar);
+        double parsedFrontageArea = double.parse(frontageAreaVar);
         property['price'] = parsedPrice;
         property['total_area'] = parsedArea;
+        property['floor_area'] = parsedFloorArea;
+        property['frontage_area'] = parsedFrontageArea;
 
         print(property['createdAt'].runtimeType);
         print(property['createdAt']);
@@ -122,12 +130,20 @@ class DataListingRepository extends ListingRepository {
       jsonResponse['listings'].forEach((val) {
         final price = val['price'];
         final area = val['total_area'];
+        final floorArea = val['floor_area'];
+        final frontageArea = val['frontage_area'];
         String priceVar = '$price';
         String areaVar = '$area';
+        String floorAreaVar = '$floorArea';
+        String frontageAreaVar = '$frontageArea';
         double parsedPrice = double.parse(priceVar);
         double parsedArea = double.parse(areaVar);
+        double parsedFloorArea = double.parse(floorAreaVar);
+        double parsedFrontageArea = double.parse(frontageAreaVar);
         val['price'] = parsedPrice;
         val['total_area'] = parsedArea;
+        val['floor_area'] = parsedFloorArea;
+        val['frontage_area'] = parsedFrontageArea;
         print(val);
         listings.add(Property.fromJson(val));
       });
@@ -197,12 +213,20 @@ class DataListingRepository extends ListingRepository {
       jsonResponse['listings'].forEach((val) {
         final price = val['price'];
         final area = val['total_area'];
+        final floorArea = val['floor_area'];
+        final frontageArea = val['frontage_area'];
         String priceVar = '$price';
         String areaVar = '$area';
+        String floorAreaVar = '$floorArea';
+        String frontageAreaVar = '$frontageArea';
         double parsedPrice = double.parse(priceVar);
         double parsedArea = double.parse(areaVar);
+        double parsedFloorArea = double.parse(floorAreaVar);
+        double parsedFrontageArea = double.parse(frontageAreaVar);
         val['price'] = parsedPrice;
         val['total_area'] = parsedArea;
+        val['floor_area'] = parsedFloorArea;
+        val['frontage_area'] = parsedFrontageArea;
         print(val);
         listings.add(Property.fromJson(val));
       });
@@ -388,12 +412,20 @@ class DataListingRepository extends ListingRepository {
       // converts int to double
       final price = property['price'];
       final area = property['total_area'];
+      final floorArea = property['floor_area'];
+      final frontageArea = property['frontage_area'];
       String priceVar = '$price';
       String areaVar = '$area';
+      String floorAreaVar = '$floorArea';
+      String frontageAreaVar = '$frontageArea';
       double parsedPrice = double.parse(priceVar);
       double parsedArea = double.parse(areaVar);
+      double parsedFloorArea = double.parse(floorAreaVar);
+      double parsedFrontageArea = double.parse(frontageAreaVar);
       property['price'] = parsedPrice;
       property['total_area'] = parsedArea;
+      property['floor_area'] = parsedFloorArea;
+      property['frontage_area'] = parsedFrontageArea;
 
       final Property propertyInstance =
           Property.fromJson(property as Map<String, dynamic>);
@@ -429,12 +461,20 @@ class DataListingRepository extends ListingRepository {
       // converts int to double
       final price = property['price'];
       final area = property['total_area'];
+      final floorArea = property['floor_area'];
+      final frontageArea = property['frontage_area'];
       String priceVar = '$price';
       String areaVar = '$area';
+      String floorAreaVar = '$floorArea';
+      String frontageAreaVar = '$frontageArea';
       double parsedPrice = double.parse(priceVar);
       double parsedArea = double.parse(areaVar);
+      double parsedFloorArea = double.parse(floorAreaVar);
+      double parsedFrontageArea = double.parse(frontageAreaVar);
       property['price'] = parsedPrice;
       property['total_area'] = parsedArea;
+      property['floor_area'] = parsedFloorArea;
+      property['frontage_area'] = parsedFrontageArea;
       selectedListing = Property.fromJson(property as Map<String, dynamic>);
 
       print('printing selected listing');

@@ -13,7 +13,7 @@ class PropertyListTile extends StatelessWidget {
   final double width;
 
   PropertyListTile(
-      {required this.items, this.height = 215.0, this.width = 285.0});
+      {required this.items, this.height = 350.0, this.width = 285.0});
 
   @override
   Widget build(BuildContext context) {
@@ -78,18 +78,32 @@ class PropertyListTile extends StatelessWidget {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
+                              // CustomText(
+                              //   text: items[index].keywordsToString ?? '',
+                              //   fontSize: 9,
+                              //   color: App.hintColor,
+                              //   fontWeight: FontWeight.w500,
+                              // ),
                               CustomText(
-                                text: items[index].keywordsToString ?? '',
-                                fontSize: 9,
-                                color: App.hintColor,
-                                fontWeight: FontWeight.w500,
+                                text: items[index].title == null
+                                    ? '(No Listing Title)'
+                                    : items[index].title,
+                                fontSize: 15,
+                                fontWeight: FontWeight.w900,
                               ),
                               SizedBox(height: 2),
                               CustomText(
-                                text: '${items[index].price} PHP',
+                                text: items[index].propertyFor == 'Rent'
+                                    ? '${items[index].formatPrice}PHP/${items[index].timePeriod?.replaceAll('ly', '')}'
+                                    : '${items[index].formatPrice} PHP',
                                 fontSize: 12,
-                                fontWeight: FontWeight.w700,
+                                fontWeight: FontWeight.w500,
                               ),
+                              CustomText(
+                                  text: items[index].completeAddress,
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w500,
+                                  color: App.hintColor),
                               SizedBox(height: 6),
                               Container(
                                 height: 20,
@@ -98,12 +112,12 @@ class PropertyListTile extends StatelessWidget {
                                   children: [
                                     PropertyTextInfo(
                                       asset: 'assets/icons/bed.png',
-                                      text: items[index].totalBedRoom,
+                                      text: '${items[index].totalBedRoom}',
                                     ),
                                     SizedBox(width: 4),
                                     PropertyTextInfo(
                                       asset: 'assets/icons/bath.png',
-                                      text: items[index].totalBathRoom,
+                                      text: '${items[index].totalBathRoom}',
                                     ),
                                     SizedBox(width: 4),
                                     PropertyTextInfo(
@@ -113,7 +127,7 @@ class PropertyListTile extends StatelessWidget {
                                     SizedBox(width: 4),
                                     PropertyTextInfo(
                                       asset: '',
-                                      text: '${items[index].totalArea} sqft',
+                                      text: '${items[index].formatArea} sqm',
                                     ),
                                   ],
                                 ),

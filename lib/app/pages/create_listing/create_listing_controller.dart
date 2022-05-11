@@ -13,9 +13,13 @@ import 'package:dazle/domain/entities/property.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:flutter_overlay_loader/flutter_overlay_loader.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wechat_assets_picker/wechat_assets_picker.dart';
 
+import '../../../data/constants.dart';
 import '../map_location_picker/map_location_picker_view.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert' as convert;
 
 class CreateListingController extends Controller {
   final CreateListingPresenter createListingPresenter;
@@ -27,15 +31,23 @@ class CreateListingController extends Controller {
   String? propertyType;
   String? propertyFor;
   String? timePeriod;
+  String? pricing;
   final TextEditingController priceTextController;
 
   // page 2
   String? numberOfBedRooms;
   String? numberOfBathRooms;
   String? numberOfParking;
+  final TextEditingController numOfBedroomController;
+  final TextEditingController numOfBathroomsController;
   final TextEditingController areaTextController;
+  final TextEditingController frontageTextController;
+  final TextEditingController floorAreaTextController;
+  final TextEditingController titleTextController;
   final TextEditingController descriptionTextController;
+
   String? isYourProperty;
+  String? ownwership;
 
   // page 3
   final TextEditingController streetTextController;
@@ -45,6 +57,27 @@ class CreateListingController extends Controller {
   double? latitude;
   double? longitude;
   Map<dynamic, dynamic>? propertyCoordinates;
+  // Map<dynamic, dynamic>? location;
+
+  List<DropdownMenuItem<String>> provinces = [];
+  List<DropdownMenuItem<String>> cities = [];
+  List<DropdownMenuItem<String>> barangays = [];
+  List<String?> provinceCodes = [];
+  List<String?> provinceNames = [];
+  List<String?> cityCodes = [];
+  List<String?> cityNames = [];
+  List<String?> brgyCodes = [];
+  List<String?> brgyNames = [];
+  String? selectedProvinceCode;
+  String? selectedCityCode;
+  String? selectedBarangayCode;
+  Map<String, dynamic> location;
+
+  final TextEditingController subdivisionTextController;
+  final TextEditingController streetNameTextController;
+  final TextEditingController houseNumberTextController;
+  final TextEditingController buildingNameTextController;
+  final TextEditingController floorTextController;
 
   // page 4
   List<String> amenitiesSelection;
@@ -54,7 +87,7 @@ class CreateListingController extends Controller {
   List<AssetEntity> assets;
   String? viewType;
   int currentPhotosCount;
-  bool isUpdating;
+  bool isUpdating = false;
   List<String>? currentPhotos;
 
   CreateListingController(userRepo, this.property)
@@ -73,7 +106,12 @@ class CreateListingController extends Controller {
         ],
         createListingPageController = PageController(),
         priceTextController = TextEditingController(),
+        numOfBedroomController = TextEditingController(),
+        numOfBathroomsController = TextEditingController(),
         areaTextController = TextEditingController(),
+        frontageTextController = TextEditingController(),
+        floorAreaTextController = TextEditingController(),
+        titleTextController = TextEditingController(),
         descriptionTextController = TextEditingController(),
         streetTextController = TextEditingController(),
         landmarkTextController = TextEditingController(),
@@ -84,6 +122,21 @@ class CreateListingController extends Controller {
         currentPhotosCount = 0,
         isUpdating = false,
         mapSwitch = false,
+        subdivisionTextController = TextEditingController(),
+        streetNameTextController = TextEditingController(),
+        houseNumberTextController = TextEditingController(),
+        buildingNameTextController = TextEditingController(),
+        floorTextController = TextEditingController(),
+        location = {
+          "ProvinceCode": '',
+          "CityCode": '',
+          "BrgyCode": '',
+          "Subdivision": '',
+          "Street": '',
+          "HouseNo": '',
+          "BuildingName": '',
+          "RoomNo": ''
+        },
         super();
 
   @override
@@ -115,7 +168,6 @@ class CreateListingController extends Controller {
     createListingPresenter.createListingOnError = (e) {
       print('create listing on error $e');
       AppConstant.showLoader(getContext(), false);
-
       if (!e['error']) {
         if (e['error_type'] == "filesize_error") {
           _statusDialog('File size error.', '${e['status'] ?? ''}');
@@ -148,7 +200,7 @@ class CreateListingController extends Controller {
     createListingPresenter.updateListingOnError = (e) async {
       AppConstant.showLoader(getContext(), false);
       await _statusDialog(
-          'Cannot update listing!', 'Your listing cannot be updated.');
+          'Cannot update listing!', 'Your listing cannot be updated: $e.');
     };
   }
 
@@ -172,6 +224,8 @@ class CreateListingController extends Controller {
         mapSwitch = true;
         refreshUI();
       }
+    } else {
+      await getProvinces();
     }
   }
 
@@ -187,28 +241,172 @@ class CreateListingController extends Controller {
 
   // initialize values on updating
   setValues() async {
+    //TODO: Add conditions of newly added fields for update and
+    numOfBedroomController.text = '${this.property!.totalBedRoom!}';
+    numOfBathroomsController.text = '${this.property!.totalBathRoom!}';
     priceTextController.text = this.property!.formatPrice;
     areaTextController.text = this.property!.formatArea;
+    frontageTextController.text = this.property!.formatFloorArea;
+    floorAreaTextController.text = this.property!.formatFloorArea;
     descriptionTextController.text = this.property!.description!;
     streetTextController.text = this.property!.street!;
     landmarkTextController.text = this.property!.landmark!;
     cityTextController.text = this.property!.city!;
-    propertyType = this.property!.propertyType;
+    propertyType = this.property!.propertyType == 'Commercial'
+        ? null
+        : this.property!.propertyType;
     propertyFor = this.property!.propertyFor;
+    ownwership = this.property!.ownership;
     timePeriod = this.property!.timePeriod;
-    numberOfBedRooms = this.property!.totalBedRoom;
-    numberOfBathRooms = this.property!.totalBathRoom;
     numberOfParking = this.property!.totalParkingSpace;
     isYourProperty = this.property!.isYourProperty;
     amenities = this.property!.amenities;
     viewType = this.property!.viewType;
     propertyCoordinates = this.property?.coordinates;
+    pricing = this.property?.pricing;
+    titleTextController.text =
+        this.property!.title == null ? '' : this.property!.title!;
 
     if (propertyCoordinates != null) {
       latitude = propertyCoordinates!["Latitude"];
       longitude = propertyCoordinates!["Longitude"];
     }
     print('LatLong on update: $latitude , $longitude');
+
+    if (this.property!.location != null) {
+      await getProvinces();
+      await getCities(this.property!.location['ProvinceCode']);
+      await getBarangays(this.property!.location['CityCode']);
+      selectedProvinceCode = this.property!.location['ProvinceCode'];
+      selectedCityCode = this.property!.location['CityCode'];
+      selectedBarangayCode = this.property!.location['BrgyCode'];
+
+      subdivisionTextController.text = this.property!.location['Subdivision'];
+      streetNameTextController.text = this.property!.location['Street'];
+      houseNumberTextController.text = this.property!.location['HouseNo'];
+      buildingNameTextController.text = this.property!.location['BuildingName'];
+      floorTextController.text = this.property!.location['RoomNo'];
+      AppConstant.showLoader(getContext(), false);
+    } else {
+      await getProvinces();
+      AppConstant.showLoader(getContext(), false);
+    }
+
+    refreshUI();
+  }
+
+  Future<Map<dynamic, dynamic>?> getRegions() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final userToken = prefs.getString("accessToken");
+    Map<dynamic, dynamic>? regions;
+
+    var response = await http
+        .post(Uri.parse("${Constants.siteURL}/api/listings/regions"), headers: {
+      'Authorization': 'Bearer ${prefs.getString("accessToken")}',
+      'Content-Type': 'application/json',
+      'Accept': 'application/json'
+    });
+
+    var jsonResponse = await convert.jsonDecode(response.body);
+    if (response.statusCode == 200) {
+      regions = await convert.jsonDecode(response.body);
+      print('Regions Length: ${jsonResponse['regions'].length}');
+    }
+
+    return regions;
+  }
+
+  getProvinces() async {
+    provinceNames.clear();
+    provinceCodes.clear();
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    for (int region = 1; region <= 17; region++) {
+      String apiLink =
+          "${Constants.siteURL}/api/listings/provinces?region_id=$region";
+
+      if (region < 10) {
+        apiLink =
+            "${Constants.siteURL}/api/listings/provinces?region_id=0$region";
+      }
+      var response = await http.get(Uri.parse(apiLink), headers: {
+        'Authorization': 'Bearer ${prefs.getString("accessToken")}',
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      });
+
+      var jsonResponse = await convert.jsonDecode(response.body);
+      if (response.statusCode == 200) {
+        // regions = await convert.jsonDecode(response.body);
+        print('Provinces Length: ${jsonResponse['provinces'].length}');
+        jsonResponse['provinces'].forEach((val) {
+          provinceCodes.add(val['province_code']);
+          provinceNames.add(val['province_name']);
+          provinces.add(DropdownMenuItem(
+            child: Text(val['province_name']),
+            value: val['province_code'],
+          ));
+        });
+      }
+    }
+    refreshUI();
+  }
+
+  getCities(String? provinceID) async {
+    cityNames.clear();
+    cityCodes.clear();
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    List<DropdownMenuItem<String>> citiesFromAPi = [];
+    var response = await http.get(
+        Uri.parse(
+            "${Constants.siteURL}/api/listings/cities?province_id=$provinceID"),
+        headers: {
+          'Authorization': 'Bearer ${prefs.getString("accessToken")}',
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        });
+
+    var jsonResponse = await convert.jsonDecode(response.body);
+    if (response.statusCode == 200) {
+      print('Cities Length: ${jsonResponse['cities'].length}');
+      jsonResponse['cities'].forEach((val) {
+        cityNames.add(val['city_name']);
+        cityCodes.add(val['city_code']);
+        cities.add(DropdownMenuItem(
+          child: Text(val['city_name']),
+          value: val['city_code'],
+        ));
+      });
+    }
+
+    refreshUI();
+  }
+
+  getBarangays(String? cityID) async {
+    brgyNames.clear();
+    brgyCodes.clear();
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var response = await http.get(
+        Uri.parse(
+            "${Constants.siteURL}/api/listings/barangays?city_id=$cityID"),
+        headers: {
+          'Authorization': 'Bearer ${prefs.getString("accessToken")}',
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        });
+
+    var jsonResponse = await convert.jsonDecode(response.body);
+    if (response.statusCode == 200) {
+      print('Barangays Length: ${jsonResponse['barangays'].length}');
+      jsonResponse['barangays'].forEach((val) {
+        brgyNames.add(val['brgy_name']);
+        brgyCodes.add(val['brgy_code']);
+        barangays.add(DropdownMenuItem(
+          child: Text(val['brgy_name']),
+          value: val['brgy_code'],
+        ));
+      });
+    }
 
     refreshUI();
   }
@@ -217,33 +415,57 @@ class CreateListingController extends Controller {
     bool isValidated = false;
     bool numberFound = priceTextController.text.contains(new RegExp(r'[0-9]'));
 
-    if (propertyFor == 'Rent') {
-      if (propertyType != null &&
-          propertyFor != null &&
-          timePeriod != null &&
-          priceTextController.text.isNotEmpty &&
-          numberFound == true &&
-          priceTextController.text != '0') {
-        isValidated = true;
-      } else
-        AppConstant.statusDialog(
-            context: getContext(),
-            text: "All inputs in this section are required.",
-            title: "Values missing.");
-    } else {
-      timePeriod = null;
-      if (propertyType != null &&
-          propertyFor != null &&
-          // timePeriod != null &&
-          priceTextController.text.isNotEmpty &&
-          numberFound == true &&
-          priceTextController.text != '0') {
-        isValidated = true;
-      } else
-        AppConstant.statusDialog(
-            context: getContext(),
-            text: "All inputs in this section are required.",
-            title: "Values missing.");
+    if (propertyType != null) {
+      // Validation for lot and Commercial
+      if (propertyType == 'Commercial Lot' ||
+          propertyType == 'Commercial Building') {
+        if (propertyFor != null && propertyFor == "Rent") {
+          // Rent validation
+          if (timePeriod != null &&
+              priceTextController.text.isNotEmpty &&
+              numberFound == true &&
+              pricing != null &&
+              priceTextController.text != '0') {
+            isValidated = true;
+          }
+        } else if (propertyFor != null && propertyFor == "Sell") {
+          //Sale validation
+          timePeriod = null;
+          if (priceTextController.text.isNotEmpty &&
+              numberFound == true &&
+              pricing != null &&
+              priceTextController.text != '0') {
+            isValidated = true;
+          }
+        }
+      } else {
+        pricing = null;
+        if (propertyFor != null && propertyFor == "Rent") {
+          // Rent validation
+          if (timePeriod != null &&
+              priceTextController.text.isNotEmpty &&
+              numberFound == true &&
+              priceTextController.text != '0') {
+            isValidated = true;
+          }
+        } else if (propertyFor != null && propertyFor == "Sell") {
+          //Sale validation
+          timePeriod = null;
+          if (priceTextController.text.isNotEmpty &&
+              numberFound == true &&
+              priceTextController.text != '0') {
+            isValidated = true;
+          }
+        }
+      }
+    }
+
+    // Error Message if isValidated is False
+    if (isValidated == false) {
+      AppConstant.statusDialog(
+          context: getContext(),
+          text: "All inputs in this section are required.",
+          title: "Values missing.");
     }
 
     return isValidated;
@@ -253,36 +475,146 @@ class CreateListingController extends Controller {
     bool isValidated = false;
     bool numberFound = areaTextController.text.contains(new RegExp(r'[0-9]'));
 
-    if (numberOfBedRooms != null &&
-        numberOfBathRooms != null &&
-        numberOfParking != null &&
-        areaTextController.text.isNotEmpty &&
-        numberFound == true &&
-        areaTextController.text != '0' &&
-        descriptionTextController.text.isNotEmpty &&
-        isYourProperty != null) {
-      isValidated = true;
-    } else
+    // Page 2 Lot and Commercial Validation
+    if (propertyType == 'Lot' ||
+        propertyType == 'Farm Lot' ||
+        propertyType == 'Commercial Lot' ||
+        propertyType == 'Commercial Building') {
+      //Include floor area if Commercial Building
+      if (propertyType == 'Commercial Building') {
+        if (numberOfParking != null &&
+            areaTextController.text.isNotEmpty &&
+            numberFound == true &&
+            areaTextController.text != '0' &&
+            floorAreaTextController.text.isNotEmpty &&
+            floorAreaTextController.text != '0' &&
+            titleTextController.text.isNotEmpty &&
+            descriptionTextController.text.isNotEmpty &&
+            ownwership != null &&
+            isYourProperty != null) {
+          numOfBathroomsController.text = '';
+          numOfBedroomController.text = '';
+          isValidated = true;
+        }
+      } else if (propertyType == 'Lot' ||
+          propertyType == 'Farm Lot' ||
+          propertyType == 'Commercial Lot') {
+        // furnished not required
+        if (numberOfParking != null &&
+            areaTextController.text.isNotEmpty &&
+            numberFound == true &&
+            areaTextController.text != '0' &&
+            titleTextController.text.isNotEmpty &&
+            descriptionTextController.text.isNotEmpty &&
+            ownwership != null) {
+          floorAreaTextController.text = '';
+          numOfBathroomsController.text = '';
+          numOfBedroomController.text = '';
+          isYourProperty = null;
+          isValidated = true;
+        }
+      } else {
+        if (numberOfParking != null &&
+            areaTextController.text.isNotEmpty &&
+            numberFound == true &&
+            areaTextController.text != '0' &&
+            titleTextController.text.isNotEmpty &&
+            descriptionTextController.text.isNotEmpty &&
+            ownwership != null &&
+            isYourProperty != null) {
+          floorAreaTextController.text = '';
+          isValidated = true;
+        }
+      }
+    } else if (propertyType == 'Warehouse') {
+      if (numOfBathroomsController.text.isNotEmpty &&
+          numOfBathroomsController.text != '0' &&
+          numberOfParking != null &&
+          areaTextController.text.isNotEmpty &&
+          numberFound == true &&
+          areaTextController.text != '0' &&
+          titleTextController.text.isNotEmpty &&
+          descriptionTextController.text.isNotEmpty &&
+          ownwership != null &&
+          isYourProperty != null) {
+        numOfBedroomController.text = '';
+        floorAreaTextController.text = '';
+        isValidated = true;
+      }
+    } else {
+      if (numOfBedroomController.text.isNotEmpty &&
+          numOfBedroomController.text != '0' &&
+          numOfBathroomsController.text.isNotEmpty &&
+          numOfBathroomsController.text != '0' &&
+          numberOfParking != null &&
+          areaTextController.text.isNotEmpty &&
+          numberFound == true &&
+          areaTextController.text != '0' &&
+          floorAreaTextController.text.isNotEmpty &&
+          floorAreaTextController.text != '0' &&
+          ownwership != null &&
+          titleTextController.text.isNotEmpty &&
+          descriptionTextController.text.isNotEmpty &&
+          isYourProperty != null) {
+        isValidated = true;
+      }
+    }
+
+    // Error Message if isValidated is False
+    if (isValidated == false) {
       AppConstant.statusDialog(
           context: getContext(),
           text: "All inputs in this section are required.",
           title: "Values missing.");
-
+    }
     return isValidated;
   }
 
   validatePage3() {
     bool isValidated = false;
+    List<String> fieldsMissing = [];
+    String errorFields;
+    String errorMsg = '';
 
-    if (streetTextController.text.isNotEmpty &&
-        cityTextController.text.isNotEmpty) {
+    if (selectedProvinceCode != null &&
+            selectedCityCode != null &&
+            selectedBarangayCode != null &&
+            subdivisionTextController.text.isNotEmpty ||
+        streetNameTextController.text.isNotEmpty ||
+        houseNumberTextController.text.isNotEmpty ||
+        buildingNameTextController.text.isNotEmpty ||
+        floorTextController.text.isNotEmpty) {
       isValidated = true;
-    } else
-      AppConstant.statusDialog(
-          context: getContext(),
-          text: "Street Address and City inputs are required.",
-          title: "Values missing.");
+    } else {
+      if (selectedProvinceCode == null) {
+        fieldsMissing.add('Province');
+      }
+      if (selectedCityCode == null) {
+        fieldsMissing.add('City');
+      }
+      if (selectedBarangayCode == null) {
+        fieldsMissing.add('Barangay');
+      }
+      if (fieldsMissing.length != 0) {
+        errorFields = fieldsMissing.join(", ");
+        errorMsg = "$errorFields are required.";
+      }
+      if (subdivisionTextController.text.isEmpty ||
+          streetNameTextController.text.isEmpty ||
+          houseNumberTextController.text.isEmpty ||
+          buildingNameTextController.text.isEmpty ||
+          floorTextController.text.isEmpty) {
+        errorMsg =
+            '$errorMsg Please provide at least one of the following: Subdivision, Street Name, Lot/Block/Phase/House Number, Building Name and Unit/Room No./Floor.';
+      }
+    }
 
+    if (isValidated == false) {
+      errorFields = fieldsMissing.join(", ");
+
+      AppConstant.statusDialog(
+          context: getContext(), text: errorMsg, title: "Values missing.");
+    }
     return isValidated;
   }
 
@@ -303,10 +635,12 @@ class CreateListingController extends Controller {
   validatePage5() async {
     print('INSIDE PAGE 5 VALIDATION');
     bool isValidated = false;
+    print('isupdating $isUpdating');
+    print('Assets length: ${assets.length}');
 
     // === Create listing Photo Validation
-    if (isUpdating = false) {
-      if (assets.length >= 4) {
+    if (isUpdating == false) {
+      if (assets.length >= 1) {
         isValidated = true;
       } else {
         await AppConstant.statusDialog(
@@ -335,10 +669,10 @@ class CreateListingController extends Controller {
     } else {
       // === Updating list Photo validation
       int? totalPhotos = assets.length + currentPhotosCount;
-      if (totalPhotos >= 4) {
+      if (totalPhotos >= 1) {
         isValidated = true;
       } else {
-        int neededPhotos = 5 - (totalPhotos + 1);
+        int neededPhotos = 1 - (totalPhotos + 1);
         await AppConstant.statusDialog(
             context: getContext(),
             text: "Upload at least $neededPhotos more photo/s.",
@@ -365,12 +699,36 @@ class CreateListingController extends Controller {
     // Converts price and area to double
     double price = double.parse(priceTextController.text.replaceAll(',', ''));
     double area = double.parse(areaTextController.text.replaceAll(',', ''));
+    double? frontageArea;
+    double? floorArea;
+    if (frontageTextController.text != '') {
+      frontageArea =
+          double.parse(frontageTextController.text.replaceAll(',', ''));
+    }
+    if (floorAreaTextController.text != '') {
+      floorArea =
+          double.parse(floorAreaTextController.text.replaceAll(',', ''));
+    }
+
     final assetsBased64;
     if (assets.length > 0) {
       assetsBased64 = await AppConstant.initializeAssetImages(images: assets);
     } else {
       assetsBased64 = null;
     }
+
+    location["ProvinceCode"] = selectedProvinceCode;
+    location["ProvinceName"] =
+        provinceNames[provinceCodes.indexOf(selectedProvinceCode)];
+    location["CityName"] = cityNames[cityCodes.indexOf(selectedCityCode)];
+    location["BrgyName"] = brgyNames[brgyCodes.indexOf(selectedBarangayCode)];
+    location["CityCode"] = selectedCityCode;
+    location["BrgyCode"] = selectedBarangayCode;
+    location["Subdivision"] = subdivisionTextController.text;
+    location["Street"] = streetNameTextController.text;
+    location["HouseNo"] = houseNumberTextController.text;
+    location["BuildingName"] = buildingNameTextController.text;
+    location["RoomNo"] = floorTextController.text;
 
     Map data = {
       "id": this.property!.id,
@@ -380,8 +738,8 @@ class CreateListingController extends Controller {
       "property_for": propertyFor,
       "time_period": timePeriod,
       "price": price,
-      "number_of_bedrooms": numberOfBedRooms,
-      "number_of_bathrooms": numberOfBathRooms,
+      "number_of_bedrooms": numOfBedroomController.text,
+      "number_of_bathrooms": numOfBathroomsController.text,
       "number_of_parking_space": numberOfParking,
       "total_area": area,
       "is_your_property": isYourProperty,
@@ -392,7 +750,13 @@ class CreateListingController extends Controller {
       "amenities": amenities,
       "view_type": viewType,
       "coordinates": propertyCoordinates,
-      "assets": assetsBased64
+      "assets": assetsBased64,
+      "floor_area": floorArea,
+      "frontage_area": frontageArea,
+      "ownership": ownwership,
+      "pricing": pricing,
+      "location": location,
+      "title": titleTextController.text
     };
 
     createListingPresenter.updateListing(data);
@@ -407,6 +771,39 @@ class CreateListingController extends Controller {
     //=== Converting price and area to double
     double price = double.parse(priceTextController.text.replaceAll(',', ''));
     double area = double.parse(areaTextController.text.replaceAll(',', ''));
+    double? frontageArea;
+    double? floorArea;
+    int? bedrooms = 0;
+    int? bathrooms = 0;
+    if (frontageTextController.text != '') {
+      frontageArea =
+          double.parse(frontageTextController.text.replaceAll(',', ''));
+    }
+    if (floorAreaTextController.text != '') {
+      floorArea =
+          double.parse(floorAreaTextController.text.replaceAll(',', ''));
+    }
+
+    if (numOfBedroomController.text != '') {
+      bedrooms = int.parse(numOfBedroomController.text);
+    }
+
+    if (numOfBedroomController.text != '') {
+      bathrooms = int.parse(numOfBathroomsController.text);
+    }
+
+    location["ProvinceCode"] = selectedProvinceCode;
+    location["ProvinceName"] =
+        provinceNames[provinceCodes.indexOf(selectedProvinceCode)];
+    location["CityName"] = cityNames[cityCodes.indexOf(selectedCityCode)];
+    location["BrgyName"] = brgyNames[brgyCodes.indexOf(selectedBarangayCode)];
+    location["CityCode"] = selectedCityCode;
+    location["BrgyCode"] = selectedBarangayCode;
+    location["Subdivision"] = subdivisionTextController.text;
+    location["Street"] = streetNameTextController.text;
+    location["HouseNo"] = houseNumberTextController.text;
+    location["BuildingName"] = buildingNameTextController.text;
+    location["RoomNo"] = floorTextController.text;
 
     var listing = {
       "cover_photo": 'https://picsum.photos/id/73/200/300',
@@ -416,8 +813,8 @@ class CreateListingController extends Controller {
       "time_period": timePeriod,
       "price": price,
 
-      "number_of_bedrooms": numberOfBedRooms,
-      "number_of_bathrooms": numberOfBathRooms,
+      "number_of_bedrooms": bedrooms,
+      "number_of_bathrooms": bathrooms,
       "number_of_parking_space": numberOfParking,
       "total_area": area,
       "is_your_property": isYourProperty,
@@ -433,7 +830,13 @@ class CreateListingController extends Controller {
 
       "coordinates": propertyCoordinates,
 
-      "view_type": viewType
+      "view_type": viewType,
+      "floor_area": floorArea,
+      "frontage_area": frontageArea,
+      "ownership": ownwership,
+      "pricing": pricing,
+      "location": location,
+      "title": titleTextController.text
     };
 
     createListingPresenter.createListing(listing: listing);
@@ -508,7 +911,9 @@ class CreateListingController extends Controller {
                       padding: const EdgeInsets.all(10.0),
                       child: CustomText(
                         text:
-                            """If you make your list public, your connections will be able to see your list. While making your list private means you are the only one can see your list but you can still change it to public later.
+                            """If you choose Public, your connections will be able to see you listings.
+
+While choosing Private means that you are the only one who can see your listings. But you can change it to public anytime. 
                           """,
                         fontSize: 13.0,
                         textAlign: TextAlign.left,
