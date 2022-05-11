@@ -18,16 +18,16 @@ class MainPage extends StatefulWidget {
         }
       ]
     },
-    // {
-    //   "ConnectionPage": ConnectionPage(),
-    //   "items": [
-    //     {
-    //       "icon": 'assets/icons/tab_bar/clear_connection.png',
-    //       "label": "Connection",
-    //       "asset": "assets/icons/tab_bar/connection.png"
-    //     }
-    //   ]
-    // },
+    {
+      "ConnectionPage": HomePage(),
+      "items": [
+        {
+          "icon": 'assets/icons/tab_bar/clear_connection.png',
+          "label": "Connection",
+          "asset": "assets/icons/tab_bar/connection.png"
+        }
+      ]
+    },
     {
       "ListingPage": ListingPage(),
       "items": [
@@ -38,22 +38,22 @@ class MainPage extends StatefulWidget {
         }
       ]
     },
-    // {
-    //   "MessagePage": MessagePage(),
-    //   "items": [
-    //     {
-    //       "icon": 'assets/icons/tab_bar/clear_message.png',
-    //       "label": "message",
-    //       "asset": "assets/icons/tab_bar/message.png"
-    //     }
-    //   ]
-    // },
+    {
+      "MessagePage": HomePage(),
+      "items": [
+        {
+          "icon": 'assets/icons/tab_bar/clear_message.png',
+          "label": "Message",
+          "asset": "assets/icons/tab_bar/message.png"
+        }
+      ]
+    },
     {
       "ProfilePage": ProfilePage(),
       "items": [
         {
           "icon": 'assets/icons/tab_bar/clear_profile.png',
-          "label": "profile",
+          "label": "Profile",
           "asset": "assets/icons/tab_bar/profile.png"
         }
       ]
@@ -88,6 +88,11 @@ class _MainPageState extends State<MainPage> {
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         selectedItemColor: Color.fromRGBO(51, 212, 157, 1),
+        // selectedFontSize: 8,
+        unselectedLabelStyle:
+            TextStyle(fontSize: 9, fontWeight: FontWeight.bold, height: 1.5),
+        selectedLabelStyle:
+            TextStyle(fontSize: 9, fontWeight: FontWeight.bold, height: 1.5),
         currentIndex: _currentIndex,
         onTap: (index) {
           setState(() {
@@ -103,8 +108,8 @@ class _MainPageState extends State<MainPage> {
                     activeIcon: CustomPaint(
                         // painter: TrianglePainter(),
                         child: Container(
-                            child: Image.asset(item['asset']!, height: 30))),
-                    icon: Image.asset(item['icon']!, height: 30),
+                            child: Image.asset(item['asset']!, height: 25))),
+                    icon: Image.asset(item['icon']!, height: 25),
                     label: item['label'],
                   ),
                 )
