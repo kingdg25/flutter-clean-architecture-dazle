@@ -27,7 +27,8 @@ class GetAgentListingUsecase extends UseCase<GetAgentListingUsecaseResponse,
       controller.close();
     } catch (e) {
       //  logger severe message
-      print(e);
+      print("-------------------------");
+      print(e.toString());
       logger.severe("GetAgentListingUsecase unsuccessful");
       //  add error to controller
       controller.addError(e);
