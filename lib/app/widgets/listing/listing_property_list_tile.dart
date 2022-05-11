@@ -1,23 +1,27 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:dazle/app/pages/listing_details/listing_details_view.dart';
-import 'package:dazle/app/utils/app.dart';
-import 'package:dazle/app/utils/app_constant.dart';
-import 'package:dazle/app/widgets/custom_text.dart';
-import 'package:dazle/app/widgets/property_text_info.dart';
-import 'package:dazle/domain/entities/property.dart';
 import 'package:flutter/material.dart';
+
+import '../../../domain/entities/property.dart';
+import '../../pages/listing_details/listing_details_view.dart';
+import '../../utils/app.dart';
+import '../../utils/app_constant.dart';
+import '../custom_text.dart';
+import '../property_text_info.dart';
+import 'listing_property_list_tile_details.dart';
 
 class ListingPropertyListTile extends StatelessWidget {
   final List<Property>? items;
   final double height;
   final double width;
   final EdgeInsetsGeometry padding;
+  final bool isCurrentUser;
 
   ListingPropertyListTile(
       {required this.items,
       this.height = 255.0,
       this.width = 322.0,
+      this.isCurrentUser = true,
       this.padding = const EdgeInsets.all(0.0)});
 
   @override
