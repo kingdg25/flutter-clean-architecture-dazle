@@ -133,29 +133,46 @@ class ListingPropertyListTile extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+                          // CustomText(
+                          //   text: items![index].keywordsToString ?? '',
+                          //   fontSize: 9,
+                          //   color: App.hintColor,
+                          //   fontWeight: FontWeight.w500,
+                          // ),
                           CustomText(
-                            text: items![index].keywordsToString ?? '',
-                            fontSize: 9,
+                            text: items![index].title == null
+                                ? '(No Listing Title)'
+                                : items![index].title,
+                            fontSize: 15,
+                            fontWeight: FontWeight.w900,
+                          ),
+                          SizedBox(height: 2),
+                          CustomText(
+                            text: items![index].propertyFor == 'Rent'
+                                ? '${items![index].formatPrice} PHP/${items![index].timePeriod?.replaceAll('ly', '')}'
+                                : '${items![index].formatPrice} PHP',
+                            fontSize: 12,
+                            fontWeight: FontWeight.w500,
+                          ),
+                          CustomText(
+                            text: items![index].completeAddress,
+                            fontSize: 12,
+                            fontWeight: FontWeight.w500,
                             color: App.hintColor,
-                            fontWeight: FontWeight.w500,
                           ),
-                          CustomText(
-                            text: '${items![index].formatPrice} PHP',
-                            fontSize: 13,
-                            fontWeight: FontWeight.w700,
-                          ),
-                          CustomText(
-                            text:
-                                '${items![index].district ?? "No disctrict specified"}',
-                            fontSize: 10,
-                            fontWeight: FontWeight.w500,
-                          ),
-                          CustomText(
-                            text: '${items![index].city}',
-                            fontSize: 10,
-                            color: App.hintColor,
-                            fontWeight: FontWeight.w500,
-                          ),
+                          //TODO: Place full location here
+                          // CustomText(
+                          //   text:
+                          //       '${items![index].district ?? "No disctrict specified"}',
+                          //   fontSize: 10,
+                          //   fontWeight: FontWeight.w500,
+                          // ),
+                          // CustomText(
+                          //   text: '${items![index].city}',
+                          //   fontSize: 10,
+                          //   color: App.hintColor,
+                          //   fontWeight: FontWeight.w500,
+                          // ),
                           SizedBox(height: 5),
                           Container(
                             height: 20,
@@ -164,12 +181,12 @@ class ListingPropertyListTile extends StatelessWidget {
                               children: [
                                 PropertyTextInfo(
                                   asset: 'assets/icons/bed.png',
-                                  text: items![index].totalBedRoom,
+                                  text: '${items![index].totalBedRoom}',
                                 ),
                                 SizedBox(width: 4),
                                 PropertyTextInfo(
                                   asset: 'assets/icons/bath.png',
-                                  text: items![index].totalBathRoom,
+                                  text: '${items![index].totalBathRoom}',
                                 ),
                                 SizedBox(width: 4),
                                 PropertyTextInfo(

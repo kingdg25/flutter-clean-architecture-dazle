@@ -66,6 +66,7 @@ class _ListingDetailsPageState
                           iconData: Icons.edit,
                           tooltip: "Edit Property",
                           onPressed: () async {
+                            AppConstant.showLoader(context, true);
                             Navigator.pop(context);
                             final popThisPage = await Navigator.push(
                                 context,
@@ -203,6 +204,13 @@ class _ListingDetailsPageState
                     shrinkWrap: true,
                     physics: NeverScrollableScrollPhysics(),
                     children: [
+                      CustomText(
+                        text: selectedListing.title == null
+                            ? '(No Listing Title)'
+                            : selectedListing.title,
+                        fontWeight: FontWeight.w900,
+                        fontSize: 23,
+                      ),
                       Text.rich(
                         TextSpan(children: [
                           TextSpan(
@@ -219,7 +227,7 @@ class _ListingDetailsPageState
                         ]),
                       ),
                       CustomText(
-                        text: '${selectedListing.city}',
+                        text: selectedListing.completeAddress,
                         color: App.hintColor,
                         fontSize: 12,
                         fontWeight: FontWeight.w600,
@@ -243,7 +251,8 @@ class _ListingDetailsPageState
                           Flexible(
                             child: ListingDetailsContainerBox(
                               asset: 'assets/icons/area.png',
-                              text: '${selectedListing.totalArea} sqft',
+                              text:
+                                  '${selectedListing.totalArea?.toStringAsFixed(0)} sqm',
                             ),
                           )
                         ],
@@ -260,10 +269,13 @@ class _ListingDetailsPageState
                           ),
                           SizedBox(width: 8),
                           Flexible(
-                            child: ListingDetailsContainerBox(
-                              asset: 'assets/icons/furnished.png',
-                              text: '${selectedListing.isYourProperty}',
-                            ),
+                            child: selectedListing.isYourProperty == null ||
+                                    selectedListing.isYourProperty == ''
+                                ? Container()
+                                : ListingDetailsContainerBox(
+                                    asset: 'assets/icons/furnished.png',
+                                    text: '${selectedListing.isYourProperty}',
+                                  ),
                           )
                         ],
                       ),
