@@ -10,14 +10,33 @@ class MyConnectionListTile extends StatelessWidget {
   Widget build(BuildContext context) {
     MyConnectionController controller =
         FlutterCleanArchitecture.getController<MyConnectionController>(context);
-    if (controller.myConnection.isEmpty) {
-      return Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Center(
-          child: CircularProgressIndicator(),
+    // before display the data it'll check if there is an error
+    // and if the data is still fetching
+    if (controller.error) {
+      return Center(
+        child: CustomButton(
+          onPressed: controller.refreshUi,
+          text: "Failed to Load. try again",
         ),
       );
     }
+    if (controller.isLoading == true) {
+      return Center(
+        heightFactor: 5,
+        child: Container(
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              CircularProgressIndicator(
+                valueColor: AlwaysStoppedAnimation(App.mainColor),
+              ),
+              CustomText(text: "Loading"),
+            ],
+          ),
+        ),
+      );
+    }
+// #=============================================================
     return ListView.builder(
       shrinkWrap: true,
       physics: NeverScrollableScrollPhysics(),

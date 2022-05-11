@@ -1,21 +1,21 @@
 import 'dart:io';
 
-import 'package:dazle/app/pages/edit_profile/edit_profile_controller.dart';
-import 'package:dazle/app/utils/app.dart';
-import 'package:dazle/app/widgets/custom_appbar.dart';
-import 'package:dazle/data/repositories/data_profile_repository.dart';
-import 'package:dazle/domain/entities/user.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 
+import '../../../data/repositories/data_profile_repository.dart';
+import '../../../domain/entities/user.dart';
+import '../../utils/app.dart';
+import '../../widgets/custom_appbar.dart';
 import '../../widgets/custom_text.dart';
 import '../../widgets/form_fields/custom_button.dart';
 import '../../widgets/form_fields/custom_field_layout.dart';
 import '../../widgets/form_fields/custom_text_field.dart';
 import '../../widgets/form_fields/title_field.dart';
+import 'edit_profile_controller.dart';
 
 class EditProfilePage extends View {
   final User? user;
@@ -89,16 +89,32 @@ class _EditProfilePageState
                 //================================================== Profile pic
                 ControlledWidgetBuilder<EditProfileController>(
                   builder: (context, controller) {
-                    return CircleAvatar(
-                      radius: 95,
-                      backgroundImage: controller.userProfilePicture != null &&
-                              _profilePicture == null
-                          ? NetworkImage(controller.userProfilePicture!)
-                          : (_profilePicture == null
-                                  ? _loadImage
-                                  : FileImage(_profilePicture!))
-                              as ImageProvider<Object>,
-                      backgroundColor: App.mainColor,
+                    return CachedNetworkImage(
+                      imageUrl: controller.userProfilePicture.toString(),
+                      imageBuilder: (context, imageProvider) => CircleAvatar(
+                        radius: 95,
+                        backgroundImage: _profilePicture == null
+                            ? imageProvider
+                            : (_profilePicture == null
+                                    ? _loadImage
+                                    : FileImage(_profilePicture!))
+                                as ImageProvider<Object>,
+                        backgroundColor: App.mainColor,
+                      ),
+                      progressIndicatorBuilder: (context, url, progress) =>
+                          Center(
+                        child: CircularProgressIndicator(
+                          valueColor: AlwaysStoppedAnimation<Color?>(
+                              Colors.indigo[900]),
+                          value: progress.progress,
+                        ),
+                      ),
+                      errorWidget: (context, url, error) => Center(
+                        child: Image.asset(
+                          'assets/user_profile.png',
+                          fit: BoxFit.scaleDown,
+                        ),
+                      ),
                     );
                   },
                 ),
@@ -252,8 +268,8 @@ class _EditProfilePageState
                               if (val.length < 2) {
                                 return "Min 2 Letters";
                               }
-                              if (val.length >= 50) {
-                                return "Max 50 Letters";
+                              if (val.length >= 120) {
+                                return "Max 120 Letters";
                               }
                             },
                           ),

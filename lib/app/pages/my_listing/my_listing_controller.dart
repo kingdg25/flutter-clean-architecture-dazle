@@ -65,18 +65,24 @@ class MyListingController extends Controller {
   void getSuggestionListings(String keyword) {
     _suggestionListing = _myListing
         .where((element) =>
-            element.amenities!.contains(keyword) ||
-            element.city!.contains(keyword) ||
-            element.propertyType!.contains(keyword) ||
-            element.propertyFor!.contains(keyword) ||
-            element.timePeriod!.contains(keyword) ||
-            element.totalBathRoom!.contains(keyword) ||
-            element.totalBedRoom!.contains(keyword) ||
-            element.totalParkingSpace!.contains(keyword) ||
-            element.isYourProperty!.contains(keyword) ||
-            element.street!.contains(keyword) ||
-            element.description!.contains(keyword) ||
-            element.viewType!.contains(keyword))
+            element.amenities!.toString().toLowerCase().contains(keyword) ||
+            element.city!.toString().toLowerCase().contains(keyword) ||
+            element.propertyType!.toString().toLowerCase().contains(keyword) ||
+            element.propertyFor!.toString().toLowerCase().contains(keyword) ||
+            element.timePeriod!.toString().toLowerCase().contains(keyword) ||
+            element.totalBathRoom!.toString().toLowerCase().contains(keyword) ||
+            element.totalBedRoom!.toString().toLowerCase().contains(keyword) ||
+            element.totalParkingSpace!
+                .toString()
+                .toLowerCase()
+                .contains(keyword) ||
+            element.isYourProperty!
+                .toString()
+                .toLowerCase()
+                .contains(keyword) ||
+            element.street!.toString().toLowerCase().contains(keyword) ||
+            element.description!.toString().toLowerCase().contains(keyword) ||
+            element.viewType!.toString().toLowerCase().contains(keyword))
         .toList();
   }
 

@@ -5,7 +5,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert' as convert;
 
-class App{
+class App {
   static const name = "Dazle";
 
   static const mainColor = Color.fromRGBO(51, 212, 157, 1.0);
@@ -13,19 +13,17 @@ class App{
   static const textColor = Color.fromRGBO(46, 53, 61, 1.0);
   static const hintColor = Color.fromRGBO(154, 160, 166, 1.0);
 
-  static textStyle({
-    double fontSize = 14.0,
-    Color color = textColor,
-    FontWeight fontWeight = FontWeight.normal,
-    FontStyle fontStyle = FontStyle.normal
-  }) {
+  static textStyle(
+      {double fontSize = 14.0,
+      Color color = textColor,
+      FontWeight fontWeight = FontWeight.normal,
+      FontStyle fontStyle = FontStyle.normal}) {
     return TextStyle(
-      fontSize: fontSize,
-      color: color,
-      fontWeight: fontWeight,
-      fontFamily: "Poppins",
-      fontStyle: fontStyle
-    );
+        fontSize: fontSize,
+        color: color,
+        fontWeight: fontWeight,
+        fontFamily: "Poppins",
+        fontStyle: fontStyle);
   }
 
   static getUser() async {
@@ -45,16 +43,14 @@ class App{
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       final GoogleSignIn googleSignIn = GoogleSignIn();
-    
+
       await prefs.remove('accessToken');
       await prefs.remove('user');
-      
+
       await FacebookAuth.instance.logOut();
       await googleSignIn.signOut();
-    
     } catch (e) {
       print('getUser error $e');
     }
   }
-
 }

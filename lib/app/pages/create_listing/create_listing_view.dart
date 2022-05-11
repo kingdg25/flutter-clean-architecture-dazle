@@ -8,6 +8,7 @@ import 'package:dazle/app/widgets/form_fields/custom_icon_button.dart';
 import 'package:dazle/app/widgets/form_fields/custom_radio_group_button.dart';
 import 'package:dazle/app/widgets/form_fields/custom_text_field.dart';
 import 'package:dazle/app/widgets/form_fields/custom_upload_field.dart';
+import 'package:dazle/app/widgets/form_fields/custom_dropdown.dart';
 import 'package:dazle/data/repositories/data_listing_repository.dart';
 import 'package:dazle/domain/entities/property.dart';
 import 'package:flutter/material.dart';
@@ -115,12 +116,15 @@ class _CreateListingPageState
                 AppConstant.customTitleField(
                     padding: EdgeInsets.only(left: 18), title: 'Property Type'),
                 CustomRadioGroupButton(
+                  autowidth: true,
                   radioWidth: 120,
                   buttonLables: [
                     "Apartment",
+                    "Condo",
                     "Villa",
                     "Townhouse",
-                    "Commercial",
+                    "Commercial Lot",
+                    "Commercial Building",
                     "Warehouse",
                     "Lot",
                     "Farm Lot",
@@ -129,9 +133,11 @@ class _CreateListingPageState
                   ],
                   buttonValues: [
                     "Apartment",
+                    "Condo",
                     "Villa",
                     "Townhouse",
-                    "Commercial",
+                    "Commercial Lot",
+                    "Commercial Building",
                     "Warehouse",
                     "Lot",
                     "Farm Lot",
@@ -140,6 +146,7 @@ class _CreateListingPageState
                   ],
                   radioButtonValue: (value) {
                     controller.propertyType = value;
+                    setState(() {});
                   },
                   defaultSelected: controller.propertyType,
                 ),
@@ -163,12 +170,10 @@ class _CreateListingPageState
                     defaultSelected: controller.propertyFor,
                   ),
                 ),
-                controller.propertyFor == 'Rent' ||
-                        controller.propertyFor == null
+                controller.propertyFor == 'Rent'
                     ? AppConstant.customTitleField(title: 'Time Period')
                     : Container(),
-                controller.propertyFor == 'Rent' ||
-                        controller.propertyFor == null
+                controller.propertyFor == 'Rent'
                     ? CustomRadioGroupButton(
                         radioPadding: 15,
                         buttonLables: ["Yearly", "Monthly"],
@@ -180,7 +185,34 @@ class _CreateListingPageState
                             ? null
                             : controller.timePeriod)
                     : Container(),
-                AppConstant.customTitleField(title: 'Price'),
+                controller.propertyType == "Commercial" ||
+                        controller.propertyType == "Commercial Lot" ||
+                        controller.propertyType == "Commercial Building"
+                    ? AppConstant.customTitleField(title: 'Pricing')
+                    : Container(),
+                controller.propertyType == "Commercial" ||
+                        controller.propertyType == "Commercial Lot" ||
+                        controller.propertyType == "Commercial Building"
+                    ? Container(
+                        alignment: Alignment.centerLeft,
+                        child: CustomRadioGroupButton(
+                          radioPadding: 15,
+                          buttonLables: ["Total Price", "Per sqm"],
+                          buttonValues: ["Total Price", "Per sqm"],
+                          radioButtonValue: (value) {
+                            controller.pricing = value;
+                            setState(() {});
+                          },
+                          defaultSelected: controller.pricing == ''
+                              ? null
+                              : controller.pricing,
+                        ),
+                      )
+                    : Container(),
+                AppConstant.customTitleField(
+                    title: controller.pricing == 'Per sqm'
+                        ? 'Price per sqm'
+                        : 'Price'),
                 Container(
                   padding: EdgeInsets.symmetric(horizontal: 20),
                   child: CustomTextField(
@@ -211,66 +243,55 @@ class _CreateListingPageState
             ListView(
               padding: EdgeInsets.only(bottom: 20),
               children: [
-                AppConstant.customTitleField(
-                    padding: EdgeInsets.only(left: 18),
-                    title: 'Number of Bedrooms'),
-                CustomRadioGroupButton(
-                  radioWidth: 70,
-                  buttonLables: [
-                    "Any",
-                    "Studio",
-                    "1BR",
-                    "2BR",
-                    "3BR",
-                    "4BR",
-                    "5BR",
-                  ],
-                  buttonValues: [
-                    "Any",
-                    "Studio",
-                    "1BR",
-                    "2BR",
-                    "3BR",
-                    "4BR",
-                    "5BR",
-                  ],
-                  radioButtonValue: (value) {
-                    controller.numberOfBedRooms = value;
-                  },
-                  defaultSelected: controller.numberOfBedRooms,
-                ),
-                AppConstant.customTitleField(title: 'Number of Bathrooms'),
-                CustomRadioGroupButton(
-                  radioWidth: 55,
-                  buttonLables: [
-                    "1",
-                    "2",
-                    "3",
-                    "4",
-                    "5",
-                    "6",
-                    "7",
-                    "8",
-                    "9",
-                    "10"
-                  ],
-                  buttonValues: [
-                    "1",
-                    "2",
-                    "3",
-                    "4",
-                    "5",
-                    "6",
-                    "7",
-                    "8",
-                    "9",
-                    "10"
-                  ],
-                  radioButtonValue: (value) {
-                    controller.numberOfBathRooms = value;
-                  },
-                  defaultSelected: controller.numberOfBathRooms,
-                ),
+                controller.propertyType == 'Lot' ||
+                        controller.propertyType == 'Farm Lot' ||
+                        controller.propertyType == 'Commercial Building' ||
+                        controller.propertyType == 'Warehouse' ||
+                        controller.propertyType == 'Commercial Lot'
+                    ? Container()
+                    : AppConstant.customTitleField(
+                        padding: EdgeInsets.only(left: 18),
+                        title: 'Number of Bedrooms'),
+                controller.propertyType == 'Lot' ||
+                        controller.propertyType == 'Farm Lot' ||
+                        controller.propertyType == 'Warehouse' ||
+                        controller.propertyType == 'Commercial Building' ||
+                        controller.propertyType == 'Commercial Lot'
+                    ? Container()
+                    : Container(
+                        padding: EdgeInsets.symmetric(horizontal: 20),
+                        child: CustomTextField(
+                          controller: controller.numOfBedroomController,
+                          keyboardType: const TextInputType.numberWithOptions(),
+                          hintText: 'Number of Bedrooms',
+                          inputFormatters: [
+                            ThousandsFormatter(allowFraction: false)
+                          ],
+                        ),
+                      ),
+                controller.propertyType == 'Lot' ||
+                        controller.propertyType == 'Farm Lot' ||
+                        controller.propertyType == 'Commercial Building' ||
+                        controller.propertyType == 'Commercial Lot'
+                    ? Container()
+                    : AppConstant.customTitleField(
+                        title: 'Number of Bathrooms'),
+                controller.propertyType == 'Lot' ||
+                        controller.propertyType == 'Farm Lot' ||
+                        controller.propertyType == 'Commercial Building' ||
+                        controller.propertyType == 'Commercial Lot'
+                    ? Container()
+                    : Container(
+                        padding: EdgeInsets.symmetric(horizontal: 20),
+                        child: CustomTextField(
+                          controller: controller.numOfBathroomsController,
+                          keyboardType: const TextInputType.numberWithOptions(),
+                          hintText: 'Number of Bathrooms',
+                          inputFormatters: [
+                            ThousandsFormatter(allowFraction: true)
+                          ],
+                        ),
+                      ),
                 AppConstant.customTitleField(title: 'Number of Parking'),
                 CustomRadioGroupButton(
                   radioWidth: 55,
@@ -303,34 +324,99 @@ class _CreateListingPageState
                   },
                   defaultSelected: controller.numberOfParking,
                 ),
-                AppConstant.customTitleField(title: 'Area'),
+                AppConstant.customTitleField(title: 'Total Area'),
                 Container(
                   padding: EdgeInsets.symmetric(horizontal: 20),
                   child: CustomTextField(
                     controller: controller.areaTextController,
                     keyboardType:
                         const TextInputType.numberWithOptions(decimal: true),
-                    hintText: 'Area (sqft)',
+                    hintText: 'Area (sqm)',
                     inputFormatters: [ThousandsFormatter(allowFraction: true)],
                   ),
                 ),
+                controller.propertyType == 'Apartment' ||
+                        controller.propertyType == 'Commercial Building' ||
+                        controller.propertyType == 'Residential House' ||
+                        controller.propertyType == 'Condo'
+                    ? AppConstant.customTitleField(title: 'Floor Area')
+                    : Container(),
+                controller.propertyType == 'Apartment' ||
+                        controller.propertyType == 'Commercial Building' ||
+                        controller.propertyType == 'Residential House' ||
+                        controller.propertyType == 'Condo'
+                    ? Container(
+                        padding: EdgeInsets.symmetric(horizontal: 20),
+                        child: CustomTextField(
+                          controller: controller.floorAreaTextController,
+                          keyboardType: const TextInputType.numberWithOptions(
+                              decimal: true),
+                          hintText: 'Floor Area (sqm)',
+                          inputFormatters: [
+                            ThousandsFormatter(allowFraction: true)
+                          ],
+                        ),
+                      )
+                    : Container(),
+                AppConstant.customTitleField(title: 'Frontage Area'),
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 20),
+                  child: CustomTextField(
+                    controller: controller.frontageTextController,
+                    keyboardType:
+                        const TextInputType.numberWithOptions(decimal: true),
+                    hintText: 'Frontage Area (sqm)',
+                    inputFormatters: [ThousandsFormatter(allowFraction: true)],
+                  ),
+                ),
+                controller.propertyType == 'Lot' ||
+                        controller.propertyType == 'Farm Lot' ||
+                        controller.propertyType == 'Commercial Lot'
+                    ? Container()
+                    : AppConstant.customTitleField(
+                        padding: EdgeInsets.only(left: 18),
+                        title: 'Is your Property'),
+                controller.propertyType == 'Lot' ||
+                        controller.propertyType == 'Farm Lot' ||
+                        controller.propertyType == 'Commercial Lot'
+                    ? Container()
+                    : CustomRadioGroupButton(
+                        autowidth: true,
+                        radioWidth: 120,
+                        buttonLables: [
+                          "Furnished",
+                          "Unfurnished",
+                          "Partly Furnished"
+                        ],
+                        buttonValues: [
+                          "Furnished",
+                          "Unfurnished",
+                          "Partly Furnished"
+                        ],
+                        radioButtonValue: (value) {
+                          controller.isYourProperty = value;
+                        },
+                        defaultSelected: controller.isYourProperty,
+                      ),
                 AppConstant.customTitleField(
-                    padding: EdgeInsets.only(left: 18),
-                    title: 'Is your Property'),
+                    padding: EdgeInsets.only(left: 18), title: 'Ownership'),
                 CustomRadioGroupButton(
+                  autowidth: true,
                   radioWidth: 120,
-                  buttonLables: [
-                    "Furnished",
-                    "Unfurnished",
-                  ],
-                  buttonValues: [
-                    "Furnished",
-                    "Unfurnished",
-                  ],
+                  buttonLables: ["Freehold", "Leasehold"],
+                  buttonValues: ["Freehold", "Leasehold"],
                   radioButtonValue: (value) {
-                    controller.isYourProperty = value;
+                    controller.ownwership = value;
                   },
-                  defaultSelected: controller.isYourProperty,
+                  defaultSelected: controller.ownwership,
+                ),
+                AppConstant.customTitleField(title: 'Title'),
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 20),
+                  child: CustomTextField(
+                    controller: controller.titleTextController,
+                    hintText: 'Listing Title',
+                  ),
                 ),
                 AppConstant.customTitleField(title: 'Description'),
                 Container(
@@ -482,30 +568,137 @@ class _CreateListingPageState
                       )
                     : Container(),
                 SizedBox(height: 12.0),
-                AppConstant.customTitleField(title: 'Street Address'),
+                AppConstant.customTitleField(title: 'Province'),
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 20),
+                  child: CustomDropdownField(
+                    items: controller.provinces,
+                    hintText: 'Select Province',
+                    value: controller.selectedProvinceCode,
+                    onChangeEvent: (String? value) async {
+                      setState(() {
+                        controller.selectedProvinceCode = value;
+                        controller.cities = [];
+                        controller.selectedCityCode = null;
+                        controller.barangays = [];
+                        controller.selectedBarangayCode = null;
+                        print('City lenght: ${controller.cities.length}');
+                      });
+                      if (controller.cities.length == 0) {
+                        await controller
+                            .getCities(controller.selectedProvinceCode);
+                        print('City lenght: ${controller.cities.length}');
+                      }
+                    },
+                  ),
+                ),
+                AppConstant.customTitleField(title: 'City/Municipality'),
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 20),
+                  child: CustomDropdownField(
+                    items: controller.cities,
+                    hintText: 'Select City/Municipality',
+                    value: controller.selectedCityCode,
+                    onChangeEvent: controller.cities.length == 0
+                        ? null
+                        : (String? value) async {
+                            setState(() {
+                              controller.selectedCityCode = value;
+                              controller.barangays = [];
+                              controller.selectedBarangayCode = null;
+                            });
+
+                            if (controller.barangays.length == 0) {
+                              await controller
+                                  .getBarangays(controller.selectedCityCode);
+                              print(
+                                  'Barangay lenght: ${controller.barangays.length}');
+                            }
+                          },
+                  ),
+                ),
+                AppConstant.customTitleField(title: 'Barangay'),
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 20),
+                  child: CustomDropdownField(
+                    items: controller.barangays,
+                    hintText: 'Select Barangay',
+                    value: controller.selectedBarangayCode,
+                    onChangeEvent: controller.barangays.length == 0
+                        ? null
+                        : (String? value) {
+                            setState(() {
+                              controller.selectedBarangayCode = value;
+                            });
+                          },
+                  ),
+                ),
+                AppConstant.customTitleField(title: 'Subdivision'),
                 Container(
                   padding: EdgeInsets.symmetric(horizontal: 20),
                   child: CustomTextField(
-                    controller: controller.streetTextController,
-                    hintText: 'Street Address',
+                    controller: controller.subdivisionTextController,
+                    hintText: 'Subdivision',
                   ),
                 ),
-                AppConstant.customTitleField(title: 'Landmark'),
+                AppConstant.customTitleField(title: 'Street Name'),
                 Container(
                   padding: EdgeInsets.symmetric(horizontal: 20),
                   child: CustomTextField(
-                    controller: controller.landmarkTextController,
-                    hintText: 'Landmark',
+                    controller: controller.streetNameTextController,
+                    hintText: 'Street Name',
                   ),
                 ),
-                AppConstant.customTitleField(title: 'City'),
+                AppConstant.customTitleField(
+                    title: 'Lot/Block/Phase/House Number'),
                 Container(
                   padding: EdgeInsets.symmetric(horizontal: 20),
                   child: CustomTextField(
-                    controller: controller.cityTextController,
-                    hintText: 'City',
+                    controller: controller.houseNumberTextController,
+                    hintText: 'Lot/Block/Phase/House Number',
                   ),
                 ),
+                AppConstant.customTitleField(title: 'Building Name'),
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 20),
+                  child: CustomTextField(
+                    controller: controller.buildingNameTextController,
+                    hintText: 'Building Name',
+                  ),
+                ),
+                AppConstant.customTitleField(title: 'Unit/Room No./Floor'),
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 20),
+                  child: CustomTextField(
+                    controller: controller.floorTextController,
+                    hintText: 'Unit/Room No./Floor',
+                  ),
+                ),
+
+                // AppConstant.customTitleField(title: 'Street Address'),
+                // Container(
+                //   padding: EdgeInsets.symmetric(horizontal: 20),
+                //   child: CustomTextField(
+                //     controller: controller.streetTextController,
+                //     hintText: 'Street Address',
+                //   ),
+                // ),
+                // AppConstant.customTitleField(title: 'Landmark'),
+                // Container(
+                //   padding: EdgeInsets.symmetric(horizontal: 20),
+                //   child: CustomTextField(
+                //     controller: controller.landmarkTextController,
+                //     hintText: 'Landmark',
+                //   ),
+                // ),
+                // AppConstant.customTitleField(title: 'City'),
+                // Container(
+                //   padding: EdgeInsets.symmetric(horizontal: 20),
+                //   child: CustomTextField(
+                //     controller: controller.cityTextController,
+                //     hintText: 'City',
+                //   ),
+                // ),
                 SizedBox(height: 20.0),
                 Container(
                   padding: EdgeInsets.symmetric(horizontal: 20),

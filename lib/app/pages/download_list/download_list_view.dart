@@ -147,8 +147,24 @@ class _DownloadListPageState
                 height: 10,
               ),
               CustomRichText(
+                mainText: 'Property Type: ',
+                valueText: widget.property.propertyType,
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              CustomRichText(
+                mainText: 'Property for: ',
+                valueText: widget.property.propertyFor,
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              CustomRichText(
                 mainText: 'Price: ',
-                valueText: widget.property.formatPrice,
+                valueText: widget.property.pricing == 'Per sqm'
+                    ? '${widget.property.formatPrice} PHP/sqm - ${widget.property.timePeriod}ly'
+                    : '${widget.property.formatPrice} PHP',
               ),
               SizedBox(
                 height: 10,
@@ -157,26 +173,34 @@ class _DownloadListPageState
                 mainText: 'Lot area(sqm): ',
                 valueText: widget.property.formatArea,
               ),
+              widget.property.frontageArea == 0
+                  ? Container()
+                  : SizedBox(
+                      height: 10,
+                    ),
+              widget.property.frontageArea == 0
+                  ? Container()
+                  : CustomRichText(
+                      mainText: 'Frontage Area(sqm): ',
+                      valueText: '${widget.property.formatFrontageArea}',
+                    ),
+              widget.property.floorArea == 0
+                  ? Container()
+                  : SizedBox(
+                      height: 10,
+                    ),
+              widget.property.floorArea == 0
+                  ? Container()
+                  : CustomRichText(
+                      mainText: 'Floor are(sqm): ',
+                      valueText: '${widget.property.formatFloorArea}',
+                    ),
               SizedBox(
                 height: 10,
               ),
               CustomRichText(
-                mainText: 'Frontage: ',
-                valueText: '',
-                // *To be added on the Property object
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              CustomRichText(
-                mainText: 'Property Type: ',
-                valueText: widget.property.propertyType,
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              CustomRichText(
-                  mainText: 'Location: ', valueText: '${widget.property.city}'),
+                  mainText: 'Location: ',
+                  valueText: '${widget.property.completeAddress}'),
               SizedBox(
                 height: 10,
               ),
@@ -184,27 +208,45 @@ class _DownloadListPageState
                 mainText: 'Property Description: ',
                 valueText: widget.property.description,
               ),
-              SizedBox(
-                height: 10,
-              ),
-              CustomRichText(
-                mainText: 'Property: ',
-                valueText: widget.property.isYourProperty,
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              CustomRichText(
-                mainText: 'No. of bedrooms: ',
-                valueText: widget.property.totalBedRoom,
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              CustomRichText(
-                mainText: 'No. of bathrooms: ',
-                valueText: widget.property.totalBathRoom,
-              ),
+              widget.property.isYourProperty == null ||
+                      widget.property.isYourProperty == ''
+                  ? Container()
+                  : SizedBox(
+                      height: 10,
+                    ),
+              widget.property.isYourProperty == null ||
+                      widget.property.isYourProperty == ''
+                  ? Container()
+                  : CustomRichText(
+                      mainText: 'Property: ',
+                      valueText: widget.property.isYourProperty,
+                    ),
+              widget.property.propertyType!.contains('Lot') ||
+                      widget.property.propertyType!.contains('Building')
+                  ? Container()
+                  : SizedBox(
+                      height: 10,
+                    ),
+              widget.property.propertyType!.contains('Lot') ||
+                      widget.property.propertyType!.contains('Building')
+                  ? Container()
+                  : CustomRichText(
+                      mainText: 'No. of bedrooms: ',
+                      valueText: '${widget.property.totalBedRoom}',
+                    ),
+              widget.property.propertyType!.contains('Lot') ||
+                      widget.property.propertyType!.contains('Building')
+                  ? Container()
+                  : SizedBox(
+                      height: 10,
+                    ),
+              widget.property.propertyType!.contains('Lot') ||
+                      widget.property.propertyType!.contains('Building')
+                  ? Container()
+                  : CustomRichText(
+                      mainText: 'No. of bathrooms: ',
+                      valueText: '${widget.property.totalBathRoom}',
+                    ),
               SizedBox(
                 height: 10,
               ),

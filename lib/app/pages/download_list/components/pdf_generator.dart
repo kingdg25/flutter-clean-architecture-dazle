@@ -60,19 +60,13 @@ class PdfGenerator {
                 //*======== PDF Title [start]
                 pw.Center(
                     child: PdfWidgets().pdfCustomText(
-                        text: property.propertyFor == 'Sell'
-                            ? '${property.propertyType} for Sale at ${property.street}, ${property.city}'
-                            : '${property.propertyType} for ${property.propertyFor} at ${property.street}, ${property.city} ',
+                        text: property.title == null
+                            ? '(No Listing Title)'
+                            : property.title!,
                         fontSize: 27,
                         fontWeight: pw.FontWeight.bold,
                         textAlign: pw.TextAlign.center)),
                 pw.SizedBox(height: 30),
-                //*======== PDF Title [end]
-                // TODO: Move image below the pdf page
-                // pw.Image(
-                //   pw.MemoryImage(image),
-                //   height: 50,
-                // ),
                 pw.Row(
                   crossAxisAlignment: pw.CrossAxisAlignment.start,
                   children: [
@@ -86,20 +80,6 @@ class PdfGenerator {
                             height: 10,
                           ),
                           PdfWidgets().pdfCustomRichText(
-                            mainText: 'Lot area (sqm): ',
-                            valueText: property.formatArea,
-                          ),
-                          pw.SizedBox(
-                            height: 10,
-                          ),
-                          PdfWidgets().pdfCustomRichText(
-                            mainText: 'Frontage: ',
-                            valueText: '',
-                          ),
-                          pw.SizedBox(
-                            height: 10,
-                          ),
-                          PdfWidgets().pdfCustomRichText(
                             mainText: 'Property Type: ',
                             valueText: property.propertyType,
                           ),
@@ -107,8 +87,44 @@ class PdfGenerator {
                             height: 10,
                           ),
                           PdfWidgets().pdfCustomRichText(
+                            mainText: 'Property for: ',
+                            valueText: property.propertyFor,
+                          ),
+                          pw.SizedBox(
+                            height: 10,
+                          ),
+                          PdfWidgets().pdfCustomRichText(
+                            mainText: 'Lot area (sqm): ',
+                            valueText: property.formatArea,
+                          ),
+                          property.floorArea == 0
+                              ? pw.Container()
+                              : pw.SizedBox(
+                                  height: 10,
+                                ),
+                          property.floorArea == 0
+                              ? pw.Container()
+                              : PdfWidgets().pdfCustomRichText(
+                                  mainText: 'Floor area: ',
+                                  valueText: '${property.floorArea}',
+                                ),
+                          property.frontageArea == 0
+                              ? pw.Container()
+                              : pw.SizedBox(
+                                  height: 10,
+                                ),
+                          property.frontageArea == 0
+                              ? pw.Container()
+                              : PdfWidgets().pdfCustomRichText(
+                                  mainText: 'Frontage area: ',
+                                  valueText: '${property.frontageArea}',
+                                ),
+                          pw.SizedBox(
+                            height: 10,
+                          ),
+                          PdfWidgets().pdfCustomRichText(
                             mainText: 'Location: ',
-                            valueText: '${property.city}',
+                            valueText: '${property.completeAddress}',
                           ),
                           pw.SizedBox(
                             height: 10,
@@ -117,27 +133,45 @@ class PdfGenerator {
                             mainText: 'Property Description: ',
                             valueText: property.description,
                           ),
-                          pw.SizedBox(
-                            height: 10,
-                          ),
-                          PdfWidgets().pdfCustomRichText(
-                            mainText: 'Property: ',
-                            valueText: property.isYourProperty,
-                          ),
-                          pw.SizedBox(
-                            height: 10,
-                          ),
-                          PdfWidgets().pdfCustomRichText(
-                            mainText: 'No. of bedrooms: ',
-                            valueText: property.totalBedRoom,
-                          ),
-                          pw.SizedBox(
-                            height: 10,
-                          ),
-                          PdfWidgets().pdfCustomRichText(
-                            mainText: 'No. of bathrooms: ',
-                            valueText: property.totalBathRoom,
-                          ),
+                          property.isYourProperty == null ||
+                                  property.isYourProperty == ''
+                              ? pw.Container()
+                              : pw.SizedBox(
+                                  height: 10,
+                                ),
+                          property.isYourProperty == null ||
+                                  property.isYourProperty == ''
+                              ? pw.Container()
+                              : PdfWidgets().pdfCustomRichText(
+                                  mainText: 'Property: ',
+                                  valueText: property.isYourProperty,
+                                ),
+                          property.propertyType!.contains('Lot') ||
+                                  property.propertyType!.contains('Building')
+                              ? pw.Container()
+                              : pw.SizedBox(
+                                  height: 10,
+                                ),
+                          property.propertyType!.contains('Lot') ||
+                                  property.propertyType!.contains('Building')
+                              ? pw.Container()
+                              : PdfWidgets().pdfCustomRichText(
+                                  mainText: 'No. of bedrooms: ',
+                                  valueText: '${property.totalBedRoom}',
+                                ),
+                          property.propertyType!.contains('Lot') ||
+                                  property.propertyType!.contains('Building')
+                              ? pw.Container()
+                              : pw.SizedBox(
+                                  height: 10,
+                                ),
+                          property.propertyType!.contains('Lot') ||
+                                  property.propertyType!.contains('Building')
+                              ? pw.Container()
+                              : PdfWidgets().pdfCustomRichText(
+                                  mainText: 'No. of bathrooms: ',
+                                  valueText: '${property.totalBathRoom}',
+                                ),
                           pw.SizedBox(
                             height: 10,
                           ),
