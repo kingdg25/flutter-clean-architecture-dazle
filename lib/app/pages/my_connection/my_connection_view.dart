@@ -38,11 +38,11 @@ class _MyConnectionPageState
                 children: [
                   controller.isLoading
                       ? Padding(
-                          padding: const EdgeInsets.only(left: 10),
+                          padding: const EdgeInsets.only(left: 2),
                           child: CustomLoadingFormat(
                             margin: EdgeInsets.only(left: 20),
                             height: 17,
-                            width: 85,
+                            width: 104,
                             radius: 16,
                           ),
                         )

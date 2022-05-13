@@ -8,13 +8,15 @@ class CustomLoadingFormat extends StatelessWidget {
   final EdgeInsetsGeometry? padding;
   final EdgeInsetsGeometry? margin;
   final double? radius;
+  final bool? isBoxShape;
   const CustomLoadingFormat({
     Key? key,
     this.height,
     this.width,
     this.padding,
     this.margin,
-    this.radius,
+    this.radius = 20,
+    this.isBoxShape,
   }) : super(key: key);
 
   @override
@@ -29,7 +31,7 @@ class CustomLoadingFormat extends StatelessWidget {
         width: width,
         height: height,
         decoration: BoxDecoration(
-          color: App.mainColor.withOpacity(0.3),
+          color: App.mainColor.withOpacity(0.2),
           borderRadius: BorderRadius.all(
             Radius.circular(radius!),
           ),
