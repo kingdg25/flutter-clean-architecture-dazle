@@ -4,6 +4,7 @@ import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import '../../../utils/app.dart';
 import '../../../widgets/custom_text.dart';
 import '../../../widgets/form_fields/custom_button.dart';
+import '../../../widgets/loading/custom_shimmer_list_tile.dart';
 import '../invites_controller.dart';
 
 class InvitesListTile extends StatelessWidget {
@@ -23,20 +24,7 @@ class InvitesListTile extends StatelessWidget {
       );
     }
     if (controller.isLoading == true) {
-      return Center(
-        heightFactor: 5,
-        child: Container(
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              CircularProgressIndicator(
-                valueColor: AlwaysStoppedAnimation(App.mainColor),
-              ),
-              CustomText(text: "Loading"),
-            ],
-          ),
-        ),
-      );
+      return CustomShimmerListTile(isMyConnection: false);
     }
 // #=============================================================
     return ListView.builder(
@@ -46,12 +34,6 @@ class InvitesListTile extends StatelessWidget {
       itemCount: controller.invites.length,
       itemBuilder: (BuildContext context, int index) {
         return Container(
-          decoration: BoxDecoration(
-              border: Border(
-                  bottom: BorderSide(
-            color: App.hintColor,
-            width: 0.3,
-          ))),
           child: ListTile(
             contentPadding:
                 EdgeInsets.symmetric(horizontal: 20.0, vertical: 8.0),

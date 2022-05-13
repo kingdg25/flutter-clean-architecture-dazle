@@ -5,6 +5,8 @@ import 'package:dazle/app/widgets/form_fields/custom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 
+import '../../../widgets/loading/custom_shimmer_list_tile.dart';
+
 class MyConnectionListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -21,20 +23,7 @@ class MyConnectionListTile extends StatelessWidget {
       );
     }
     if (controller.isLoading == true) {
-      return Center(
-        heightFactor: 5,
-        child: Container(
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              CircularProgressIndicator(
-                valueColor: AlwaysStoppedAnimation(App.mainColor),
-              ),
-              CustomText(text: "Loading"),
-            ],
-          ),
-        ),
-      );
+      return CustomShimmerListTile();
     }
 // #=============================================================
     return ListView.builder(

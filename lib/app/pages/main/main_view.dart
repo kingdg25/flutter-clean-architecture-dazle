@@ -1,3 +1,4 @@
+import 'package:dazle/app/pages/connection/connection_view.dart';
 import 'package:dazle/app/pages/home/home_view.dart';
 import 'package:dazle/app/pages/listing/listing_view.dart';
 import 'package:dazle/app/pages/profile/profile_view.dart';
@@ -18,16 +19,16 @@ class MainPage extends StatefulWidget {
         }
       ]
     },
-    // {
-    //   "ConnectionPage": HomePage(),
-    //   "items": [
-    //     {
-    //       "icon": 'assets/icons/tab_bar/clear_connection.png',
-    //       "label": "Connection",
-    //       "asset": "assets/icons/tab_bar/connection.png"
-    //     }
-    //   ]
-    // },
+    {
+      "ConnectionPage": ConnectionPage(),
+      "items": [
+        {
+          "icon": 'assets/icons/tab_bar/clear_connection.png',
+          "label": "Connection",
+          "asset": "assets/icons/tab_bar/connection.png"
+        }
+      ]
+    },
     {
       "ListingPage": ListingPage(),
       "items": [
