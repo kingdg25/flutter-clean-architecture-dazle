@@ -43,6 +43,8 @@ dependencies:
   flutter_google_places: ^0.3.0
   flutter_switch: ^0.3.2
   shimmer: ^2.0.0
+  grouped_list: ^4.2.0
+  file_picker: ^4.5.1
 
 
 dev_dependencies:

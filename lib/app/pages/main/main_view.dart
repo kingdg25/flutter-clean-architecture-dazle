@@ -4,6 +4,8 @@ import 'package:dazle/app/pages/listing/listing_view.dart';
 import 'package:dazle/app/pages/profile/profile_view.dart';
 import 'package:flutter/material.dart';
 
+import '../message/message_view.dart';
+
 class MainPage extends StatefulWidget {
   static const String id = 'main_page';
 
@@ -39,16 +41,16 @@ class MainPage extends StatefulWidget {
         }
       ]
     },
-    // {
-    //   "MessagePage": MessagePage(),
-    //   "items": [
-    //     {
-    //       "icon": 'assets/icons/tab_bar/clear_message.png',
-    //       "label": "Message",
-    //       "asset": "assets/icons/tab_bar/message.png"
-    //     }
-    //   ]
-    // },
+     {
+       "MessagePage": MessagePage(),
+       "items": [
+         {
+           "icon": 'assets/icons/tab_bar/clear_message.png',
+           "label": "Message",
+           "asset": "assets/icons/tab_bar/message.png"
+         }
+       ]
+     },
     {
       "ProfilePage": ProfilePage(),
       "items": [
