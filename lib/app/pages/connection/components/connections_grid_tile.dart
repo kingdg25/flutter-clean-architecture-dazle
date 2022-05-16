@@ -125,7 +125,7 @@ class ConnectionsGridTile extends StatelessWidget {
                                       backgroundColor: App.mainColor,
                                       radius: 35,
                                       backgroundImage: AssetImage(
-                                        'assets/icons/user.png',
+                                        'assets/user_profile.png',
                                       ),
                                     );
                                   },
