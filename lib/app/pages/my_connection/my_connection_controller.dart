@@ -3,6 +3,7 @@ import 'package:dazle/app/utils/app_constant.dart';
 import 'package:dazle/domain/entities/my_connection_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
+import 'package:flutter_overlay_loader/flutter_overlay_loader.dart';
 
 class MyConnectionController extends Controller {
   final MyConnectionPresenter myConnectionPresenter;
@@ -33,6 +34,7 @@ class MyConnectionController extends Controller {
 
     myConnectionPresenter.readMyConnectionOnNext =
         (List<MyConnectionTile> res) {
+      AppConstant.showLoader(getContext(), false);
       print('read my connection on next $res');
       _myConnection = res;
       isLoading = false;
@@ -54,6 +56,7 @@ class MyConnectionController extends Controller {
 
     // remove my connection
     myConnectionPresenter.removeConnectionOnNext = (res) {
+      AppConstant.showLoader(getContext(), false);
       print('remove my connection on next $res');
     };
 
@@ -101,6 +104,7 @@ class MyConnectionController extends Controller {
   }
 
   void removeConnection(MyConnectionTile res) {
+    AppConstant.showLoader(getContext(), true);
     myConnectionPresenter.removeConnection(invitedId: res.id);
   }
 
@@ -126,6 +130,7 @@ class MyConnectionController extends Controller {
 
   @override
   void onDisposed() {
+    Loader.hide();
     myConnectionPresenter.dispose(); // don't forget to dispose of the presenter
     searchTextController.dispose();
     super.onDisposed();
