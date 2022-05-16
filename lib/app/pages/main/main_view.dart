@@ -21,16 +21,16 @@ class MainPage extends StatefulWidget {
         }
       ]
     },
-    {
-      "ConnectionPage": ConnectionPage(),
-      "items": [
-        {
-          "icon": 'assets/icons/tab_bar/clear_connection.png',
-          "label": "Connection",
-          "asset": "assets/icons/tab_bar/connection.png"
-        }
-      ]
-    },
+    // {
+    //   "ConnectionPage": ConnectionPage(),
+    //   "items": [
+    //     {
+    //       "icon": 'assets/icons/tab_bar/clear_connection.png',
+    //       "label": "Connection",
+    //       "asset": "assets/icons/tab_bar/connection.png"
+    //     }
+    //   ]
+    // },
     {
       "ListingPage": ListingPage(),
       "items": [
@@ -41,16 +41,16 @@ class MainPage extends StatefulWidget {
         }
       ]
     },
-     {
-       "MessagePage": MessagePage(),
-       "items": [
-         {
-           "icon": 'assets/icons/tab_bar/clear_message.png',
-           "label": "Message",
-           "asset": "assets/icons/tab_bar/message.png"
-         }
-       ]
-     },
+     // {
+     //   "MessagePage": MessagePage(),
+     //   "items": [
+     //     {
+     //       "icon": 'assets/icons/tab_bar/clear_message.png',
+     //       "label": "Message",
+     //       "asset": "assets/icons/tab_bar/message.png"
+     //     }
+     //   ]
+     // },
     {
       "ProfilePage": ProfilePage(),
       "items": [
