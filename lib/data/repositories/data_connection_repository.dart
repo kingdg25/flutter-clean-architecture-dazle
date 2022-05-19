@@ -333,13 +333,20 @@ class DataConnectionRepository extends ConnectionRepository {
       jsonResponse['listings'].forEach((val) {
         final price = val['price'];
         final area = val['total_area'];
+        final floorArea = val['floor_area'];
+        final frontageArea = val['frontage_area'];
         String priceVar = '$price';
         String areaVar = '$area';
+        String floorAreaVar = '$floorArea';
+        String frontageAreaVar = '$frontageArea';
         double parsedPrice = double.parse(priceVar);
         double parsedArea = double.parse(areaVar);
+        double parsedFloorArea = double.parse(floorAreaVar);
+        double parsedFrontageArea = double.parse(frontageAreaVar);
         val['price'] = parsedPrice;
         val['total_area'] = parsedArea;
-
+        val['floor_area'] = parsedFloorArea;
+        val['frontage_area'] = parsedFrontageArea;
         listings.add(Property.fromJson(val));
       });
     } else {

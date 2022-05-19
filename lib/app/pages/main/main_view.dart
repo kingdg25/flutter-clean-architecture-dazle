@@ -1,7 +1,10 @@
+import 'package:dazle/app/pages/connection/connection_view.dart';
 import 'package:dazle/app/pages/home/home_view.dart';
 import 'package:dazle/app/pages/listing/listing_view.dart';
 import 'package:dazle/app/pages/profile/profile_view.dart';
 import 'package:flutter/material.dart';
+
+import '../message/message_view.dart';
 
 class MainPage extends StatefulWidget {
   static const String id = 'main_page';
@@ -38,22 +41,22 @@ class MainPage extends StatefulWidget {
         }
       ]
     },
-    // {
-    //   "MessagePage": MessagePage(),
-    //   "items": [
-    //     {
-    //       "icon": 'assets/icons/tab_bar/clear_message.png',
-    //       "label": "message",
-    //       "asset": "assets/icons/tab_bar/message.png"
-    //     }
-    //   ]
-    // },
+     // {
+     //   "MessagePage": MessagePage(),
+     //   "items": [
+     //     {
+     //       "icon": 'assets/icons/tab_bar/clear_message.png',
+     //       "label": "Message",
+     //       "asset": "assets/icons/tab_bar/message.png"
+     //     }
+     //   ]
+     // },
     {
       "ProfilePage": ProfilePage(),
       "items": [
         {
           "icon": 'assets/icons/tab_bar/clear_profile.png',
-          "label": "profile",
+          "label": "Profile",
           "asset": "assets/icons/tab_bar/profile.png"
         }
       ]
@@ -88,6 +91,10 @@ class _MainPageState extends State<MainPage> {
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         selectedItemColor: Color.fromRGBO(51, 212, 157, 1),
+        unselectedLabelStyle:
+            TextStyle(fontSize: 9, fontWeight: FontWeight.bold, height: 1.5),
+        selectedLabelStyle:
+            TextStyle(fontSize: 9, fontWeight: FontWeight.bold, height: 1.5),
         currentIndex: _currentIndex,
         onTap: (index) {
           setState(() {
@@ -103,8 +110,8 @@ class _MainPageState extends State<MainPage> {
                     activeIcon: CustomPaint(
                         // painter: TrianglePainter(),
                         child: Container(
-                            child: Image.asset(item['asset']!, height: 30))),
-                    icon: Image.asset(item['icon']!, height: 30),
+                            child: Image.asset(item['asset']!, height: 22))),
+                    icon: Image.asset(item['icon']!, height: 22),
                     label: item['label'],
                   ),
                 )

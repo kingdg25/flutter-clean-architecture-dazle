@@ -42,7 +42,7 @@ class AgentProfileController extends Controller {
       _agentListings = listing;
     };
     agentProfilePresenter.getAgentListingOnError = (e) {
-      print("getting agent listing(ERROR=>) ...." + e);
+      print("getting agent listing(ERROR=>) ...." + e.toString());
     };
     agentProfilePresenter.getAgentListingOnComplete = () {
       print("getting agent listing(on complete) ....");

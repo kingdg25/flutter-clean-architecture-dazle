@@ -45,7 +45,7 @@ class _AgentProfilePageState
                 child: SingleChildScrollView(
                     child: ProfileInfo(
                   controller.agent!,
-                  controller.agentListings!,
+                  listings: controller.agentListings,
                 )),
               );
             },
