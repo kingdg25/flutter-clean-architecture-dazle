@@ -37,6 +37,7 @@ class _MyListingPageState
                 onChanged: (value) {
                   print('onChanged onChanged $value');
                   // controller.searchUser();
+                  //
                   if (value == '') {
                     controller.getSearchResultListing(value);
                   }
