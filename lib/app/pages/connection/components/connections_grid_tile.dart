@@ -5,6 +5,7 @@ import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import '../../../utils/app.dart';
 import '../../../widgets/custom_text.dart';
 import '../../../widgets/form_fields/custom_button.dart';
+import '../../../widgets/loading/custom_shimmer_grid_tile.dart';
 import '../../agent_profile/agent_profile_view.dart';
 import '../connection_controller.dart';
 
@@ -29,20 +30,7 @@ class ConnectionsGridTile extends StatelessWidget {
       );
     }
     if (controller.isLoading == true) {
-      return Center(
-        heightFactor: 5,
-        child: Container(
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              CircularProgressIndicator(
-                valueColor: AlwaysStoppedAnimation(App.mainColor),
-              ),
-              CustomText(text: "Loading"),
-            ],
-          ),
-        ),
-      );
+      return CustomShimmerGridTile();
     }
 // #=============================================================
 
@@ -53,10 +41,11 @@ class ConnectionsGridTile extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-              child: CustomText(
-            text: "Real Estate Brokers you may know",
-            fontWeight: FontWeight.w500,
-          )),
+            child: CustomText(
+              text: "Real Estate Brokers you may know",
+              fontWeight: FontWeight.w500,
+            ),
+          ),
           GridView.builder(
             physics: const NeverScrollableScrollPhysics(),
             shrinkWrap: true,
@@ -83,7 +72,6 @@ class ConnectionsGridTile extends StatelessWidget {
                   splashColor: App.mainColor,
                   child: Stack(
                     children: [
-                      //** reserve for the future updates
                       Positioned(
                         right: 0,
                         child: GestureDetector(
@@ -134,6 +122,7 @@ class ConnectionsGridTile extends StatelessWidget {
                                   ),
                                   errorWidget: (context, url, error) {
                                     return CircleAvatar(
+                                      backgroundColor: App.mainColor,
                                       radius: 35,
                                       backgroundImage: AssetImage(
                                         'assets/user_profile.png',

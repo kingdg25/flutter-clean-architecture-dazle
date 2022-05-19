@@ -6,6 +6,7 @@ import 'package:dazle/app/pages/register/register_view.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 
 import 'package:flutter/material.dart';
+import 'app/pages/chat/chat_view.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -40,6 +41,7 @@ class MyApp extends StatelessWidget {
         RegisterPage.id: (context) => RegisterPage(),
         WelcomePage.id: (context) => WelcomePage(),
         MainPage.id: (context) => MainPage(),
+        ChatPage.id: (context) => ChatPage(),
       },
       // locale: DevicePreview.of(context).locale, // <--- /!\ Add the locale
       // builder: DevicePreview.appBuilder, // <--- /!\ Add the builder

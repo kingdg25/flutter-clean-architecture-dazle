@@ -3,6 +3,7 @@ import 'package:dazle/app/utils/app_constant.dart';
 import 'package:dazle/domain/entities/invite_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
+import 'package:flutter_overlay_loader/flutter_overlay_loader.dart';
 
 class InvitesController extends Controller {
   final InvitesPresenter invitesPresenter;
@@ -33,6 +34,7 @@ class InvitesController extends Controller {
     };
 
     invitesPresenter.readInvitesOnComplete = () {
+      AppConstant.showLoader(getContext(), false);
       print('read invites on complete');
       refreshUI();
       isLoading = false;
@@ -51,11 +53,12 @@ class InvitesController extends Controller {
     };
 
     invitesPresenter.addConnectionOnComplete = () {
+      AppConstant.showLoader(getContext(), false);
       print('add connection on complete');
       AppConstant.statusDialog(
         context: getContext(),
         text: "Successfully Invited",
-        title: "",
+        title: "Invites",
       );
       refreshUI();
     };
@@ -88,6 +91,7 @@ class InvitesController extends Controller {
   }
 
   void addConnection(InviteTile res) {
+    AppConstant.showLoader(getContext(), true);
     print(res.displayName);
     invitesPresenter.addConnection(invitedId: res.id);
   }
@@ -121,6 +125,7 @@ class InvitesController extends Controller {
 
   @override
   void onDisposed() {
+    Loader.hide();
     invitesPresenter.dispose(); // don't forget to dispose of the presenter
     searchTextController.dispose();
     super.onDisposed();

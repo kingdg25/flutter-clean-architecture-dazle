@@ -111,7 +111,7 @@ class _ProfilePageState extends ViewState<ProfilePage, ProfileController> {
                 // ),
                 ProfileInfo(
                   user!,
-                  listings!,
+                  listings: listings!,
                 ),
               ],
             ),

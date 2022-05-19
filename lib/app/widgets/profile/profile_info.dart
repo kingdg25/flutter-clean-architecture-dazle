@@ -12,8 +12,8 @@ import '../listing/listing_property_list_tile.dart';
 
 class ProfileInfo extends StatefulWidget {
   final User user;
-  final List<Property> listings;
-  ProfileInfo(this.user, this.listings, {Key? key}) : super(key: key);
+  final List<Property>? listings;
+  ProfileInfo(this.user, {this.listings, Key? key}) : super(key: key);
 
   @override
   State<ProfileInfo> createState() => _ProfileInfoState();
@@ -128,9 +128,12 @@ class _ProfileInfoState extends State<ProfileInfo> {
                       Column(
                         children: [
                           CustomText(
-                            text: widget.listings.isEmpty
+                            text: widget.listings!.isEmpty
                                 ? '0'
-                                : '${widget.listings.length}',
+                                : '${widget.listings!.where((element) {
+                                    if (isCurrentUser) return true;
+                                    return (element.viewType == 'public');
+                                  }).length}',
                             fontSize: 18,
                             fontWeight: FontWeight.w600,
                           ),
