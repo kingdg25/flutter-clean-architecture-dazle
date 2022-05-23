@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 
@@ -6,8 +7,6 @@ import '../../../domain/entities/property.dart';
 import '../../../domain/entities/user.dart';
 import '../../utils/app.dart';
 import '../../widgets/custom_text.dart';
-import '../../widgets/profile/profile_info.dart';
-import '../settings/settings_view.dart';
 import 'profile_controller.dart';
 
 class ProfilePage extends View {
@@ -30,31 +29,31 @@ class _ProfilePageState extends ViewState<ProfilePage, ProfileController> {
     return Scaffold(
       key: globalKey,
       appBar: AppBar(
-        title: CustomText(
-          text: 'Profile',
-          fontSize: 20,
-          fontWeight: FontWeight.w600,
-        ),
+        // title: CustomText(
+        //   text: 'Profile',
+        //   fontSize: 20,
+        //   fontWeight: FontWeight.w600,
+        // ),
         automaticallyImplyLeading: false,
         backgroundColor: Colors.white,
         centerTitle: true,
-        actions: [
-          Container(
-            padding: EdgeInsets.only(right: 10.0),
-            child: IconButton(
-                icon: Icon(
-                  Icons.more_horiz_sharp,
-                  color: App.textColor,
-                ),
-                iconSize: 30,
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (buildContext) => SettingsPage()));
-                }),
-          )
-        ],
+        // actions: [
+        //   Container(
+        //     padding: EdgeInsets.only(right: 10.0),
+        //     child: IconButton(
+        //         icon: Icon(
+        //           Icons.more_horiz_sharp,
+        //           color: App.textColor,
+        //         ),
+        //         iconSize: 30,
+        //         onPressed: () {
+        //           Navigator.push(
+        //               context,
+        //               MaterialPageRoute(
+        //                   builder: (buildContext) => SettingsPage()));
+        //         }),
+        //   )
+        // ],
       ),
       backgroundColor: Colors.white,
       body: ControlledWidgetBuilder<ProfileController>(
@@ -70,53 +69,241 @@ class _ProfilePageState extends ViewState<ProfilePage, ProfileController> {
           // print("IN THE CONTROLLERERERERERERE $user");
           // controller.getUserToDisplay();
           return SingleChildScrollView(
-            child: Column(
-              children: [
-                /**reserve*/
-                // Container(
-                //   decoration: BoxDecoration(
-                //     color: Color.fromRGBO(221, 99, 110, 0.5),
-                //     borderRadius: BorderRadius.circular(10),
-                //   ),
-                //   padding: EdgeInsets.all(20.0),
-                //   child: Row(
-                //       crossAxisAlignment: CrossAxisAlignment.start,
-                //       children: [
-                //         Icon(
-                //           Icons.error_outline_outlined,
-                //           color: Color.fromRGBO(226, 87, 76, 1),
-                //           size: 26.0,
-                //         ),
-                //         SizedBox(
-                //           width: 10.0,
-                //         ),
-                //         Expanded(
-                //             child: CustomRichText(
-                //           mainText:
-                //               'Your profile is still unverified, due to this you can only access limited features. of the app. Click this link to ',
-                //           mainTextFontWeight: FontWeight.normal,
-                //           valueText: 'verify now.',
-                //           valueTextDecoration: TextDecoration.underline,
-                //           valueTextCallback: () {
-                //             print('Value text Callback called!');
-                //             Navigator.push(
-                //                 context,
-                //                 MaterialPageRoute(
-                //                     builder: (buildContext) => VerifyProfilePage(
-                //                           userPosition: user.position,
-                //                         )));
-                //           },
-                //         ))
-                //       ]),
-                // ),
-                ProfileInfo(
-                  user!,
-                  listings: listings!,
+            child: Center(
+              child: Padding(
+                padding: EdgeInsets.symmetric(
+                    horizontal: controller.getProportionateScreenWidth(16.0)),
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: controller.getProportionateScreenHeight(8.0),
+                    ),
+                    CachedNetworkImage(
+                      imageUrl: user!.profilePicture.toString(),
+                      imageBuilder: (context, imageProvider) => CircleAvatar(
+                        radius: 50,
+                        backgroundImage: imageProvider,
+                        backgroundColor: App.mainColor,
+                      ),
+                      progressIndicatorBuilder: (context, url, progress) =>
+                          Center(
+                        child: CircularProgressIndicator(
+                          valueColor:
+                              AlwaysStoppedAnimation<Color?>(App.mainColor),
+                          value: progress.progress,
+                        ),
+                      ),
+                      errorWidget: (context, url, error) => CircleAvatar(
+                        backgroundColor: App.mainColor,
+                        radius: 50,
+                        backgroundImage: AssetImage('assets/user_profile.png'),
+                      ),
+                    ),
+                    SizedBox(
+                      height: controller.getProportionateScreenHeight(8.0),
+                    ),
+                    FittedBox(
+                      child: CustomText(
+                        text: user!.displayName,
+                        fontSize: 18,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    FittedBox(
+                      child: CustomText(
+                        text: user!.email,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.black.withOpacity(.5),
+                      ),
+                    ),
+                    Divider(
+                      height: controller.getProportionateScreenHeight(32.0),
+                    ),
+                    Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(10),
+                            topRight: Radius.circular(10),
+                            bottomLeft: Radius.circular(10),
+                            bottomRight: Radius.circular(10)),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.3),
+                            spreadRadius: 1,
+                            blurRadius: 4,
+                            offset: Offset(0, 4), // changes position of shadow
+                          ),
+                        ],
+                      ),
+                      child: Column(
+                        children: [
+                          ProfileCard(
+                            image: 'assets/icons/tab_bar/profile.png',
+                            color: App.mainColor.withOpacity(0.3),
+                            title: 'My Profile',
+                          ),
+                          ProfileCard(
+                            image: 'assets/icons/area.png',
+                            color: Colors.black54,
+                            title: 'Notifications',
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      height: controller.getProportionateScreenHeight(15.0),
+                    ),
+                    Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(10),
+                            topRight: Radius.circular(10),
+                            bottomLeft: Radius.circular(10),
+                            bottomRight: Radius.circular(10)),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.3),
+                            spreadRadius: 1,
+                            blurRadius: 4,
+                            offset: Offset(0, 4), // changes position of shadow
+                          ),
+                        ],
+                      ),
+                      child: Column(
+                        children: [
+                          ProfileCard(
+                            image: 'assets/icons/area.png',
+                            color: App.mainColor,
+                            title: 'Help Center',
+                          ),
+                          ProfileCard(
+                            image: 'assets/icons/area.png',
+                            color: Colors.black54,
+                            title: 'Privacy Policy',
+                          ),
+                          ProfileCard(
+                            image: 'assets/icons/area.png',
+                            color: Colors.black54,
+                            title: 'Accessibility',
+                          ),
+                          ProfileCard(
+                            image: 'assets/icons/area.png',
+                            color: Colors.black54,
+                            title: 'End User License Agreement',
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      height: controller.getProportionateScreenHeight(15.0),
+                    ),
+                    Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(10),
+                            topRight: Radius.circular(10),
+                            bottomLeft: Radius.circular(10),
+                            bottomRight: Radius.circular(10)),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.3),
+                            spreadRadius: 1,
+                            blurRadius: 4,
+                            offset: Offset(0, 4), // changes position of shadow
+                          ),
+                        ],
+                      ),
+                      child: Column(
+                        children: [
+                          ProfileCard(
+                            image: 'assets/icons/area.png',
+                            color: App.mainColor,
+                            title: 'Logout',
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      height: controller.getProportionateScreenHeight(50.0),
+                    ),
+                  ],
                 ),
-              ],
+              ),
             ),
           );
         },
+      ),
+    );
+  }
+}
+
+//============================================
+class ProfileCard extends StatelessWidget {
+  const ProfileCard({
+    Key? key,
+    required this.image,
+    required this.title,
+    this.tapHandler,
+    required this.color,
+  }) : super(key: key);
+
+  final String image;
+  final String title;
+  final Function? tapHandler;
+  final Color color;
+
+  @override
+  Widget build(BuildContext context) {
+    ProfileController controller =
+        FlutterCleanArchitecture.getController<ProfileController>(context);
+    return GestureDetector(
+      onTap: () => tapHandler,
+      child: Container(
+        padding: EdgeInsets.all(
+          controller.getProportionateScreenWidth(8.0),
+        ),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+              offset: Offset(0, 1),
+              color: App.mainColor.withOpacity(0.05),
+              blurRadius: 10,
+            ),
+          ],
+        ),
+        child: Row(
+          children: [
+            Container(
+              padding: EdgeInsets.all(
+                controller.getProportionateScreenWidth(4.0),
+              ),
+              decoration: ShapeDecoration(
+                color: color,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(
+                    controller.getProportionateScreenWidth(8.0),
+                  ),
+                ),
+              ),
+              child: Container(height: 15, child: Image.asset(image)),
+            ),
+            SizedBox(
+              width: controller.getProportionateScreenWidth(8.0),
+            ),
+            Expanded(
+              child: CustomText(
+                text: title,
+                fontSize: 14,
+              ),
+            ),
+            Icon(Icons.arrow_forward_ios_rounded),
+          ],
+        ),
       ),
     );
   }

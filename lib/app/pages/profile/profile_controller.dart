@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 
 import '../../../data/repositories/data_profile_repository.dart';
@@ -21,6 +22,17 @@ class ProfileController extends Controller {
   List<Property>? get listings => _listings;
   Timer? _timer;
 
+  /*
+
+
+   */
+
+  static MediaQueryData? _mediaQueryData;
+  static double? screenWidth;
+  static double? screenHeight;
+  static double? defaultSize;
+  static Orientation? orientation;
+
   ProfileController({DataProfileRepository? dataProfileRepo, this.uidToDisplay})
       : profilePresenter = ProfilePresenter(),
         super();
@@ -31,6 +43,10 @@ class ProfileController extends Controller {
     await getUserToDisplay();
     await getListings();
 
+    _mediaQueryData = MediaQuery.of(getContext());
+    screenWidth = _mediaQueryData!.size.width;
+    screenHeight = _mediaQueryData!.size.height;
+    orientation = _mediaQueryData!.orientation;
     const oneSec = Duration(seconds: 10);
     _timer = Timer.periodic(oneSec, (Timer t) async {
       await getListings();
@@ -52,6 +68,19 @@ class ProfileController extends Controller {
       //     text: "Can't fetch listings for this time.",
       //     title: "Can't fetch listings");
     };
+  }
+
+  // Get the proportionate height as per screen size
+  double getProportionateScreenWidth(double inputWidth) {
+    double? screenW = screenWidth;
+    // As if 375
+    return (inputWidth / 275.0) * screenW!;
+  }
+
+  double getProportionateScreenHeight(double inputHeight) {
+    double? screenH = screenHeight;
+    // as if 812
+    return (inputHeight / 812.0) * screenH!;
   }
 
   getCurrentUser() async {
