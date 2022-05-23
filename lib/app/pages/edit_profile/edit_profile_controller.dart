@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:dazle/app/pages/edit_profile/edit_profile_presenter.dart';
@@ -6,6 +7,7 @@ import 'package:dazle/app/utils/app_constant.dart';
 import 'package:dazle/domain/entities/user.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_overlay_loader/flutter_overlay_loader.dart';
 
 import '../main/main_view.dart';
@@ -28,6 +30,8 @@ class EditProfileController extends Controller {
   final TextEditingController brokerLicenseNumberTextController;
   final TextEditingController aboutMeTextController;
 
+  Timer? _timer;
+
   EditProfileController(userRepo)
       : editProfilePresenter = EditProfilePresenter(userRepo),
         editProfileFormKey = GlobalKey<FormState>(),
@@ -40,9 +44,33 @@ class EditProfileController extends Controller {
         aboutMeTextController = TextEditingController(),
         super();
 
+  void configLoading() {
+    EasyLoading.instance
+      ..displayDuration = const Duration(milliseconds: 1000)
+      ..indicatorType = EasyLoadingIndicatorType.fadingCircle
+      ..loadingStyle = EasyLoadingStyle.dark
+      ..indicatorSize = 45.0
+      ..radius = 10.0
+      ..progressColor = Colors.yellow
+      ..backgroundColor = Colors.green
+      ..indicatorColor = Colors.yellow
+      ..textColor = Colors.yellow
+      ..maskColor = Colors.blue.withOpacity(0.5)
+      ..userInteractions = true
+      ..dismissOnTap = false;
+    // ..customAnimation = CustomAnimation();
+  }
+
   @override
   void initListeners() {
     getCurrentUser();
+    configLoading();
+    EasyLoading.addStatusCallback((status) {
+      print('EasyLoading Status $status');
+      if (status == EasyLoadingStatus.dismiss) {
+        _timer?.cancel();
+      }
+    });
 
     // update user
     editProfilePresenter.updateUserOnNext = () {
@@ -51,33 +79,22 @@ class EditProfileController extends Controller {
 
     editProfilePresenter.updateUserOnComplete = () async {
       print('update user on complete');
-      AppConstant.showLoader(getContext(), false);
-
-      await _statusDialog('Success!', 'Updated Successfully', onPressed: () {
-        Navigator.pop(getContext());
-
-        Navigator.pushReplacement(
-            getContext(),
-            MaterialPageRoute(
-              builder: (context) => MainPage(
-                backCurrentIndex: "ProfilePage",
-              ),
-            ));
-      });
+      // AppConstant.showLoader(getContext(), false);
+      await EasyLoading.showSuccess('Success!')
+          .then((value) => Navigator.pushReplacement(
+              getContext(),
+              MaterialPageRoute(
+                builder: (context) => MainPage(
+                  backCurrentIndex: "ProfilePage",
+                ),
+              )));
+      EasyLoading.dismiss();
     };
     editProfilePresenter.updateUserOnError = (e) {
       print('update user on error $e');
-      AppConstant.showLoader(getContext(), false);
-
-      if (!e['error']) {
-        if (e['error_type'] == "filesize_error") {
-          _statusDialog('File size error.', '${e['status'] ?? ''}');
-        } else {
-          _statusDialog('Oops!', '${e['status'] ?? ''}');
-        }
-      } else {
-        _statusDialog('Something went wrong', '${e.toString()}');
-      }
+      // AppConstant.showLoader(getContext(), false);
+      EasyLoading.showError('Failed with Error');
+      EasyLoading.dismiss();
     };
   }
 
@@ -102,7 +119,7 @@ class EditProfileController extends Controller {
   }
 
   void updateUser() async {
-    AppConstant.showLoader(getContext(), true);
+    EasyLoading.show(status: 'loading...');
 
     User updatedUser = User(
         id: _user!.id,
@@ -144,7 +161,8 @@ class EditProfileController extends Controller {
   @override
   void onDisposed() {
     editProfilePresenter.dispose(); // don't forget to dispose of the presenter
-
+    EasyLoading.dismiss();
+    EasyLoading.removeAllCallbacks();
     firstNameTextController.dispose();
     lastNameTextController.dispose();
     professionTextController.dispose();
