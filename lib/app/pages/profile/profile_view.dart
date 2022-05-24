@@ -29,14 +29,14 @@ class _ProfilePageState extends ViewState<ProfilePage, ProfileController> {
     return Scaffold(
       key: globalKey,
       appBar: AppBar(
-        // title: CustomText(
-        //   text: 'Profile',
-        //   fontSize: 20,
-        //   fontWeight: FontWeight.w600,
-        // ),
+        title: CustomText(
+          text: 'Settings',
+          fontSize: 20,
+          fontWeight: FontWeight.w600,
+        ),
         automaticallyImplyLeading: false,
         backgroundColor: Colors.white,
-        centerTitle: true,
+        // centerTitle: true,
         // actions: [
         //   Container(
         //     padding: EdgeInsets.only(right: 10.0),
@@ -81,7 +81,7 @@ class _ProfilePageState extends ViewState<ProfilePage, ProfileController> {
                     CachedNetworkImage(
                       imageUrl: user!.profilePicture.toString(),
                       imageBuilder: (context, imageProvider) => CircleAvatar(
-                        radius: 50,
+                        radius: 40,
                         backgroundImage: imageProvider,
                         backgroundColor: App.mainColor,
                       ),
@@ -95,7 +95,7 @@ class _ProfilePageState extends ViewState<ProfilePage, ProfileController> {
                       ),
                       errorWidget: (context, url, error) => CircleAvatar(
                         backgroundColor: App.mainColor,
-                        radius: 50,
+                        radius: 40,
                         backgroundImage: AssetImage('assets/user_profile.png'),
                       ),
                     ),
@@ -140,13 +140,14 @@ class _ProfilePageState extends ViewState<ProfilePage, ProfileController> {
                       child: Column(
                         children: [
                           ProfileCard(
-                            image: 'assets/icons/tab_bar/profile.png',
+                            icon: Icons.account_circle_outlined,
                             color: App.mainColor.withOpacity(0.3),
+                            colorIcon: Colors.green,
                             title: 'My Profile',
                           ),
                           ProfileCard(
-                            image: 'assets/icons/area.png',
-                            color: Colors.black54,
+                            icon: Icons.notifications_none_outlined,
+                            color: Colors.lightBlueAccent,
                             title: 'Notifications',
                           ),
                         ],
@@ -175,23 +176,23 @@ class _ProfilePageState extends ViewState<ProfilePage, ProfileController> {
                       child: Column(
                         children: [
                           ProfileCard(
-                            image: 'assets/icons/area.png',
-                            color: App.mainColor,
+                            icon: Icons.help_center_outlined,
+                            color: Colors.grey,
                             title: 'Help Center',
                           ),
                           ProfileCard(
-                            image: 'assets/icons/area.png',
-                            color: Colors.black54,
+                            icon: Icons.privacy_tip_outlined,
+                            color: Colors.grey,
                             title: 'Privacy Policy',
                           ),
                           ProfileCard(
-                            image: 'assets/icons/area.png',
-                            color: Colors.black54,
+                            icon: Icons.accessibility_new_outlined,
+                            color: Colors.grey,
                             title: 'Accessibility',
                           ),
                           ProfileCard(
-                            image: 'assets/icons/area.png',
-                            color: Colors.black54,
+                            icon: Icons.handshake_outlined,
+                            color: Colors.grey,
                             title: 'End User License Agreement',
                           ),
                         ],
@@ -220,8 +221,8 @@ class _ProfilePageState extends ViewState<ProfilePage, ProfileController> {
                       child: Column(
                         children: [
                           ProfileCard(
-                            image: 'assets/icons/area.png',
-                            color: App.mainColor,
+                            icon: Icons.exit_to_app_outlined,
+                            color: Colors.redAccent,
                             title: 'Logout',
                           ),
                         ],
@@ -243,18 +244,20 @@ class _ProfilePageState extends ViewState<ProfilePage, ProfileController> {
 
 //============================================
 class ProfileCard extends StatelessWidget {
-  const ProfileCard({
-    Key? key,
-    required this.image,
-    required this.title,
-    this.tapHandler,
-    required this.color,
-  }) : super(key: key);
+  const ProfileCard(
+      {Key? key,
+      required this.icon,
+      required this.title,
+      this.tapHandler,
+      required this.color,
+      this.colorIcon = Colors.white})
+      : super(key: key);
 
-  final String image;
+  final IconData icon;
   final String title;
   final Function? tapHandler;
   final Color color;
+  final Color? colorIcon;
 
   @override
   Widget build(BuildContext context) {
@@ -290,7 +293,14 @@ class ProfileCard extends StatelessWidget {
                   ),
                 ),
               ),
-              child: Container(height: 15, child: Image.asset(image)),
+              child: Container(
+                height: 18,
+                child: Icon(
+                  icon,
+                  size: 18,
+                  color: colorIcon,
+                ),
+              ),
             ),
             SizedBox(
               width: controller.getProportionateScreenWidth(8.0),
