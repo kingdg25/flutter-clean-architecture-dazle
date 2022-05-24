@@ -65,8 +65,8 @@ class App {
       ..radius = 10.0
       ..progressColor = Colors.green
       ..backgroundColor = App.mainColor
-      ..indicatorColor = Colors.black54
-      ..textColor = Colors.black54
+      ..indicatorColor = Colors.white
+      ..textColor = Colors.white
       ..maskColor = App.mainColor.withOpacity(0.5)
       ..userInteractions = false
       ..dismissOnTap = false;

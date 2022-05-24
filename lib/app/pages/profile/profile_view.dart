@@ -31,30 +31,12 @@ class _ProfilePageState extends ViewState<ProfilePage, ProfileController> {
       key: globalKey,
       appBar: AppBar(
         title: CustomText(
-          text: 'Settings',
+          text: 'Profile',
           fontSize: 20,
           fontWeight: FontWeight.w600,
         ),
         automaticallyImplyLeading: false,
         backgroundColor: Colors.white,
-        // centerTitle: true,
-        // actions: [
-        //   Container(
-        //     padding: EdgeInsets.only(right: 10.0),
-        //     child: IconButton(
-        //         icon: Icon(
-        //           Icons.more_horiz_sharp,
-        //           color: App.textColor,
-        //         ),
-        //         iconSize: 30,
-        //         onPressed: () {
-        //           Navigator.push(
-        //               context,
-        //               MaterialPageRoute(
-        //                   builder: (buildContext) => SettingsPage()));
-        //         }),
-        //   )
-        // ],
       ),
       backgroundColor: Colors.white,
       body: ControlledWidgetBuilder<ProfileController>(
@@ -152,6 +134,12 @@ class _ProfilePageState extends ViewState<ProfilePage, ProfileController> {
                             color: Colors.lightBlueAccent,
                             title: 'Notifications',
                             tapHandler: controller.comingSoon,
+                          ),
+                          ProfileCard(
+                            icon: Icons.edit_outlined,
+                            color: Colors.purpleAccent.withOpacity(0.3),
+                            title: 'Edit Profile',
+                            tapHandler: controller.editProfile,
                           ),
                         ],
                       ),

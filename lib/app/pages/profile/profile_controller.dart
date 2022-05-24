@@ -11,6 +11,7 @@ import '../../../domain/entities/property.dart';
 import '../../../domain/entities/user.dart';
 import '../../utils/app.dart';
 import '../../utils/app_constant.dart';
+import '../edit_profile/edit_profile_view.dart';
 import '../login/login_view.dart';
 import 'profile_presenter.dart';
 
@@ -32,10 +33,10 @@ class ProfileController extends Controller {
 
    */
 
-  static MediaQueryData? _mediaQueryData;
-  static double? screenWidth;
-  static double? screenHeight;
-  static double? defaultSize;
+  MediaQueryData? _mediaQueryData;
+  double? screenWidth;
+  double? screenHeight;
+  double? defaultSize;
   static Orientation? orientation;
 
   ProfileController({DataProfileRepository? dataProfileRepo, this.uidToDisplay})
@@ -105,7 +106,17 @@ class ProfileController extends Controller {
                 )));
   }
 
-  // Get the proportionate height as per screen size
+  void editProfile() {
+    Navigator.push(
+      getContext(),
+      MaterialPageRoute(
+        builder: (buildContext) => EditProfilePage(
+          user: _currentUser,
+        ),
+      ),
+    );
+  }
+
   double getProportionateScreenWidth(double inputWidth) {
     double? screenW = screenWidth;
     // As if 375
@@ -121,11 +132,9 @@ class ProfileController extends Controller {
   getCurrentUser() async {
     User user = await App.getUser();
 
-    if (user != null) {
-      _currentUser = user;
+    _currentUser = user;
 
-      refreshUI();
-    }
+    refreshUI();
   }
 
   getUserToDisplay() async {
