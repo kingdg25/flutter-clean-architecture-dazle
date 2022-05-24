@@ -10,14 +10,14 @@ class ProfileCard extends StatelessWidget {
       {Key? key,
       required this.icon,
       required this.title,
-      this.tapHandler,
+      required this.tapHandler,
       required this.color,
       this.colorIcon = Colors.white})
       : super(key: key);
 
   final IconData icon;
   final String title;
-  final Function? tapHandler;
+  final Function tapHandler;
   final Color color;
   final Color? colorIcon;
 
@@ -26,13 +26,14 @@ class ProfileCard extends StatelessWidget {
     ProfileController controller =
         FlutterCleanArchitecture.getController<ProfileController>(context);
     return InkWell(
-      onTap: () => tapHandler!(),
+      splashColor: App.mainColor,
+      onTap: () => tapHandler(),
       child: Container(
         padding: EdgeInsets.all(
           controller.getProportionateScreenWidth(8.0),
         ),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: Colors.white70,
           boxShadow: [
             BoxShadow(
               offset: Offset(0, 1),
@@ -71,6 +72,7 @@ class ProfileCard extends StatelessWidget {
               child: CustomText(
                 text: title,
                 fontSize: 14,
+                fontWeight: FontWeight.w600,
               ),
             ),
             Icon(Icons.arrow_forward_ios_rounded),

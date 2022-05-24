@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'dart:io';
 
 import 'package:dazle/app/pages/edit_profile/edit_profile_presenter.dart';
@@ -28,8 +27,6 @@ class EditProfileController extends Controller {
   final TextEditingController mobileNumberTextController;
   final TextEditingController brokerLicenseNumberTextController;
   final TextEditingController aboutMeTextController;
-
-  Timer? _timer;
 
   EditProfileController(userRepo)
       : editProfilePresenter = EditProfilePresenter(userRepo),

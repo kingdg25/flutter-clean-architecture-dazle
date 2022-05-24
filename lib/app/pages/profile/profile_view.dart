@@ -123,7 +123,7 @@ class _ProfilePageState extends ViewState<ProfilePage, ProfileController> {
                     ),
                     Container(
                       decoration: BoxDecoration(
-                        color: Colors.white,
+                        color: Colors.transparent,
                         borderRadius: BorderRadius.only(
                             topLeft: Radius.circular(10),
                             topRight: Radius.circular(10),
@@ -131,7 +131,7 @@ class _ProfilePageState extends ViewState<ProfilePage, ProfileController> {
                             bottomRight: Radius.circular(10)),
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.grey.withOpacity(0.3),
+                            color: Colors.grey.withOpacity(0.2),
                             spreadRadius: 1,
                             blurRadius: 4,
                             offset: Offset(0, 4), // changes position of shadow
@@ -151,6 +151,7 @@ class _ProfilePageState extends ViewState<ProfilePage, ProfileController> {
                             icon: Icons.notifications_none_outlined,
                             color: Colors.lightBlueAccent,
                             title: 'Notifications',
+                            tapHandler: controller.comingSoon,
                           ),
                         ],
                       ),
@@ -160,7 +161,7 @@ class _ProfilePageState extends ViewState<ProfilePage, ProfileController> {
                     ),
                     Container(
                       decoration: BoxDecoration(
-                        color: Colors.white,
+                        color: Colors.transparent,
                         borderRadius: BorderRadius.only(
                             topLeft: Radius.circular(10),
                             topRight: Radius.circular(10),
@@ -168,7 +169,7 @@ class _ProfilePageState extends ViewState<ProfilePage, ProfileController> {
                             bottomRight: Radius.circular(10)),
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.grey.withOpacity(0.3),
+                            color: Colors.grey.withOpacity(0.2),
                             spreadRadius: 1,
                             blurRadius: 4,
                             offset: Offset(0, 4), // changes position of shadow
@@ -181,21 +182,25 @@ class _ProfilePageState extends ViewState<ProfilePage, ProfileController> {
                             icon: Icons.help_center_outlined,
                             color: Colors.grey,
                             title: 'Help Center',
+                            tapHandler: controller.comingSoon,
                           ),
                           ProfileCard(
                             icon: Icons.privacy_tip_outlined,
                             color: Colors.grey,
                             title: 'Privacy Policy',
+                            tapHandler: controller.comingSoon,
                           ),
                           ProfileCard(
                             icon: Icons.accessibility_new_outlined,
                             color: Colors.grey,
                             title: 'Accessibility',
+                            tapHandler: controller.comingSoon,
                           ),
                           ProfileCard(
                             icon: Icons.handshake_outlined,
                             color: Colors.grey,
                             title: 'End User License Agreement',
+                            tapHandler: controller.comingSoon,
                           ),
                         ],
                       ),
@@ -205,7 +210,7 @@ class _ProfilePageState extends ViewState<ProfilePage, ProfileController> {
                     ),
                     Container(
                       decoration: BoxDecoration(
-                        color: Colors.white,
+                        // color: Colors.white,
                         borderRadius: BorderRadius.only(
                             topLeft: Radius.circular(10),
                             topRight: Radius.circular(10),
@@ -213,7 +218,7 @@ class _ProfilePageState extends ViewState<ProfilePage, ProfileController> {
                             bottomRight: Radius.circular(10)),
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.grey.withOpacity(0.3),
+                            color: Colors.grey.withOpacity(0.2),
                             spreadRadius: 1,
                             blurRadius: 4,
                             offset: Offset(0, 4), // changes position of shadow

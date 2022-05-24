@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:dazle/app/pages/profile/components/profile_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_overlay_loader/flutter_overlay_loader.dart';
 
 import '../../../data/repositories/data_profile_repository.dart';
@@ -137,8 +138,8 @@ class ProfileController extends Controller {
     profilePresenter.getUserListing(this._userToDisplay!.id);
   }
 
-  void testPress() {
-    debugPrint("okay well done");
+  void comingSoon() {
+    EasyLoading.showInfo('Coming Soon.');
   }
 
   void signOut() {
