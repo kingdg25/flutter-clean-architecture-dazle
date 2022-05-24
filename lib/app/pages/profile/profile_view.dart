@@ -7,6 +7,7 @@ import '../../../domain/entities/property.dart';
 import '../../../domain/entities/user.dart';
 import '../../utils/app.dart';
 import '../../widgets/custom_text.dart';
+import '../../widgets/profile/profile_card.dart';
 import 'profile_controller.dart';
 
 class ProfilePage extends View {
@@ -144,6 +145,7 @@ class _ProfilePageState extends ViewState<ProfilePage, ProfileController> {
                             color: App.mainColor.withOpacity(0.3),
                             colorIcon: Colors.green,
                             title: 'My Profile',
+                            tapHandler: controller.testPress,
                           ),
                           ProfileCard(
                             icon: Icons.notifications_none_outlined,
@@ -224,6 +226,7 @@ class _ProfilePageState extends ViewState<ProfilePage, ProfileController> {
                             icon: Icons.exit_to_app_outlined,
                             color: Colors.redAccent,
                             title: 'Logout',
+                            tapHandler: controller.signOut,
                           ),
                         ],
                       ),
@@ -243,78 +246,3 @@ class _ProfilePageState extends ViewState<ProfilePage, ProfileController> {
 }
 
 //============================================
-class ProfileCard extends StatelessWidget {
-  const ProfileCard(
-      {Key? key,
-      required this.icon,
-      required this.title,
-      this.tapHandler,
-      required this.color,
-      this.colorIcon = Colors.white})
-      : super(key: key);
-
-  final IconData icon;
-  final String title;
-  final Function? tapHandler;
-  final Color color;
-  final Color? colorIcon;
-
-  @override
-  Widget build(BuildContext context) {
-    ProfileController controller =
-        FlutterCleanArchitecture.getController<ProfileController>(context);
-    return GestureDetector(
-      onTap: () => tapHandler,
-      child: Container(
-        padding: EdgeInsets.all(
-          controller.getProportionateScreenWidth(8.0),
-        ),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          boxShadow: [
-            BoxShadow(
-              offset: Offset(0, 1),
-              color: App.mainColor.withOpacity(0.05),
-              blurRadius: 10,
-            ),
-          ],
-        ),
-        child: Row(
-          children: [
-            Container(
-              padding: EdgeInsets.all(
-                controller.getProportionateScreenWidth(4.0),
-              ),
-              decoration: ShapeDecoration(
-                color: color,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(
-                    controller.getProportionateScreenWidth(8.0),
-                  ),
-                ),
-              ),
-              child: Container(
-                height: 18,
-                child: Icon(
-                  icon,
-                  size: 18,
-                  color: colorIcon,
-                ),
-              ),
-            ),
-            SizedBox(
-              width: controller.getProportionateScreenWidth(8.0),
-            ),
-            Expanded(
-              child: CustomText(
-                text: title,
-                fontSize: 14,
-              ),
-            ),
-            Icon(Icons.arrow_forward_ios_rounded),
-          ],
-        ),
-      ),
-    );
-  }
-}

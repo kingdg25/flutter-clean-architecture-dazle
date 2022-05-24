@@ -2,11 +2,14 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
+import 'package:flutter_overlay_loader/flutter_overlay_loader.dart';
 
 import '../../../data/repositories/data_profile_repository.dart';
 import '../../../domain/entities/property.dart';
 import '../../../domain/entities/user.dart';
 import '../../utils/app.dart';
+import '../../utils/app_constant.dart';
+import '../login/login_view.dart';
 import 'profile_presenter.dart';
 
 class ProfileController extends Controller {
@@ -42,7 +45,7 @@ class ProfileController extends Controller {
     await getCurrentUser();
     await getUserToDisplay();
     await getListings();
-
+    App.configLoading();
     _mediaQueryData = MediaQuery.of(getContext());
     screenWidth = _mediaQueryData!.size.width;
     screenHeight = _mediaQueryData!.size.height;
@@ -68,6 +71,26 @@ class ProfileController extends Controller {
       //     text: "Can't fetch listings for this time.",
       //     title: "Can't fetch listings");
     };
+
+    // logout
+    profilePresenter.logoutUserOnNext = () {
+      print('logout on next');
+    };
+
+    profilePresenter.logoutUserOnComplete = () {
+      print('logout on complete');
+      AppConstant.showLoader(getContext(), false);
+      loginPage();
+    };
+
+    profilePresenter.logoutUserOnError = (e) {
+      print('logout on error $e');
+      AppConstant.showLoader(getContext(), false);
+    };
+  }
+
+  void loginPage() {
+    Navigator.popAndPushNamed(getContext(), LoginPage.id);
   }
 
   // Get the proportionate height as per screen size
@@ -103,6 +126,17 @@ class ProfileController extends Controller {
     profilePresenter.getUserListing(this._userToDisplay!.id);
   }
 
+  void testPress() {
+    debugPrint("okay well done");
+  }
+
+  void signOut() {
+    print('user logout home controller');
+    AppConstant.showLoader(getContext(), true);
+
+    profilePresenter.logoutUser();
+  }
+
   @override
   void onResumed() => print('On resumed');
 
@@ -116,6 +150,7 @@ class ProfileController extends Controller {
   void onDisposed() {
     _timer?.cancel();
     profilePresenter.dispose(); // don't forget to dispose of the presenter
+    Loader.hide();
     super.onDisposed();
   }
 }

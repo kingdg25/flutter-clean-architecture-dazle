@@ -3,7 +3,6 @@ import 'dart:io';
 
 import 'package:dazle/app/pages/edit_profile/edit_profile_presenter.dart';
 import 'package:dazle/app/utils/app.dart';
-import 'package:dazle/app/utils/app_constant.dart';
 import 'package:dazle/domain/entities/user.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
@@ -44,33 +43,16 @@ class EditProfileController extends Controller {
         aboutMeTextController = TextEditingController(),
         super();
 
-  void configLoading() {
-    EasyLoading.instance
-      ..displayDuration = const Duration(milliseconds: 1000)
-      ..indicatorType = EasyLoadingIndicatorType.fadingCircle
-      ..loadingStyle = EasyLoadingStyle.dark
-      ..indicatorSize = 45.0
-      ..radius = 10.0
-      ..progressColor = Colors.yellow
-      ..backgroundColor = Colors.green
-      ..indicatorColor = Colors.yellow
-      ..textColor = Colors.yellow
-      ..maskColor = Colors.blue.withOpacity(0.5)
-      ..userInteractions = true
-      ..dismissOnTap = false;
-    // ..customAnimation = CustomAnimation();
-  }
-
   @override
   void initListeners() {
     getCurrentUser();
-    configLoading();
-    EasyLoading.addStatusCallback((status) {
-      print('EasyLoading Status $status');
-      if (status == EasyLoadingStatus.dismiss) {
-        _timer?.cancel();
-      }
-    });
+    App.configLoading();
+    // EasyLoading.addStatusCallback((status) {
+    //   print('EasyLoading Status $status');
+    //   if (status == EasyLoadingStatus.dismiss) {
+    //     _timer?.cancel();
+    //   }
+    // });
 
     // update user
     editProfilePresenter.updateUserOnNext = () {
@@ -139,15 +121,15 @@ class EditProfileController extends Controller {
         user: updatedUser, profilePicture: profilePicturePath);
   }
 
-  _statusDialog(String title, String text,
-      {bool? success, Function? onPressed}) {
-    AppConstant.statusDialog(
-        context: getContext(),
-        success: success ?? false,
-        title: title,
-        text: text,
-        onPressed: onPressed);
-  }
+  // _statusDialog(String title, String text,
+  //     {bool? success, Function? onPressed}) {
+  //   AppConstant.statusDialog(
+  //       context: getContext(),
+  //       success: success ?? false,
+  //       title: title,
+  //       text: text,
+  //       onPressed: onPressed);
+  // }
 
   @override
   void onResumed() => print('On resumed');
