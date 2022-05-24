@@ -70,6 +70,8 @@ class _ProfileInfoState extends State<ProfileInfo> {
                   text: widget.user.displayName,
                   fontSize: 25,
                   fontWeight: FontWeight.w600,
+                  overflow: TextOverflow.ellipsis,
+                  textAlign: TextAlign.center,
                 ),
                 SizedBox(height: 5),
                 CustomText(

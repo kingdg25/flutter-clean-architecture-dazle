@@ -145,7 +145,7 @@ class _ProfilePageState extends ViewState<ProfilePage, ProfileController> {
                             color: App.mainColor.withOpacity(0.3),
                             colorIcon: Colors.green,
                             title: 'My Profile',
-                            tapHandler: controller.testPress,
+                            tapHandler: controller.profilePage,
                           ),
                           ProfileCard(
                             icon: Icons.notifications_none_outlined,
