@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../../../domain/entities/property.dart';
 import '../../../domain/entities/user.dart';
+import '../../pages/edit_profile/edit_profile_view.dart';
 import '../../utils/app.dart';
 import '../custom_text.dart';
 import '../form_fields/custom_button.dart';
@@ -69,8 +70,6 @@ class _ProfileInfoState extends State<ProfileInfo> {
                   text: widget.user.displayName,
                   fontSize: 25,
                   fontWeight: FontWeight.w600,
-                  overflow: TextOverflow.ellipsis,
-                  textAlign: TextAlign.center,
                 ),
                 SizedBox(height: 5),
                 CustomText(
@@ -88,9 +87,22 @@ class _ProfileInfoState extends State<ProfileInfo> {
                     textAlign: TextAlign.center,
                   ),
                 ),
-                // SizedBox(height: 10),
+                SizedBox(height: 20),
                 isCurrentUser
-                    ? Container()
+                    ? CustomButton(
+                        text: 'Edit Profile',
+                        width: 120,
+                        borderRadius: 30,
+                        onPressed: () async {
+                          await Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (buildContext) => EditProfilePage(
+                                user: widget.user,
+                              ),
+                            ),
+                          );
+                        })
                     : Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
