@@ -2,10 +2,10 @@ import 'dart:io';
 
 import 'package:dazle/app/pages/edit_profile/edit_profile_presenter.dart';
 import 'package:dazle/app/utils/app.dart';
+import 'package:dazle/app/utils/app_constant.dart';
 import 'package:dazle/domain/entities/user.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_overlay_loader/flutter_overlay_loader.dart';
 
 import '../main/main_view.dart';
@@ -43,13 +43,6 @@ class EditProfileController extends Controller {
   @override
   void initListeners() {
     getCurrentUser();
-    App.configLoading();
-    // EasyLoading.addStatusCallback((status) {
-    //   print('EasyLoading Status $status');
-    //   if (status == EasyLoadingStatus.dismiss) {
-    //     _timer?.cancel();
-    //   }
-    // });
 
     // update user
     editProfilePresenter.updateUserOnNext = () {
@@ -58,22 +51,33 @@ class EditProfileController extends Controller {
 
     editProfilePresenter.updateUserOnComplete = () async {
       print('update user on complete');
-      // AppConstant.showLoader(getContext(), false);
-      await EasyLoading.showSuccess('Success!')
-          .then((value) => Navigator.pushReplacement(
-              getContext(),
-              MaterialPageRoute(
-                builder: (context) => MainPage(
-                  backCurrentIndex: "ProfilePage",
-                ),
-              )));
-      EasyLoading.dismiss();
+      AppConstant.showLoader(getContext(), false);
+
+      await _statusDialog('Success!', 'Updated Successfully', onPressed: () {
+        Navigator.pop(getContext());
+
+        Navigator.pushReplacement(
+            getContext(),
+            MaterialPageRoute(
+              builder: (context) => MainPage(
+                backCurrentIndex: "ProfilePage",
+              ),
+            ));
+      });
     };
     editProfilePresenter.updateUserOnError = (e) {
       print('update user on error $e');
-      // AppConstant.showLoader(getContext(), false);
-      EasyLoading.showError('Failed with Error');
-      EasyLoading.dismiss();
+      AppConstant.showLoader(getContext(), false);
+
+      if (!e['error']) {
+        if (e['error_type'] == "filesize_error") {
+          _statusDialog('File size error.', '${e['status'] ?? ''}');
+        } else {
+          _statusDialog('Oops!', '${e['status'] ?? ''}');
+        }
+      } else {
+        _statusDialog('Something went wrong', '${e.toString()}');
+      }
     };
   }
 
@@ -98,7 +102,7 @@ class EditProfileController extends Controller {
   }
 
   void updateUser() async {
-    EasyLoading.show(status: 'loading...');
+    AppConstant.showLoader(getContext(), true);
 
     User updatedUser = User(
         id: _user!.id,
@@ -118,15 +122,15 @@ class EditProfileController extends Controller {
         user: updatedUser, profilePicture: profilePicturePath);
   }
 
-  // _statusDialog(String title, String text,
-  //     {bool? success, Function? onPressed}) {
-  //   AppConstant.statusDialog(
-  //       context: getContext(),
-  //       success: success ?? false,
-  //       title: title,
-  //       text: text,
-  //       onPressed: onPressed);
-  // }
+  _statusDialog(String title, String text,
+      {bool? success, Function? onPressed}) {
+    AppConstant.statusDialog(
+        context: getContext(),
+        success: success ?? false,
+        title: title,
+        text: text,
+        onPressed: onPressed);
+  }
 
   @override
   void onResumed() => print('On resumed');
@@ -140,8 +144,7 @@ class EditProfileController extends Controller {
   @override
   void onDisposed() {
     editProfilePresenter.dispose(); // don't forget to dispose of the presenter
-    EasyLoading.dismiss();
-    EasyLoading.removeAllCallbacks();
+
     firstNameTextController.dispose();
     lastNameTextController.dispose();
     professionTextController.dispose();
