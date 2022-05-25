@@ -37,24 +37,6 @@ class _ProfilePageState extends ViewState<ProfilePage, ProfileController> {
         ),
         automaticallyImplyLeading: false,
         backgroundColor: Colors.white,
-        centerTitle: true,
-        actions: [
-          Container(
-            padding: EdgeInsets.only(right: 10.0),
-            child: IconButton(
-                icon: Icon(
-                  Icons.more_horiz_sharp,
-                  color: App.textColor,
-                ),
-                iconSize: 30,
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (buildContext) => SettingsPage()));
-                }),
-          )
-        ],
       ),
       backgroundColor: Colors.white,
       body: ControlledWidgetBuilder<ProfileController>(
@@ -113,7 +95,7 @@ class _ProfilePageState extends ViewState<ProfilePage, ProfileController> {
                   user!,
                   listings: listings!,
                 ),
-              ],
+              ),
             ),
           );
         },
@@ -121,3 +103,5 @@ class _ProfilePageState extends ViewState<ProfilePage, ProfileController> {
     );
   }
 }
+
+//============================================
