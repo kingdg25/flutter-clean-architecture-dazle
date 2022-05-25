@@ -1,4 +1,4 @@
-import 'package:cached_network_image/cached_network_image.dart';
+import 'package:dazle/app/widgets/custom_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 
@@ -7,6 +7,7 @@ import '../../../domain/entities/property.dart';
 import '../../../domain/entities/user.dart';
 import '../../utils/app.dart';
 import '../../widgets/custom_text.dart';
+import '../../widgets/profile/box_container.dart';
 import '../../widgets/profile/profile_card.dart';
 import 'profile_controller.dart';
 
@@ -61,27 +62,10 @@ class _ProfilePageState extends ViewState<ProfilePage, ProfileController> {
                     SizedBox(
                       height: controller.getProportionateScreenHeight(8.0),
                     ),
-                    CachedNetworkImage(
-                      imageUrl: user!.profilePicture.toString(),
-                      imageBuilder: (context, imageProvider) => CircleAvatar(
-                        radius: 40,
-                        backgroundImage: imageProvider,
-                        backgroundColor: App.mainColor,
-                      ),
-                      progressIndicatorBuilder: (context, url, progress) =>
-                          Center(
-                        child: CircularProgressIndicator(
-                          valueColor:
-                              AlwaysStoppedAnimation<Color?>(App.mainColor),
-                          value: progress.progress,
-                        ),
-                      ),
-                      errorWidget: (context, url, error) => CircleAvatar(
-                        backgroundColor: App.mainColor,
-                        radius: 40,
-                        backgroundImage: AssetImage('assets/user_profile.png'),
-                      ),
-                    ),
+                    //
+                    CustomImage(
+                        assetImage: 'assets/user_profile.png',
+                        imageUrl: user!.profilePicture.toString()),
                     SizedBox(
                       height: controller.getProportionateScreenHeight(8.0),
                     ),
@@ -103,68 +87,35 @@ class _ProfilePageState extends ViewState<ProfilePage, ProfileController> {
                     Divider(
                       height: controller.getProportionateScreenHeight(32.0),
                     ),
-                    Container(
-                      decoration: BoxDecoration(
-                        color: Colors.transparent,
-                        borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(10),
-                            topRight: Radius.circular(10),
-                            bottomLeft: Radius.circular(10),
-                            bottomRight: Radius.circular(10)),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.2),
-                            spreadRadius: 1,
-                            blurRadius: 4,
-                            offset: Offset(0, 4), // changes position of shadow
-                          ),
-                        ],
-                      ),
-                      child: Column(
-                        children: [
-                          ProfileCard(
-                            icon: Icons.account_circle_outlined,
-                            color: App.mainColor.withOpacity(0.3),
-                            colorIcon: Colors.green,
-                            title: 'My Profile',
-                            tapHandler: controller.profilePage,
-                          ),
-                          ProfileCard(
-                            icon: Icons.notifications_none_outlined,
-                            color: Colors.lightBlueAccent,
-                            title: 'Notifications',
-                            tapHandler: controller.comingSoon,
-                          ),
-                          ProfileCard(
-                            icon: Icons.edit_outlined,
-                            color: Colors.purpleAccent.withOpacity(0.3),
-                            title: 'Edit Profile',
-                            tapHandler: controller.editProfile,
-                          ),
-                        ],
-                      ),
-                    ),
+                    BoxContainer(
+                        widget: Column(
+                      children: [
+                        ProfileCard(
+                          icon: Icons.account_circle_outlined,
+                          color: App.mainColor.withOpacity(0.3),
+                          colorIcon: Colors.green,
+                          title: 'My Profile',
+                          tapHandler: controller.profilePage,
+                        ),
+                        ProfileCard(
+                          icon: Icons.notifications_none_outlined,
+                          color: Colors.lightBlueAccent,
+                          title: 'Notifications',
+                          tapHandler: controller.comingSoon,
+                        ),
+                        ProfileCard(
+                          icon: Icons.edit_outlined,
+                          color: Colors.purpleAccent.withOpacity(0.3),
+                          title: 'Edit Profile',
+                          tapHandler: controller.editProfile,
+                        ),
+                      ],
+                    )),
                     SizedBox(
                       height: controller.getProportionateScreenHeight(15.0),
                     ),
-                    Container(
-                      decoration: BoxDecoration(
-                        color: Colors.transparent,
-                        borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(10),
-                            topRight: Radius.circular(10),
-                            bottomLeft: Radius.circular(10),
-                            bottomRight: Radius.circular(10)),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.2),
-                            spreadRadius: 1,
-                            blurRadius: 4,
-                            offset: Offset(0, 4), // changes position of shadow
-                          ),
-                        ],
-                      ),
-                      child: Column(
+                    BoxContainer(
+                      widget: Column(
                         children: [
                           ProfileCard(
                             icon: Icons.help_center_outlined,
@@ -196,34 +147,17 @@ class _ProfilePageState extends ViewState<ProfilePage, ProfileController> {
                     SizedBox(
                       height: controller.getProportionateScreenHeight(15.0),
                     ),
-                    Container(
-                      decoration: BoxDecoration(
-                        // color: Colors.white,
-                        borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(10),
-                            topRight: Radius.circular(10),
-                            bottomLeft: Radius.circular(10),
-                            bottomRight: Radius.circular(10)),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.2),
-                            spreadRadius: 1,
-                            blurRadius: 4,
-                            offset: Offset(0, 4), // changes position of shadow
-                          ),
-                        ],
-                      ),
-                      child: Column(
-                        children: [
-                          ProfileCard(
-                            icon: Icons.exit_to_app_outlined,
-                            color: Colors.redAccent,
-                            title: 'Logout',
-                            tapHandler: controller.signOut,
-                          ),
-                        ],
-                      ),
-                    ),
+                    BoxContainer(
+                        widget: Column(
+                      children: [
+                        ProfileCard(
+                          icon: Icons.exit_to_app_outlined,
+                          color: Colors.redAccent,
+                          title: 'Logout',
+                          tapHandler: controller.signOut,
+                        ),
+                      ],
+                    )),
                     SizedBox(
                       height: controller.getProportionateScreenHeight(50.0),
                     ),
