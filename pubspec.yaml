@@ -45,6 +45,7 @@ dependencies:
   shimmer: ^2.0.0
   grouped_list: ^4.2.0
   file_picker: ^4.5.1
+  flutter_easyloading: ^3.0.5
 
 
 dev_dependencies:
