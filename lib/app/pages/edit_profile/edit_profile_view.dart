@@ -90,11 +90,14 @@ class _EditProfilePageState
                 ControlledWidgetBuilder<EditProfileController>(
                   builder: (context, controller) {
                     return CustomImage(
-                        isProfilePicture: true,
-                        assetImage: 'assets/user_profile.png',
-                        imageUrl: controller.userProfilePicture.toString());
+                      assetImage: 'assets/user_profile.png',
+                      imageUrl: controller.userProfilePicture.toString(),
+                      profilePicturePath: _profilePicture,
+                      isProfilePicture: true,
+                    );
                   },
                 ),
+
                 //=================================================== Upload img
                 ControlledWidgetBuilder<EditProfileController>(
                   builder: (context, controller) {

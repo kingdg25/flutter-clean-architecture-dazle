@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
@@ -7,11 +9,13 @@ class CustomImage extends StatelessWidget {
   final String imageUrl;
   final String assetImage;
   final bool? isProfilePicture;
+  final File? profilePicturePath;
   const CustomImage(
       {Key? key,
       required this.assetImage,
       required this.imageUrl,
-      this.isProfilePicture = false})
+      this.isProfilePicture = false,
+      this.profilePicturePath})
       : super(key: key);
 
   @override
@@ -20,7 +24,11 @@ class CustomImage extends StatelessWidget {
       imageUrl: imageUrl,
       imageBuilder: (context, imageProvider) => CircleAvatar(
         radius: isProfilePicture == true ? 95 : 40,
-        backgroundImage: imageProvider,
+        backgroundImage: profilePicturePath == null
+            ? imageProvider
+            : (profilePicturePath == null
+                ? assetImage
+                : FileImage(profilePicturePath!)) as ImageProvider<Object>,
         backgroundColor: App.mainColor,
       ),
       progressIndicatorBuilder: (context, url, progress) => Center(
