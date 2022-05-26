@@ -6,8 +6,12 @@ import '../utils/app.dart';
 class CustomImage extends StatelessWidget {
   final String imageUrl;
   final String assetImage;
+  final bool? isProfilePicture;
   const CustomImage(
-      {Key? key, required this.assetImage, required this.imageUrl})
+      {Key? key,
+      required this.assetImage,
+      required this.imageUrl,
+      this.isProfilePicture = false})
       : super(key: key);
 
   @override
@@ -15,7 +19,7 @@ class CustomImage extends StatelessWidget {
     return CachedNetworkImage(
       imageUrl: imageUrl,
       imageBuilder: (context, imageProvider) => CircleAvatar(
-        radius: 40,
+        radius: isProfilePicture == true ? 95 : 40,
         backgroundImage: imageProvider,
         backgroundColor: App.mainColor,
       ),
@@ -27,7 +31,7 @@ class CustomImage extends StatelessWidget {
       ),
       errorWidget: (context, url, error) => CircleAvatar(
         backgroundColor: App.mainColor,
-        radius: 40,
+        radius: isProfilePicture == true ? 95 : 40,
         backgroundImage: AssetImage(assetImage),
       ),
     );
