@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:cached_network_image/cached_network_image.dart';
+import 'package:dazle/app/widgets/custom_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:image_picker/image_picker.dart';
@@ -89,35 +89,15 @@ class _EditProfilePageState
                 //================================================== Profile pic
                 ControlledWidgetBuilder<EditProfileController>(
                   builder: (context, controller) {
-                    return CachedNetworkImage(
+                    return CustomImage(
+                      assetImage: 'assets/user_profile.png',
                       imageUrl: controller.userProfilePicture.toString(),
-                      imageBuilder: (context, imageProvider) => CircleAvatar(
-                        radius: 95,
-                        backgroundImage: _profilePicture == null
-                            ? imageProvider
-                            : (_profilePicture == null
-                                    ? _loadImage
-                                    : FileImage(_profilePicture!))
-                                as ImageProvider<Object>,
-                        backgroundColor: App.mainColor,
-                      ),
-                      progressIndicatorBuilder: (context, url, progress) =>
-                          Center(
-                        child: CircularProgressIndicator(
-                          valueColor: AlwaysStoppedAnimation<Color?>(
-                              Colors.indigo[900]),
-                          value: progress.progress,
-                        ),
-                      ),
-                      errorWidget: (context, url, error) => Center(
-                        child: Image.asset(
-                          'assets/user_profile.png',
-                          fit: BoxFit.scaleDown,
-                        ),
-                      ),
+                      profilePicturePath: _profilePicture,
+                      isProfilePicture: true,
                     );
                   },
                 ),
+
                 //=================================================== Upload img
                 ControlledWidgetBuilder<EditProfileController>(
                   builder: (context, controller) {

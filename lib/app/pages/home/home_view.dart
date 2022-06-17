@@ -100,42 +100,44 @@ class _HomePageState extends ViewState<HomePage, HomeController> {
                     top: 0,
                     left: 1,
                     right: 1,
-                    child: CustomSearchField(
-                      controller: controller.searchTextController,
-                      hintText: 'Building, Neighboorhood, City',
-                      iconData: Icons.contacts_outlined,
-                      borderRadius: 10.0,
-                      filled: true,
-                      fillColor: Colors.white,
-                      enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.white),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.white),
-                      ),
-                      withIcon: true,
-                      isAssetIcon: true,
-                      asset: 'assets/icons/filter.png',
-                      onChanged: (value) {
-                        // controller.searchUser();
-                      },
-                      suggestionsCallback: (pattern) async {
-                        return [];
-                      },
-                      onSuggestionSelected: (suggestion) {
-                        // controller.searchTextController.text = suggestion;
-                        // controller.getMyConnection(filterByName: suggestion);
-                      },
-                      onSubmitted: (value) {
-                        // controller.getMyConnection(filterByName: value);
-                      },
-                      onPressedButton: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (buildContext) => FilterPage()));
-                      },
-                    ),
+                    child: true
+                        ? Container()
+                        : CustomSearchField(
+                            controller: controller.searchTextController,
+                            hintText: 'Building, Neighboorhood, City',
+                            iconData: Icons.contacts_outlined,
+                            borderRadius: 10.0,
+                            filled: true,
+                            fillColor: Colors.white,
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.white),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.white),
+                            ),
+                            withIcon: true,
+                            isAssetIcon: true,
+                            asset: 'assets/icons/filter.png',
+                            onChanged: (value) {
+                              // controller.searchUser();
+                            },
+                            suggestionsCallback: (pattern) async {
+                              return [];
+                            },
+                            onSuggestionSelected: (suggestion) {
+                              // controller.searchTextController.text = suggestion;
+                              // controller.getMyConnection(filterByName: suggestion);
+                            },
+                            onSubmitted: (value) {
+                              // controller.getMyConnection(filterByName: value);
+                            },
+                            onPressedButton: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (buildContext) => FilterPage()));
+                            },
+                          ),
                   ),
                   Positioned(
                     bottom: screenHeight / 14,

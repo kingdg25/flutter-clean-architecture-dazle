@@ -66,7 +66,7 @@ class MyListingController extends Controller {
     _suggestionListing = _myListing
         .where((element) =>
             element.amenities!.toString().toLowerCase().contains(keyword) ||
-            element.city!.toString().toLowerCase().contains(keyword) ||
+            element.location.toString().toLowerCase().contains(keyword) ||
             element.propertyType!.toString().toLowerCase().contains(keyword) ||
             element.propertyFor!.toString().toLowerCase().contains(keyword) ||
             element.timePeriod!.toString().toLowerCase().contains(keyword) ||
@@ -80,7 +80,6 @@ class MyListingController extends Controller {
                 .toString()
                 .toLowerCase()
                 .contains(keyword) ||
-            element.street!.toString().toLowerCase().contains(keyword) ||
             element.description!.toString().toLowerCase().contains(keyword) ||
             element.viewType!.toString().toLowerCase().contains(keyword))
         .toList();

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Brooky AI</string>
-    <string name="facebook_app_id">2559523267704447</string>
-    <string name="fb_login_protocol_scheme">fb2559523267704447</string>
-    <string name="facebook_client_token">cd4699a3e3f9fd5d38914e735ae1021c</string>
+    <string name="app_name">Dazle</string>
+    <string name="facebook_app_id">299457225731995</string>
+    <string name="fb_login_protocol_scheme">fb299457225731995</string>
+    <string name="facebook_client_token">65b63834fa2a27cb8a392b44b335d686</string>
 
-    <string name="default_web_client_id">857388716055-ue1bu6tjjkajvgvf5fbe8aka945505dr.apps.googleusercontent.com</string>
+    <!-- <string name="default_web_client_id">857388716055-ue1bu6tjjkajvgvf5fbe8aka945505dr.apps.googleusercontent.com</string> -->
 </resources>
