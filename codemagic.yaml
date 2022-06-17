@@ -8,7 +8,7 @@ workflows:
           # ANDROID_KEY_PASS
           # ANDROID_KEYSTORE_PASS
           # ANDROID_KEYSTORE_FILE
-      flutter: stable
+      flutter: 2.10.5
     triggering:
       events:
         - push
