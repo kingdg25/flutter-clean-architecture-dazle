@@ -58,9 +58,14 @@ class RegisterController extends Controller {
 
       Navigator.pushAndRemoveUntil(
           getContext(),
-          MaterialPageRoute(
-              builder: (BuildContext context) => EmailVerificationPage()),
+          MaterialPageRoute(builder: (BuildContext context) => LoginPage()),
           (Route<dynamic> route) => false);
+
+      // Navigator.pushAndRemoveUntil(
+      //     getContext(),
+      //     MaterialPageRoute(
+      //         builder: (BuildContext context) => EmailVerificationPage()),
+      //     (Route<dynamic> route) => false);
 
       return;
 

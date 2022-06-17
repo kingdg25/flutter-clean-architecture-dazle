@@ -20,6 +20,56 @@ class DataProfileRepository extends ProfileRepository {
   factory DataProfileRepository() => _instance;
 
   @override
+  Future<UserFeedback> createFeedback({UserFeedback? feedback}) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    final user = await App.getUser();
+    final uid = user.id;
+
+    if (uid != null) {
+      Map params = {
+        "feedback": feedback!.toJson(),
+      };
+
+      var response = await http.post(
+          Uri.parse("${Constants.siteURL}/api/feedbacks/create-feedback"),
+          body: convert.jsonEncode(params),
+          headers: {
+            'Authorization': 'Bearer ${prefs.getString("accessToken")}',
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          });
+
+      var jsonResponse = await convert.jsonDecode(response.body);
+      print(jsonResponse);
+      print(response.statusCode);
+
+      if (response.statusCode == 200) {
+        final Map createFeedbackRequest = jsonResponse["feedback"];
+
+        final UserFeedback feedbaclInstance = UserFeedback.fromJson(
+            createFeedbackRequest as Map<String, dynamic>);
+
+        print(feedbaclInstance.toJson());
+
+        return feedbaclInstance;
+      } else {
+        throw {
+          "error": true,
+          "error_type": "server_error",
+          "status": "Feedback was not created."
+        };
+      }
+    } else {
+      throw {
+        "error": false,
+        "error_type": "dynamic",
+        "status": "Has no user _id"
+      };
+    }
+  }
+
+  @override
   Future<void> update({User? user, File? profilePicture}) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     print('update user update user ${user!.toJson()}');

@@ -1,4 +1,3 @@
-
 import 'dart:async';
 
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
@@ -11,27 +10,42 @@ class MapLocationPickerController extends Controller {
   final CameraPosition? initialCameraPosition;
   final bool viewOnly;
 
-  MapLocationPickerController({this.initialCameraPosition, this.viewOnly = false})
-    : propertyCameraPositionTarget = initialCameraPosition!=null ? LatLng(initialCameraPosition.target.latitude, initialCameraPosition.target.longitude) : null,
-    markers = (initialCameraPosition!=null && viewOnly) ? {Marker(position: LatLng(initialCameraPosition.target.latitude, initialCameraPosition.target.longitude), markerId: MarkerId("property_position"))} : {};
+  MapLocationPickerController(
+      {this.initialCameraPosition, this.viewOnly = false})
+      : propertyCameraPositionTarget = initialCameraPosition != null
+            ? LatLng(initialCameraPosition.target.latitude,
+                initialCameraPosition.target.longitude)
+            : null,
+        markers = (initialCameraPosition != null && viewOnly)
+            ? {
+                Marker(
+                    position: LatLng(initialCameraPosition.target.latitude,
+                        initialCameraPosition.target.longitude),
+                    markerId: MarkerId("property_position"))
+              }
+            : {};
 
   Completer<GoogleMapController> googleMapFuture = Completer();
-
 
   late LatLng? propertyCameraPositionTarget;
   double propertyPositionTargetIconSize = 50.0;
 
   Set<Marker> markers = <Marker>{};
-  GoogleMapsPlaces googleMapPlaces = GoogleMapsPlaces(apiKey: "AIzaSyCSacvsau8vEncNbORdwU0buakm7Mx2rbE");
+  GoogleMapsPlaces googleMapPlaces =
+      GoogleMapsPlaces(apiKey: "AIzaSyCSacvsau8vEncNbORdwU0buakm7Mx2rbE");
 
   @override
   void initListeners() {
     // initPropertyCameraPosition();
+    getLocationPermission();
+    refreshUI();
   }
 
   initPropertyCameraPosition() async {
-    if (initialCameraPosition!=null) {
-      propertyCameraPositionTarget = LatLng(initialCameraPosition?.target.latitude ?? 8.482298546726664, initialCameraPosition?.target.longitude ?? 124.64927255100129);
+    if (initialCameraPosition != null) {
+      propertyCameraPositionTarget = LatLng(
+          initialCameraPosition?.target.latitude ?? 8.482298546726664,
+          initialCameraPosition?.target.longitude ?? 124.64927255100129);
       // refreshUI();
     }
   }
@@ -52,46 +66,55 @@ class MapLocationPickerController extends Controller {
   }
 
   changePropertyCameraPositionTarget(LatLng position) async {
-    propertyCameraPositionTarget = LatLng(position.latitude, position.longitude);
+    propertyCameraPositionTarget =
+        LatLng(position.latitude, position.longitude);
   }
 
   changePropertyMarker(LatLng position) async {
     await moveMapCamera(LatLng(position.latitude, position.longitude));
-    propertyCameraPositionTarget = LatLng(position.latitude, position.longitude);
+    propertyCameraPositionTarget =
+        LatLng(position.latitude, position.longitude);
     refreshUI();
   }
-  
+
   Future<PlacesDetailsResponse> getDetailsByPlaceId(String placeId) async {
     return await googleMapPlaces.getDetailsByPlaceId(placeId);
   }
 
-  Future<PlacesSearchResponse> searchNearbyWithRadius(Location location, num radius) async {
+  Future<PlacesSearchResponse> searchNearbyWithRadius(
+      Location location, num radius) async {
     return await googleMapPlaces.searchNearbyWithRadius(location, radius);
   }
-  
+
   inputPlace() async {
     Prediction? p = await PlacesAutocomplete.show(
-      context: getContext(),
-      apiKey: "AIzaSyCSacvsau8vEncNbORdwU0buakm7Mx2rbE",
-      mode: Mode.overlay, // Mode.fullscreen
-      // language: "ph",
-      types: [],
-      strictbounds: false,
-      onError: (PlacesAutocompleteResponse autoCompleteResponse) async {
-        print(autoCompleteResponse.errorMessage);
-      },
-      location: propertyCameraPositionTarget!=null ? Location(lat: propertyCameraPositionTarget!.latitude, lng: propertyCameraPositionTarget!.longitude) : null,
-      components: [
-        // new Component(Component.country, "ph")
-      ]
-    );
-    
-    if (p!=null) {
-      PlacesDetailsResponse placeDetailsResponse = await getDetailsByPlaceId(p.placeId ?? "");
+        context: getContext(),
+        apiKey: "AIzaSyCSacvsau8vEncNbORdwU0buakm7Mx2rbE",
+        mode: Mode.overlay, // Mode.fullscreen
+        // language: "ph",
+        types: [],
+        strictbounds: false,
+        onError: (PlacesAutocompleteResponse autoCompleteResponse) async {
+          print(autoCompleteResponse.errorMessage);
+        },
+        location: propertyCameraPositionTarget != null
+            ? Location(
+                lat: propertyCameraPositionTarget!.latitude,
+                lng: propertyCameraPositionTarget!.longitude)
+            : null,
+        components: [
+          // new Component(Component.country, "ph")
+        ]);
+
+    if (p != null) {
+      PlacesDetailsResponse placeDetailsResponse =
+          await getDetailsByPlaceId(p.placeId ?? "");
       Geometry? geometry = placeDetailsResponse.result.geometry;
-      if (geometry!=null) {
+      if (geometry != null) {
         final latLng = LatLng(geometry.location.lat, geometry.location.lng);
-        PlacesSearchResponse placesSearchResponse = await searchNearbyWithRadius(Location(lat: latLng.latitude, lng: latLng.longitude), 100.0);
+        PlacesSearchResponse placesSearchResponse =
+            await searchNearbyWithRadius(
+                Location(lat: latLng.latitude, lng: latLng.longitude), 100.0);
         print("WEWAEEAWEAWE");
         // print(placesSearchResponse.results[0].formattedAddress);
         // print(placesSearchResponse.results[0].toJson());
@@ -107,7 +130,9 @@ class MapLocationPickerController extends Controller {
 
   goToCurrentLocation() async {
     Position? geolocatorPosition = await getGeolocatorCurrentLocation();
-    if (geolocatorPosition!=null) await moveMapCamera(LatLng(geolocatorPosition.latitude, geolocatorPosition.longitude));
+    if (geolocatorPosition != null)
+      await moveMapCamera(
+          LatLng(geolocatorPosition.latitude, geolocatorPosition.longitude));
   }
 
   Future<Position?> getGeolocatorCurrentLocation() async {
@@ -122,19 +147,38 @@ class MapLocationPickerController extends Controller {
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
       if (permission == LocationPermission.denied) {
-      return null;
+        return null;
       }
     }
     if (permission == LocationPermission.deniedForever) {
       return null;
-    } 
+    }
 
     return await Geolocator.getCurrentPosition();
+  }
+
+  void getLocationPermission() async {
+    bool serviceEnabled;
+    LocationPermission permission;
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      return null;
+    }
+
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        return null;
+      }
+    }
+    if (permission == LocationPermission.deniedForever) {
+      return null;
+    }
   }
 
   @override
   void onDisposed() {
     super.onDisposed();
   }
-
 }
