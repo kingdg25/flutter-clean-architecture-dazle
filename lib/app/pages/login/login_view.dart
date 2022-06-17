@@ -12,8 +12,6 @@ import 'package:dazle/app/pages/register/register_view.dart';
 import 'package:dazle/app/widgets/social_login.dart';
 import 'package:dazle/data/repositories/data_authentication_repository.dart';
 
-
-
 class LoginPage extends View {
   static const String id = 'login_page';
 
@@ -23,37 +21,37 @@ class LoginPage extends View {
   _LoginPageState createState() => _LoginPageState();
 }
 
-
 class _LoginPageState extends ViewState<LoginPage, LoginController> {
   _LoginPageState() : super(LoginController(DataAuthenticationRepository()));
 
   @override
   Widget get view {
     return Scaffold(
-      key: globalKey,
-      backgroundColor: App.mainColor,
-      body: ControlledWidgetBuilder<LoginController>(
-        builder: (context, controller) {
+        key: globalKey,
+        backgroundColor: App.mainColor,
+        body: ControlledWidgetBuilder<LoginController>(
+            builder: (context, controller) {
           var _formKey = controller.loginFormKey;
 
           return Center(
             child: SingleChildScrollView(
               padding: EdgeInsets.only(
-                top: MediaQuery.of(context).orientation == Orientation.landscape ? 80.0 : 20.0,
-                bottom: 40.0,
-                left: 40.0,
-                right: 40.0
-              ),
+                  top: MediaQuery.of(context).orientation ==
+                          Orientation.landscape
+                      ? 80.0
+                      : 20.0,
+                  bottom: 40.0,
+                  left: 40.0,
+                  right: 40.0),
               child: Container(
                 constraints: BoxConstraints(maxWidth: 300, minWidth: 250),
                 child: Column(
                   children: [
                     CustomText(
-                      text: "Welcome",
-                      fontSize: 30.0,
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold
-                    ),
+                        text: "Welcome",
+                        fontSize: 30.0,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold),
                     CustomText(
                       text: 'Sign in to continue',
                       fontSize: 18.0,
@@ -66,51 +64,46 @@ class _LoginPageState extends ViewState<LoginPage, LoginController> {
                       child: Column(
                         children: [
                           CustomEmailField(
-                            controller: controller.emailTextController,
-                            hintText: 'Email Address',
-                            filled: true,
-                            hintColor: Colors.white
-                          ),
+                              controller: controller.emailTextController,
+                              hintText: 'Email Address',
+                              filled: true,
+                              hintColor: Colors.white),
                           CustomPasswordField(
-                            controller: controller.passwordTextController,
-                            hintText: 'Password',
-                            filled: true,
-                            hintColor: Colors.white
-                          )
+                              controller: controller.passwordTextController,
+                              hintText: 'Password',
+                              filled: true,
+                              hintColor: Colors.white)
                         ],
                       ),
                     ),
                     Container(
                       alignment: Alignment.centerRight,
                       child: CustomFlatButton(
-                        text: 'Forgot Password?',
-                        color: Colors.white,
-                        fontSize: 13.0,
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (buildContext) => ForgotPasswordPage()
-                            )
-                          );
-                        }
-                      ),
+                          text: 'Forgot Password?',
+                          color: Colors.white,
+                          fontSize: 13.0,
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (buildContext) =>
+                                        ForgotPasswordPage()));
+                          }),
                     ),
                     SizedBox(height: 30.0),
                     CustomButton(
-                      text: 'SIGN IN',
-                      backgroudColor: Color.fromRGBO(0, 126, 203, 1.0),
-                      expanded: true,
-                      borderRadius: 10.0,
-                      onPressed: () {
-                        FocusScope.of(context).unfocus();
+                        text: 'SIGN IN',
+                        backgroudColor: Color.fromRGBO(0, 126, 203, 1.0),
+                        expanded: true,
+                        borderRadius: 10.0,
+                        onPressed: () {
+                          FocusScope.of(context).unfocus();
 
-                        if (_formKey.currentState!.validate()) {
-                          _formKey.currentState!.save();
-                          controller.login();
-                        }
-                      }
-                    ),
+                          if (_formKey.currentState!.validate()) {
+                            _formKey.currentState!.save();
+                            controller.login();
+                          }
+                        }),
                     SizedBox(height: 30.0),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -141,41 +134,38 @@ class _LoginPageState extends ViewState<LoginPage, LoginController> {
                     SocialLogin(
                       googleHandleSignIn: controller.googleSignIn,
                       facebookHandleSignIn: controller.facebookSignIn,
-                      appleHandleSignIn: null, 
+                      appleHandleSignIn: null,
                     ),
-                    SizedBox(height: 80.0),
+                    SizedBox(height: 50.0),
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Flexible(
-                          child: CustomText(
-                            text: "Don’t have an account yet?",
-                            color: Colors.white,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          // Flexible(
+                          //   child: CustomText(
+                          //     text: "Don’t have an account yet?",
+                          //     color: Colors.white,
+                          //     fontWeight: FontWeight.w500,
+                          //   )
+                          // ),
+                          CustomFlatButton(
+                            text: 'Register with Email Address.',
+                            color: Color.fromRGBO(0, 126, 203, 1.0),
+                            // color: Colors.white,
                             fontWeight: FontWeight.w500,
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (buildContext) =>
+                                          RegisterPage()));
+                            },
                           )
-                        ),
-                        CustomFlatButton(
-                          text: 'Click here',
-                          color: Color.fromRGBO(0, 126, 203, 1.0),
-                          fontWeight: FontWeight.w500,
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (buildContext) => RegisterPage()
-                              )
-                            );
-                          },
-                        )
-                      ]
-                    )
+                        ])
                   ],
                 ),
               ),
             ),
           );
-        }
-      )
-    );
+        }));
   }
 }

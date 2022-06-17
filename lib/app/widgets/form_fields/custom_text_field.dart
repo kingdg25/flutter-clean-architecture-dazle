@@ -39,7 +39,7 @@ class CustomTextField extends StatelessWidget {
       this.readOnly = false,
       this.isRequired = false,
       this.keyboardType = TextInputType.text,
-      this.fontSize = 16.0,
+      this.fontSize = 14.0,
       this.validator,
       this.onTap,
       this.onSaved,

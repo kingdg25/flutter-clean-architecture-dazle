@@ -474,91 +474,150 @@ class CreateListingController extends Controller {
   validatePage2() {
     bool isValidated = false;
     bool numberFound = areaTextController.text.contains(new RegExp(r'[0-9]'));
+    List<String> furnishedAndFloorAreaProperties = [
+      'Apartment',
+      'Condo',
+      'Villa',
+      'Townhouse',
+      'Commercial Building',
+      'Warehouse',
+      'Residential House'
+    ];
+    List<String> bedroomAndBathroomProperties = [
+      'Apartment',
+      'Condo',
+      'Villa',
+      'Townhouse',
+      'Residential House'
+    ];
+    List<String> frontageAreaProperties = [
+      'Villa',
+      'Townhouse',
+      'Residential House'
+    ];
+    bool generalValidation =
+        page2GeneralValidation(); // Execute the general validation
 
-    // Page 2 Lot and Commercial Validation
-    if (propertyType == 'Lot' ||
-        propertyType == 'Farm Lot' ||
-        propertyType == 'Commercial Lot' ||
-        propertyType == 'Commercial Building') {
-      //Include floor area if Commercial Building
-      if (propertyType == 'Commercial Building') {
-        if (numberOfParking != null &&
-            areaTextController.text.isNotEmpty &&
-            numberFound == true &&
-            areaTextController.text != '0' &&
+    if (furnishedAndFloorAreaProperties.contains(propertyType)) {
+      if (bedroomAndBathroomProperties.contains(propertyType)) {
+        //general, FA , furnished, Bedroom and Bathroom
+        if (generalValidation == true &&
             floorAreaTextController.text.isNotEmpty &&
             floorAreaTextController.text != '0' &&
-            titleTextController.text.isNotEmpty &&
-            descriptionTextController.text.isNotEmpty &&
-            ownwership != null &&
-            isYourProperty != null) {
-          numOfBathroomsController.text = '';
-          numOfBedroomController.text = '';
-          isValidated = true;
-        }
-      } else if (propertyType == 'Lot' ||
-          propertyType == 'Farm Lot' ||
-          propertyType == 'Commercial Lot') {
-        // furnished not required
-        if (numberOfParking != null &&
-            areaTextController.text.isNotEmpty &&
-            numberFound == true &&
-            areaTextController.text != '0' &&
-            titleTextController.text.isNotEmpty &&
-            descriptionTextController.text.isNotEmpty &&
-            ownwership != null) {
-          floorAreaTextController.text = '';
-          numOfBathroomsController.text = '';
-          numOfBedroomController.text = '';
-          isYourProperty = null;
+            isYourProperty != null &&
+            numOfBedroomController.text.isNotEmpty &&
+            numOfBedroomController.text != '0' &&
+            numOfBathroomsController.text.isNotEmpty &&
+            numOfBathroomsController.text != '0') {
           isValidated = true;
         }
       } else {
-        if (numberOfParking != null &&
-            areaTextController.text.isNotEmpty &&
-            numberFound == true &&
-            areaTextController.text != '0' &&
-            titleTextController.text.isNotEmpty &&
-            descriptionTextController.text.isNotEmpty &&
-            ownwership != null &&
+        //general, FA , furnished,
+        if (generalValidation == true &&
+            floorAreaTextController.text.isNotEmpty &&
+            floorAreaTextController.text != '0' &&
             isYourProperty != null) {
-          floorAreaTextController.text = '';
+          numOfBathroomsController.text = '';
+          numOfBedroomController.text = '';
           isValidated = true;
         }
       }
-    } else if (propertyType == 'Warehouse') {
-      if (numOfBathroomsController.text.isNotEmpty &&
-          numOfBathroomsController.text != '0' &&
-          numberOfParking != null &&
-          areaTextController.text.isNotEmpty &&
-          numberFound == true &&
-          areaTextController.text != '0' &&
-          titleTextController.text.isNotEmpty &&
-          descriptionTextController.text.isNotEmpty &&
-          ownwership != null &&
-          isYourProperty != null) {
-        numOfBedroomController.text = '';
-        floorAreaTextController.text = '';
-        isValidated = true;
-      }
     } else {
-      if (numOfBedroomController.text.isNotEmpty &&
-          numOfBedroomController.text != '0' &&
-          numOfBathroomsController.text.isNotEmpty &&
-          numOfBathroomsController.text != '0' &&
-          numberOfParking != null &&
-          areaTextController.text.isNotEmpty &&
-          numberFound == true &&
-          areaTextController.text != '0' &&
-          floorAreaTextController.text.isNotEmpty &&
-          floorAreaTextController.text != '0' &&
-          ownwership != null &&
-          titleTextController.text.isNotEmpty &&
-          descriptionTextController.text.isNotEmpty &&
-          isYourProperty != null) {
+      // only General
+      // Commercial Lot, Lot, Farm Lot, Beach
+      if (generalValidation == true) {
+        floorAreaTextController.text = '';
+        numOfBathroomsController.text = '';
+        numOfBedroomController.text = '';
+        isYourProperty = null;
         isValidated = true;
       }
     }
+
+    // // Page 2 Lot and Commercial Validation
+    // if (propertyType == 'Lot' ||
+    //     propertyType == 'Farm Lot' ||
+    //     propertyType == 'Commercial Lot' ||
+    //     propertyType == 'Commercial Building') {
+    //   //Include floor area if Commercial Building
+    //   if (propertyType == 'Commercial Building') {
+    //     if (numberOfParking != null &&
+    //         areaTextController.text.isNotEmpty &&
+    //         numberFound == true &&
+    //         areaTextController.text != '0' &&
+    //         floorAreaTextController.text.isNotEmpty &&
+    //         floorAreaTextController.text != '0' &&
+    //         titleTextController.text.isNotEmpty &&
+    //         descriptionTextController.text.isNotEmpty &&
+    //         ownwership != null &&
+    //         isYourProperty != null) {
+    //       numOfBathroomsController.text = '';
+    //       numOfBedroomController.text = '';
+    //       isValidated = true;
+    //     }
+    //   } else if (propertyType == 'Lot' ||
+    //       propertyType == 'Farm Lot' ||
+    //       propertyType == 'Commercial Lot') {
+    //     // furnished not required
+    //     if (numberOfParking != null &&
+    //         areaTextController.text.isNotEmpty &&
+    //         numberFound == true &&
+    //         areaTextController.text != '0' &&
+    //         titleTextController.text.isNotEmpty &&
+    //         descriptionTextController.text.isNotEmpty &&
+    //         ownwership != null) {
+    //       floorAreaTextController.text = '';
+    //       numOfBathroomsController.text = '';
+    //       numOfBedroomController.text = '';
+    //       isYourProperty = null;
+    //       isValidated = true;
+    //     }
+    //   } else {
+    //     if (numberOfParking != null &&
+    //         areaTextController.text.isNotEmpty &&
+    //         numberFound == true &&
+    //         areaTextController.text != '0' &&
+    //         titleTextController.text.isNotEmpty &&
+    //         descriptionTextController.text.isNotEmpty &&
+    //         ownwership != null &&
+    //         isYourProperty != null) {
+    //       floorAreaTextController.text = '';
+    //       isValidated = true;
+    //     }
+    //   }
+    // } else if (propertyType == 'Warehouse') {
+    //   if (numOfBathroomsController.text.isNotEmpty &&
+    //       numOfBathroomsController.text != '0' &&
+    //       numberOfParking != null &&
+    //       areaTextController.text.isNotEmpty &&
+    //       numberFound == true &&
+    //       areaTextController.text != '0' &&
+    //       titleTextController.text.isNotEmpty &&
+    //       descriptionTextController.text.isNotEmpty &&
+    //       ownwership != null &&
+    //       isYourProperty != null) {
+    //     numOfBedroomController.text = '';
+    //     floorAreaTextController.text = '';
+    //     isValidated = true;
+    //   }
+    // } else {
+    //   if (numOfBedroomController.text.isNotEmpty &&
+    //       numOfBedroomController.text != '0' &&
+    //       numOfBathroomsController.text.isNotEmpty &&
+    //       numOfBathroomsController.text != '0' &&
+    //       numberOfParking != null &&
+    //       areaTextController.text.isNotEmpty &&
+    //       numberFound == true &&
+    //       areaTextController.text != '0' &&
+    //       floorAreaTextController.text.isNotEmpty &&
+    //       floorAreaTextController.text != '0' &&
+    //       ownwership != null &&
+    //       titleTextController.text.isNotEmpty &&
+    //       descriptionTextController.text.isNotEmpty &&
+    //       isYourProperty != null) {
+    //     isValidated = true;
+    //   }
+    // }
 
     // Error Message if isValidated is False
     if (isValidated == false) {
@@ -567,6 +626,20 @@ class CreateListingController extends Controller {
           text: "All inputs in this section are required.",
           title: "Values missing.");
     }
+    return isValidated;
+  }
+
+  bool page2GeneralValidation() {
+    bool isValidated = false;
+    if (numberOfParking != null &&
+        areaTextController.text.isNotEmpty &&
+        areaTextController.text != '0' &&
+        ownwership != null &&
+        titleTextController.text.isNotEmpty &&
+        descriptionTextController.text.isNotEmpty) {
+      isValidated = true;
+    }
+
     return isValidated;
   }
 

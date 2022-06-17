@@ -102,7 +102,7 @@ class CustomSearchField extends StatelessWidget {
                         height: 80,
                       ),
                       title: Text('${result.formatPrice} PHP'),
-                      subtitle: Text('${result.street}, ${result.city}'),
+                      subtitle: Text(result.completeAddress),
                       isThreeLine: true,
                     );
                   },
