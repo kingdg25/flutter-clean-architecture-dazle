@@ -10,6 +10,7 @@ import 'package:dazle/app/pages/home/home_presenter.dart';
 import 'package:dazle/domain/entities/user.dart';
 import 'package:flutter_overlay_loader/flutter_overlay_loader.dart';
 import 'package:dazle/app/pages/login/login_view.dart';
+import 'package:mixpanel_flutter/mixpanel_flutter.dart';
 
 class HomeController extends Controller {
   final HomePresenter homePresenter;
@@ -48,6 +49,9 @@ class HomeController extends Controller {
 
   @override
   void initListeners() {
+    // Mix Panel Initialized
+    initMixpanel();
+
     homePresenter.getUser();
     // get user
     homePresenter.getUserOnNext = (User res) {
@@ -215,6 +219,12 @@ class HomeController extends Controller {
       print('logout on error $e');
       AppConstant.showLoader(getContext(), false);
     };
+  }
+
+  Future<void> initMixpanel() async {
+    var mixpanel = await Mixpanel.init("30f8919ea459d5bc9530fa6428dbd457",
+        optOutTrackingDefault: false);
+    print('MixPanel Initialized!!!!');
   }
 
   void getData() {

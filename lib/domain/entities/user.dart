@@ -71,3 +71,26 @@ class Verification {
   Map<String, dynamic> toJson() =>
       {'user_id': user_id, 'status': status, 'attachment': attachment};
 }
+
+class UserFeedback {
+  final String? userId;
+  final String? userDisplayName;
+  final String? likes;
+  final String? improvements;
+
+  UserFeedback(
+      this.likes, this.improvements, this.userId, this.userDisplayName);
+
+  UserFeedback.fromJson(Map<String, dynamic> json)
+      : userId = json['user_id'],
+        userDisplayName = json['user_display_name'],
+        likes = json['likes'],
+        improvements = json['improvements'];
+
+  Map<String, dynamic> toJson() => {
+        'user_id': userId,
+        'user_display_name': userDisplayName,
+        'likes': likes,
+        'improvements': improvements
+      };
+}

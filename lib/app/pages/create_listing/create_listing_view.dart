@@ -72,6 +72,28 @@ class _CreateListingPageState
             ))
         .toList();
 
+    /// FOR HIDING NON-GENERAL FIELDS IN PAGE 2
+    List<String> furnishedAndFloorAreaProperties = [
+      'Apartment',
+      'Condo',
+      'Villa',
+      'Townhouse',
+      'Commercial Building',
+      'Warehouse',
+      'Residential House'
+    ];
+    List<String> bedroomAndBathroomProperties = [
+      'Apartment',
+      'Condo',
+      'Villa',
+      'Townhouse',
+      'Residential House'
+    ];
+    List<String> frontageAreaProperties = [
+      'Villa',
+      'Townhouse',
+      'Residential House'
+    ];
     return Scaffold(
         key: globalKey,
         appBar: CustomAppBar(
@@ -119,6 +141,7 @@ class _CreateListingPageState
                   autowidth: true,
                   radioWidth: 120,
                   buttonLables: [
+                    "Residential House",
                     "Apartment",
                     "Condo",
                     "Villa",
@@ -128,10 +151,10 @@ class _CreateListingPageState
                     "Warehouse",
                     "Lot",
                     "Farm Lot",
-                    "Residential House",
                     "Beach",
                   ],
                   buttonValues: [
+                    "Residential House",
                     "Apartment",
                     "Condo",
                     "Villa",
@@ -141,7 +164,6 @@ class _CreateListingPageState
                     "Warehouse",
                     "Lot",
                     "Farm Lot",
-                    "Residential House",
                     "Beach",
                   ],
                   radioButtonValue: (value) {
@@ -243,20 +265,16 @@ class _CreateListingPageState
             ListView(
               padding: EdgeInsets.only(bottom: 20),
               children: [
-                controller.propertyType == 'Lot' ||
-                        controller.propertyType == 'Farm Lot' ||
-                        controller.propertyType == 'Commercial Building' ||
-                        controller.propertyType == 'Warehouse' ||
-                        controller.propertyType == 'Commercial Lot'
+                bedroomAndBathroomProperties
+                            .contains(controller.propertyType) ==
+                        false
                     ? Container()
                     : AppConstant.customTitleField(
                         padding: EdgeInsets.only(left: 18),
                         title: 'Number of Bedrooms'),
-                controller.propertyType == 'Lot' ||
-                        controller.propertyType == 'Farm Lot' ||
-                        controller.propertyType == 'Warehouse' ||
-                        controller.propertyType == 'Commercial Building' ||
-                        controller.propertyType == 'Commercial Lot'
+                bedroomAndBathroomProperties
+                            .contains(controller.propertyType) ==
+                        false
                     ? Container()
                     : Container(
                         padding: EdgeInsets.symmetric(horizontal: 20),
@@ -269,17 +287,15 @@ class _CreateListingPageState
                           ],
                         ),
                       ),
-                controller.propertyType == 'Lot' ||
-                        controller.propertyType == 'Farm Lot' ||
-                        controller.propertyType == 'Commercial Building' ||
-                        controller.propertyType == 'Commercial Lot'
+                bedroomAndBathroomProperties
+                            .contains(controller.propertyType) ==
+                        false
                     ? Container()
                     : AppConstant.customTitleField(
                         title: 'Number of Bathrooms'),
-                controller.propertyType == 'Lot' ||
-                        controller.propertyType == 'Farm Lot' ||
-                        controller.propertyType == 'Commercial Building' ||
-                        controller.propertyType == 'Commercial Lot'
+                bedroomAndBathroomProperties
+                            .contains(controller.propertyType) ==
+                        false
                     ? Container()
                     : Container(
                         padding: EdgeInsets.symmetric(horizontal: 20),
@@ -335,16 +351,12 @@ class _CreateListingPageState
                     inputFormatters: [ThousandsFormatter(allowFraction: true)],
                   ),
                 ),
-                controller.propertyType == 'Apartment' ||
-                        controller.propertyType == 'Commercial Building' ||
-                        controller.propertyType == 'Residential House' ||
-                        controller.propertyType == 'Condo'
+                furnishedAndFloorAreaProperties
+                        .contains(controller.propertyType)
                     ? AppConstant.customTitleField(title: 'Floor Area')
                     : Container(),
-                controller.propertyType == 'Apartment' ||
-                        controller.propertyType == 'Commercial Building' ||
-                        controller.propertyType == 'Residential House' ||
-                        controller.propertyType == 'Condo'
+                furnishedAndFloorAreaProperties
+                        .contains(controller.propertyType)
                     ? Container(
                         padding: EdgeInsets.symmetric(horizontal: 20),
                         child: CustomTextField(
@@ -358,27 +370,35 @@ class _CreateListingPageState
                         ),
                       )
                     : Container(),
-                AppConstant.customTitleField(title: 'Frontage Area'),
-                Container(
-                  padding: EdgeInsets.symmetric(horizontal: 20),
-                  child: CustomTextField(
-                    controller: controller.frontageTextController,
-                    keyboardType:
-                        const TextInputType.numberWithOptions(decimal: true),
-                    hintText: 'Frontage Area (sqm)',
-                    inputFormatters: [ThousandsFormatter(allowFraction: true)],
-                  ),
-                ),
-                controller.propertyType == 'Lot' ||
-                        controller.propertyType == 'Farm Lot' ||
-                        controller.propertyType == 'Commercial Lot'
+                frontageAreaProperties.contains(controller.propertyType) ==
+                        false
+                    ? Container()
+                    : AppConstant.customTitleField(title: 'Frontage Area'),
+                frontageAreaProperties.contains(controller.propertyType) ==
+                        false
+                    ? Container()
+                    : Container(
+                        padding: EdgeInsets.symmetric(horizontal: 20),
+                        child: CustomTextField(
+                          controller: controller.frontageTextController,
+                          keyboardType: const TextInputType.numberWithOptions(
+                              decimal: true),
+                          hintText: 'Frontage Area (sqm)',
+                          inputFormatters: [
+                            ThousandsFormatter(allowFraction: true)
+                          ],
+                        ),
+                      ),
+                furnishedAndFloorAreaProperties
+                            .contains(controller.propertyType) ==
+                        false
                     ? Container()
                     : AppConstant.customTitleField(
                         padding: EdgeInsets.only(left: 18),
                         title: 'Is your Property'),
-                controller.propertyType == 'Lot' ||
-                        controller.propertyType == 'Farm Lot' ||
-                        controller.propertyType == 'Commercial Lot'
+                furnishedAndFloorAreaProperties
+                            .contains(controller.propertyType) ==
+                        false
                     ? Container()
                     : CustomRadioGroupButton(
                         autowidth: true,
