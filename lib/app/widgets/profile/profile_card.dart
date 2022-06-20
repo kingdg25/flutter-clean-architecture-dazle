@@ -75,7 +75,10 @@ class ProfileCard extends StatelessWidget {
                 fontWeight: FontWeight.w600,
               ),
             ),
-            Icon(Icons.arrow_forward_ios_rounded),
+            Icon(
+              Icons.arrow_forward_ios_rounded,
+              size: 15,
+            ),
           ],
         ),
       ),

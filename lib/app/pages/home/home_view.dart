@@ -4,6 +4,7 @@ import 'package:dazle/app/pages/find_match/find_match_view.dart';
 import 'package:dazle/app/pages/home/components/header_home_tile.dart';
 import 'package:dazle/app/pages/home/components/property_list_tile.dart';
 import 'package:dazle/app/pages/home/components/photo_list_tile.dart';
+import 'package:dazle/app/pages/profile/profile_view.dart';
 import 'package:dazle/app/utils/app.dart';
 import 'package:dazle/app/utils/app_constant.dart';
 import 'package:dazle/app/widgets/form_fields/custom_search_field.dart';
@@ -38,13 +39,13 @@ class _HomePageState extends ViewState<HomePage, HomeController> {
             Container(
               padding: EdgeInsets.only(right: 10.0),
               child: IconButton(
-                  icon: Image.asset('assets/icons/find.png'),
-                  iconSize: 30,
+                  icon: Image.asset('assets/user_profile.png'),
+                  iconSize: 45,
                   onPressed: () {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (buildContext) => FindMatchPage()));
+                            builder: (buildContext) => ProfilePage()));
                   }),
             )
           ],

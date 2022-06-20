@@ -5,19 +5,22 @@ class ListingDetailsIconButton extends StatelessWidget {
   final String? tooltip;
   final IconData iconData;
   final Function onPressed;
+  final double iconPadding;
+  final double iconSize;
 
-  ListingDetailsIconButton({
-    this.margin = const EdgeInsets.only(right: 8),
-    this.tooltip,
-    required this.iconData,
-    required this.onPressed
-  });
+  ListingDetailsIconButton(
+      {this.margin = const EdgeInsets.only(right: 8),
+      this.tooltip,
+      required this.iconData,
+      required this.onPressed,
+      this.iconPadding = 12,
+      this.iconSize = 20});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: margin,
-      padding: EdgeInsets.all(12),
+      padding: EdgeInsets.all(iconPadding),
       decoration: BoxDecoration(
         color: Colors.white,
         shape: BoxShape.circle,
@@ -25,11 +28,8 @@ class ListingDetailsIconButton extends StatelessWidget {
       child: IconButton(
         padding: EdgeInsets.zero,
         constraints: BoxConstraints(),
-        iconSize: 20,
-        icon: Icon(
-          iconData, 
-          color: Colors.black
-        ),
+        iconSize: iconSize,
+        icon: Icon(iconData, color: Colors.black),
         tooltip: tooltip,
         onPressed: onPressed as void Function()?,
       ),

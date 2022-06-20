@@ -14,14 +14,14 @@ class BoxContainer extends StatelessWidget {
             topRight: Radius.circular(10),
             bottomLeft: Radius.circular(10),
             bottomRight: Radius.circular(10)),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.2),
-            spreadRadius: 1,
-            blurRadius: 4,
-            offset: Offset(0, 4), // changes position of shadow
-          ),
-        ],
+        // boxShadow: [
+        //   BoxShadow(
+        //     color: Colors.grey.withOpacity(0.2),
+        //     spreadRadius: 1,
+        //     blurRadius: 4,
+        //     offset: Offset(0, 4), // changes position of shadow
+        //   ),
+        // ],
       ),
       child: widget,
     );

@@ -1,3 +1,4 @@
+import 'package:dazle/app/widgets/custom_appbar.dart';
 import 'package:dazle/app/widgets/custom_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
@@ -30,15 +31,18 @@ class _ProfilePageState extends ViewState<ProfilePage, ProfileController> {
   Widget get view {
     return Scaffold(
       key: globalKey,
-      appBar: AppBar(
-        title: CustomText(
-          text: 'Profile',
-          fontSize: 20,
-          fontWeight: FontWeight.w600,
-        ),
-        automaticallyImplyLeading: false,
-        backgroundColor: Colors.white,
+      appBar: CustomAppBar(
+        title: '',
       ),
+      // AppBar(
+      //   title: CustomText(
+      //     text: 'Profile',
+      //     fontSize: 20,
+      //     fontWeight: FontWeight.w600,
+      //   ),
+      //   automaticallyImplyLeading: true,
+      //   backgroundColor: Colors.white,
+      // ),
       backgroundColor: Colors.white,
       body: ControlledWidgetBuilder<ProfileController>(
         builder: (context, controller) {
@@ -84,7 +88,12 @@ class _ProfilePageState extends ViewState<ProfilePage, ProfileController> {
                         color: Colors.black.withOpacity(.5),
                       ),
                     ),
+                    // Divider(
+                    //   height: controller.getProportionateScreenHeight(32.0),
+                    // ),
                     Divider(
+                      color: App.hintColor,
+                      thickness: 0.1,
                       height: controller.getProportionateScreenHeight(32.0),
                     ),
                     BoxContainer(
@@ -111,9 +120,14 @@ class _ProfilePageState extends ViewState<ProfilePage, ProfileController> {
                         ),
                       ],
                     )),
-                    SizedBox(
+                    Divider(
+                      color: App.hintColor,
+                      thickness: 0.1,
                       height: controller.getProportionateScreenHeight(15.0),
                     ),
+                    // SizedBox(
+                    //   height: controller.getProportionateScreenHeight(15.0),
+                    // ),
                     BoxContainer(
                       widget: Column(
                         children: [
@@ -144,9 +158,14 @@ class _ProfilePageState extends ViewState<ProfilePage, ProfileController> {
                         ],
                       ),
                     ),
-                    SizedBox(
+                    Divider(
+                      color: App.hintColor,
+                      thickness: 0.1,
                       height: controller.getProportionateScreenHeight(15.0),
                     ),
+                    // SizedBox(
+                    //   height: controller.getProportionateScreenHeight(15.0),
+                    // ),
                     BoxContainer(
                         widget: Column(
                       children: [

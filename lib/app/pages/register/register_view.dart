@@ -138,13 +138,13 @@ class _RegisterPageState extends ViewState<RegisterPage, RegisterController> {
                     items: ['Broker', 'Salesperson'],
                     onChanged: controller.setPosition,
                   ),
-                  TitleField(title: controller.brokerLicenseNumberTextField),
-                  CustomTextField(
-                    controller: controller.brokerLicenseNumberTextController,
-                    hintText: controller.brokerLicenseNumberTextField,
-                    isRequired: true,
-                    keyboardType: TextInputType.number,
-                  ),
+                  // TitleField(title: controller.brokerLicenseNumberTextField),
+                  // CustomTextField(
+                  //   controller: controller.brokerLicenseNumberTextController,
+                  //   hintText: controller.brokerLicenseNumberTextField,
+                  //   isRequired: true,
+                  //   keyboardType: TextInputType.number,
+                  // ),
                   SizedBox(height: 20.0),
                   CustomIconButton(
                     onPressed: () {
@@ -152,8 +152,11 @@ class _RegisterPageState extends ViewState<RegisterPage, RegisterController> {
 
                       if (_formKey1.currentState!.validate()) {
                         _formKey1.currentState!.save();
-
-                        controller.checkLicenseNumber();
+                        controller.registerPageController
+                          ..nextPage(
+                              duration: Duration(milliseconds: 500),
+                              curve: Curves.ease);
+                        // controller.checkLicenseNumber();
                       }
                     },
                   )
