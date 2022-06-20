@@ -30,7 +30,7 @@
          FlutterApplication and put your custom class here. -->
     <application
         android:name="${applicationName}"
-        android:label="dazle"
+        android:label="Dazle"
         android:largeHeap="true"
         android:requestLegacyExternalStorage="true"
         android:icon="@mipmap/ic_launcher">
