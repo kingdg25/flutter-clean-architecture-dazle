@@ -89,37 +89,67 @@ class _EditProfilePageState
                 //================================================== Profile pic
                 ControlledWidgetBuilder<EditProfileController>(
                   builder: (context, controller) {
-                    return CustomImage(
-                      assetImage: 'assets/user_profile.png',
-                      imageUrl: controller.userProfilePicture.toString(),
-                      profilePicturePath: _profilePicture,
-                      isProfilePicture: true,
+                    return Stack(
+                      children: [
+                        CircleAvatar(
+                          radius: 95,
+                          backgroundImage: controller.userProfilePicture !=
+                                      null &&
+                                  _profilePicture == null
+                              ? NetworkImage(controller.userProfilePicture!)
+                              : (_profilePicture == null
+                                      ? AssetImage('assets/user_profile.png')
+                                      : FileImage(_profilePicture!))
+                                  as ImageProvider<Object>,
+                          backgroundColor: App.mainColor,
+                        ),
+                        Positioned(
+                          right: 0,
+                          bottom: 1,
+                          child: CircleAvatar(
+                              backgroundColor: Colors.grey[200],
+                              radius: 25,
+                              child: IconButton(
+                                icon: Icon(
+                                  Icons.camera_alt_rounded,
+                                  color: App.mainColor,
+                                  size: 30,
+                                ),
+                                onPressed: () {
+                                  showModalBottomSheet(
+                                    context: context,
+                                    builder: ((builder) => bottomSheet()),
+                                  );
+                                },
+                              )),
+                        )
+                      ],
                     );
                   },
                 ),
 
-                //=================================================== Upload img
-                ControlledWidgetBuilder<EditProfileController>(
-                  builder: (context, controller) {
-                    return CircleAvatar(
-                      backgroundColor: Colors.grey[200],
-                      radius: 25,
-                      child: IconButton(
-                        icon: Icon(
-                          Icons.camera_alt_rounded,
-                          color: App.mainColor,
-                          size: 30,
-                        ),
-                        onPressed: () {
-                          showModalBottomSheet(
-                            context: context,
-                            builder: ((builder) => bottomSheet()),
-                          );
-                        },
-                      ),
-                    );
-                  },
-                ),
+                // //=================================================== Upload img
+                // ControlledWidgetBuilder<EditProfileController>(
+                //   builder: (context, controller) {
+                //     return CircleAvatar(
+                //       backgroundColor: Colors.grey[200],
+                //       radius: 25,
+                //       child: IconButton(
+                //         icon: Icon(
+                //           Icons.camera_alt_rounded,
+                //           color: App.mainColor,
+                //           size: 30,
+                //         ),
+                //         onPressed: () {
+                //           showModalBottomSheet(
+                //             context: context,
+                //             builder: ((builder) => bottomSheet()),
+                //           );
+                //         },
+                //       ),
+                //     );
+                //   },
+                // ),
                 //====================================================== details
                 ControlledWidgetBuilder<EditProfileController>(
                   builder: (context, controller) {
@@ -230,6 +260,18 @@ class _EditProfilePageState
                           ),
                           //  --- number [end]
                           //  *********************
+                          //  --- Broker License [Start]
+                          CustomFieldLayout(
+                            child: TitleField(title: 'Broker License #'),
+                          ),
+                          CustomTextField(
+                            controller:
+                                controller.brokerLicenseNumberTextController,
+                            hintText: 'Broker License #',
+                            keyboardType: TextInputType.number,
+                          ),
+                          //  --- Broker License [end]
+                          //  *********************
                           //  --- about me [start]
                           CustomFieldLayout(
                             child: TitleField(title: 'About Me'),
@@ -295,16 +337,16 @@ class _EditProfilePageState
                             hintText: 'Profession',
                             readOnly: true,
                           ),
-                          CustomFieldLayout(
-                            child: TitleField(title: 'Broker License #'),
-                          ),
-                          CustomTextField(
-                            controller:
-                                controller.brokerLicenseNumberTextController,
-                            hintText: 'Broker License #',
-                            readOnly: true,
-                            keyboardType: TextInputType.number,
-                          ),
+                          // CustomFieldLayout(
+                          //   child: TitleField(title: 'Broker License #'),
+                          // ),
+                          // CustomTextField(
+                          //   controller:
+                          //       controller.brokerLicenseNumberTextController,
+                          //   hintText: 'Broker License #',
+                          //   readOnly: true,
+                          //   keyboardType: TextInputType.number,
+                          // ),
                         ],
                       ),
                     );
@@ -346,8 +388,8 @@ class _EditProfilePageState
                     text: 'Camera',
                     fontWeight: FontWeight.w500,
                   ),
-                  onPressed: () {
-                    takePicture();
+                  onPressed: () async {
+                    await takePicture();
                     Navigator.pop(context);
                   },
                 ),
@@ -362,8 +404,8 @@ class _EditProfilePageState
                     text: 'Gallery',
                     fontWeight: FontWeight.w500,
                   ),
-                  onPressed: () {
-                    uploadFromGallery();
+                  onPressed: () async {
+                    await uploadFromGallery();
                     Navigator.pop(context);
                   },
                 ),

@@ -5,6 +5,7 @@ class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
   final String? title;
   final bool centerTitle;
   final bool automaticallyImplyLeading;
+  final Widget? customLeading;
   final List<Widget>? actions;
 
   CustomAppBar(
@@ -12,7 +13,8 @@ class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
       this.title,
       this.centerTitle = false,
       this.automaticallyImplyLeading = true,
-      this.actions})
+      this.actions,
+      this.customLeading})
       : preferredSize = Size.fromHeight(60.0),
         super(key: key);
 
@@ -42,7 +44,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
               tooltip: MaterialLocalizations.of(context).backButtonTooltip,
               onPressed: () => Navigator.of(context).pop(),
             )
-          : null,
+          : widget.customLeading,
       actions: widget.actions,
     );
   }

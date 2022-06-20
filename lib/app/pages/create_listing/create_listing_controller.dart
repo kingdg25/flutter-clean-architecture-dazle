@@ -718,7 +718,7 @@ class CreateListingController extends Controller {
       } else {
         await AppConstant.statusDialog(
             context: getContext(),
-            text: "Upload files at least 4 photos.",
+            text: "Please Upload atlease 1 photo",
             title: "Upload Photos.");
         return false;
       }

@@ -185,7 +185,7 @@ class RegisterController extends Controller {
         lastName: lastNameTextController.text,
         mobileNumber: mobileNumberTextController.text,
         position: position,
-        brokerLicenseNumber: brokerLicenseNumberTextController.text,
+        // brokerLicenseNumber: brokerLicenseNumberTextController.text,
         email: emailTextController.text,
         password: passwordTextController.text);
   }

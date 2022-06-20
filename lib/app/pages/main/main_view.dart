@@ -3,6 +3,8 @@ import 'package:dazle/app/pages/listing/listing_view.dart';
 import 'package:dazle/app/pages/profile/profile_view.dart';
 import 'package:flutter/material.dart';
 
+import '../find_match/find_match_view.dart';
+
 class MainPage extends StatefulWidget {
   static const String id = 'main_page';
 
@@ -33,7 +35,7 @@ class MainPage extends StatefulWidget {
       "items": [
         {
           "icon": 'assets/icons/tab_bar/clear_listing.png',
-          "label": "New listing",
+          "label": "My listing",
           "asset": "assets/icons/tab_bar/listing.png"
         }
       ]
@@ -48,13 +50,23 @@ class MainPage extends StatefulWidget {
     //     }
     //   ]
     // },
+    // {
+    //   "ProfilePage": ProfilePage(),
+    //   "items": [
+    //     {
+    //       "icon": 'assets/icons/tab_bar/clear_profile.png',
+    //       "label": "Profile",
+    //       "asset": "assets/icons/tab_bar/profile.png"
+    //     }
+    //   ]
+    // },
     {
-      "ProfilePage": ProfilePage(),
+      "FindMatchPage": FindMatchPage(),
       "items": [
         {
-          "icon": 'assets/icons/tab_bar/clear_profile.png',
-          "label": "Profile",
-          "asset": "assets/icons/tab_bar/profile.png"
+          "icon": 'assets/icons/tab_bar/property_match_inactive.png',
+          "label": "Property Match",
+          "asset": "assets/icons/tab_bar/property_match_active.png"
         }
       ]
     },
@@ -89,9 +101,9 @@ class _MainPageState extends State<MainPage> {
         type: BottomNavigationBarType.fixed,
         selectedItemColor: Color.fromRGBO(51, 212, 157, 1),
         unselectedLabelStyle:
-            TextStyle(fontSize: 9, fontWeight: FontWeight.bold, height: 1.5),
+            TextStyle(fontSize: 11, fontWeight: FontWeight.normal, height: 1.5),
         selectedLabelStyle:
-            TextStyle(fontSize: 9, fontWeight: FontWeight.bold, height: 1.5),
+            TextStyle(fontSize: 11, fontWeight: FontWeight.normal, height: 1.5),
         currentIndex: _currentIndex,
         onTap: (index) {
           setState(() {

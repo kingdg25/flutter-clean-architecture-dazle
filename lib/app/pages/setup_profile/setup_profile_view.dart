@@ -116,15 +116,15 @@ class _SetupProfilePageState
                         items: ['Broker', 'Salesperson'],
                         onChanged: controller.setPosition,
                       ),
-                      TitleField(
-                          title: controller.brokerLicenseNumberTextField),
-                      CustomTextField(
-                        controller:
-                            controller.brokerLicenseNumberTextController,
-                        hintText: controller.brokerLicenseNumberTextField,
-                        isRequired: true,
-                        keyboardType: TextInputType.number,
-                      ),
+                      // TitleField(
+                      //     title: controller.brokerLicenseNumberTextField),
+                      // CustomTextField(
+                      //   controller:
+                      //       controller.brokerLicenseNumberTextController,
+                      //   hintText: controller.brokerLicenseNumberTextField,
+                      //   isRequired: true,
+                      //   keyboardType: TextInputType.number,
+                      // ),
                       SizedBox(height: 20.0),
                       CustomButton(
                           text: 'Confirm',
