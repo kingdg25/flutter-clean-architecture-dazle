@@ -4,40 +4,36 @@ import 'package:dazle/domain/entities/user.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:dazle/data/repositories/data_authentication_repository.dart';
 
-
-class SetupProfileUseCase extends UseCase<SetupProfileUseCaseResponse, SetupProfileUseCaseParams> {
+class SetupProfileUseCase
+    extends UseCase<SetupProfileUseCaseResponse, SetupProfileUseCaseParams> {
   final DataAuthenticationRepository dataAuthenticationRepository;
   SetupProfileUseCase(this.dataAuthenticationRepository);
 
   @override
-  Future<Stream<SetupProfileUseCaseResponse>> buildUseCaseStream(SetupProfileUseCaseParams? params) async {
+  Future<Stream<SetupProfileUseCaseResponse>> buildUseCaseStream(
+      SetupProfileUseCaseParams? params) async {
     final controller = StreamController<SetupProfileUseCaseResponse>();
-    
+
     try {
       User? user = await dataAuthenticationRepository.setupProfile(
-        firstName: params!.firstName, 
-        lastName: params.lastName,
-        mobileNumber: params.mobileNumber,
-        position: params.position,
-        brokerLicenseNumber: params.brokerLicenseNumber,
-        email: params.email
-      );
-      
+          firstName: params!.firstName,
+          lastName: params.lastName,
+          mobileNumber: params.mobileNumber,
+          position: params.position,
+          // brokerLicenseNumber: params.brokerLicenseNumber,
+          email: params.email);
+
       controller.add(SetupProfileUseCaseResponse(user));
       logger.finest('Update User successful.');
       controller.close();
-
-    } 
-    catch (e) {
+    } catch (e) {
       logger.severe('Update User fail.');
       // Trigger .onError
       controller.addError(e);
     }
     return controller.stream;
   }
-  
 }
-
 
 class SetupProfileUseCaseParams {
   final String? firstName;
@@ -47,16 +43,9 @@ class SetupProfileUseCaseParams {
   final String? brokerLicenseNumber;
   final String? email;
 
-  SetupProfileUseCaseParams(
-    this.firstName,
-    this.lastName,
-    this.mobileNumber,
-    this.position,
-    this.brokerLicenseNumber,
-    this.email
-  );
+  SetupProfileUseCaseParams(this.firstName, this.lastName, this.mobileNumber,
+      this.position, this.brokerLicenseNumber, this.email);
 }
-
 
 class SetupProfileUseCaseResponse {
   final User? user;

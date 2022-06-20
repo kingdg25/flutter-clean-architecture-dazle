@@ -15,31 +15,32 @@ class RegisterPresenter extends Presenter {
   final CheckLicenseNumberUseCase checkLicenseNumberUseCase;
 
   RegisterPresenter(userRepo)
-    : registerUserUseCase = RegisterUserUseCase(userRepo),
-      checkLicenseNumberUseCase = CheckLicenseNumberUseCase(userRepo);
-  
-  void registerUser({
-    String? firstName,
-    String? lastName,
-    String? mobileNumber,
-    String? position,
-    String? brokerLicenseNumber,
-    String? email,
-    String? password
-  }) {
-    registerUserUseCase.execute(_RegisterUserUseCaseObserver(this), RegisterUserUseCaseParams(
-      firstName,
-      lastName,
-      mobileNumber,
-      position,
-      brokerLicenseNumber,
-      email,
-      password
-    ));
+      : registerUserUseCase = RegisterUserUseCase(userRepo),
+        checkLicenseNumberUseCase = CheckLicenseNumberUseCase(userRepo);
+
+  void registerUser(
+      {String? firstName,
+      String? lastName,
+      String? mobileNumber,
+      String? position,
+      // String? brokerLicenseNumber,
+      String? email,
+      String? password}) {
+    registerUserUseCase.execute(
+        _RegisterUserUseCaseObserver(this),
+        RegisterUserUseCaseParams(
+            firstName,
+            lastName,
+            mobileNumber,
+            position,
+            // brokerLicenseNumber,
+            email,
+            password));
   }
 
-  void checkLicenseNumber({String? licenseNumber}){
-    checkLicenseNumberUseCase.execute(_CheckLicenseNumberUseCaseObserver(this), CheckLicenseNumberUseCaseParams(licenseNumber));
+  void checkLicenseNumber({String? licenseNumber}) {
+    checkLicenseNumberUseCase.execute(_CheckLicenseNumberUseCaseObserver(this),
+        CheckLicenseNumberUseCaseParams(licenseNumber));
   }
 
   @override
@@ -47,9 +48,7 @@ class RegisterPresenter extends Presenter {
     registerUserUseCase.dispose();
     checkLicenseNumberUseCase.dispose();
   }
-  
 }
-
 
 class _RegisterUserUseCaseObserver extends Observer<void> {
   final RegisterPresenter presenter;
@@ -67,12 +66,11 @@ class _RegisterUserUseCaseObserver extends Observer<void> {
   }
 
   @override
-  void onNext(response) {
-  }
+  void onNext(response) {}
 }
 
-
-class _CheckLicenseNumberUseCaseObserver extends Observer<CheckLicenseNumberUseCaseResponse> {
+class _CheckLicenseNumberUseCaseObserver
+    extends Observer<CheckLicenseNumberUseCaseResponse> {
   final RegisterPresenter presenter;
   _CheckLicenseNumberUseCaseObserver(this.presenter);
   @override

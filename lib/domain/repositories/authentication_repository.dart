@@ -1,15 +1,14 @@
 import 'package:dazle/domain/entities/user.dart';
 
 abstract class AuthenticationRepository {
-  Future<void> register({
-    String? firstName,
-    String? lastName,
-    String? mobileNumber,
-    String? position,
-    String? brokerLicenseNumber,
-    String? email,
-    String? password
-  });
+  Future<void> register(
+      {String? firstName,
+      String? lastName,
+      String? mobileNumber,
+      String? position,
+      // String? brokerLicenseNumber,
+      String? email,
+      String? password});
 
   Future<User?> login({String? email, String? password});
 
@@ -26,7 +25,7 @@ abstract class AuthenticationRepository {
     String? lastName,
     String? mobileNumber,
     String? position,
-    String? brokerLicenseNumber,
+    // String? brokerLicenseNumber,
     String? email,
   });
 
