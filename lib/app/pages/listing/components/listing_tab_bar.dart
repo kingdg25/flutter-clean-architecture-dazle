@@ -18,7 +18,7 @@ class _ListingTabBarState extends State<ListingTabBar>
   TabController? _tabcontroller;
 
   final List myTabs = <Widget>[
-    Tab(text: 'My Listing'),
+    Tab(text: 'My Listings'),
     // Tab(text: 'My Collection'),
   ];
 
