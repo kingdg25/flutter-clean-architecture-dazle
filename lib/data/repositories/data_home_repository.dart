@@ -73,13 +73,29 @@ class DataHomeRepository extends HomeRepository {
               'https://static.wixstatic.com/media/ef6ac7_baf7e4eecf0b4d72a6b122d1721ea68e~mv2.gif',
           text: ''),
       PhotoTile(
-          photoURL: 'http://via.placeholder.com/200x150', text: 'Lorem Ipsum'),
-      PhotoTile(photoURL: 'http://via.placeholder.com/350x150', text: 'text'),
+          photoURL:
+              'https://static.wixstatic.com/media/ef6ac7_baf7e4eecf0b4d72a6b122d1721ea68e~mv2.gif',
+          text: ''),
       PhotoTile(
           photoURL:
-              'https://images.unsplash.com/photo-1532264523420-881a47db012d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9',
-          text: 'text2'),
-      PhotoTile(photoURL: 'https://picsum.photos/250?image=9', text: 'text3')
+              'https://static.wixstatic.com/media/ef6ac7_baf7e4eecf0b4d72a6b122d1721ea68e~mv2.gif',
+          text: ''),
+      PhotoTile(
+          photoURL:
+              'https://static.wixstatic.com/media/ef6ac7_baf7e4eecf0b4d72a6b122d1721ea68e~mv2.gif',
+          text: ''),
+      PhotoTile(
+          photoURL:
+              'https://static.wixstatic.com/media/ef6ac7_baf7e4eecf0b4d72a6b122d1721ea68e~mv2.gif',
+          text: ''),
+      // PhotoTile(
+      //     photoURL: 'http://via.placeholder.com/200x150', text: 'Lorem Ipsum'),
+      // PhotoTile(photoURL: 'http://via.placeholder.com/350x150', text: 'text'),
+      // PhotoTile(
+      //     photoURL:
+      //         'https://images.unsplash.com/photo-1532264523420-881a47db012d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9',
+      //     text: 'text2'),
+      // PhotoTile(photoURL: 'https://picsum.photos/250?image=9', text: 'text3')
     ];
   }
 

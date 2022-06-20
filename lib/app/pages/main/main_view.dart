@@ -35,7 +35,7 @@ class MainPage extends StatefulWidget {
       "items": [
         {
           "icon": 'assets/icons/tab_bar/clear_listing.png',
-          "label": "My listing",
+          "label": "My listings",
           "asset": "assets/icons/tab_bar/listing.png"
         }
       ]
