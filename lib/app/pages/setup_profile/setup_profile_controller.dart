@@ -11,8 +11,6 @@ import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:flutter_overlay_loader/flutter_overlay_loader.dart';
 import 'package:dazle/app/utils/app_constant.dart';
 
-
-
 class SetupProfileController extends Controller {
   final SetupProfilePresenter setupProfilePresenter;
 
@@ -28,18 +26,16 @@ class SetupProfileController extends Controller {
   final TextEditingController brokerLicenseNumberTextController;
   String brokerLicenseNumberTextField;
 
-
   SetupProfileController(userRepo)
-    : setupProfilePresenter = SetupProfilePresenter(userRepo),
-    setupProfileFormKey = GlobalKey<FormState>(),
-    firstNameTextController = TextEditingController(),
-    lastNameTextController = TextEditingController(),
-    mobileNumberTextController = TextEditingController(),
-    position = null,
-    brokerLicenseNumberTextController = TextEditingController(),
-    brokerLicenseNumberTextField = 'Enter your License #',
-    super();
-  
+      : setupProfilePresenter = SetupProfilePresenter(userRepo),
+        setupProfileFormKey = GlobalKey<FormState>(),
+        firstNameTextController = TextEditingController(),
+        lastNameTextController = TextEditingController(),
+        mobileNumberTextController = TextEditingController(),
+        position = null,
+        brokerLicenseNumberTextController = TextEditingController(),
+        brokerLicenseNumberTextField = 'Enter your License #',
+        super();
 
   @override
   void initListeners() {
@@ -61,36 +57,27 @@ class SetupProfileController extends Controller {
       // if verified: proceed to home page
       // else: route to email verification page
 
-        User _user = await App.getUser();
-           if (!(_user.emailVerified ?? false) && _user.id!=null) {
-             emailVerificationPage();
-           } else if ( _user.isNewUser != null && _user.isNewUser! ) {
-            welcomePage();
-          }
-          else {
-            mainPage();
-          }
-
+      User _user = await App.getUser();
+      if (!(_user.emailVerified ?? false) && _user.id != null) {
+        emailVerificationPage();
+      } else if (_user.isNewUser != null && _user.isNewUser!) {
+        welcomePage();
+      } else {
+        mainPage();
+      }
 
       return;
 
-      if ( position == 'Broker' ){
+      if (position == 'Broker') {
         Navigator.push(
-          getContext(),
-          MaterialPageRoute(
-            builder: (buildContext) => WaitingScreen(
-              firstName: firstNameTextController.text,
-            )
-          )
-        );
-      }
-      else {
-        Navigator.push(
-          getContext(),
-          MaterialPageRoute(
-            builder: (buildContext) => SendRequestScreen()
-          )
-        );
+            getContext(),
+            MaterialPageRoute(
+                builder: (buildContext) => WaitingScreen(
+                      firstName: firstNameTextController.text,
+                    )));
+      } else {
+        Navigator.push(getContext(),
+            MaterialPageRoute(builder: (buildContext) => SendRequestScreen()));
       }
 
       App.logOutUser();
@@ -100,25 +87,24 @@ class SetupProfileController extends Controller {
       print('setup profile on error $e');
       AppConstant.showLoader(getContext(), false);
 
-      if ( !e['error'] ) {
+      if (!e['error']) {
         _statusDialog(false, 'Oops!', '${e['status'] ?? ''}');
-      }
-      else{
+      } else {
         _statusDialog(false, 'Something went wrong', '${e.toString()}');
-      } 
+      }
     };
   }
 
   @override
   void onDisposed() {
     setupProfilePresenter.dispose(); // don't forget to dispose of the presenter
-    
+
     // setup profile
     firstNameTextController.dispose();
     lastNameTextController.dispose();
     mobileNumberTextController.dispose();
     brokerLicenseNumberTextController.dispose();
-    
+
     Loader.hide();
     super.onDisposed();
   }
@@ -127,17 +113,15 @@ class SetupProfileController extends Controller {
     AppConstant.showLoader(getContext(), true);
     print('setupProfile ${_user!.email}');
 
-    if ( _user!.email != null ) {
+    if (_user!.email != null) {
       setupProfilePresenter.setupProfile(
-        firstName: firstNameTextController.text, 
-        lastName: lastNameTextController.text, 
-        mobileNumber: mobileNumberTextController.text,
-        position: position,
-        brokerLicenseNumber: brokerLicenseNumberTextController.text,
-        email: _user!.email
-      );
+          firstName: firstNameTextController.text,
+          lastName: lastNameTextController.text,
+          mobileNumber: mobileNumberTextController.text,
+          position: position,
+          brokerLicenseNumber: brokerLicenseNumberTextController.text,
+          email: _user!.email);
     }
-
   }
 
   void mainPage() {
@@ -150,42 +134,42 @@ class SetupProfileController extends Controller {
 
   void emailVerificationPage() {
     Navigator.pushAndRemoveUntil(
-      getContext(),
-      MaterialPageRoute(builder: (BuildContext context) => EmailVerificationPage()),
-      (Route<dynamic> route) => false);
+        getContext(),
+        MaterialPageRoute(
+            builder: (BuildContext context) => EmailVerificationPage()),
+        (Route<dynamic> route) => false);
   }
 
   getCurrentUser() async {
     User user = await App.getUser();
 
-    if (user != null){
+    if (user != null) {
       _user = user;
 
       firstNameTextController.text = user.firstName!;
       lastNameTextController.text = user.lastName!;
       mobileNumberTextController.text = user.mobileNumber!;
       position = user.position;
-      brokerLicenseNumberTextController.text = user.brokerLicenseNumber!;
+      // brokerLicenseNumberTextController.text = user.brokerLicenseNumber!;
 
       refreshUI();
     }
   }
 
-  setPosition(value){
+  setPosition(value) {
     print('Position $value');
     position = value;
 
-    if(value == 'Salesperson'){
+    if (value == 'Salesperson') {
       brokerLicenseNumberTextField = 'Enter your Broker’s License #';
-    }
-    else {
+    } else {
       brokerLicenseNumberTextField = 'Enter your License #';
     }
 
     refreshUI();
   }
 
-  _statusDialog(bool success, String title, String text){
+  _statusDialog(bool success, String title, String text) {
     AppConstant.statusDialog(
       context: getContext(),
       success: success,
@@ -193,5 +177,4 @@ class SetupProfileController extends Controller {
       text: text,
     );
   }
-
 }

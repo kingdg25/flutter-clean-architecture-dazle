@@ -3,6 +3,7 @@ import 'package:dazle/app/pages/login/login_view.dart';
 import 'package:dazle/app/pages/notify_user/notify_user_view.dart';
 import 'package:dazle/app/pages/register/components/send_request_screen.dart';
 import 'package:dazle/app/pages/register/components/waiting_screen.dart';
+import 'package:dazle/app/pages/welcome/welcome_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:dazle/app/pages/register/register_presenter.dart';
@@ -58,7 +59,7 @@ class RegisterController extends Controller {
 
       Navigator.pushAndRemoveUntil(
           getContext(),
-          MaterialPageRoute(builder: (BuildContext context) => LoginPage()),
+          MaterialPageRoute(builder: (BuildContext context) => WelcomePage()),
           (Route<dynamic> route) => false);
 
       // Navigator.pushAndRemoveUntil(
