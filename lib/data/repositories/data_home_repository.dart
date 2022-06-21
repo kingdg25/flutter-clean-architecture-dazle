@@ -70,23 +70,31 @@ class DataHomeRepository extends HomeRepository {
     return [
       PhotoTile(
           photoURL:
-              'https://static.wixstatic.com/media/ef6ac7_baf7e4eecf0b4d72a6b122d1721ea68e~mv2.gif',
+              'https://cdn.discordapp.com/attachments/931055718503698453/988636051222433792/coming_soon.png',
           text: ''),
       PhotoTile(
           photoURL:
-              'https://static.wixstatic.com/media/ef6ac7_baf7e4eecf0b4d72a6b122d1721ea68e~mv2.gif',
+              'https://cdn.discordapp.com/attachments/931055718503698453/988636051222433792/coming_soon.png',
           text: ''),
       PhotoTile(
           photoURL:
-              'https://static.wixstatic.com/media/ef6ac7_baf7e4eecf0b4d72a6b122d1721ea68e~mv2.gif',
+              'https://cdn.discordapp.com/attachments/931055718503698453/988636051222433792/coming_soon.png',
           text: ''),
       PhotoTile(
           photoURL:
-              'https://static.wixstatic.com/media/ef6ac7_baf7e4eecf0b4d72a6b122d1721ea68e~mv2.gif',
+              'https://cdn.discordapp.com/attachments/931055718503698453/988636051222433792/coming_soon.png',
           text: ''),
       PhotoTile(
           photoURL:
-              'https://static.wixstatic.com/media/ef6ac7_baf7e4eecf0b4d72a6b122d1721ea68e~mv2.gif',
+              'https://cdn.discordapp.com/attachments/931055718503698453/988636051222433792/coming_soon.png',
+          text: ''),
+      PhotoTile(
+          photoURL:
+              'https://cdn.discordapp.com/attachments/931055718503698453/988636051222433792/coming_soon.png',
+          text: ''),
+      PhotoTile(
+          photoURL:
+              'https://cdn.discordapp.com/attachments/931055718503698453/988636051222433792/coming_soon.png',
           text: ''),
       // PhotoTile(
       //     photoURL: 'http://via.placeholder.com/200x150', text: 'Lorem Ipsum'),
