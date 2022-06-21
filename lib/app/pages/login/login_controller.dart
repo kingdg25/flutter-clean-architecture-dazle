@@ -11,6 +11,7 @@ import 'package:dazle/app/pages/login/login_presenter.dart';
 import 'package:dazle/app/pages/login/login_view.dart';
 import 'package:flutter_overlay_loader/flutter_overlay_loader.dart';
 import 'package:dazle/app/utils/app_constant.dart';
+import 'package:the_apple_sign_in/the_apple_sign_in.dart';
 
 class LoginController extends Controller {
   final LoginPresenter loginPresenter;
@@ -31,6 +32,10 @@ class LoginController extends Controller {
   void initListeners() {
     // Initialize presenter listeners here
     // These will be called upon success, failure, or data retrieval after usecase execution
+    TheAppleSignIn.onCredentialRevoked?.listen((_) {
+      print("Credentials revoked");
+    });
+
     loginPresenter.isAuthenticated();
     loginPresenter.isAuthenticatedOnNext = (bool res) async {
       print('current user on next $res ${res.toString()}');
@@ -197,7 +202,18 @@ class LoginController extends Controller {
 
     loginPresenter.socialLogin(loginType: 'facebook');
   }
+  
+  void appleSignIn() async {
+    AppConstant.showLoader(getContext(), true);
 
+    if (!(await TheAppleSignIn.isAvailable())) {
+      AppConstant.showLoader(getContext(), false);
+      return;
+    }
+    
+    loginPresenter.socialLogin(loginType: 'apple');
+    
+  }
   _statusDialog(String title, String text,
       {bool? success, Function? onPressed}) {
     AppConstant.statusDialog(
