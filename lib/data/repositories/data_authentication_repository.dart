@@ -189,7 +189,6 @@ class DataAuthenticationRepository extends AuthenticationRepository {
         "lastname": lastName,
         "mobile_number": mobileNumber,
         "position": position,
-        "broker_license_number": '',
         "email": email,
         "password": password
       }
@@ -291,7 +290,6 @@ class DataAuthenticationRepository extends AuthenticationRepository {
         "lastname": lastName,
         "mobile_number": mobileNumber,
         "position": position,
-        "broker_license_number": '',
         "email": email
       }
     };
