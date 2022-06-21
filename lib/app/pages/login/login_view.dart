@@ -134,7 +134,7 @@ class _LoginPageState extends ViewState<LoginPage, LoginController> {
                     SocialLogin(
                       googleHandleSignIn: controller.googleSignIn,
                       facebookHandleSignIn: controller.facebookSignIn,
-                      appleHandleSignIn: null,
+                      appleHandleSignIn: controller.appleSignIn,
                     ),
                     SizedBox(height: 50.0),
                     Row(

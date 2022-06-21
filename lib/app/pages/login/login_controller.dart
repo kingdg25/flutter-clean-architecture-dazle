@@ -11,6 +11,7 @@ import 'package:dazle/app/pages/login/login_presenter.dart';
 import 'package:dazle/app/pages/login/login_view.dart';
 import 'package:flutter_overlay_loader/flutter_overlay_loader.dart';
 import 'package:dazle/app/utils/app_constant.dart';
+import 'package:the_apple_sign_in/the_apple_sign_in.dart';
 
 class LoginController extends Controller {
   final LoginPresenter loginPresenter;
@@ -31,6 +32,10 @@ class LoginController extends Controller {
   void initListeners() {
     // Initialize presenter listeners here
     // These will be called upon success, failure, or data retrieval after usecase execution
+    TheAppleSignIn.onCredentialRevoked?.listen((_) {
+      print("Credentials revoked");
+    });
+
     loginPresenter.isAuthenticated();
     loginPresenter.isAuthenticatedOnNext = (bool res) async {
       print('current user on next $res ${res.toString()}');
@@ -39,10 +44,8 @@ class LoginController extends Controller {
 
         print(_user.toJson());
 
-        if (_user.position != null && _user.brokerLicenseNumber != null) {
+        if (_user.position != null) {
           if (!(_user.emailVerified ?? false) && _user.id != null) {
-            //Todo: if login_type is 'gmail' -> (no more checking of email verificaiton, email is verified already)
-            //Todo: if login_type is 'emal&pass' -> Check if account is less than 14 days. Send email verification if not
             emailVerificationPage();
           } else if (_user.isNewUser != null && _user.isNewUser!) {
             welcomePage();
@@ -101,7 +104,7 @@ class LoginController extends Controller {
     loginPresenter.socialLoginOnNext = (User res) {
       print('social login on next $res ${res.toString()}');
       if (res != null) {
-        if (res.position != null && res.brokerLicenseNumber != null) {
+        if (res.position != null) {
           if (!(res.emailVerified ?? false) && res.id != null) {
             emailVerificationPage();
           } else {
@@ -196,6 +199,17 @@ class LoginController extends Controller {
     AppConstant.showLoader(getContext(), true);
 
     loginPresenter.socialLogin(loginType: 'facebook');
+  }
+
+  void appleSignIn() async {
+    AppConstant.showLoader(getContext(), true);
+
+    if (!(await TheAppleSignIn.isAvailable())) {
+      AppConstant.showLoader(getContext(), false);
+      return;
+    }
+
+    loginPresenter.socialLogin(loginType: 'apple');
   }
 
   _statusDialog(String title, String text,

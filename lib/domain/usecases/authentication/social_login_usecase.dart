@@ -5,6 +5,7 @@ import 'package:dazle/data/repositories/data_authentication_repository.dart';
 import 'package:dazle/domain/entities/user.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+import 'package:the_apple_sign_in/the_apple_sign_in.dart';
 // import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 
 
@@ -67,9 +68,29 @@ class SocialLoginUseCase extends UseCase<SocialLoginUseCaseResponse, SocialLogin
           controller.addError('${params.loginType} login fail.');
         }
         
-      }
-      
-      else {
+      } else if (params.loginType == 'apple') {
+        final AuthorizationResult result = await TheAppleSignIn.performRequests([
+          AppleIdRequest(requestedScopes: [Scope.email, Scope.fullName])
+        ]);
+        
+        switch (result.status) {
+          case AuthorizationStatus.authorized:
+            // final user = await dataAuthenticationRepository.socialLogin(loginType: params.loginType, email: result.credential?.email, token: result.credential.identityToken);
+            // controller.add(SocialLoginUseCaseResponse(user));
+            logger.finest('Apple login successful.');
+            break;
+
+          case AuthorizationStatus.error:
+            print("Sign in failed: ${result.error?.localizedDescription}");
+            controller.addError('${result.error?.localizedDescription}');
+            break;
+
+          case AuthorizationStatus.cancelled:
+            controller.addError('${result.error?.localizedDescription}');
+            print('User cancelled');
+            break;
+        }
+      } else {
         logger.severe('Social login in fail.');
         controller.addError('No ${params.loginType} login loginType implemented');
       }

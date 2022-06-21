@@ -53,15 +53,23 @@ class SocialLogin extends StatelessWidget {
               /** ===============================    LOGIN WITH APPLE           ============================================ */
               Platform.isIOS
                   ? AppleAuthButton(
-                      onPressed: facebookHandleSignIn as Function()?,
+                      onPressed: appleHandleSignIn as Function()?,
                       darkMode: false,
+                      text: 'Sign in with Apple',
                       style: AuthButtonStyle(
-                        buttonType: AuthButtonType.icon,
+                        // buttonType: AuthButtonType.,
+                        height: 50,
+                        textStyle: TextStyle(
+                          fontSize: 18,
+                          color: Colors.black,
+                        ),
+                        iconSize: 25,
                         borderRadius: 100,
+                        separator: 30,
                       ),
                     )
                   : Container(),
-              Platform.isIOS ? SizedBox(width: 20.0) : Container(),
+              Platform.isIOS ? SizedBox(height: 20.0) : Container(),
               /** ===============================    LOGIN WITH GOOGLE           ============================================ */
               GoogleAuthButton(
                 onPressed: googleHandleSignIn as Function(),
