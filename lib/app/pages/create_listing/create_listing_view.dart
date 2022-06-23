@@ -9,6 +9,7 @@ import 'package:dazle/app/widgets/form_fields/custom_radio_group_button.dart';
 import 'package:dazle/app/widgets/form_fields/custom_text_field.dart';
 import 'package:dazle/app/widgets/form_fields/custom_upload_field.dart';
 import 'package:dazle/app/widgets/form_fields/custom_dropdown.dart';
+import 'package:dazle/app/widgets/profile/box_container.dart';
 import 'package:dazle/data/repositories/data_listing_repository.dart';
 import 'package:dazle/domain/entities/property.dart';
 import 'package:flutter/material.dart';
@@ -98,7 +99,7 @@ class _CreateListingPageState
     ];
     return Scaffold(
       key: globalKey,
-      resizeToAvoidBottomInset: false,
+      resizeToAvoidBottomInset: true,
       appBar: CustomAppBar(
         title: appBarTitle,
         automaticallyImplyLeading: false,
@@ -264,6 +265,9 @@ class _CreateListingPageState
                   inputFormatters: [ThousandsFormatter(allowFraction: true)],
                 ),
               ),
+              SizedBox(
+                height: 80.0,
+              )
             ],
           ),
           // page 2
@@ -445,6 +449,9 @@ class _CreateListingPageState
                   hintText: 'description',
                 ),
               ),
+              SizedBox(
+                height: 80.0,
+              )
             ],
           ),
           // page 3
@@ -657,6 +664,9 @@ class _CreateListingPageState
                   hintText: 'Unit/Room No./Floor',
                 ),
               ),
+              SizedBox(
+                height: 80.0,
+              )
 
               // AppConstant.customTitleField(title: 'Street Address'),
               // Container(
@@ -933,153 +943,266 @@ class _CreateListingPageState
 
         // total pages
         totalPage = createListingList.length;
-
-        return PageView(
-            physics: NeverScrollableScrollPhysics(),
-            controller: _pageController,
-            onPageChanged: (i) {
-              setState(() {
-                currentPage = i + 1;
-              });
-
-              if (i == 0 || i == 1) {
-                setState(() {
-                  appBarTitle =
-                      (widget.property != null && widget.property!.id != null)
-                          ? "Update Listing"
-                          : 'Create Listing';
-                });
-              } else if (i == 2) {
-                setState(() {
-                  appBarTitle =
-                      (widget.property != null && widget.property!.id != null)
-                          ? "Update Location"
-                          : 'Location';
-                });
-              } else if (i == 3) {
-                setState(() {
-                  appBarTitle =
-                      (widget.property != null && widget.property!.id != null)
-                          ? "Update Amenities"
-                          : 'Amenities';
-                });
-              } else if (i == 4) {
-                setState(() {
-                  appBarTitle =
-                      (widget.property != null && widget.property!.id != null)
-                          ? "Update Photos"
-                          : 'Photos';
-                });
-              }
-            },
-            children: createListingList);
-      }),
-      bottomNavigationBar: ControlledWidgetBuilder<CreateListingController>(
-          builder: (context, controller) {
-        var _pageController = controller.createListingPageController;
         String nextButtonLabel = '';
         if (widget.property == null) {
           nextButtonLabel = this.currentPage != 5 ? 'Next' : 'Create Listing';
         } else {
           nextButtonLabel = this.currentPage != 5 ? 'Next' : 'Save Changes';
         }
-        return Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Divider(
-              height: 1,
-              thickness: 1,
-            ),
-            Container(
-              padding: EdgeInsets.symmetric(vertical: 20, horizontal: 15),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+
+        return Stack(children: [
+          PageView(
+              physics: NeverScrollableScrollPhysics(),
+              controller: _pageController,
+              onPageChanged: (i) {
+                setState(() {
+                  currentPage = i + 1;
+                });
+
+                if (i == 0 || i == 1) {
+                  setState(() {
+                    appBarTitle =
+                        (widget.property != null && widget.property!.id != null)
+                            ? "Update Listing"
+                            : 'Create Listing';
+                  });
+                } else if (i == 2) {
+                  setState(() {
+                    appBarTitle =
+                        (widget.property != null && widget.property!.id != null)
+                            ? "Update Location"
+                            : 'Location';
+                  });
+                } else if (i == 3) {
+                  setState(() {
+                    appBarTitle =
+                        (widget.property != null && widget.property!.id != null)
+                            ? "Update Amenities"
+                            : 'Amenities';
+                  });
+                } else if (i == 4) {
+                  setState(() {
+                    appBarTitle =
+                        (widget.property != null && widget.property!.id != null)
+                            ? "Update Photos"
+                            : 'Photos';
+                  });
+                }
+              },
+              children: createListingList),
+          Align(
+              alignment: Alignment.bottomCenter,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
                 children: [
-                  Expanded(
-                    child: Container(
-                      child: CustomButtonReverse(
-                        text: 'Previous',
-                        height: 50,
-                        onPressed: () async {
-                          FocusScope.of(context).unfocus();
-
-                          _pageController.previousPage(
-                              duration: Duration(milliseconds: 500),
-                              curve: Curves.ease);
-                        },
-                        backgroudColor: Colors.white,
-                        textColor: App.mainColor,
-                      ),
-                    ),
+                  Divider(
+                    height: 1,
+                    thickness: 1,
                   ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Expanded(
-                    child: Container(
-                      child: CustomButton(
-                        text: nextButtonLabel,
-                        height: 50,
-                        onPressed: () async {
-                          var stepNumber = controller
-                                  .createListingPageController.page!
-                                  .toInt() +
-                              1;
-                          print('PRINTING CURRENT PAGE: $stepNumber');
+                  Container(
+                    constraints: BoxConstraints(
+                        maxHeight: 200,
+                        maxWidth: MediaQuery.of(context).size.width),
+                    padding: EdgeInsets.symmetric(vertical: 20, horizontal: 15),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: Container(
+                            child: CustomButtonReverse(
+                              text: 'Previous',
+                              height: 50,
+                              onPressed: () async {
+                                FocusScope.of(context).unfocus();
 
-                          if (stepNumber == 1) {
-                            FocusScope.of(context).unfocus();
-                            if (controller.validatePage1()) {
-                              _pageController.nextPage(
-                                  duration: Duration(milliseconds: 500),
-                                  curve: Curves.ease);
-                            }
-                          } else if (stepNumber == 2) {
-                            FocusScope.of(context).unfocus();
-                            if (controller.validatePage2()) {
-                              _pageController.nextPage(
-                                  duration: Duration(milliseconds: 500),
-                                  curve: Curves.ease);
-                            }
-                          } else if (stepNumber == 3) {
-                            FocusScope.of(context).unfocus();
-                            if (controller.validatePage3()) {
-                              _pageController.nextPage(
-                                  duration: Duration(milliseconds: 500),
-                                  curve: Curves.ease);
-                            }
-                          } else if (stepNumber == 4) {
-                            FocusScope.of(context).unfocus();
-                            if (controller.validatePage4()) {
-                              _pageController.nextPage(
-                                  duration: Duration(milliseconds: 500),
-                                  curve: Curves.ease);
-                            }
-                          } else if (stepNumber == 5) {
-                            FocusScope.of(context).unfocus();
-                            if (await controller.validatePage5()) {
-                              if (widget.property == null) {
-                                // // *** Mixpanel Tracking [start]
-                                // controller.mixpanelSendData();
-                                // // *** Mixpanel Tracking [end]
-                                controller.createListing();
-                              } else {
-                                controller.currentPhotos =
-                                    _currentPhotos.cast<String>();
-                                controller.updateListing();
-                              }
-                            }
-                          }
-                        },
-                      ),
+                                _pageController.previousPage(
+                                    duration: Duration(milliseconds: 500),
+                                    curve: Curves.ease);
+                              },
+                              backgroudColor: Colors.white,
+                              textColor: App.mainColor,
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Expanded(
+                          child: Container(
+                            child: CustomButton(
+                              text: nextButtonLabel,
+                              height: 50,
+                              onPressed: () async {
+                                var stepNumber = controller
+                                        .createListingPageController.page!
+                                        .toInt() +
+                                    1;
+                                print('PRINTING CURRENT PAGE: $stepNumber');
+
+                                if (stepNumber == 1) {
+                                  FocusScope.of(context).unfocus();
+                                  if (controller.validatePage1()) {
+                                    _pageController.nextPage(
+                                        duration: Duration(milliseconds: 500),
+                                        curve: Curves.ease);
+                                  }
+                                } else if (stepNumber == 2) {
+                                  FocusScope.of(context).unfocus();
+                                  if (controller.validatePage2()) {
+                                    _pageController.nextPage(
+                                        duration: Duration(milliseconds: 500),
+                                        curve: Curves.ease);
+                                  }
+                                } else if (stepNumber == 3) {
+                                  FocusScope.of(context).unfocus();
+                                  if (controller.validatePage3()) {
+                                    _pageController.nextPage(
+                                        duration: Duration(milliseconds: 500),
+                                        curve: Curves.ease);
+                                  }
+                                } else if (stepNumber == 4) {
+                                  FocusScope.of(context).unfocus();
+                                  if (controller.validatePage4()) {
+                                    _pageController.nextPage(
+                                        duration: Duration(milliseconds: 500),
+                                        curve: Curves.ease);
+                                  }
+                                } else if (stepNumber == 5) {
+                                  FocusScope.of(context).unfocus();
+                                  if (await controller.validatePage5()) {
+                                    if (widget.property == null) {
+                                      // // *** Mixpanel Tracking [start]
+                                      // controller.mixpanelSendData();
+                                      // // *** Mixpanel Tracking [end]
+                                      controller.createListing();
+                                    } else {
+                                      controller.currentPhotos =
+                                          _currentPhotos.cast<String>();
+                                      controller.updateListing();
+                                    }
+                                  }
+                                }
+                              },
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ],
-              ),
-            ),
-          ],
-        );
+              ))
+        ]);
       }),
+      bottomNavigationBar: true
+          ? null
+          : ControlledWidgetBuilder<CreateListingController>(
+              builder: (context, controller) {
+              var _pageController = controller.createListingPageController;
+              String nextButtonLabel = '';
+              if (widget.property == null) {
+                nextButtonLabel =
+                    this.currentPage != 5 ? 'Next' : 'Create Listing';
+              } else {
+                nextButtonLabel =
+                    this.currentPage != 5 ? 'Next' : 'Save Changes';
+              }
+              return Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Divider(
+                    height: 1,
+                    thickness: 1,
+                  ),
+                  Container(
+                    padding: EdgeInsets.symmetric(vertical: 20, horizontal: 15),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: Container(
+                            child: CustomButtonReverse(
+                              text: 'Previous',
+                              height: 50,
+                              onPressed: () async {
+                                FocusScope.of(context).unfocus();
+
+                                _pageController.previousPage(
+                                    duration: Duration(milliseconds: 500),
+                                    curve: Curves.ease);
+                              },
+                              backgroudColor: Colors.white,
+                              textColor: App.mainColor,
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Expanded(
+                          child: Container(
+                            child: CustomButton(
+                              text: nextButtonLabel,
+                              height: 50,
+                              onPressed: () async {
+                                var stepNumber = controller
+                                        .createListingPageController.page!
+                                        .toInt() +
+                                    1;
+                                print('PRINTING CURRENT PAGE: $stepNumber');
+
+                                if (stepNumber == 1) {
+                                  FocusScope.of(context).unfocus();
+                                  if (controller.validatePage1()) {
+                                    _pageController.nextPage(
+                                        duration: Duration(milliseconds: 500),
+                                        curve: Curves.ease);
+                                  }
+                                } else if (stepNumber == 2) {
+                                  FocusScope.of(context).unfocus();
+                                  if (controller.validatePage2()) {
+                                    _pageController.nextPage(
+                                        duration: Duration(milliseconds: 500),
+                                        curve: Curves.ease);
+                                  }
+                                } else if (stepNumber == 3) {
+                                  FocusScope.of(context).unfocus();
+                                  if (controller.validatePage3()) {
+                                    _pageController.nextPage(
+                                        duration: Duration(milliseconds: 500),
+                                        curve: Curves.ease);
+                                  }
+                                } else if (stepNumber == 4) {
+                                  FocusScope.of(context).unfocus();
+                                  if (controller.validatePage4()) {
+                                    _pageController.nextPage(
+                                        duration: Duration(milliseconds: 500),
+                                        curve: Curves.ease);
+                                  }
+                                } else if (stepNumber == 5) {
+                                  FocusScope.of(context).unfocus();
+                                  if (await controller.validatePage5()) {
+                                    if (widget.property == null) {
+                                      // // *** Mixpanel Tracking [start]
+                                      // controller.mixpanelSendData();
+                                      // // *** Mixpanel Tracking [end]
+                                      controller.createListing();
+                                    } else {
+                                      controller.currentPhotos =
+                                          _currentPhotos.cast<String>();
+                                      controller.updateListing();
+                                    }
+                                  }
+                                }
+                              },
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              );
+            }),
     );
   }
 }
