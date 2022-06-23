@@ -164,15 +164,21 @@ class AppConstant {
     List<AssetEntity> assets = <AssetEntity>[];
 
     try {
-      var result = await PhotoManager.requestPermission();
+      var result = await PhotoManager.requestPermissionExtend();
 
-      if (result) {
+      if (result.isAuth) {
         final List<AssetEntity>? pickAssets = await AssetPicker.pickAssets(
-            context,
-            maxAssets: maxAssets,
-            requestType: RequestType.image,
-            textDelegate: EnglishTextDelegate(),
-            selectedAssets: selectedAssets);
+          context,
+          pickerConfig: AssetPickerConfig(
+              maxAssets: maxAssets,
+              requestType: RequestType.image,
+              textDelegate: EnglishAssetPickerTextDelegate(),
+              selectedAssets: selectedAssets),
+          // maxAssets: maxAssets,
+          // requestType: RequestType.image,
+          // textDelegate: EnglishTextDelegate(),
+          // selectedAssets: selectedAssets
+        );
 
         if (pickAssets != null) {
           assets = pickAssets;

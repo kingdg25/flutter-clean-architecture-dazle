@@ -330,7 +330,11 @@ class _DownloadListPageState
                           filePaths.add(pdfFilePath!);
                           await Share.shareFiles(
                             filePaths,
-                            mimeTypes: ["image/jpg"],
+                            mimeTypes: [
+                              Platform.isAndroid
+                                  ? "image/jpg"
+                                  : "application/pdf"
+                            ],
                             subject:
                                 'Dazle Property Listing-${widget.property.id}',
                             text:

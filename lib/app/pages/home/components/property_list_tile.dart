@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dazle/app/pages/listing_details/listing_details_view.dart';
 import 'package:dazle/app/widgets/property_text_info.dart';
@@ -188,7 +190,11 @@ class PropertyListTile extends StatelessWidget {
                             filePaths.add(pdfFilePath!);
                             await Share.shareFiles(
                               filePaths,
-                              mimeTypes: ["image/jpg"],
+                              mimeTypes: [
+                                Platform.isAndroid
+                                    ? "image/jpg"
+                                    : "application/pdf"
+                              ],
                               subject:
                                   'Dazle Property Listing-${items[index].id}',
                               text: 'Dazle Property Listing-${items[index].id}',

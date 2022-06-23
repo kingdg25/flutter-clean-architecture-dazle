@@ -28,9 +28,9 @@ dependencies:
   pdf: ^3.7.1
   pin_code_fields: ^7.3.0
   screenshot: ^1.2.3
-  share_plus: ^3.0.4
+  share_plus: ^4.0.9
   shared_preferences: ^2.0.13
-  wechat_assets_picker: ^6.3.1
+  wechat_assets_picker: ^7.0.0
   open_file: ^3.2.1
   permission_handler: ^8.3.0
   dotted_border: ^2.0.0+2
