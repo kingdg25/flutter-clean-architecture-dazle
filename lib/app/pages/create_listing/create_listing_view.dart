@@ -98,6 +98,7 @@ class _CreateListingPageState
     ];
     return Scaffold(
       key: globalKey,
+      resizeToAvoidBottomInset: false,
       appBar: CustomAppBar(
         title: appBarTitle,
         automaticallyImplyLeading: false,
@@ -1058,6 +1059,9 @@ class _CreateListingPageState
                             FocusScope.of(context).unfocus();
                             if (await controller.validatePage5()) {
                               if (widget.property == null) {
+                                // // *** Mixpanel Tracking [start]
+                                // controller.mixpanelSendData();
+                                // // *** Mixpanel Tracking [end]
                                 controller.createListing();
                               } else {
                                 controller.currentPhotos =

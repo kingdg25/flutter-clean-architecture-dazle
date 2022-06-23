@@ -4,15 +4,18 @@ import 'package:dazle/app/pages/create_listing/create_listing_presenter.dart';
 import 'package:dazle/app/pages/email_verification/email_verification_view.dart';
 import 'package:dazle/app/pages/listing_details/listing_details_view.dart';
 import 'package:dazle/app/pages/login/login_view.dart';
+import 'package:dazle/app/utils/app.dart';
 import 'package:dazle/app/utils/app_constant.dart';
 import 'package:dazle/app/widgets/custom_text.dart';
 import 'package:dazle/app/widgets/form_fields/custom_button.dart';
 import 'package:dazle/app/widgets/form_fields/custom_radio_group_button.dart';
 import 'package:dazle/domain/entities/property.dart';
+import 'package:dazle/domain/entities/user.dart';
 // import 'package:dazle/domain/entities/amenity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:flutter_overlay_loader/flutter_overlay_loader.dart';
+import 'package:mixpanel_flutter/mixpanel_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wechat_assets_picker/wechat_assets_picker.dart';
 
@@ -24,6 +27,9 @@ import 'dart:convert' as convert;
 class CreateListingController extends Controller {
   final CreateListingPresenter createListingPresenter;
   final Property? property;
+
+  Mixpanel? _mixpanel;
+  Mixpanel? get mixpanel => _mixpanel;
 
   PageController createListingPageController;
 
@@ -141,6 +147,7 @@ class CreateListingController extends Controller {
 
   @override
   void initListeners() {
+    initMixpanel();
     initializeProperty();
     // create listing
     createListingPresenter.createListingOnNext = (listing) async {
@@ -202,6 +209,28 @@ class CreateListingController extends Controller {
       await _statusDialog(
           'Cannot update listing!', 'Your listing cannot be updated: $e.');
     };
+  }
+
+  Future<void> initMixpanel() async {
+    _mixpanel = await AppConstant.mixPanelInit();
+  }
+
+  void mixpanelSendData() async {
+    mixpanel?.track('Listing Saved');
+    mixpanel
+        ?.track('Property Type', properties: {'Property Type': propertyType});
+    mixpanel?.track('Property For', properties: {'Property For': propertyFor});
+    mixpanel?.track('Time Period', properties: {'Time Period': timePeriod});
+    mixpanel?.track('Furnished', properties: {'Furnished': isYourProperty});
+    mixpanel?.track('Ownership', properties: {'Ownership': ownwership});
+    mixpanel?.track('Amenities', properties: {'Amenities': amenities});
+    mixpanel?.track('View Type', properties: {'View Type': viewType});
+    if (mapSwitch) {
+      mixpanel?.track('Map Displayed');
+    }
+    User user = await App.getUser();
+    mixpanel?.identify(user.id!);
+    mixpanel?.getPeople().increment('Total Listings', 1);
   }
 
   updateAmenitiesSelection({List amenities = const []}) {
@@ -911,6 +940,7 @@ class CreateListingController extends Controller {
       "location": location,
       "title": titleTextController.text
     };
+    mixpanelSendData();
 
     createListingPresenter.createListing(listing: listing);
   }

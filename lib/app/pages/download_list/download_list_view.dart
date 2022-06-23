@@ -282,66 +282,72 @@ class _DownloadListPageState
           ),
         ),
       ),
-      bottomNavigationBar: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Divider(
-            height: 1,
-            thickness: 1,
-          ),
-          Container(
-            padding: EdgeInsets.all(15),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Expanded(
-                  child: Container(
-                    child: CustomButton(
-                      text: 'Download',
-                      onPressed: () async {
-                        //? Changed to open pdf
-                        print('ashjkfdjasdhfkljashdfljkhasf');
-                        Loader.show(context);
-                        String? pdfFilePath = await PdfGenerator()
-                            .downloadPdf(property: widget.property);
-                        Loader.hide();
-                        await OpenFile.open(pdfFilePath);
-                      },
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  width: 10,
-                ),
-                Expanded(
-                  child: Container(
-                    child: CustomButtonReverse(
-                      text: 'Share',
-                      onPressed: () async {
-                        Loader.show(context);
-                        String? pdfFilePath = await PdfGenerator()
-                            .sharePdf(property: widget.property);
-                        Loader.hide();
-                        List<String> filePaths = [];
-                        filePaths.add(pdfFilePath!);
-                        await Share.shareFiles(
-                          filePaths,
-                          mimeTypes: ["image/jpg"],
-                          subject:
-                              'Dazle Property Listing-${widget.property.id}',
-                          text: 'Dazle Property Listing-${widget.property.id}',
-                        );
-                      },
-                      backgroudColor: Colors.white,
-                      textColor: App.mainColor,
-                    ),
-                  ),
-                ),
-              ],
+      bottomNavigationBar: ControlledWidgetBuilder<DownloadListController>(
+          builder: (context, controller) {
+        return Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Divider(
+              height: 1,
+              thickness: 1,
             ),
-          ),
-        ],
-      ),
+            Container(
+              padding: EdgeInsets.all(15),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Expanded(
+                    child: Container(
+                      child: CustomButton(
+                        text: 'Download',
+                        onPressed: () async {
+                          //? Changed to open pdf
+                          controller.mixpanel?.track('Download Listing');
+                          print('ashjkfdjasdhfkljashdfljkhasf');
+                          Loader.show(context);
+                          String? pdfFilePath = await PdfGenerator()
+                              .downloadPdf(property: widget.property);
+                          Loader.hide();
+                          await OpenFile.open(pdfFilePath);
+                        },
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Expanded(
+                    child: Container(
+                      child: CustomButtonReverse(
+                        text: 'Share',
+                        onPressed: () async {
+                          controller.mixpanel?.track('Share Listing');
+                          Loader.show(context);
+                          String? pdfFilePath = await PdfGenerator()
+                              .sharePdf(property: widget.property);
+                          Loader.hide();
+                          List<String> filePaths = [];
+                          filePaths.add(pdfFilePath!);
+                          await Share.shareFiles(
+                            filePaths,
+                            mimeTypes: ["image/jpg"],
+                            subject:
+                                'Dazle Property Listing-${widget.property.id}',
+                            text:
+                                'Dazle Property Listing-${widget.property.id}',
+                          );
+                        },
+                        backgroudColor: Colors.white,
+                        textColor: App.mainColor,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        );
+      }),
     );
   }
 }

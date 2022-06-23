@@ -15,8 +15,23 @@ import 'package:flutter_overlay_loader/flutter_overlay_loader.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wechat_assets_picker/wechat_assets_picker.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
+import 'package:mixpanel_flutter/mixpanel_flutter.dart';
 
 class AppConstant {
+  // *** MixPanel [start]
+  static Mixpanel? _mixPanelInstance;
+
+  static Future<Mixpanel> mixPanelInit() async {
+    if (_mixPanelInstance == null) {
+      _mixPanelInstance = await Mixpanel.init(
+          "30f8919ea459d5bc9530fa6428dbd457",
+          optOutTrackingDefault: false);
+    }
+    print('MIXPANEL INIT: $_mixPanelInstance');
+    return _mixPanelInstance!;
+  }
+// *** MixPanel [end]
+
   static showLoader(BuildContext context, bool show) {
     try {
       show

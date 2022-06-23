@@ -4,6 +4,7 @@ import 'package:dazle/app/pages/my_listing/my_listing_presenter.dart';
 import 'package:dazle/app/utils/app_constant.dart';
 import 'package:dazle/domain/entities/property.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
+import 'package:mixpanel_flutter/mixpanel_flutter.dart';
 
 class MyListingController extends Controller {
   final MyListingPresenter myListingPresenter;
@@ -13,6 +14,9 @@ class MyListingController extends Controller {
   List<Property> _suggestionListing;
   List<Property> get suggestionListing => _suggestionListing;
   List<Property>? searchResultListing;
+
+  Mixpanel? _mixpanel;
+  Mixpanel? get mixpanel => _mixpanel;
 
   Timer? _timer;
 
@@ -25,6 +29,7 @@ class MyListingController extends Controller {
 
   @override
   void initListeners() {
+    initMixpanel();
     getData();
     const oneSec = Duration(seconds: 10);
     _timer = Timer.periodic(oneSec, (Timer t) {
@@ -107,6 +112,10 @@ class MyListingController extends Controller {
     }
 
     refreshUI();
+  }
+
+  Future<void> initMixpanel() async {
+    _mixpanel = await AppConstant.mixPanelInit();
   }
 
   @override
