@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mixpanel_flutter/mixpanel_flutter.dart';
 
 import '../../../domain/entities/property.dart';
 import 'listing_property_list_tile_details.dart';
@@ -9,12 +10,14 @@ class ListingPropertyListTile extends StatelessWidget {
   final double width;
   final EdgeInsetsGeometry padding;
   final bool isCurrentUser;
+  final Mixpanel? mixpanel;
 
   ListingPropertyListTile(
       {required this.items,
       this.height = 255.0,
       this.width = 322.0,
       this.isCurrentUser = true,
+      this.mixpanel,
       this.padding = const EdgeInsets.all(0.0)});
 
   @override
@@ -29,12 +32,14 @@ class ListingPropertyListTile extends StatelessWidget {
                 items: items,
                 index: index,
                 padding: padding,
+                mixpanel: mixpanel,
               )
             : items![index].viewType == "public"
                 ? ListingPropertyListTileDetails(
                     items: items,
                     index: index,
                     padding: padding,
+                    mixpanel: mixpanel,
                   )
                 : Container();
       },

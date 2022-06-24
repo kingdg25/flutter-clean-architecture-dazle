@@ -387,7 +387,9 @@ class PdfGenerator {
           await buildPdf(property: property!); // Builds the pdf file
 
       try {
-        final dir = await getExternalStorageDirectory();
+        final dir = Platform.isAndroid
+            ? await getExternalStorageDirectory()
+            : await getApplicationDocumentsDirectory();
         // downloadPath =
         //     '${dir?.path}/Dazzle Property List - ${property.district} - ${property.city} ${DateTime.now().toIso8601String()}.pdf';
         downloadPath = '${dir!.path}/Dazle Property Listing-${property.id}.pdf';
@@ -411,7 +413,9 @@ class PdfGenerator {
 
     //* Save pdf to App Storage Directory
     try {
-      final dir = await getApplicationDocumentsDirectory();
+      final dir = Platform.isAndroid
+          ? await getApplicationDocumentsDirectory()
+          : await getApplicationDocumentsDirectory();
       // localPath =
       // '${dir.path}/Dazle Property List - ${property.street} - ${property.city} ${DateTime.now().toIso8601String()}.pdf';
       filePath = '${dir.path}/Dazle Property Listing-${property.id}.pdf';

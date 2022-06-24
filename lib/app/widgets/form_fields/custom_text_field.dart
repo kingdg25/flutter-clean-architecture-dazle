@@ -31,6 +31,8 @@ class CustomTextField extends StatelessWidget {
   final int? minLines;
   final int? maxLines;
 
+  final int? maxLength;
+
   CustomTextField(
       {this.hintText,
       this.hintColor = App.hintColor,
@@ -48,6 +50,7 @@ class CustomTextField extends StatelessWidget {
       this.filled = false,
       this.textCapitalization = TextCapitalization.none,
       this.minLines,
+      this.maxLength,
       this.maxLines});
 
   @override
@@ -61,6 +64,7 @@ class CustomTextField extends StatelessWidget {
       onSaved: onSaved as void Function(String?)?,
       minLines: minLines,
       maxLines: maxLines,
+      maxLength: maxLength == null ? null : maxLength,
       validator: (isRequired && validator == null)
           ? (val) {
               if (val?.length == 0) {

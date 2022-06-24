@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:dazle/app/pages/main/main_view.dart';
+import 'package:dazle/app/utils/app.dart';
 import 'package:dazle/app/utils/app_constant.dart';
 import 'package:dazle/domain/entities/photo_tile.dart';
 import 'package:dazle/domain/entities/property.dart';
@@ -14,6 +15,9 @@ import 'package:mixpanel_flutter/mixpanel_flutter.dart';
 
 class HomeController extends Controller {
   final HomePresenter homePresenter;
+
+  Mixpanel? _mixpanel;
+  Mixpanel? get mixpanel => _mixpanel;
 
   User? _user;
   User? get user => _user;
@@ -221,10 +225,15 @@ class HomeController extends Controller {
     };
   }
 
+  // Mixpanel callback
   Future<void> initMixpanel() async {
-    var mixpanel = await Mixpanel.init("30f8919ea459d5bc9530fa6428dbd457",
-        optOutTrackingDefault: false);
-    print('MixPanel Initialized!!!!');
+    _mixpanel = await AppConstant.mixPanelInit();
+
+    // Set User Profile in Mixpanel
+    User user = await App.getUser();
+    _mixpanel?.identify(user.id!);
+    _mixpanel?.getPeople().set('Name', '${user.firstName} ${user.lastName}');
+    _mixpanel?.getPeople().set('Position', '${user.position}');
   }
 
   void getData() {

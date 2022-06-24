@@ -51,22 +51,26 @@ class _HomePageState extends ViewState<HomePage, HomeController> {
           ],
         ),
         floatingActionButton: FractionallySizedBox(
-          widthFactor: 0.90,
-          child: FloatingActionButton.extended(
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (buildContext) => CreateListingPage()));
-              },
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(10.0))),
-              tooltip: 'Create listing',
-              backgroundColor: App.mainColor,
-              label: const Text('Add New Listing')
-              // child: Icon(Icons.add)
-              ),
-        ),
+            widthFactor: 0.90,
+            child: ControlledWidgetBuilder<HomeController>(
+                builder: (context, controller) {
+              return FloatingActionButton.extended(
+                  onPressed: () {
+                    controller.mixpanel!.track('Create New Listing',
+                        properties: {'Page Pressed': 'Home Page'});
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (buildContext) => CreateListingPage()));
+                  },
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(10.0))),
+                  tooltip: 'Create listing',
+                  backgroundColor: App.mainColor,
+                  label: const Text('Add New Listing')
+                  // child: Icon(Icons.add)
+                  );
+            })),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         body: ControlledWidgetBuilder<HomeController>(
             builder: (context, controller) {
@@ -169,6 +173,7 @@ class _HomePageState extends ViewState<HomePage, HomeController> {
                 subTitle: 'Your Listings',
                 child: PropertyListTile(
                   items: controller.myListing,
+                  mixpanel: controller.mixpanel,
                 ),
                 viewAllOnTap: () {
                   print('view all your listings');

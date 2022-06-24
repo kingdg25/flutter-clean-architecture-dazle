@@ -1,7 +1,10 @@
+import 'dart:io';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_overlay_loader/flutter_overlay_loader.dart';
+import 'package:mixpanel_flutter/mixpanel_flutter.dart';
 import 'package:open_file/open_file.dart';
 import 'package:share_plus/share_plus.dart';
 
@@ -20,11 +23,13 @@ class ListingPropertyListTileDetails extends StatelessWidget {
   final double width;
   final int index;
   final EdgeInsetsGeometry padding;
+  final Mixpanel? mixpanel;
   ListingPropertyListTileDetails(
       {required this.items,
       this.height = 255.0,
       this.width = 322.0,
       this.index = 0,
+      this.mixpanel,
       this.padding = const EdgeInsets.all(0.0),
       Key? key})
       : super(key: key);
@@ -221,6 +226,7 @@ class ListingPropertyListTileDetails extends StatelessWidget {
                   tooltip: "Download",
                   onPressed: () async {
                     //? Changed to open pdf
+                    mixpanel?.track('Download Listing');
                     print('ashjkfdjasdhfkljashdfljkhasf');
                     Loader.show(context);
                     String? pdfFilePath = await PdfGenerator()
@@ -235,7 +241,8 @@ class ListingPropertyListTileDetails extends StatelessWidget {
                   iconData: Icons.share,
                   tooltip: "Share",
                   onPressed: () async {
-                    //     ));
+                    mixpanel?.track('Share Listing');
+                    Loader.show(context);
                     String? pdfFilePath =
                         await PdfGenerator().sharePdf(property: items![index]);
                     Loader.hide();
@@ -243,7 +250,9 @@ class ListingPropertyListTileDetails extends StatelessWidget {
                     filePaths.add(pdfFilePath!);
                     await Share.shareFiles(
                       filePaths,
-                      mimeTypes: ["image/jpg"],
+                      mimeTypes: [
+                        Platform.isAndroid ? "image/jpg" : "application/pdf"
+                      ],
                       subject: 'Dazle Property Listing-${items![index].id}',
                       text: 'Dazle Property Listing-${items![index].id}',
                     );

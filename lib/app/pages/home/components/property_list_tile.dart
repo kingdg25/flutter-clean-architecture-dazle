@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dazle/app/pages/listing_details/listing_details_view.dart';
 import 'package:dazle/app/widgets/property_text_info.dart';
@@ -7,6 +9,7 @@ import 'package:dazle/app/widgets/custom_text.dart';
 import 'package:dazle/domain/entities/property.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_overlay_loader/flutter_overlay_loader.dart';
+import 'package:mixpanel_flutter/mixpanel_flutter.dart';
 import 'package:open_file/open_file.dart';
 import 'package:share_plus/share_plus.dart';
 
@@ -17,12 +20,17 @@ class PropertyListTile extends StatelessWidget {
   final List<Property> items;
   final double height;
   final double width;
+  final Mixpanel? mixpanel;
 
   PropertyListTile(
-      {required this.items, this.height = 350.0, this.width = 285.0});
+      {required this.items,
+      this.height = 350.0,
+      this.width = 285.0,
+      this.mixpanel});
 
   @override
   Widget build(BuildContext context) {
+    // Mixpanel mixpanel = await AppConstant.mixPanelInit();
     return Container(
       height: height,
       child: ListView.builder(
@@ -157,6 +165,7 @@ class PropertyListTile extends StatelessWidget {
                           iconData: Icons.file_download_outlined,
                           tooltip: "Download",
                           onPressed: () async {
+                            mixpanel?.track('Download Listing');
                             //? Changed to open pdf
                             print('ashjkfdjasdhfkljashdfljkhasf');
                             Loader.show(context);
@@ -172,7 +181,8 @@ class PropertyListTile extends StatelessWidget {
                           iconData: Icons.share,
                           tooltip: "Share",
                           onPressed: () async {
-                            //     ));
+                            mixpanel?.track('Share Listing');
+                            Loader.show(context);
                             String? pdfFilePath = await PdfGenerator()
                                 .sharePdf(property: items[index]);
                             Loader.hide();
@@ -180,7 +190,11 @@ class PropertyListTile extends StatelessWidget {
                             filePaths.add(pdfFilePath!);
                             await Share.shareFiles(
                               filePaths,
-                              mimeTypes: ["image/jpg"],
+                              mimeTypes: [
+                                Platform.isAndroid
+                                    ? "image/jpg"
+                                    : "application/pdf"
+                              ],
                               subject:
                                   'Dazle Property Listing-${items[index].id}',
                               text: 'Dazle Property Listing-${items[index].id}',
@@ -198,4 +212,8 @@ class PropertyListTile extends StatelessWidget {
       ),
     );
   }
+
+  // Future<void> initMixpanel() async {
+  //   _mixpanel = await AppConstant.mixPanelInit();
+  // }
 }

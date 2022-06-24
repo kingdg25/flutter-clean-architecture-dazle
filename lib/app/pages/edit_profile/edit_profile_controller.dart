@@ -44,7 +44,7 @@ class EditProfileController extends Controller {
   @override
   void initListeners() {
     getCurrentUser();
-    App.configLoading();
+    // App.configLoading();
     // EasyLoading.addStatusCallback((status) {
     //   print('EasyLoading Status $status');
     //   if (status == EasyLoadingStatus.dismiss) {
@@ -61,15 +61,15 @@ class EditProfileController extends Controller {
       print('update user on complete');
       AppConstant.showLoader(getContext(), false);
       await _statusDialog('Done!', 'Your Profile has been Updated.',
-          success: true, onPressed: () {
-        Navigator.pushReplacement(
-            getContext(),
-            MaterialPageRoute(
-              builder: (context) => MainPage(
-                backCurrentIndex: "HomePage",
-              ),
-            ));
-      });
+          success: false);
+
+      // Navigator.pushReplacement(
+      //     getContext(),
+      //     MaterialPageRoute(
+      //       builder: (context) => MainPage(
+      //         backCurrentIndex: "HomePage",
+      //       ),
+      //     ));
 
       // await EasyLoading.showSuccess('Profile Updated Successfully')
       //     .then((value) => Navigator.pushReplacement(
@@ -97,6 +97,7 @@ class EditProfileController extends Controller {
   }
 
   getCurrentUser() async {
+    print('INSIDE GET CURRENT USER');
     User user = await App.getUser();
 
     _user = user;
@@ -108,10 +109,13 @@ class EditProfileController extends Controller {
     emailTextController.text = user.email!;
     mobileNumberTextController.text = user.mobileNumber!;
 
-    brokerLicenseNumberTextController.text = user.brokerLicenseNumber!;
     aboutMeTextController.text = user.aboutMe!;
 
     userProfilePicture = user.profilePicture;
+    print('BROKER: ${user.brokerLicenseNumber}');
+    if (user.brokerLicenseNumber != null) {
+      brokerLicenseNumberTextController.text = user.brokerLicenseNumber!;
+    }
 
     refreshUI();
   }
@@ -119,20 +123,35 @@ class EditProfileController extends Controller {
   void updateUser() async {
     // EasyLoading.show(status: 'loading...');
     AppConstant.showLoader(getContext(), true);
+    User updatedUser;
+    if (brokerLicenseNumberTextController.text != '') {
+      updatedUser = User(
+          id: _user!.id,
+          firstName: firstNameTextController.text,
+          lastName: lastNameTextController.text,
+          mobileNumber: mobileNumberTextController.text,
+          aboutMe: aboutMeTextController.text,
+          profilePicture: user?.profilePicture,
+          brokerLicenseNumber: brokerLicenseNumberTextController.text,
 
-    User updatedUser = User(
-        id: _user!.id,
-        firstName: firstNameTextController.text,
-        lastName: lastNameTextController.text,
-        mobileNumber: mobileNumberTextController.text,
-        aboutMe: aboutMeTextController.text,
-        profilePicture: user?.profilePicture,
-        brokerLicenseNumber: brokerLicenseNumberTextController.text,
+          // retain value
+          email: _user!.email,
+          position: _user!.position,
+          isNewUser: false);
+    } else {
+      updatedUser = User(
+          id: _user!.id,
+          firstName: firstNameTextController.text,
+          lastName: lastNameTextController.text,
+          mobileNumber: mobileNumberTextController.text,
+          aboutMe: aboutMeTextController.text,
+          profilePicture: user?.profilePicture,
 
-        // retain value
-        email: _user!.email,
-        position: _user!.position,
-        isNewUser: false);
+          // retain value
+          email: _user!.email,
+          position: _user!.position,
+          isNewUser: false);
+    }
 
     editProfilePresenter.updateUser(
         user: updatedUser, profilePicture: profilePicturePath);
