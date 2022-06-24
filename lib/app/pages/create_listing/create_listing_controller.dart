@@ -350,8 +350,6 @@ class CreateListingController extends Controller {
     provinceCodes.clear();
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    List<String> prov = [];
-
     for (int region = 1; region <= 17; region++) {
       String apiLink =
           "${Constants.siteURL}/api/listings/provinces?region_id=$region";
