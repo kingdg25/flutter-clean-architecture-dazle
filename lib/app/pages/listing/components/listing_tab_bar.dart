@@ -5,6 +5,8 @@ import 'package:dazle/app/utils/app.dart';
 import 'package:dazle/app/widgets/custom_bottom_tab_bar.dart';
 import 'package:dazle/app/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
+import 'package:mixpanel_flutter/mixpanel_flutter.dart';
+import 'package:dazle/app/utils/app_constant.dart';
 
 class ListingTabBar extends StatefulWidget {
   const ListingTabBar({Key? key}) : super(key: key);
@@ -16,6 +18,7 @@ class ListingTabBar extends StatefulWidget {
 class _ListingTabBarState extends State<ListingTabBar>
     with SingleTickerProviderStateMixin {
   TabController? _tabcontroller;
+  Mixpanel? _mixpanel;
 
   final List myTabs = <Widget>[
     Tab(text: 'My Listings'),
@@ -51,24 +54,6 @@ class _ListingTabBarState extends State<ListingTabBar>
         backgroundColor: Colors.white,
       ),
       backgroundColor: Colors.white,
-      floatingActionButton: FractionallySizedBox(
-        widthFactor: 0.90,
-        child: FloatingActionButton.extended(
-            onPressed: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (buildContext) => CreateListingPage()));
-            },
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(10.0))),
-            tooltip: 'Create listing',
-            backgroundColor: App.mainColor,
-            label: const Text('Add New Listing')
-            // child: Icon(Icons.add)
-            ),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       body: TabBarView(
         controller: _tabcontroller,
         physics: NeverScrollableScrollPhysics(),

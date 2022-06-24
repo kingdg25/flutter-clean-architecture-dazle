@@ -114,8 +114,9 @@ class _CustomUploadFieldState extends State<CustomUploadField> {
                 return ClipRRect(
                     borderRadius: BorderRadius.circular(5),
                     child: FutureBuilder<dynamic>(
-                      future: selectedAssets[index]
-                          .thumbDataWithSize(200, 200, format: ThumbFormat.png),
+                      future: selectedAssets[index].thumbnailDataWithSize(
+                          ThumbnailSize(200, 200),
+                          format: ThumbnailFormat.png),
                       builder: (BuildContext context, snapshot) {
                         if (snapshot.connectionState == ConnectionState.done) {
                           return Stack(

@@ -226,12 +226,22 @@ class DataAuthenticationRepository extends AuthenticationRepository {
 
   @override
   Future<User?> socialLogin(
-      {String? email, String? loginType, String? token}) async {
+      {String? email,
+      String? loginType,
+      String? token,
+      dynamic otherDetails}) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
     Map params = {
-      "user": {"email": email, "login_type": loginType, "token": token}
+      "user": {
+        "email": email,
+        "login_type": loginType,
+        "token": token,
+        "otherDetails": otherDetails
+      }
     };
+    print("PRARMARMR ++++++++");
+    print(params);
 
     var response = await http.post(
         Uri.parse("${Constants.siteURL}/auth/social-login"),

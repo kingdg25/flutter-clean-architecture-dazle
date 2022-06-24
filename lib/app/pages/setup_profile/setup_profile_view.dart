@@ -83,6 +83,7 @@ class _SetupProfilePageState
                       ),
                       CustomFieldLayout(
                         child: InternationalPhoneNumberInput(
+                          countries: ['PH'],
                           textFieldController:
                               controller.mobileNumberTextController,
                           initialValue: PhoneNumber(

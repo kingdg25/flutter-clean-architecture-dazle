@@ -233,6 +233,7 @@ class _EditProfilePageState
                           ),
                           CustomFieldLayout(
                             child: InternationalPhoneNumberInput(
+                              countries: ['PH'],
                               textFieldController:
                                   controller.mobileNumberTextController,
                               initialValue: PhoneNumber(
@@ -280,6 +281,7 @@ class _EditProfilePageState
                             controller: controller.aboutMeTextController,
                             hintText: 'About Me',
                             isRequired: true,
+                            maxLength: 150,
                             keyboardType: TextInputType.multiline,
                             minLines: 4,
                             maxLines: null,
