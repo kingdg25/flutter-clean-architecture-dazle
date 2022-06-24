@@ -120,6 +120,7 @@ class _RegisterPageState extends ViewState<RegisterPage, RegisterController> {
                   )),
                   TitleField(title: 'Enter Mobile Number'),
                   InternationalPhoneNumberInput(
+                    countries: ['PH'],
                     initialValue: PhoneNumber(isoCode: 'PH'),
                     inputBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(5.0)),

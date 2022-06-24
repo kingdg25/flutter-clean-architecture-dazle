@@ -103,20 +103,27 @@ class _CreateListingPageState
       appBar: CustomAppBar(
         title: appBarTitle,
         automaticallyImplyLeading: false,
-        customLeading: IconButton(
-          icon: Icon(Icons.close_rounded, color: Colors.black),
-          tooltip: MaterialLocalizations.of(context).backButtonTooltip,
-          onPressed: () {
-            AppConstant.deleteDialog(
-                context: context,
-                title: 'Confim',
-                text: (widget.property != null && widget.property?.id != null)
-                    ? 'Are you sure you want to cancel Update Listing?'
-                    : 'Are you sure you want to close Create Listing Form?',
-                onConfirm: () {
-                  Navigator.of(context).pop();
-                  Navigator.of(context).pop();
-                });
+        customLeading: ControlledWidgetBuilder<CreateListingController>(
+          builder: (context, controller) {
+            return IconButton(
+              icon: Icon(Icons.close_rounded, color: Colors.black),
+              tooltip: MaterialLocalizations.of(context).backButtonTooltip,
+              onPressed: () {
+                AppConstant.deleteDialog(
+                    context: context,
+                    title: 'Confim',
+                    text: (widget.property != null &&
+                            widget.property?.id != null)
+                        ? 'Are you sure you want to cancel Update Listing?'
+                        : 'Are you sure you want to close Create Listing Form?',
+                    onConfirm: () {
+                      controller.mixpanel?.track('Exit Create Listing',
+                          properties: {'Exited in': 'Step $currentPage'});
+                      Navigator.of(context).pop();
+                      Navigator.of(context).pop();
+                    });
+              },
+            );
           },
         ),
         actions: [
@@ -1000,6 +1007,7 @@ class _CreateListingPageState
                     thickness: 1,
                   ),
                   Container(
+                    color: Colors.white,
                     constraints: BoxConstraints(
                         maxHeight: 200,
                         maxWidth: MediaQuery.of(context).size.width),
