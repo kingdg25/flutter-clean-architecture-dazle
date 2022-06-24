@@ -9,6 +9,7 @@ import 'package:dazle/app/widgets/custom_text.dart';
 import 'package:dazle/domain/entities/property.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_overlay_loader/flutter_overlay_loader.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:mixpanel_flutter/mixpanel_flutter.dart';
 import 'package:open_file/open_file.dart';
 import 'package:share_plus/share_plus.dart';
@@ -169,10 +170,13 @@ class PropertyListTile extends StatelessWidget {
                             //? Changed to open pdf
                             print('ashjkfdjasdhfkljashdfljkhasf');
                             Loader.show(context);
+                            AppConstant.showToast(msg: "Generating document please wait...", timeInSecForIosWeb: 3);
                             String? pdfFilePath = await PdfGenerator()
                                 .downloadPdf(property: items[index]);
                             Loader.hide();
+                          AppConstant.showToast(msg: "Launching document...");
                             await OpenFile.open(pdfFilePath);
+                          Fluttertoast.cancel();
                           },
                         ),
                         ListingDetailsIconButton(
@@ -183,11 +187,13 @@ class PropertyListTile extends StatelessWidget {
                           onPressed: () async {
                             mixpanel?.track('Share Listing');
                             Loader.show(context);
+                            AppConstant.showToast(msg: "Generating document please wait...", timeInSecForIosWeb: 3);
                             String? pdfFilePath = await PdfGenerator()
                                 .sharePdf(property: items[index]);
                             Loader.hide();
                             List<String> filePaths = [];
                             filePaths.add(pdfFilePath!);
+                          AppConstant.showToast(msg: "Launching document...");
                             await Share.shareFiles(
                               filePaths,
                               mimeTypes: [
@@ -199,6 +205,7 @@ class PropertyListTile extends StatelessWidget {
                                   'Dazle Property Listing-${items[index].id}',
                               text: 'Dazle Property Listing-${items[index].id}',
                             );
+                          Fluttertoast.cancel();
                           },
                         ),
                       ],
