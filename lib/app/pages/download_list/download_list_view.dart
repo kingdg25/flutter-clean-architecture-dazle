@@ -5,6 +5,7 @@ import 'dart:typed_data';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dazle/app/pages/download_list/download_list_controller.dart';
 import 'package:dazle/app/utils/app.dart';
+import 'package:dazle/app/utils/app_constant.dart';
 import 'package:dazle/app/widgets/custom_appbar.dart';
 import 'package:dazle/app/widgets/custom_richtext.dart';
 import 'package:dazle/app/widgets/custom_text.dart';
@@ -16,6 +17,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:flutter_overlay_loader/flutter_overlay_loader.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:open_file/open_file.dart';
 import './components/pdf_generator.dart';
 import 'package:share_plus/share_plus.dart';
@@ -304,11 +306,14 @@ class _DownloadListPageState
                           //? Changed to open pdf
                           controller.mixpanel?.track('Download Listing');
                           print('ashjkfdjasdhfkljashdfljkhasf');
+                          AppConstant.showToast(msg: "Generating document please wait...", timeInSecForIosWeb: 3);
                           Loader.show(context);
                           String? pdfFilePath = await PdfGenerator()
                               .downloadPdf(property: widget.property);
+                          AppConstant.showToast(msg: "Launching document...");
                           Loader.hide();
                           await OpenFile.open(pdfFilePath);
+                          Fluttertoast.cancel();
                         },
                       ),
                     ),
@@ -323,11 +328,13 @@ class _DownloadListPageState
                         onPressed: () async {
                           controller.mixpanel?.track('Share Listing');
                           Loader.show(context);
+                          AppConstant.showToast(msg: "Generating document please wait...", timeInSecForIosWeb: 3);
                           String? pdfFilePath = await PdfGenerator()
                               .sharePdf(property: widget.property);
                           Loader.hide();
                           List<String> filePaths = [];
                           filePaths.add(pdfFilePath!);
+                          AppConstant.showToast(msg: "Launching document...");
                           await Share.shareFiles(
                             filePaths,
                             mimeTypes: [
@@ -340,6 +347,7 @@ class _DownloadListPageState
                             text:
                                 'Dazle Property Listing-${widget.property.id}',
                           );
+                          Fluttertoast.cancel();
                         },
                         backgroudColor: Colors.white,
                         textColor: App.mainColor,

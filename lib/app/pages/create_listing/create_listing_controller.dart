@@ -367,17 +367,29 @@ class CreateListingController extends Controller {
       var jsonResponse = await convert.jsonDecode(response.body);
       if (response.statusCode == 200) {
         // regions = await convert.jsonDecode(response.body);
+
         print('Provinces Length: ${jsonResponse['provinces'].length}');
         jsonResponse['provinces'].forEach((val) {
           provinceCodes.add(val['province_code']);
           provinceNames.add(val['province_name']);
-          provinces.add(DropdownMenuItem(
-            child: Text(val['province_name']),
-            value: val['province_code'],
-          ));
+          // provinces.add(DropdownMenuItem(
+          //   child: Text(val['province_name']),
+          //   value: val['province_code'],
+          // ));
         });
       }
     }
+    List<String?> sortedProvNames = [];
+    sortedProvNames.addAll(provinceNames);
+    sortedProvNames.sort(((a, b) => a!.compareTo(b!)));
+
+    sortedProvNames.forEach((val) {
+      provinces.add(DropdownMenuItem(
+        child: Text(val!),
+        value: provinceCodes[provinceNames.indexOf(val)],
+      ));
+    });
+
     refreshUI();
   }
 
