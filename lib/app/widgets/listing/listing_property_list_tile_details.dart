@@ -4,6 +4,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_overlay_loader/flutter_overlay_loader.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:mixpanel_flutter/mixpanel_flutter.dart';
 import 'package:open_file/open_file.dart';
 import 'package:share_plus/share_plus.dart';
@@ -229,10 +230,13 @@ class ListingPropertyListTileDetails extends StatelessWidget {
                     mixpanel?.track('Download Listing');
                     print('ashjkfdjasdhfkljashdfljkhasf');
                     Loader.show(context);
+                    AppConstant.showToast(msg: "Generating document please wait...", timeInSecForIosWeb: 3);
                     String? pdfFilePath = await PdfGenerator()
                         .downloadPdf(property: items![index]);
                     Loader.hide();
+                    AppConstant.showToast(msg: "Launching document...");
                     await OpenFile.open(pdfFilePath);
+                    Fluttertoast.cancel();
                   },
                 ),
                 ListingDetailsIconButton(
@@ -243,11 +247,13 @@ class ListingPropertyListTileDetails extends StatelessWidget {
                   onPressed: () async {
                     mixpanel?.track('Share Listing');
                     Loader.show(context);
+                    AppConstant.showToast(msg: "Generating document please wait...", timeInSecForIosWeb: 3);
                     String? pdfFilePath =
                         await PdfGenerator().sharePdf(property: items![index]);
                     Loader.hide();
                     List<String> filePaths = [];
                     filePaths.add(pdfFilePath!);
+                    AppConstant.showToast(msg: "Launching document...");
                     await Share.shareFiles(
                       filePaths,
                       mimeTypes: [
@@ -256,6 +262,7 @@ class ListingPropertyListTileDetails extends StatelessWidget {
                       subject: 'Dazle Property Listing-${items![index].id}',
                       text: 'Dazle Property Listing-${items![index].id}',
                     );
+                    Fluttertoast.cancel();
                   },
                 ),
               ],

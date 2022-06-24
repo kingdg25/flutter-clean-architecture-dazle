@@ -117,8 +117,10 @@ class _CreateListingPageState
                         ? 'Are you sure you want to cancel Update Listing?'
                         : 'Are you sure you want to close Create Listing Form?',
                     onConfirm: () {
-                      controller.mixpanel?.track('Exit Create Listing',
-                          properties: {'Exited in': 'Step $currentPage'});
+                      if (widget.property == null) {
+                        controller.mixpanel?.track('Exit Create Listing',
+                            properties: {'Exited in': 'Step $currentPage'});
+                      }
                       Navigator.of(context).pop();
                       Navigator.of(context).pop();
                     });

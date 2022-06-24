@@ -3,6 +3,7 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'dart:convert' as convert;
 import 'package:dazle/data/constants.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:path/path.dart';
 
@@ -41,6 +42,32 @@ class AppConstant {
             });
     } catch (e) {
       print('show loader err $e');
+    }
+  }
+
+
+  static showToast({
+    required String msg,
+    Toast? toastLength = Toast.LENGTH_SHORT,
+    int timeInSecForIosWeb = 1,
+    double? fontSize,
+    ToastGravity? gravity = ToastGravity.BOTTOM,
+    Color? backgroundColor = Colors.black,
+    Color? textColor = Colors.white,
+    bool webShowClose = false,
+  }) {
+    try {
+      Fluttertoast.showToast(
+        msg: msg,
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.black,
+        textColor: Colors.white,
+        fontSize: 16.0
+    );
+    } catch (e) {
+      print('show toast err $e');
     }
   }
 
