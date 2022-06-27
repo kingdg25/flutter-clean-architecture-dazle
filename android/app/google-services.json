@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "857388716055",
+    "project_id": "skilful-grammar-260603",
+    "storage_bucket": "skilful-grammar-260603.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:857388716055:android:fefd39c51d358304588c52",
+        "android_client_info": {
+          "package_name": "com.brooky.dazle"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "857388716055-718bpk3a94houtcr2l1d7hrn9hahd8mm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.brooky.dazle",
+            "certificate_hash": "f3e118e966542d0131105edf3329cca2b8f494e2"
+          }
+        },
+        {
+          "client_id": "857388716055-88bk8amkr6nosq0h2rtsmq16v8ls55qr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.brooky.dazle",
+            "certificate_hash": "ca4403e19d2ae53d7ea268d95575eba2807a4eac"
+          }
+        },
+        {
+          "client_id": "857388716055-j76ms4171s6ci9u0itr8atpbifcig8vt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDnM1Q7f0-ekMK5FtuSkzTRxVYGXaNfw8Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "857388716055-j76ms4171s6ci9u0itr8atpbifcig8vt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
