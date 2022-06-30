@@ -23,7 +23,7 @@
 		<dict>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>fb2559523267704447</string>
+				<string>fb299457225731995</string>
 				<string>com.googleusercontent.apps.184819832732-8qgep6q9s1hoasricr6jf27g7lp2597d</string>
 			</array>
 		</dict>
@@ -31,11 +31,11 @@
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>FacebookAppID</key>
-	<string>2559523267704447</string>
+	<string>299457225731995</string>
 	<key>FacebookClientToken</key>
-	<string>CLIENT-TOKEN</string>
+	<string>65b63834fa2a27cb8a392b44b335d686</string>
 	<key>FacebookDisplayName</key>
-	<string>Brooky AI</string>
+	<string>Dazle</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>fbapi</string>
@@ -56,6 +56,8 @@
 	<string>This app needs access to location when open to be able to know your current location.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>This app requires read and write access to the photo library to be able to upload images for your listing, profile picture and other app functionality.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>This app requires access to the camera to be able to upload images for your listing, profile picture and other app functionality.</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
