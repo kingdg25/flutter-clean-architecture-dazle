@@ -45,7 +45,6 @@ class AppConstant {
     }
   }
 
-
   static showToast({
     required String msg,
     Toast? toastLength = Toast.LENGTH_SHORT,
@@ -58,14 +57,13 @@ class AppConstant {
   }) {
     try {
       Fluttertoast.showToast(
-        msg: msg,
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.BOTTOM,
-        timeInSecForIosWeb: 1,
-        backgroundColor: Colors.black,
-        textColor: Colors.white,
-        fontSize: 16.0
-    );
+          msg: msg,
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.black,
+          textColor: Colors.white,
+          fontSize: 16.0);
     } catch (e) {
       print('show toast err $e');
     }
@@ -190,6 +188,8 @@ class AppConstant {
       int maxAssets = 1}) async {
     List<AssetEntity> assets = <AssetEntity>[];
 
+    print("WWWWEEEWEWEWEWEEW");
+
     try {
       var result = await PhotoManager.requestPermissionExtend();
 
@@ -211,11 +211,21 @@ class AppConstant {
           assets = pickAssets;
         }
       } else {
+        if (Platform.isIOS) {
+          await statusDialog(
+              context: context,
+              text:
+                  "Please allow permission to read all your photos in settings and upload again.",
+              title: "Confirm",
+              onPressed: () async {
+                await PhotoManager.openSetting();
+              });
+        }
         // fail
         /// if result is fail, you can call `PhotoManager.openSetting();`  to open android/ios applicaton's setting to get permission
       }
     } catch (e) {
-      print('loadAssets error $e');
+      print('lWWWWEEEWEWEWEWEEW oadAssets error $e');
     }
 
     return assets;
