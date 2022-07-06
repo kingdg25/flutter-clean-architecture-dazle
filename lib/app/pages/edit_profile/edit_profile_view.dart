@@ -76,7 +76,7 @@ class _EditProfilePageState
     return Scaffold(
       key: globalKey,
       appBar: CustomAppBar(
-        title: 'Personal and Account information',
+        title: 'Personal and Account Information',
       ),
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
