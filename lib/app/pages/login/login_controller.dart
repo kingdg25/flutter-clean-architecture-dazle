@@ -51,6 +51,8 @@ class LoginController extends Controller {
             welcomePage();
           } else {
             mainPage();
+
+            //after login here
           }
         } else {
           setupProfilePage();

@@ -4,6 +4,7 @@ import 'package:dazle/app/utils/app.dart';
 import 'package:dazle/app/utils/app_constant.dart';
 import 'package:dazle/app/widgets/custom_appbar.dart';
 import 'package:dazle/app/widgets/form_fields/amenities_check_box_group.dart';
+import 'package:dazle/app/widgets/form_fields/custom_dropdown_search.dart';
 import 'package:dazle/app/widgets/form_fields/custom_icon_button.dart';
 import 'package:dazle/app/widgets/form_fields/custom_radio_group_button.dart';
 import 'package:dazle/app/widgets/form_fields/custom_text_field.dart';
@@ -12,6 +13,7 @@ import 'package:dazle/app/widgets/form_fields/custom_dropdown.dart';
 import 'package:dazle/app/widgets/profile/box_container.dart';
 import 'package:dazle/data/repositories/data_listing_repository.dart';
 import 'package:dazle/domain/entities/property.dart';
+import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:pattern_formatter/pattern_formatter.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
@@ -160,13 +162,37 @@ class _CreateListingPageState
           builder: (context, controller) {
         var _pageController = controller.createListingPageController;
 
+        // Page 2 required properties
+        List<String> floorAreaRequiredProperties = [
+          'Residential House',
+          'Apartment',
+          'Condo',
+          'Villa',
+          'Townhouse',
+          'Warehouse'
+        ];
+
+        List<String> furnishedRequiredProperties = [
+          'Residential House',
+          'Apartment',
+          'Condo',
+          'Villa',
+          'Townhouse',
+          'Commercial Building',
+          'Warehouse'
+        ];
+
         createListingList = [
           // page 1
           ListView(
             padding: EdgeInsets.only(bottom: 20),
             children: [
-              AppConstant.customTitleField(
-                  padding: EdgeInsets.only(left: 18), title: 'Property Type'),
+              AppConstant.customTitleFieldWithSubtext(
+                padding: EdgeInsets.only(left: 18),
+                title: 'Property Type',
+                optionalText: 'required',
+                optionalTextColor: Colors.red,
+              ),
               CustomRadioGroupButton(
                 autowidth: true,
                 radioWidth: 120,
@@ -202,7 +228,11 @@ class _CreateListingPageState
                 },
                 defaultSelected: controller.propertyType,
               ),
-              AppConstant.customTitleField(title: 'Property For'),
+              AppConstant.customTitleFieldWithSubtext(
+                title: 'Property For',
+                optionalText: 'required',
+                optionalTextColor: Colors.red,
+              ),
               Container(
                 alignment: Alignment.centerLeft,
                 child: CustomRadioGroupButton(
@@ -223,7 +253,11 @@ class _CreateListingPageState
                 ),
               ),
               controller.propertyFor == 'Rent'
-                  ? AppConstant.customTitleField(title: 'Time Period')
+                  ? AppConstant.customTitleFieldWithSubtext(
+                      title: 'Time Period',
+                      optionalText: 'required',
+                      optionalTextColor: Colors.red,
+                    )
                   : Container(),
               controller.propertyFor == 'Rent'
                   ? CustomRadioGroupButton(
@@ -261,10 +295,12 @@ class _CreateListingPageState
                       ),
                     )
                   : Container(),
-              AppConstant.customTitleField(
-                  title: controller.pricing == 'Per sqm'
-                      ? 'Price per sqm'
-                      : 'Price'),
+              AppConstant.customTitleFieldWithSubtext(
+                title:
+                    controller.pricing == 'Per sqm' ? 'Price per sqm' : 'Price',
+                optionalText: 'required',
+                optionalTextColor: Colors.red,
+              ),
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 20),
                 child: CustomTextField(
@@ -286,9 +322,12 @@ class _CreateListingPageState
               bedroomAndBathroomProperties.contains(controller.propertyType) ==
                       false
                   ? Container()
-                  : AppConstant.customTitleField(
+                  : AppConstant.customTitleFieldWithSubtext(
                       padding: EdgeInsets.only(left: 18),
-                      title: 'Number of Bedrooms'),
+                      title: 'Number of Bedrooms',
+                      optionalText: 'required',
+                      optionalTextColor: Colors.red,
+                    ),
               bedroomAndBathroomProperties.contains(controller.propertyType) ==
                       false
                   ? Container()
@@ -306,7 +345,11 @@ class _CreateListingPageState
               bedroomAndBathroomProperties.contains(controller.propertyType) ==
                       false
                   ? Container()
-                  : AppConstant.customTitleField(title: 'Number of Bathrooms'),
+                  : AppConstant.customTitleFieldWithSubtext(
+                      title: 'Number of Bathrooms',
+                      optionalText: 'required',
+                      optionalTextColor: Colors.red,
+                    ),
               bedroomAndBathroomProperties.contains(controller.propertyType) ==
                       false
                   ? Container()
@@ -321,53 +364,82 @@ class _CreateListingPageState
                         ],
                       ),
                     ),
-              AppConstant.customTitleField(title: 'Number of Parking'),
-              CustomRadioGroupButton(
-                radioWidth: 55,
-                buttonLables: [
-                  "1",
-                  "2",
-                  "3",
-                  "4",
-                  "5",
-                  "6",
-                  "7",
-                  "8",
-                  "9",
-                  "10"
-                ],
-                buttonValues: [
-                  "1",
-                  "2",
-                  "3",
-                  "4",
-                  "5",
-                  "6",
-                  "7",
-                  "8",
-                  "9",
-                  "10"
-                ],
-                radioButtonValue: (value) {
-                  controller.numberOfParking = value;
-                },
-                defaultSelected: controller.numberOfParking,
-              ),
-              AppConstant.customTitleField(title: 'Total Area'),
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 20),
-                child: CustomTextField(
-                  controller: controller.areaTextController,
-                  keyboardType:
-                      const TextInputType.numberWithOptions(decimal: true),
-                  hintText: 'Area (sqm)',
-                  inputFormatters: [ThousandsFormatter(allowFraction: true)],
-                ),
-              ),
-              furnishedAndFloorAreaProperties.contains(controller.propertyType)
-                  ? AppConstant.customTitleField(title: 'Floor Area')
+              controller.propertyType == 'Commercial Lot' ||
+                      controller.propertyType == 'Beach' ||
+                      controller.propertyType == 'Lot' ||
+                      controller.propertyType == 'Farm Lot'
+                  ? Container()
+                  : AppConstant.customTitleFieldWithSubtext(
+                      title: 'Number of Parking',
+                      optionalText: 'required',
+                      optionalTextColor: Colors.red,
+                    ),
+              controller.propertyType == 'Commercial Lot' ||
+                      controller.propertyType == 'Beach' ||
+                      controller.propertyType == 'Lot' ||
+                      controller.propertyType == 'Farm Lot'
+                  ? Container()
+                  : CustomRadioGroupButton(
+                      radioWidth: 55,
+                      buttonLables: [
+                        "0",
+                        "1",
+                        "2",
+                        "3",
+                        "4",
+                        "5",
+                        "6",
+                        "7",
+                        "8",
+                        "9",
+                        "10"
+                      ],
+                      buttonValues: [
+                        "0",
+                        "1",
+                        "2",
+                        "3",
+                        "4",
+                        "5",
+                        "6",
+                        "7",
+                        "8",
+                        "9",
+                        "10"
+                      ],
+                      radioButtonValue: (value) {
+                        controller.numberOfParking = value;
+                      },
+                      defaultSelected: controller.numberOfParking,
+                    ),
+              controller.propertyType == 'Condo'
+                  ? Container()
+                  : AppConstant.customTitleFieldWithSubtext(
+                      title: 'Lot Area',
+                      optionalText: 'required',
+                      optionalTextColor: Colors.red,
+                    ),
+              controller.propertyType == 'Condo'
+                  ? Container()
+                  : Container(
+                      padding: EdgeInsets.symmetric(horizontal: 20),
+                      child: CustomTextField(
+                        controller: controller.areaTextController,
+                        keyboardType: const TextInputType.numberWithOptions(
+                            decimal: true),
+                        hintText: 'Area (sqm)',
+                        inputFormatters: [
+                          ThousandsFormatter(allowFraction: true)
+                        ],
+                      ),
+                    ),
+              floorAreaRequiredProperties.contains(controller.propertyType)
+                  ? AppConstant.customTitleFieldWithSubtext(
+                      title: 'Floor Area',
+                      optionalText: 'required',
+                      optionalTextColor: Colors.red)
                   : Container(),
-              furnishedAndFloorAreaProperties.contains(controller.propertyType)
+              floorAreaRequiredProperties.contains(controller.propertyType)
                   ? Container(
                       padding: EdgeInsets.symmetric(horizontal: 20),
                       child: CustomTextField(
@@ -381,65 +453,90 @@ class _CreateListingPageState
                       ),
                     )
                   : Container(),
-              frontageAreaProperties.contains(controller.propertyType) == false
-                  ? Container()
-                  : AppConstant.customTitleField(title: 'Frontage Area'),
-              frontageAreaProperties.contains(controller.propertyType) == false
-                  ? Container()
-                  : Container(
-                      padding: EdgeInsets.symmetric(horizontal: 20),
-                      child: CustomTextField(
-                        controller: controller.frontageTextController,
-                        keyboardType: const TextInputType.numberWithOptions(
-                            decimal: true),
-                        hintText: 'Frontage Area (sqm)',
-                        inputFormatters: [
-                          ThousandsFormatter(allowFraction: true)
-                        ],
-                      ),
-                    ),
-              furnishedAndFloorAreaProperties
-                          .contains(controller.propertyType) ==
+              AppConstant.customTitleFieldWithSubtext(
+                  title: 'Frontage Area',
+                  optionalText: controller.propertyType == 'Commercial Lot'
+                      ? 'required'
+                      : 'optional',
+                  optionalTextColor: controller.propertyType == 'Commercial Lot'
+                      ? Colors.red
+                      : App.textColor),
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 20),
+                child: CustomTextField(
+                  controller: controller.frontageTextController,
+                  keyboardType:
+                      const TextInputType.numberWithOptions(decimal: true),
+                  hintText: 'Frontage Area (sqm)',
+                  inputFormatters: [ThousandsFormatter(allowFraction: true)],
+                ),
+              ),
+              furnishedRequiredProperties.contains(controller.propertyType) ==
                       false
                   ? Container()
-                  : AppConstant.customTitleField(
+                  : AppConstant.customTitleFieldWithSubtext(
                       padding: EdgeInsets.only(left: 18),
-                      title: 'Is your Property'),
-              furnishedAndFloorAreaProperties
-                          .contains(controller.propertyType) ==
+                      title: 'Is your Property',
+                      optionalText: 'required',
+                      optionalTextColor: Colors.red),
+              furnishedRequiredProperties.contains(controller.propertyType) ==
                       false
                   ? Container()
                   : CustomRadioGroupButton(
                       autowidth: true,
                       radioWidth: 120,
-                      buttonLables: [
-                        "Furnished",
-                        "Unfurnished",
-                        "Partly Furnished"
-                      ],
-                      buttonValues: [
-                        "Furnished",
-                        "Unfurnished",
-                        "Partly Furnished"
-                      ],
+                      buttonLables: controller.propertyType == 'Warehouse' ||
+                              controller.propertyType == 'Commercial Building'
+                          ? [
+                              "Furnished",
+                              "Unfurnished",
+                              "Partly Furnished",
+                              "None",
+                            ]
+                          : [
+                              "Furnished",
+                              "Unfurnished",
+                              "Partly Furnished",
+                            ],
+                      buttonValues: controller.propertyType == 'Warehouse' ||
+                              controller.propertyType == 'Commercial Building'
+                          ? [
+                              "Furnished",
+                              "Unfurnished",
+                              "Partly Furnished",
+                              "None",
+                            ]
+                          : [
+                              "Furnished",
+                              "Unfurnished",
+                              "Partly Furnished",
+                            ],
                       radioButtonValue: (value) {
                         controller.isYourProperty = value;
                       },
                       defaultSelected: controller.isYourProperty,
                     ),
-              AppConstant.customTitleField(
-                  padding: EdgeInsets.only(left: 18), title: 'Ownership'),
+              AppConstant.customTitleFieldWithSubtext(
+                padding: EdgeInsets.only(left: 18),
+                title: 'Ownership',
+                optionalText: 'required',
+                optionalTextColor: Colors.red,
+              ),
               CustomRadioGroupButton(
                 autowidth: true,
                 radioWidth: 120,
-                buttonLables: ["Freehold", "Leasehold"],
-                buttonValues: ["Freehold", "Leasehold"],
+                buttonLables: ["Freehold", "Leasehold", "None"],
+                buttonValues: ["Freehold", "Leasehold", "None"],
                 radioButtonValue: (value) {
                   controller.ownwership = value;
                 },
                 defaultSelected: controller.ownwership,
               ),
-              AppConstant.customTitleField(title: 'Title'),
+              AppConstant.customTitleFieldWithSubtext(
+                title: 'Listing Title',
+                optionalText: 'required',
+                optionalTextColor: Colors.red,
+              ),
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 20),
                 child: CustomTextField(
@@ -447,7 +544,11 @@ class _CreateListingPageState
                   hintText: 'Listing Title',
                 ),
               ),
-              AppConstant.customTitleField(title: 'Description'),
+              AppConstant.customTitleFieldWithSubtext(
+                title: 'Description',
+                optionalText: 'required',
+                optionalTextColor: Colors.red,
+              ),
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 20),
                 child: CustomTextField(
@@ -465,8 +566,24 @@ class _CreateListingPageState
           ),
           // page 3
           ListView(
-            padding: EdgeInsets.only(bottom: 20),
+            padding: EdgeInsets.symmetric(vertical: 20),
             children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Color.fromRGBO(51, 212, 157, 0.5),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  padding: EdgeInsets.all(20.0),
+                  child: CustomText(
+                    // fontSize: 16,
+                    text:
+                        'For Security Purposes, you can choose to either show or hide your listing location by tapping the button.',
+                    textAlign: TextAlign.justify,
+                  ),
+                ),
+              ),
               false
                   ? Container()
                   : AppConstant.customTitleField(title: 'Display Map:'),
@@ -567,22 +684,42 @@ class _CreateListingPageState
                     )
                   : Container(),
               SizedBox(height: 12.0),
-              AppConstant.customTitleField(title: 'Province'),
+              AppConstant.customTitleFieldWithSwith(
+                title: 'Province',
+                optionalText: 'required',
+                optionalTextColor: Colors.red,
+                switchValue: controller.showProvince,
+                switchHandler: (val) {
+                  setState(() {
+                    controller.showProvince = val;
+                  });
+                },
+              ),
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 20),
-                child: CustomDropdownField(
-                  items: controller.provinces,
+                child: CustomDropdownSearch(
+                  items: controller.sortedProvinceNames,
+                  isEnabled: controller.provinces.isNotEmpty,
                   hintText: 'Select Province',
-                  value: controller.selectedProvinceCode,
+                  selctedItem: controller.selectedProvinceName,
                   onChangeEvent: (String? value) async {
+                    print('Selected: $value');
+
                     setState(() {
-                      controller.selectedProvinceCode = value;
+                      controller.setSelectedProvinceCode(provinceName: value);
+                      controller.setSelectedProvinceName(
+                          provinceCode: controller.selectedProvinceCode);
+
                       controller.cities = [];
+                      controller.selectedCityName = null;
                       controller.selectedCityCode = null;
                       controller.barangays = [];
+                      controller.selectedBarangayName = null;
                       controller.selectedBarangayCode = null;
                       print('City lenght: ${controller.cities.length}');
                     });
+                    print(controller.cities.length);
+                    setState(() {});
                     if (controller.cities.length == 0) {
                       await controller
                           .getCities(controller.selectedProvinceCode);
@@ -591,56 +728,120 @@ class _CreateListingPageState
                   },
                 ),
               ),
-              AppConstant.customTitleField(title: 'City/Municipality'),
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 20),
-                child: CustomDropdownField(
-                  items: controller.cities,
-                  hintText: 'Select City/Municipality',
-                  value: controller.selectedCityCode,
-                  onChangeEvent: controller.cities.length == 0
-                      ? null
-                      : (String? value) async {
+              SizedBox(height: 12.0),
+              AppConstant.customTitleFieldWithSwith(
+                title: 'City',
+                optionalText: 'required',
+                optionalTextColor: Colors.red,
+                switchValue: controller.showCity,
+                switchHandler: (val) {
+                  setState(() {
+                    controller.showCity = val;
+                  });
+                },
+              ),
+              controller.cities.isEmpty
+                  ? Container(
+                      padding: EdgeInsets.symmetric(horizontal: 20),
+                      child: CustomDropdownSearch(
+                          hintText: 'Select City',
+                          isEnabled: false,
+                          items: [],
+                          onChangeEvent: (String? value) {}))
+                  : Container(
+                      padding: EdgeInsets.symmetric(horizontal: 20),
+                      child: CustomDropdownSearch(
+                        items: controller.cityNames,
+                        isEnabled: controller.cities.isNotEmpty,
+                        hintText: 'Select City',
+                        selctedItem: controller.selectedCityName,
+                        onChangeEvent: (String? value) async {
                           setState(() {
-                            controller.selectedCityCode = value;
+                            controller.setSelectedCityCode(cityName: value);
+                            controller.setSelectedCityName(
+                                cityCode: controller.selectedCityCode);
                             controller.barangays = [];
                             controller.selectedBarangayCode = null;
+                            controller.selectedBarangayName = null;
+                            print(
+                                'Brgy lenght: ${controller.barangays.length}');
                           });
-
                           if (controller.barangays.length == 0) {
                             await controller
                                 .getBarangays(controller.selectedCityCode);
                             print(
-                                'Barangay lenght: ${controller.barangays.length}');
+                                'Brgy lenght: ${controller.barangays.length}');
                           }
                         },
-                ),
+                      ),
+                    ),
+              SizedBox(height: 12.0),
+              AppConstant.customTitleFieldWithSwith(
+                title: 'Barangay',
+                optionalText: 'required',
+                optionalTextColor: Colors.red,
+                switchValue: controller.showBarangay,
+                switchHandler: (val) {
+                  setState(() {
+                    controller.showBarangay = val;
+                  });
+                },
               ),
-              AppConstant.customTitleField(title: 'Barangay'),
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 20),
-                child: CustomDropdownField(
-                  items: controller.barangays,
-                  hintText: 'Select Barangay',
-                  value: controller.selectedBarangayCode,
-                  onChangeEvent: controller.barangays.length == 0
-                      ? null
-                      : (String? value) {
+              controller.barangays.isEmpty
+                  ? Container(
+                      padding: EdgeInsets.symmetric(horizontal: 20),
+                      child: CustomDropdownSearch(
+                          hintText: 'Select Barangay',
+                          isEnabled: false,
+                          items: [],
+                          onChangeEvent: (String? value) {}))
+                  : Container(
+                      padding: EdgeInsets.symmetric(horizontal: 20),
+                      child: CustomDropdownSearch(
+                        items: controller.brgyNames,
+                        isEnabled: controller.barangays.isNotEmpty,
+                        hintText: 'Select Barangay',
+                        selctedItem: controller.selectedBarangayName,
+                        onChangeEvent: (String? value) async {
                           setState(() {
-                            controller.selectedBarangayCode = value;
+                            controller.setSelectedBarangayCode(
+                                barangayName: value);
+                            controller.setSelectedBarangayName(
+                                barangayCode: controller.selectedBarangayCode);
                           });
                         },
-                ),
+                      ),
+                    ),
+              controller.propertyType == 'Condo'
+                  ? Container()
+                  : AppConstant.customTitleFieldWithSwith(
+                      title: 'Subdivision',
+                      optionalText: 'optional',
+                      switchValue: controller.showSubdivision,
+                      switchHandler: (val) {
+                        setState(() {
+                          controller.showSubdivision = val;
+                        });
+                      },
+                    ),
+              controller.propertyType == 'Condo'
+                  ? Container()
+                  : Container(
+                      padding: EdgeInsets.symmetric(horizontal: 20),
+                      child: CustomTextField(
+                        controller: controller.subdivisionTextController,
+                        hintText: 'Subdivision',
+                      ),
+                    ),
+              AppConstant.customTitleFieldWithSwith(
+                title: 'Street Name',
+                optionalText: 'optional',
+                switchHandler: (val) {
+                  setState(() {
+                    controller.showStreet = val;
+                  });
+                },
               ),
-              AppConstant.customTitleField(title: 'Subdivision'),
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 20),
-                child: CustomTextField(
-                  controller: controller.subdivisionTextController,
-                  hintText: 'Subdivision',
-                ),
-              ),
-              AppConstant.customTitleField(title: 'Street Name'),
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 20),
                 child: CustomTextField(
@@ -648,31 +849,79 @@ class _CreateListingPageState
                   hintText: 'Street Name',
                 ),
               ),
-              AppConstant.customTitleField(
-                  title: 'Lot/Block/Phase/House Number'),
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 20),
-                child: CustomTextField(
-                  controller: controller.houseNumberTextController,
-                  hintText: 'Lot/Block/Phase/House Number',
-                ),
-              ),
-              AppConstant.customTitleField(title: 'Building Name'),
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 20),
-                child: CustomTextField(
-                  controller: controller.buildingNameTextController,
-                  hintText: 'Building Name',
-                ),
-              ),
-              AppConstant.customTitleField(title: 'Unit/Room No./Floor'),
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 20),
-                child: CustomTextField(
-                  controller: controller.floorTextController,
-                  hintText: 'Unit/Room No./Floor',
-                ),
-              ),
+              controller.propertyType == 'Condo' ||
+                      controller.propertyType == 'Commercial Building' ||
+                      controller.propertyType == 'Farm Lot' ||
+                      controller.propertyType == 'Beach'
+                  ? Container()
+                  : AppConstant.customTitleFieldWithSwith(
+                      title: 'Lot/Block/Phase/House Number',
+                      optionalText: 'optional',
+                      switchValue: controller.showHouseNumber,
+                      switchHandler: (val) {
+                        setState(() {
+                          controller.showHouseNumber = val;
+                        });
+                      },
+                    ),
+              controller.propertyType == 'Condo' ||
+                      controller.propertyType == 'Commercial Building' ||
+                      controller.propertyType == 'Farm Lot' ||
+                      controller.propertyType == 'Beach'
+                  ? Container()
+                  : Container(
+                      padding: EdgeInsets.symmetric(horizontal: 20),
+                      child: CustomTextField(
+                        controller: controller.houseNumberTextController,
+                        hintText: 'Lot/Block/Phase/House Number',
+                      ),
+                    ),
+              controller.propertyType == 'Condo' ||
+                      controller.propertyType == 'Warehouse'
+                  ? AppConstant.customTitleFieldWithSwith(
+                      title: controller.propertyType == 'Warehouse'
+                          ? 'Building/Compound Name'
+                          : 'Building Name',
+                      optionalText: 'optional',
+                      switchValue: controller.showBuildingName,
+                      switchHandler: (val) {
+                        setState(() {
+                          controller.showBuildingName = val;
+                        });
+                      },
+                    )
+                  : Container(),
+              controller.propertyType == 'Condo' ||
+                      controller.propertyType == 'Warehouse'
+                  ? Container(
+                      padding: EdgeInsets.symmetric(horizontal: 20),
+                      child: CustomTextField(
+                        controller: controller.buildingNameTextController,
+                        hintText: 'Building Name',
+                      ),
+                    )
+                  : Container(),
+              controller.propertyType != 'Condo'
+                  ? Container()
+                  : AppConstant.customTitleFieldWithSwith(
+                      title: 'Unit/Room No./Floor',
+                      optionalText: 'optional',
+                      switchValue: controller.showFloorNumber,
+                      switchHandler: (val) {
+                        setState(() {
+                          controller.showFloorNumber = val;
+                        });
+                      },
+                    ),
+              controller.propertyType != 'Condo'
+                  ? Container()
+                  : Container(
+                      padding: EdgeInsets.symmetric(horizontal: 20),
+                      child: CustomTextField(
+                        controller: controller.floorTextController,
+                        hintText: 'Unit/Room No./Floor',
+                      ),
+                    ),
               SizedBox(
                 height: 80.0,
               )
@@ -1062,6 +1311,19 @@ class _CreateListingPageState
                                     _pageController.nextPage(
                                         duration: Duration(milliseconds: 500),
                                         curve: Curves.ease);
+                                    // if (widget.property != null) {
+                                    //   print('------------------------------');
+                                    //   if (controller.brgyNames?.length == 0) {
+                                    //     print(
+                                    //         '------------------------------>');
+                                    //     //Todo: use progress bar
+                                    //     AppConstant.showToast(
+                                    //         msg:
+                                    //             "Getting locaton details please wait...",
+                                    //         timeInSecForIosWeb: 3);
+                                    //     AppConstant.showLoader(context, true);
+                                    //   }
+                                    // }
                                   }
                                 } else if (stepNumber == 3) {
                                   FocusScope.of(context).unfocus();

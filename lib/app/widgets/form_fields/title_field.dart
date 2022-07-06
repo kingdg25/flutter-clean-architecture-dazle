@@ -9,8 +9,8 @@ class TitleField extends StatelessWidget {
   final bool optional;
   final optionalText;
   final Color color;
+  final Color optionalTextcolor;
   final FontWeight fontWeight;
-
 
   TitleField({
     required this.title,
@@ -19,6 +19,7 @@ class TitleField extends StatelessWidget {
     this.optional = false,
     this.optionalText = 'Optional',
     this.color = App.textColor,
+    this.optionalTextcolor = App.textColor,
     this.fontWeight = FontWeight.w500,
   });
 
@@ -26,34 +27,42 @@ class TitleField extends StatelessWidget {
     return CustomText(
       text: title,
       color: color,
-      fontSize: fontSize, 
+      fontSize: fontSize,
       fontWeight: fontWeight,
     );
   }
 
   Widget mainTextWithOptional() {
     return Text.rich(
-      TextSpan(
-        children: [
+        TextSpan(children: [
           TextSpan(
             text: title,
           ),
           TextSpan(
-            text: " ($optionalText)",
-            style: TextStyle(
-              fontSize: 14.0,
-              fontWeight: FontWeight.normal
-            )
-          )
-        ]
-      ),
-      style: TextStyle(
-        color: color,
-        fontSize: fontSize, 
-        fontWeight: fontWeight,
-        fontFamily: 'Poppins',
-      )
-    );
+              text: " (",
+              style: TextStyle(
+                fontSize: 14.0,
+                fontWeight: FontWeight.normal,
+              )),
+          TextSpan(
+              text: "$optionalText",
+              style: TextStyle(
+                  fontSize: 14.0,
+                  fontWeight: FontWeight.normal,
+                  color: optionalTextcolor)),
+          TextSpan(
+              text: ")",
+              style: TextStyle(
+                fontSize: 14.0,
+                fontWeight: FontWeight.normal,
+              )),
+        ]),
+        style: TextStyle(
+          color: color,
+          fontSize: fontSize,
+          fontWeight: fontWeight,
+          fontFamily: 'Poppins',
+        ));
   }
 
   @override
