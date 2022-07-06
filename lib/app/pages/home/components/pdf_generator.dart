@@ -124,7 +124,7 @@ class PdfGenerator {
                           ),
                           PdfWidgets().pdfCustomRichText(
                             mainText: 'Location: ',
-                            valueText: '${property.completeAddress}',
+                            valueText: '${property.visibilityAddress}',
                           ),
                           pw.SizedBox(
                             height: 10,

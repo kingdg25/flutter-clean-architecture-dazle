@@ -44,6 +44,8 @@ class CustomRadioGroupButton extends StatelessWidget {
         defaultSelected: defaultSelected,
         autoWidth: autowidth,
         height: autowidth == true ? 50 : 35,
+        // enableShape: true,
+        // radius: 5,
       ),
     );
   }

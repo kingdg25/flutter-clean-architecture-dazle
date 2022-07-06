@@ -67,6 +67,9 @@ class _ListingDetailsPageState
                           tooltip: "Edit Property",
                           onPressed: () async {
                             AppConstant.showLoader(context, true);
+                            AppConstant.showToast(
+                                msg: "Getting locaton details please wait...",
+                                timeInSecForIosWeb: 3);
                             Navigator.pop(context);
                             final popThisPage = await Navigator.push(
                                 context,
