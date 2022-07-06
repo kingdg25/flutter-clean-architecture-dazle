@@ -112,12 +112,12 @@ class _ProfilePageState extends ViewState<ProfilePage, ProfileController> {
                           title: 'Notifications',
                           tapHandler: controller.comingSoon,
                         ),
-                        ProfileCard(
-                          icon: Icons.edit_outlined,
-                          color: Colors.purpleAccent.withOpacity(0.3),
-                          title: 'Edit Profile',
-                          tapHandler: controller.editProfile,
-                        ),
+                        // ProfileCard(
+                        //   icon: Icons.edit_outlined,
+                        //   color: Colors.purpleAccent.withOpacity(0.3),
+                        //   title: 'Edit Profile',
+                        //   tapHandler: controller.editProfile,
+                        // ),
                       ],
                     )),
                     Divider(
