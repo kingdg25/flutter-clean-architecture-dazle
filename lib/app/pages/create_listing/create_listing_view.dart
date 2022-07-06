@@ -454,13 +454,9 @@ class _CreateListingPageState
                     )
                   : Container(),
               AppConstant.customTitleFieldWithSubtext(
-                  title: 'Frontage Area',
-                  optionalText: controller.propertyType == 'Commercial Lot'
-                      ? 'required'
-                      : 'optional',
-                  optionalTextColor: controller.propertyType == 'Commercial Lot'
-                      ? Colors.red
-                      : App.textColor),
+                title: 'Frontage Area',
+                optionalText: 'optional',
+              ),
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 20),
                 child: CustomTextField(

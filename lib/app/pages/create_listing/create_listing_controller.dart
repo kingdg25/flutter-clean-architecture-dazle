@@ -777,8 +777,6 @@ class CreateListingController extends Controller {
 
     if (areaTextController.text.isNotEmpty &&
         areaTextController.text != '0' &&
-        frontageTextController.text.isNotEmpty &&
-        frontageTextController.text != '0' &&
         ownwership != null) {
       isValidated = true;
     }
