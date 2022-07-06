@@ -15,6 +15,7 @@ import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:dazle/app/pages/home/home_controller.dart';
 import 'package:dazle/app/pages/listing_details/listing_details_view.dart';
 import 'package:upgrader/upgrader.dart';
+import 'dart:io' show Platform;
 
 class HomePage extends View {
   HomePage({Key? key}) : super(key: key);
@@ -28,6 +29,9 @@ class _HomePageState extends ViewState<HomePage, HomeController> {
   @override
   Widget get view {
     return UpgradeAlert(
+      upgrader: Platform.isIOS
+          ? Upgrader(dialogStyle: UpgradeDialogStyle.cupertino)
+          : null,
       child: Scaffold(
           key: globalKey,
           appBar: AppBar(
