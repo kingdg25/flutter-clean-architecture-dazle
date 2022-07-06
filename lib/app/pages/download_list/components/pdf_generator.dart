@@ -124,7 +124,7 @@ class PdfGenerator {
                           ),
                           PdfWidgets().pdfCustomRichText(
                             mainText: 'Location: ',
-                            valueText: '${property.completeAddress}',
+                            valueText: '${property.visibilityAddress}',
                           ),
                           pw.SizedBox(
                             height: 10,
@@ -385,7 +385,7 @@ class PdfGenerator {
     if (statuses[Permission.storage]!.isGranted) {
       final listingPdf =
           await buildPdf(property: property!); // Builds the pdf file
-
+      // pd.update(value: 100);
       try {
         final dir = Platform.isAndroid
             ? await getExternalStorageDirectory()

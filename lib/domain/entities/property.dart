@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
 
 class Property {
@@ -81,6 +82,55 @@ class Property {
     }
 
     return completeAddress;
+  }
+
+  String get visibilityAddress {
+    String visibilityAddress = '';
+
+    if (location == null) {
+      return 'No complete Address';
+    }
+
+    if ((location["RoomNo"].length > 0 &&
+            location["ShowFloorNumber"] == true) ||
+        location["ShowFloorNumber"] == null) {
+      visibilityAddress = visibilityAddress + '${location["RoomNo"]}, ';
+    }
+
+    if ((location["BuildingName"].length > 0 &&
+            location["ShowBuildingName"] == true) ||
+        location["ShowBuildingName"] == null) {
+      visibilityAddress = visibilityAddress + '${location["BuildingName"]}, ';
+    }
+    if ((location["HouseNo"].length > 0 &&
+            location["ShowHouseNumber"] == true) ||
+        location["ShowHouseNumber"] == null) {
+      visibilityAddress = visibilityAddress + '${location["HouseNo"]}, ';
+    }
+    if ((location["Street"].length > 0 && location["ShowStreet"] == true) ||
+        location["ShowStreet"] == null) {
+      visibilityAddress = visibilityAddress + '${location["Street"]}, ';
+    }
+    if ((location["Subdivision"].length > 0 &&
+            location["ShowSubdivision"] == true) ||
+        location["ShowSubdivision"] == null) {
+      visibilityAddress = visibilityAddress + '${location["Subdivision"]}, ';
+    }
+    if ((location["BrgyName"] != null && location["ShowBarangay"] == true) ||
+        location["ShowBarangay"] == null) {
+      visibilityAddress = visibilityAddress + '${location["BrgyName"]}, ';
+    }
+    if ((location["CityName"] != null && location["ShowCity"] == true) ||
+        location["ShowCity"] == null) {
+      visibilityAddress = visibilityAddress + '${location["CityName"]}, ';
+    }
+    if ((location["ProvinceName"] != null &&
+            location["ShowProvince"] == true) ||
+        location["ShowProvince"] == null) {
+      visibilityAddress = visibilityAddress + '${location["ProvinceName"]} ';
+    }
+
+    return visibilityAddress;
   }
 
   Property(

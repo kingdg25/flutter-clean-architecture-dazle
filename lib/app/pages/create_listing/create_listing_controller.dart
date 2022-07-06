@@ -15,6 +15,7 @@ import 'package:dazle/domain/entities/user.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:flutter_overlay_loader/flutter_overlay_loader.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:mixpanel_flutter/mixpanel_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wechat_assets_picker/wechat_assets_picker.dart';
@@ -70,13 +71,17 @@ class CreateListingController extends Controller {
   List<DropdownMenuItem<String>> barangays = [];
   List<String?> provinceCodes = [];
   List<String?> provinceNames = [];
+  List<String>? sortedProvinceNames = [];
   List<String?> cityCodes = [];
-  List<String?> cityNames = [];
+  List<String>? cityNames = [];
   List<String?> brgyCodes = [];
-  List<String?> brgyNames = [];
+  List<String>? brgyNames = [];
   String? selectedProvinceCode;
   String? selectedCityCode;
   String? selectedBarangayCode;
+  String? selectedProvinceName;
+  String? selectedCityName;
+  String? selectedBarangayName;
   Map<String, dynamic> location;
 
   final TextEditingController subdivisionTextController;
@@ -84,6 +89,16 @@ class CreateListingController extends Controller {
   final TextEditingController houseNumberTextController;
   final TextEditingController buildingNameTextController;
   final TextEditingController floorTextController;
+
+  // Visibility
+  bool showProvince = true;
+  bool showCity = true;
+  bool showBarangay = true;
+  bool showSubdivision = true;
+  bool showStreet = true;
+  bool showHouseNumber = true;
+  bool showBuildingName = true;
+  bool showFloorNumber = true;
 
   // page 4
   List<String> amenitiesSelection;
@@ -270,7 +285,6 @@ class CreateListingController extends Controller {
 
   // initialize values on updating
   setValues() async {
-    //TODO: Add conditions of newly added fields for update and
     numOfBedroomController.text = '${this.property!.totalBedRoom!}';
     numOfBathroomsController.text = '${this.property!.totalBathRoom!}';
     priceTextController.text = this.property!.formatPrice;
@@ -309,16 +323,31 @@ class CreateListingController extends Controller {
       selectedProvinceCode = this.property!.location['ProvinceCode'];
       selectedCityCode = this.property!.location['CityCode'];
       selectedBarangayCode = this.property!.location['BrgyCode'];
+      selectedProvinceName = this.property!.location['ProvinceName'];
+      selectedCityName = this.property!.location['CityName'];
+      selectedBarangayName = this.property!.location['BrgyName'];
 
       subdivisionTextController.text = this.property!.location['Subdivision'];
       streetNameTextController.text = this.property!.location['Street'];
       houseNumberTextController.text = this.property!.location['HouseNo'];
       buildingNameTextController.text = this.property!.location['BuildingName'];
       floorTextController.text = this.property!.location['RoomNo'];
+
+      showProvince = this.property!.location['ShowProvince'] ?? true;
+      showCity = this.property!.location['ShowCity'] ?? true;
+      showBarangay = this.property!.location['ShowBarangay'] ?? true;
+      showSubdivision = this.property!.location['ShowSubdivision'] ?? true;
+      showStreet = this.property!.location['ShowStreet'] ?? true;
+      showHouseNumber = this.property!.location['ShowHouseNumber'] ?? true;
+      showBuildingName = this.property!.location['ShowBuildingName'] ?? true;
+      showFloorNumber = this.property!.location['ShowFloorNumber'] ?? true;
+
       AppConstant.showLoader(getContext(), false);
+      Fluttertoast.cancel();
     } else {
       await getProvinces();
       AppConstant.showLoader(getContext(), false);
+      Fluttertoast.cancel();
     }
 
     refreshUI();
@@ -343,6 +372,32 @@ class CreateListingController extends Controller {
     }
 
     return regions;
+  }
+
+  //Setting location codes
+  setSelectedProvinceCode({String? provinceName}) {
+    selectedProvinceCode = provinceCodes[provinceNames.indexOf(provinceName)];
+  }
+
+  setSelectedCityCode({String? cityName}) {
+    selectedCityCode = cityCodes[cityNames!.indexOf(cityName!)];
+  }
+
+  setSelectedBarangayCode({String? barangayName}) {
+    selectedBarangayCode = brgyCodes[brgyNames!.indexOf(barangayName!)];
+  }
+
+  //Setting location names
+  setSelectedProvinceName({String? provinceCode}) {
+    selectedProvinceName = provinceNames[provinceCodes.indexOf(provinceCode)];
+  }
+
+  setSelectedCityName({String? cityCode}) {
+    selectedCityName = cityNames![cityCodes.indexOf(cityCode)];
+  }
+
+  setSelectedBarangayName({String? barangayCode}) {
+    selectedBarangayName = brgyNames![brgyCodes.indexOf(barangayCode)];
   }
 
   getProvinces() async {
@@ -372,6 +427,7 @@ class CreateListingController extends Controller {
         jsonResponse['provinces'].forEach((val) {
           provinceCodes.add(val['province_code']);
           provinceNames.add(val['province_name']);
+          sortedProvinceNames?.add(val['province_name']);
           // provinces.add(DropdownMenuItem(
           //   child: Text(val['province_name']),
           //   value: val['province_code'],
@@ -382,6 +438,7 @@ class CreateListingController extends Controller {
     List<String?> sortedProvNames = [];
     sortedProvNames.addAll(provinceNames);
     sortedProvNames.sort(((a, b) => a!.compareTo(b!)));
+    sortedProvinceNames?.sort(((a, b) => a.compareTo(b)));
 
     sortedProvNames.forEach((val) {
       provinces.add(DropdownMenuItem(
@@ -394,7 +451,8 @@ class CreateListingController extends Controller {
   }
 
   getCities(String? provinceID) async {
-    cityNames.clear();
+    refreshUI();
+    cityNames?.clear();
     cityCodes.clear();
     SharedPreferences prefs = await SharedPreferences.getInstance();
     List<DropdownMenuItem<String>> citiesFromAPi = [];
@@ -411,7 +469,7 @@ class CreateListingController extends Controller {
     if (response.statusCode == 200) {
       print('Cities Length: ${jsonResponse['cities'].length}');
       jsonResponse['cities'].forEach((val) {
-        cityNames.add(val['city_name']);
+        cityNames?.add(val['city_name']);
         cityCodes.add(val['city_code']);
         cities.add(DropdownMenuItem(
           child: Text(val['city_name']),
@@ -424,7 +482,7 @@ class CreateListingController extends Controller {
   }
 
   getBarangays(String? cityID) async {
-    brgyNames.clear();
+    brgyNames?.clear();
     brgyCodes.clear();
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var response = await http.get(
@@ -440,7 +498,7 @@ class CreateListingController extends Controller {
     if (response.statusCode == 200) {
       print('Barangays Length: ${jsonResponse['barangays'].length}');
       jsonResponse['barangays'].forEach((val) {
-        brgyNames.add(val['brgy_name']);
+        brgyNames?.add(val['brgy_name']);
         brgyCodes.add(val['brgy_code']);
         barangays.add(DropdownMenuItem(
           child: Text(val['brgy_name']),
@@ -515,150 +573,55 @@ class CreateListingController extends Controller {
   validatePage2() {
     bool isValidated = false;
     bool numberFound = areaTextController.text.contains(new RegExp(r'[0-9]'));
-    List<String> furnishedAndFloorAreaProperties = [
-      'Apartment',
-      'Condo',
-      'Villa',
-      'Townhouse',
-      'Commercial Building',
-      'Warehouse',
-      'Residential House'
-    ];
-    List<String> bedroomAndBathroomProperties = [
-      'Apartment',
-      'Condo',
-      'Villa',
-      'Townhouse',
-      'Residential House'
-    ];
-    List<String> frontageAreaProperties = [
-      'Villa',
-      'Townhouse',
-      'Residential House'
-    ];
+
     bool generalValidation =
         page2GeneralValidation(); // Execute the general validation
 
-    if (furnishedAndFloorAreaProperties.contains(propertyType)) {
-      if (bedroomAndBathroomProperties.contains(propertyType)) {
-        //general, FA , furnished, Bedroom and Bathroom
-        if (generalValidation == true &&
-            floorAreaTextController.text.isNotEmpty &&
-            floorAreaTextController.text != '0' &&
-            isYourProperty != null &&
-            numOfBedroomController.text.isNotEmpty &&
-            numOfBedroomController.text != '0' &&
-            numOfBathroomsController.text.isNotEmpty &&
-            numOfBathroomsController.text != '0') {
-          isValidated = true;
-        }
-      } else {
-        //general, FA , furnished,
-        if (generalValidation == true &&
-            floorAreaTextController.text.isNotEmpty &&
-            floorAreaTextController.text != '0' &&
-            isYourProperty != null) {
-          numOfBathroomsController.text = '';
-          numOfBedroomController.text = '';
-          isValidated = true;
-        }
+    if (propertyType == 'Residential House') {
+      if (generalValidation && residentialHouseValidationPage2()) {
+        isValidated = true;
       }
-    } else {
-      // only General
-      // Commercial Lot, Lot, Farm Lot, Beach
-      if (generalValidation == true) {
-        floorAreaTextController.text = '';
-        numOfBathroomsController.text = '';
-        numOfBedroomController.text = '';
-        isYourProperty = null;
+    } else if (propertyType == 'Apartment') {
+      if (generalValidation && apartmentValidationPage2()) {
+        isValidated = true;
+      }
+    } else if (propertyType == 'Condo') {
+      if (generalValidation && condoValidationPage2()) {
+        isValidated = true;
+      }
+    } else if (propertyType == 'Villa') {
+      if (generalValidation && villaValidationPage2()) {
+        isValidated = true;
+      }
+    } else if (propertyType == 'Townhouse') {
+      if (generalValidation && townhouseValidationPage2()) {
+        isValidated = true;
+      }
+    } else if (propertyType == 'Commercial Building') {
+      if (generalValidation && commercialBuildingValidationPage2()) {
+        isValidated = true;
+      }
+    } else if (propertyType == 'Warehouse') {
+      if (generalValidation && warehouseValidationPage2()) {
+        isValidated = true;
+      }
+    } else if (propertyType == 'Commercial Lot') {
+      if (generalValidation && commercialLotValidationPage2()) {
+        isValidated = true;
+      }
+    } else if (propertyType == 'Lot') {
+      if (generalValidation && lotValidationPage2()) {
+        isValidated = true;
+      }
+    } else if (propertyType == 'Farm Lot') {
+      if (generalValidation && farmLotValidationPage2()) {
+        isValidated = true;
+      }
+    } else if (propertyType == 'Beach') {
+      if (generalValidation && beachValidationPage2()) {
         isValidated = true;
       }
     }
-
-    // // Page 2 Lot and Commercial Validation
-    // if (propertyType == 'Lot' ||
-    //     propertyType == 'Farm Lot' ||
-    //     propertyType == 'Commercial Lot' ||
-    //     propertyType == 'Commercial Building') {
-    //   //Include floor area if Commercial Building
-    //   if (propertyType == 'Commercial Building') {
-    //     if (numberOfParking != null &&
-    //         areaTextController.text.isNotEmpty &&
-    //         numberFound == true &&
-    //         areaTextController.text != '0' &&
-    //         floorAreaTextController.text.isNotEmpty &&
-    //         floorAreaTextController.text != '0' &&
-    //         titleTextController.text.isNotEmpty &&
-    //         descriptionTextController.text.isNotEmpty &&
-    //         ownwership != null &&
-    //         isYourProperty != null) {
-    //       numOfBathroomsController.text = '';
-    //       numOfBedroomController.text = '';
-    //       isValidated = true;
-    //     }
-    //   } else if (propertyType == 'Lot' ||
-    //       propertyType == 'Farm Lot' ||
-    //       propertyType == 'Commercial Lot') {
-    //     // furnished not required
-    //     if (numberOfParking != null &&
-    //         areaTextController.text.isNotEmpty &&
-    //         numberFound == true &&
-    //         areaTextController.text != '0' &&
-    //         titleTextController.text.isNotEmpty &&
-    //         descriptionTextController.text.isNotEmpty &&
-    //         ownwership != null) {
-    //       floorAreaTextController.text = '';
-    //       numOfBathroomsController.text = '';
-    //       numOfBedroomController.text = '';
-    //       isYourProperty = null;
-    //       isValidated = true;
-    //     }
-    //   } else {
-    //     if (numberOfParking != null &&
-    //         areaTextController.text.isNotEmpty &&
-    //         numberFound == true &&
-    //         areaTextController.text != '0' &&
-    //         titleTextController.text.isNotEmpty &&
-    //         descriptionTextController.text.isNotEmpty &&
-    //         ownwership != null &&
-    //         isYourProperty != null) {
-    //       floorAreaTextController.text = '';
-    //       isValidated = true;
-    //     }
-    //   }
-    // } else if (propertyType == 'Warehouse') {
-    //   if (numOfBathroomsController.text.isNotEmpty &&
-    //       numOfBathroomsController.text != '0' &&
-    //       numberOfParking != null &&
-    //       areaTextController.text.isNotEmpty &&
-    //       numberFound == true &&
-    //       areaTextController.text != '0' &&
-    //       titleTextController.text.isNotEmpty &&
-    //       descriptionTextController.text.isNotEmpty &&
-    //       ownwership != null &&
-    //       isYourProperty != null) {
-    //     numOfBedroomController.text = '';
-    //     floorAreaTextController.text = '';
-    //     isValidated = true;
-    //   }
-    // } else {
-    //   if (numOfBedroomController.text.isNotEmpty &&
-    //       numOfBedroomController.text != '0' &&
-    //       numOfBathroomsController.text.isNotEmpty &&
-    //       numOfBathroomsController.text != '0' &&
-    //       numberOfParking != null &&
-    //       areaTextController.text.isNotEmpty &&
-    //       numberFound == true &&
-    //       areaTextController.text != '0' &&
-    //       floorAreaTextController.text.isNotEmpty &&
-    //       floorAreaTextController.text != '0' &&
-    //       ownwership != null &&
-    //       titleTextController.text.isNotEmpty &&
-    //       descriptionTextController.text.isNotEmpty &&
-    //       isYourProperty != null) {
-    //     isValidated = true;
-    //   }
-    // }
 
     // Error Message if isValidated is False
     if (isValidated == false) {
@@ -672,15 +635,208 @@ class CreateListingController extends Controller {
 
   bool page2GeneralValidation() {
     bool isValidated = false;
-    if (numberOfParking != null &&
-        areaTextController.text.isNotEmpty &&
-        areaTextController.text != '0' &&
-        ownwership != null &&
-        titleTextController.text.isNotEmpty &&
+
+    if (titleTextController.text.isNotEmpty &&
         descriptionTextController.text.isNotEmpty) {
       isValidated = true;
     }
 
+    print('General validation is: $isValidated');
+    return isValidated;
+  }
+
+  bool residentialHouseValidationPage2() {
+    bool isValidated = false;
+    if (numOfBathroomsController.text != '' &&
+        numOfBathroomsController.text != '' &&
+        numberOfParking != null &&
+        areaTextController.text.isNotEmpty &&
+        areaTextController.text != '0' &&
+        floorAreaTextController.text.isNotEmpty &&
+        floorAreaTextController.text != '0' &&
+        isYourProperty != null &&
+        ownwership != null) {
+      isValidated = true;
+    }
+    print('residential validation is: $isValidated');
+    return isValidated;
+  }
+
+  bool apartmentValidationPage2() {
+    bool isValidated = false;
+    if (numOfBathroomsController.text != '' &&
+        numOfBathroomsController.text != '' &&
+        numberOfParking != null &&
+        areaTextController.text.isNotEmpty &&
+        areaTextController.text != '0' &&
+        floorAreaTextController.text.isNotEmpty &&
+        floorAreaTextController.text != '0' &&
+        isYourProperty != null &&
+        ownwership != null) {
+      isValidated = true;
+    }
+    print('apartment validation is: $isValidated');
+    return isValidated;
+  }
+
+  bool condoValidationPage2() {
+    bool isValidated = false;
+    areaTextController.text = '';
+    if (numOfBathroomsController.text != '' &&
+        numOfBathroomsController.text != '' &&
+        numberOfParking != null &&
+        floorAreaTextController.text.isNotEmpty &&
+        floorAreaTextController.text != '0' &&
+        isYourProperty != null &&
+        ownwership != null) {
+      isValidated = true;
+    }
+    print('condo validation is: $isValidated');
+    return isValidated;
+  }
+
+  bool villaValidationPage2() {
+    bool isValidated = false;
+    if (numOfBathroomsController.text != '' &&
+        numOfBathroomsController.text != '' &&
+        numberOfParking != null &&
+        areaTextController.text.isNotEmpty &&
+        areaTextController.text != '0' &&
+        floorAreaTextController.text.isNotEmpty &&
+        floorAreaTextController.text != '0' &&
+        isYourProperty != null &&
+        ownwership != null) {
+      isValidated = true;
+    }
+    print('villa validation is: $isValidated');
+    return isValidated;
+  }
+
+  bool townhouseValidationPage2() {
+    bool isValidated = false;
+    if (numOfBathroomsController.text != '' &&
+        numOfBathroomsController.text != '' &&
+        numberOfParking != null &&
+        areaTextController.text.isNotEmpty &&
+        areaTextController.text != '0' &&
+        floorAreaTextController.text.isNotEmpty &&
+        floorAreaTextController.text != '0' &&
+        isYourProperty != null &&
+        ownwership != null) {
+      isValidated = true;
+    }
+    print('townhouse validation is: $isValidated');
+    return isValidated;
+  }
+
+  bool commercialBuildingValidationPage2() {
+    bool isValidated = false;
+
+    numOfBedroomController.text = '';
+    numOfBathroomsController.text = '';
+    floorAreaTextController.text = '';
+
+    if (numberOfParking != null &&
+        areaTextController.text.isNotEmpty &&
+        areaTextController.text != '0' &&
+        isYourProperty != null &&
+        ownwership != null) {
+      isValidated = true;
+    }
+    print('commercial building validation is: $isValidated');
+    return isValidated;
+  }
+
+  bool warehouseValidationPage2() {
+    bool isValidated = false;
+
+    numOfBedroomController.text = '';
+    numOfBathroomsController.text = '';
+
+    if (numberOfParking != null &&
+        areaTextController.text.isNotEmpty &&
+        areaTextController.text != '0' &&
+        floorAreaTextController.text.isNotEmpty &&
+        floorAreaTextController.text != '0' &&
+        isYourProperty != null &&
+        ownwership != null) {
+      isValidated = true;
+    }
+    print('warehouse validation is: $isValidated');
+    return isValidated;
+  }
+
+  bool commercialLotValidationPage2() {
+    bool isValidated = false;
+
+    numOfBedroomController.text = '';
+    numOfBathroomsController.text = '';
+    floorAreaTextController.text = '';
+    numberOfParking = null;
+    isYourProperty = null;
+
+    if (areaTextController.text.isNotEmpty &&
+        areaTextController.text != '0' &&
+        frontageTextController.text.isNotEmpty &&
+        frontageTextController.text != '0' &&
+        ownwership != null) {
+      isValidated = true;
+    }
+    print('commercial lot validation is: $isValidated');
+    return isValidated;
+  }
+
+  bool lotValidationPage2() {
+    bool isValidated = false;
+
+    numOfBedroomController.text = '';
+    numOfBathroomsController.text = '';
+    floorAreaTextController.text = '';
+    numberOfParking = null;
+    isYourProperty = null;
+
+    if (areaTextController.text.isNotEmpty &&
+        areaTextController.text != '0' &&
+        ownwership != null) {
+      isValidated = true;
+    }
+    print('lot validation is: $isValidated');
+    return isValidated;
+  }
+
+  bool farmLotValidationPage2() {
+    bool isValidated = false;
+
+    numOfBedroomController.text = '';
+    numOfBathroomsController.text = '';
+    floorAreaTextController.text = '';
+    numberOfParking = null;
+    isYourProperty = null;
+
+    if (areaTextController.text.isNotEmpty &&
+        areaTextController.text != '0' &&
+        ownwership != null) {
+      isValidated = true;
+    }
+    print('farm lot validation is: $isValidated');
+    return isValidated;
+  }
+
+  bool beachValidationPage2() {
+    bool isValidated = false;
+
+    numOfBedroomController.text = '';
+    numOfBathroomsController.text = '';
+    floorAreaTextController.text = '';
+    numberOfParking = null;
+    isYourProperty = null;
+
+    if (areaTextController.text.isNotEmpty &&
+        areaTextController.text != '0' &&
+        ownwership != null) {
+      isValidated = true;
+    }
+    print('beach validation is: $isValidated');
     return isValidated;
   }
 
@@ -691,13 +847,27 @@ class CreateListingController extends Controller {
     String errorMsg = '';
 
     if (selectedProvinceCode != null &&
-            selectedCityCode != null &&
-            selectedBarangayCode != null &&
-            subdivisionTextController.text.isNotEmpty ||
-        streetNameTextController.text.isNotEmpty ||
-        houseNumberTextController.text.isNotEmpty ||
-        buildingNameTextController.text.isNotEmpty ||
-        floorTextController.text.isNotEmpty) {
+        selectedCityCode != null &&
+        selectedBarangayCode != null) {
+      if (propertyType == 'Condo') {
+        subdivisionTextController.text = '';
+        showSubdivision = false;
+      } else if (propertyType == 'Commercial Building' ||
+          propertyType == 'Farm Lot' ||
+          propertyType == 'Beach') {
+        showHouseNumber = false;
+        houseNumberTextController.text = '';
+        showBuildingName = false;
+        buildingNameTextController.text = '';
+        showFloorNumber = false;
+        floorTextController.text = '';
+      } else if (propertyType == 'Commercial Lot' || propertyType == 'Lot') {
+        showBuildingName = false;
+        buildingNameTextController.text = '';
+        showFloorNumber = false;
+        floorTextController.text = '';
+      }
+
       isValidated = true;
     } else {
       if (selectedProvinceCode == null) {
@@ -713,14 +883,15 @@ class CreateListingController extends Controller {
         errorFields = fieldsMissing.join(", ");
         errorMsg = "$errorFields are required.";
       }
-      if (subdivisionTextController.text.isEmpty ||
-          streetNameTextController.text.isEmpty ||
-          houseNumberTextController.text.isEmpty ||
-          buildingNameTextController.text.isEmpty ||
-          floorTextController.text.isEmpty) {
-        errorMsg =
-            '$errorMsg Please provide at least one of the following: Subdivision, Street Name, Lot/Block/Phase/House Number, Building Name and Unit/Room No./Floor.';
-      }
+
+      // if (subdivisionTextController.text.isEmpty ||
+      //     streetNameTextController.text.isEmpty ||
+      //     houseNumberTextController.text.isEmpty ||
+      //     buildingNameTextController.text.isEmpty ||
+      //     floorTextController.text.isEmpty) {
+      //   errorMsg =
+      //       '$errorMsg Please provide at least one of the following: Subdivision, Street Name, Lot/Block/Phase/House Number, Building Name and Unit/Room No./Floor.';
+      // }
     }
 
     if (isValidated == false) {
@@ -834,8 +1005,8 @@ class CreateListingController extends Controller {
     location["ProvinceCode"] = selectedProvinceCode;
     location["ProvinceName"] =
         provinceNames[provinceCodes.indexOf(selectedProvinceCode)];
-    location["CityName"] = cityNames[cityCodes.indexOf(selectedCityCode)];
-    location["BrgyName"] = brgyNames[brgyCodes.indexOf(selectedBarangayCode)];
+    location["CityName"] = cityNames![cityCodes.indexOf(selectedCityCode)];
+    location["BrgyName"] = selectedBarangayName;
     location["CityCode"] = selectedCityCode;
     location["BrgyCode"] = selectedBarangayCode;
     location["Subdivision"] = subdivisionTextController.text;
@@ -843,6 +1014,16 @@ class CreateListingController extends Controller {
     location["HouseNo"] = houseNumberTextController.text;
     location["BuildingName"] = buildingNameTextController.text;
     location["RoomNo"] = floorTextController.text;
+
+    /// visisbility
+    location["ShowProvince"] = showProvince;
+    location["ShowCity"] = showCity;
+    location["ShowBarangay"] = showBarangay;
+    location["ShowSubdivision"] = showSubdivision;
+    location["ShowStreet"] = showStreet;
+    location["ShowHouseNumber"] = showHouseNumber;
+    location["ShowBuildingName"] = showBuildingName;
+    location["ShowFloorNumber"] = showFloorNumber;
 
     Map data = {
       "id": this.property!.id,
@@ -907,10 +1088,9 @@ class CreateListingController extends Controller {
     }
 
     location["ProvinceCode"] = selectedProvinceCode;
-    location["ProvinceName"] =
-        provinceNames[provinceCodes.indexOf(selectedProvinceCode)];
-    location["CityName"] = cityNames[cityCodes.indexOf(selectedCityCode)];
-    location["BrgyName"] = brgyNames[brgyCodes.indexOf(selectedBarangayCode)];
+    location["ProvinceName"] = selectedProvinceName;
+    location["CityName"] = selectedCityName;
+    location["BrgyName"] = selectedBarangayName;
     location["CityCode"] = selectedCityCode;
     location["BrgyCode"] = selectedBarangayCode;
     location["Subdivision"] = subdivisionTextController.text;
@@ -918,6 +1098,16 @@ class CreateListingController extends Controller {
     location["HouseNo"] = houseNumberTextController.text;
     location["BuildingName"] = buildingNameTextController.text;
     location["RoomNo"] = floorTextController.text;
+
+    /// visisbility
+    location["ShowProvince"] = showProvince;
+    location["ShowCity"] = showCity;
+    location["ShowBarangay"] = showBarangay;
+    location["ShowSubdivision"] = showSubdivision;
+    location["ShowStreet"] = showStreet;
+    location["ShowHouseNumber"] = showHouseNumber;
+    location["ShowBuildingName"] = showBuildingName;
+    location["ShowFloorNumber"] = showFloorNumber;
 
     var listing = {
       "cover_photo": 'https://picsum.photos/id/73/200/300',

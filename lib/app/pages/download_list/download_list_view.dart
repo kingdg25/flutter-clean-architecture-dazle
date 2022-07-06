@@ -305,9 +305,11 @@ class _DownloadListPageState
                         onPressed: () async {
                           //? Changed to open pdf
                           controller.mixpanel?.track('Download Listing');
-                          print('ashjkfdjasdhfkljashdfljkhasf');
-                          AppConstant.showToast(msg: "Generating document please wait...", timeInSecForIosWeb: 3);
+                          AppConstant.showToast(
+                              msg: "Generating document please wait...",
+                              timeInSecForIosWeb: 3);
                           Loader.show(context);
+
                           String? pdfFilePath = await PdfGenerator()
                               .downloadPdf(property: widget.property);
                           AppConstant.showToast(msg: "Launching document...");
@@ -328,7 +330,9 @@ class _DownloadListPageState
                         onPressed: () async {
                           controller.mixpanel?.track('Share Listing');
                           Loader.show(context);
-                          AppConstant.showToast(msg: "Generating document please wait...", timeInSecForIosWeb: 3);
+                          AppConstant.showToast(
+                              msg: "Generating document please wait...",
+                              timeInSecForIosWeb: 3);
                           String? pdfFilePath = await PdfGenerator()
                               .sharePdf(property: widget.property);
                           Loader.hide();
