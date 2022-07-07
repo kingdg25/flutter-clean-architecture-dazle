@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:dazle/app/pages/edit_profile/edit_profile_view.dart';
 import 'package:flutter/material.dart';
 
 import '../../../domain/entities/property.dart';
@@ -87,6 +88,37 @@ class _ProfileInfoState extends State<ProfileInfo> {
                     fontWeight: FontWeight.w500,
                     textAlign: TextAlign.center,
                   ),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    CustomButton(
+                        text: 'Edit Profile',
+                        width: 120,
+                        borderRadius: 30,
+                        onPressed: () async {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (buildContext) => EditProfilePage(
+                                user: _currentUser,
+                              ),
+                            ),
+                          );
+                        }),
+                    // SizedBox(width: 8),
+                    // CustomButton(
+                    //     text: 'Share Profile',
+                    //     width: 120,
+                    //     borderRadius: 30,
+                    //     main: false,
+                    //     onPressed: () async {
+                    //       await Navigator.push(
+                    //           context,
+                    //           MaterialPageRoute(
+                    //               builder: (buildContext) => ProfilePage()));
+                    //     })
+                  ],
                 ),
                 // SizedBox(height: 10),
                 isCurrentUser

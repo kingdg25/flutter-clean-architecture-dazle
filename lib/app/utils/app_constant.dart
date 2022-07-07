@@ -3,6 +3,7 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'dart:convert' as convert;
 import 'package:dazle/data/constants.dart';
+import 'package:flutter_switch/flutter_switch.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:path/path.dart';
@@ -178,6 +179,71 @@ class AppConstant {
         title: title,
         fontSize: 16,
         fontWeight: FontWeight.w600,
+      ),
+    );
+  }
+
+  static customTitleFieldWithSubtext({
+    required String title,
+    String? optionalText,
+    Color optionalTextColor = App.textColor,
+    EdgeInsets padding = const EdgeInsets.only(left: 18, top: 12),
+  }) {
+    return Container(
+      padding: EdgeInsets.only(left: 18, top: 12),
+      child: TitleField(
+        title: title,
+        fontSize: 16,
+        fontWeight: FontWeight.w600,
+        optional: true,
+        optionalText: optionalText,
+        optionalTextcolor: optionalTextColor,
+      ),
+    );
+  }
+
+  static customTitleFieldWithSwith(
+      {required String title,
+      String? optionalText,
+      Color optionalTextColor = App.textColor,
+      bool switchValue = true,
+      required void Function(bool) switchHandler,
+      EdgeInsets padding = const EdgeInsets.only(left: 18, top: 12)}) {
+    return Container(
+      padding: EdgeInsets.only(left: 18, top: 12, bottom: 2),
+      child: Row(
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          Flexible(
+            flex: 2,
+            child: TitleField(
+              title: title,
+              fontSize: 16,
+              fontWeight: FontWeight.w600,
+              optional: true,
+              optionalText: optionalText,
+              optionalTextcolor: optionalTextColor,
+            ),
+          ),
+          Flexible(
+            // flex: 1,
+            child: FlutterSwitch(
+              showOnOff: true,
+              activeColor: App.mainColor,
+              activeTextColor: App.textColor,
+              inactiveColor: App.hintColor,
+              inactiveTextColor: App.textColor,
+              toggleSize: 15,
+              valueFontSize: 14,
+              activeText: 'Show',
+              inactiveText: 'Hide',
+              width: 65,
+              height: 27,
+              value: switchValue,
+              onToggle: switchHandler,
+            ),
+          )
+        ],
       ),
     );
   }

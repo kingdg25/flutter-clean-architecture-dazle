@@ -12,6 +12,8 @@ import 'package:dazle/domain/entities/user.dart';
 import 'package:flutter_overlay_loader/flutter_overlay_loader.dart';
 import 'package:dazle/app/pages/login/login_view.dart';
 import 'package:mixpanel_flutter/mixpanel_flutter.dart';
+import 'package:update_available/update_available.dart';
+import 'package:upgrader/upgrader.dart';
 
 class HomeController extends Controller {
   final HomePresenter homePresenter;
@@ -38,6 +40,8 @@ class HomeController extends Controller {
   List<Property> get myListing => _myListing;
 
   Timer? _timer;
+
+  String text = 'Is there any update?';
 
   TextEditingController? searchTextController;
 
