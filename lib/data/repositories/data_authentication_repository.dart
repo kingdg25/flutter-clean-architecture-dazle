@@ -16,6 +16,104 @@ class DataAuthenticationRepository extends AuthenticationRepository {
   factory DataAuthenticationRepository() => _instance;
 
   @override
+  Future<void> verifyPassword({String? email, String? password}) async {
+    Map params = {
+      "user": {"email": email, "password": password}
+    };
+
+    var response = await http.post(
+        Uri.parse("${Constants.siteURL}/auth/verify-password"),
+        body: convert.jsonEncode(params),
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        });
+
+    var jsonResponse = await convert.jsonDecode(response.body);
+    if (response.statusCode == 200) {
+      print('verifypassword data $jsonResponse');
+      bool success = jsonResponse['success'];
+
+      if (!success) {
+        throw {
+          "error": false,
+          "error_type": "${jsonResponse['error_type'] ?? ''}",
+          "status": jsonResponse['status']
+        };
+      }
+    } else {
+      throw {"error": true, "error_type": "dynamic", "status": "$jsonResponse"};
+    }
+  }
+
+  @override
+  Future<String?> deleteAccountCode({String? email}) async {
+    Map params = {
+      "user": {
+        "email": email,
+      }
+    };
+
+    var response = await http.post(
+        Uri.parse("${Constants.siteURL}/auth/delete-account-code"),
+        body: convert.jsonEncode(params),
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        });
+
+    var jsonResponse = await convert.jsonDecode(response.body);
+    if (response.statusCode == 200) {
+      print('delete account code json data $jsonResponse');
+      bool success = jsonResponse['success'];
+      var user = jsonResponse['user'];
+
+      if (success) {
+        return user['code'];
+      } else {
+        throw {
+          "error": false,
+          "error_type": "${jsonResponse['error_type'] ?? ''}",
+          "status": "${jsonResponse?['status'] ?? jsonResponse}"
+        };
+      }
+    } else {
+      throw {"error": true, "error_type": "dynamic", "status": "$jsonResponse"};
+    }
+  }
+
+  @override
+  Future<void> checkDeleteAccountCode({String? email, String? code}) async {
+    Map params = {
+      "user": {"email": email, "code": code}
+    };
+
+    var response = await http.post(
+        Uri.parse("${Constants.siteURL}/auth/check-delete-account-code"),
+        body: convert.jsonEncode(params),
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        });
+
+    var jsonResponse = await convert.jsonDecode(response.body);
+    if (response.statusCode == 200) {
+      print('check delete account code data $jsonResponse');
+      bool success = jsonResponse['success'];
+
+      if (!success) {
+        throw {
+          "error": false,
+          "error_type": "${jsonResponse['error_type'] ?? ''}",
+          "status": jsonResponse['status']
+        };
+      }
+    } else {
+      throw {"error": true, "error_type": "dynamic", "status": "$jsonResponse"};
+    }
+  }
+
+  @override
   Future<String?> forgotPassword({String? email}) async {
     Map params = {
       "user": {
@@ -43,7 +141,7 @@ class DataAuthenticationRepository extends AuthenticationRepository {
         throw {
           "error": false,
           "error_type": "${jsonResponse['error_type'] ?? ''}",
-          "status": "$jsonResponse"
+          "status": "${jsonResponse?['status'] ?? jsonResponse}"
         };
       }
     } else {

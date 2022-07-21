@@ -109,7 +109,7 @@ class EditProfileController extends Controller {
     emailTextController.text = user.email!;
     mobileNumberTextController.text = user.mobileNumber!;
 
-    aboutMeTextController.text = user.aboutMe!;
+    aboutMeTextController.text = user.aboutMe ?? '';
 
     userProfilePicture = user.profilePicture;
     print('BROKER: ${user.brokerLicenseNumber}');

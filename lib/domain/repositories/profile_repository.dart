@@ -8,4 +8,10 @@ abstract class ProfileRepository {
   Future<Verification> requestVerification({File? attachment});
 
   Future<UserFeedback> createFeedback({UserFeedback? feedback});
+
+  Future<void> deactivateActivateAccount({User? user});
+
+  Future<String> checkLoginType({User? user});
+
+  Future<void> deleteAccount({String? userId});
 }

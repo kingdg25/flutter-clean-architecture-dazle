@@ -7,6 +7,7 @@ import 'package:dazle/app/utils/app.dart';
 import 'package:dazle/app/utils/app_constant.dart';
 import 'package:dazle/app/widgets/custom_text.dart';
 import 'package:dazle/domain/entities/property.dart';
+import 'package:dazle/domain/entities/user.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_overlay_loader/flutter_overlay_loader.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -166,17 +167,27 @@ class PropertyListTile extends StatelessWidget {
                           iconData: Icons.file_download_outlined,
                           tooltip: "Download",
                           onPressed: () async {
-                            mixpanel?.track('Download Listing');
-                            //? Changed to open pdf
-                            print('ashjkfdjasdhfkljashdfljkhasf');
-                            Loader.show(context);
-                            AppConstant.showToast(msg: "Generating document please wait...", timeInSecForIosWeb: 3);
-                            String? pdfFilePath = await PdfGenerator()
-                                .downloadPdf(property: items[index]);
-                            Loader.hide();
-                          AppConstant.showToast(msg: "Launching document...");
-                            await OpenFile.open(pdfFilePath);
-                          Fluttertoast.cancel();
+                            User currentUser = await App.getUser();
+                            if (currentUser.accountStatus != 'Deactivated') {
+                              mixpanel?.track('Download Listing');
+                              Loader.show(context);
+                              AppConstant.showToast(
+                                  msg: "Generating document please wait...",
+                                  timeInSecForIosWeb: 3);
+                              String? pdfFilePath = await PdfGenerator()
+                                  .downloadPdf(property: items[index]);
+                              Loader.hide();
+                              AppConstant.showToast(
+                                  msg: "Launching document...");
+                              await OpenFile.open(pdfFilePath);
+                              Fluttertoast.cancel();
+                            } else {
+                              AppConstant.statusDialog(
+                                  context: context,
+                                  title: 'Action not Allowed',
+                                  text: 'Please Reactivate your account first.',
+                                  success: false);
+                            }
                           },
                         ),
                         ListingDetailsIconButton(
@@ -185,27 +196,40 @@ class PropertyListTile extends StatelessWidget {
                           iconData: Icons.share,
                           tooltip: "Share",
                           onPressed: () async {
-                            mixpanel?.track('Share Listing');
-                            Loader.show(context);
-                            AppConstant.showToast(msg: "Generating document please wait...", timeInSecForIosWeb: 3);
-                            String? pdfFilePath = await PdfGenerator()
-                                .sharePdf(property: items[index]);
-                            Loader.hide();
-                            List<String> filePaths = [];
-                            filePaths.add(pdfFilePath!);
-                          AppConstant.showToast(msg: "Launching document...");
-                            await Share.shareFiles(
-                              filePaths,
-                              mimeTypes: [
-                                Platform.isAndroid
-                                    ? "image/jpg"
-                                    : "application/pdf"
-                              ],
-                              subject:
-                                  'Dazle Property Listing-${items[index].id}',
-                              text: 'Dazle Property Listing-${items[index].id}',
-                            );
-                          Fluttertoast.cancel();
+                            User currentUser = await App.getUser();
+                            if (currentUser.accountStatus != 'Deactivated') {
+                              mixpanel?.track('Share Listing');
+                              Loader.show(context);
+                              AppConstant.showToast(
+                                  msg: "Generating document please wait...",
+                                  timeInSecForIosWeb: 3);
+                              String? pdfFilePath = await PdfGenerator()
+                                  .sharePdf(property: items[index]);
+                              Loader.hide();
+                              List<String> filePaths = [];
+                              filePaths.add(pdfFilePath!);
+                              AppConstant.showToast(
+                                  msg: "Launching document...");
+                              await Share.shareFiles(
+                                filePaths,
+                                mimeTypes: [
+                                  Platform.isAndroid
+                                      ? "image/jpg"
+                                      : "application/pdf"
+                                ],
+                                subject:
+                                    'Dazle Property Listing-${items[index].id}',
+                                text:
+                                    'Dazle Property Listing-${items[index].id}',
+                              );
+                              Fluttertoast.cancel();
+                            } else {
+                              AppConstant.statusDialog(
+                                  context: context,
+                                  title: 'Action not Allowed',
+                                  text: 'Please Reactivate your account first.',
+                                  success: false);
+                            }
                           },
                         ),
                       ],

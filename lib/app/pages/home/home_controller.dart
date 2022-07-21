@@ -236,8 +236,11 @@ class HomeController extends Controller {
     // Set User Profile in Mixpanel
     User user = await App.getUser();
     _mixpanel?.identify(user.id!);
-    _mixpanel?.getPeople().set('Name', '${user.firstName} ${user.lastName}');
+
+    _mixpanel?.getPeople().set("\$name", user.displayName);
+    _mixpanel?.getPeople().set("\$email", user.email);
     _mixpanel?.getPeople().set('Position', '${user.position}');
+    print('MIXPANEL INITIALIZED');
   }
 
   void getData() {

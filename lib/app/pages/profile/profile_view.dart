@@ -163,9 +163,6 @@ class _ProfilePageState extends ViewState<ProfilePage, ProfileController> {
                       thickness: 0.1,
                       height: controller.getProportionateScreenHeight(15.0),
                     ),
-                    // SizedBox(
-                    //   height: controller.getProportionateScreenHeight(15.0),
-                    // ),
                     BoxContainer(
                         widget: Column(
                       children: [
@@ -174,6 +171,32 @@ class _ProfilePageState extends ViewState<ProfilePage, ProfileController> {
                           color: Colors.redAccent,
                           title: 'Logout',
                           tapHandler: controller.signOut,
+                        ),
+                        Divider(
+                          // color: App.hintColor,
+                          color: Colors.black,
+                          thickness: 0.1,
+                          height: controller.getProportionateScreenHeight(15.0),
+                        ),
+                        ProfileCard(
+                          icon: controller.currentUser?.accountStatus == null ||
+                                  controller.currentUser?.accountStatus ==
+                                      'Active'
+                              ? Icons.delete_forever
+                              : Icons.account_circle,
+                          color:
+                              controller.currentUser?.accountStatus == null ||
+                                      controller.currentUser?.accountStatus ==
+                                          'Active'
+                                  ? Colors.redAccent
+                                  : Colors.green,
+                          title:
+                              controller.currentUser?.accountStatus == null ||
+                                      controller.currentUser?.accountStatus ==
+                                          'Active'
+                                  ? 'Delete Account'
+                                  : 'Reactivate Account',
+                          tapHandler: controller.deleteAccountPage,
                         ),
                       ],
                     )),

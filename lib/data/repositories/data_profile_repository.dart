@@ -20,6 +20,113 @@ class DataProfileRepository extends ProfileRepository {
   factory DataProfileRepository() => _instance;
 
   @override
+  Future<void> deleteAccount({String? userId}) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    var response = await http.delete(
+        Uri.parse("${Constants.siteURL}/api/users/delete-account/$userId"),
+        headers: {
+          'Authorization': 'Bearer ${prefs.getString("accessToken")}',
+          'Content-Type': 'application/json'
+        });
+
+    var jsonResponse = await convert.jsonDecode(response.body);
+
+    if (response.statusCode == 200) {
+      print(jsonResponse);
+      bool success = jsonResponse['success'];
+
+      if (success == false) {
+        throw {
+          "error": false,
+          "error_type": "${jsonResponse['error_type'] ?? ''}",
+          "status": jsonResponse['status']
+        };
+      }
+    } else if (response.statusCode == 401) {
+      throw {
+        "error": false,
+        "error_type": "unauthorized",
+        "status": "Unauthorized. Signing out!"
+      };
+    } else {
+      throw {"error": true, "error_type": "dynamic", "status": "$jsonResponse"};
+    }
+  }
+
+  @override
+  Future<String> checkLoginType({User? user}) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    print('Activate/Deactivate user: ${user!.toJson()}');
+
+    Map params = {"user": user.toJson()};
+
+    var response = await http.put(
+        Uri.parse("${Constants.siteURL}/api/users/check-login-type"),
+        body: convert.jsonEncode(params),
+        headers: {
+          'Authorization': 'Bearer ${prefs.getString("accessToken")}',
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        });
+
+    var jsonResponse = await convert.jsonDecode(response.body);
+    if (response.statusCode == 200) {
+      print('check login type: $jsonResponse');
+      bool success = jsonResponse['success'];
+      String loginType = jsonResponse['login_type'];
+
+      if (success) {
+        return loginType;
+      } else {
+        throw {
+          "error": false,
+          "error_type": "${jsonResponse['error_type'] ?? ''}",
+          "status": jsonResponse['status']
+        };
+      }
+    } else {
+      throw {"error": true, "error_type": "dynamic", "status": "$jsonResponse"};
+    }
+  }
+
+  @override
+  Future<void> deactivateActivateAccount({User? user}) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    print('Activate/Deactivate user: ${user!.toJson()}');
+
+    Map params = {"user": user.toJson()};
+
+    var response = await http.put(
+        Uri.parse("${Constants.siteURL}/api/users/deactivate-activate-account"),
+        body: convert.jsonEncode(params),
+        headers: {
+          'Authorization': 'Bearer ${prefs.getString("accessToken")}',
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        });
+
+    var jsonResponse = await convert.jsonDecode(response.body);
+    if (response.statusCode == 200) {
+      print('deactivate/activate $jsonResponse');
+      bool success = jsonResponse['success'];
+      var resUser = jsonResponse['user'];
+
+      if (success) {
+        await prefs.setString('user', convert.jsonEncode(resUser));
+      } else {
+        throw {
+          "error": false,
+          "error_type": "${jsonResponse['error_type'] ?? ''}",
+          "status": jsonResponse['status']
+        };
+      }
+    } else {
+      throw {"error": true, "error_type": "dynamic", "status": "$jsonResponse"};
+    }
+  }
+
+  @override
   Future<UserFeedback> createFeedback({UserFeedback? feedback}) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 

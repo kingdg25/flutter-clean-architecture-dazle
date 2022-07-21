@@ -62,12 +62,21 @@ class _HomePageState extends ViewState<HomePage, HomeController> {
                   builder: (context, controller) {
                 return FloatingActionButton.extended(
                     onPressed: () {
-                      controller.mixpanel!.track('Create New Listing',
-                          properties: {'Page Pressed': 'Home Page'});
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (buildContext) => CreateListingPage()));
+                      if (controller.user?.accountStatus != 'Deactivated') {
+                        controller.mixpanel!.track('Create New Listing',
+                            properties: {'Page Pressed': 'Home Page'});
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (buildContext) =>
+                                    CreateListingPage()));
+                      } else {
+                        AppConstant.statusDialog(
+                            context: context,
+                            title: 'Action not Allowed',
+                            text: 'Please Reactivate your account first.',
+                            success: false);
+                      }
                     },
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.all(Radius.circular(10.0))),

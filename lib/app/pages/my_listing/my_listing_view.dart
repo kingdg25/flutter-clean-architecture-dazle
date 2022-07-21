@@ -1,9 +1,11 @@
 import 'package:dazle/app/utils/app.dart';
+import 'package:dazle/app/utils/app_constant.dart';
 import 'package:dazle/app/widgets/listing/listing_property_list_tile.dart';
 import 'package:dazle/app/pages/my_listing/my_listing_controller.dart';
 import 'package:dazle/app/widgets/form_fields/custom_search_field.dart';
 import 'package:dazle/data/repositories/data_listing_repository.dart';
 import 'package:dazle/domain/entities/property.dart';
+import 'package:dazle/domain/entities/user.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 
@@ -88,13 +90,22 @@ class _MyListingPageState
         child: ControlledWidgetBuilder<MyListingController>(
           builder: (context, controller) {
             return FloatingActionButton.extended(
-                onPressed: () {
-                  controller.mixpanel!.track('Create New Listing',
-                      properties: {'Page Pressed': 'My Listing Page'});
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (buildContext) => CreateListingPage()));
+                onPressed: () async {
+                  User currentUser = await App.getUser();
+                  if (currentUser.accountStatus != 'Deactivated') {
+                    controller.mixpanel!.track('Create New Listing',
+                        properties: {'Page Pressed': 'Home Page'});
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (buildContext) => CreateListingPage()));
+                  } else {
+                    AppConstant.statusDialog(
+                        context: context,
+                        title: 'Action not Allowed',
+                        text: 'Please Reactivate your account first.',
+                        success: false);
+                  }
                 },
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.all(Radius.circular(10.0))),

@@ -987,10 +987,14 @@ class CreateListingController extends Controller {
     if (frontageTextController.text != '') {
       frontageArea =
           double.parse(frontageTextController.text.replaceAll(',', ''));
+    } else {
+      frontageArea = 0;
     }
     if (floorAreaTextController.text != '') {
       floorArea =
           double.parse(floorAreaTextController.text.replaceAll(',', ''));
+    } else {
+      floorArea = 0;
     }
 
     final assetsBased64;
@@ -1031,9 +1035,13 @@ class CreateListingController extends Controller {
       "property_for": propertyFor,
       "time_period": timePeriod,
       "price": price,
-      "number_of_bedrooms": numOfBedroomController.text,
-      "number_of_bathrooms": numOfBathroomsController.text,
-      "number_of_parking_space": numberOfParking,
+      "number_of_bedrooms":
+          numOfBedroomController.text == '' ? 0 : numOfBedroomController.text,
+      "number_of_bathrooms": numOfBathroomsController.text == ''
+          ? 0
+          : numOfBathroomsController.text,
+      "number_of_parking_space":
+          numberOfParking == null ? '0' : numberOfParking,
       "total_area": area,
       "is_your_property": isYourProperty,
       "description": descriptionTextController.text,

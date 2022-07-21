@@ -7,15 +7,13 @@ import 'package:flutter_overlay_loader/flutter_overlay_loader.dart';
 import 'package:dazle/app/utils/app_constant.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
-
 class ForgotPasswordController extends Controller {
-
   /// forgot password
   PageController forgotPasswordPageController;
 
   GlobalKey<FormState> forgotPasswordFormKey;
   final TextEditingController forgotPasswordEmailTextController;
-  
+
   /// verify code
   String verificationCode;
   bool resendVerificationCode;
@@ -26,22 +24,21 @@ class ForgotPasswordController extends Controller {
   GlobalKey<FormState> resetPasswordFormKey;
   final TextEditingController resetPasswordTextController;
 
-
   final ForgotPasswordPresenter forgotPasswordPresenter;
 
   ForgotPasswordController(userRepo)
-    : forgotPasswordPresenter = ForgotPasswordPresenter(userRepo),
-      forgotPasswordPageController = PageController(),
-      forgotPasswordFormKey = GlobalKey<FormState>(),
-      forgotPasswordEmailTextController = TextEditingController(),
-      verificationCode = '',
-      resendVerificationCode = false,
-      verificationCodeTextController = TextEditingController(),
-      verificationCodeErrorController = StreamController<ErrorAnimationType>(),
-      resetPasswordFormKey = GlobalKey<FormState>(),
-      resetPasswordTextController = TextEditingController(),
-      super();
-  
+      : forgotPasswordPresenter = ForgotPasswordPresenter(userRepo),
+        forgotPasswordPageController = PageController(),
+        forgotPasswordFormKey = GlobalKey<FormState>(),
+        forgotPasswordEmailTextController = TextEditingController(),
+        verificationCode = '',
+        resendVerificationCode = false,
+        verificationCodeTextController = TextEditingController(),
+        verificationCodeErrorController =
+            StreamController<ErrorAnimationType>(),
+        resetPasswordFormKey = GlobalKey<FormState>(),
+        resetPasswordTextController = TextEditingController(),
+        super();
 
   @override
   void initListeners() {
@@ -49,12 +46,10 @@ class ForgotPasswordController extends Controller {
     forgotPasswordPresenter.forgotPasswordOnNext = (res) {
       print('forgot pass on next $res ${res.toString()}');
       verificationCode = res;
-      
+
       if (res != null && !resendVerificationCode) {
         forgotPasswordPageController.nextPage(
-          duration: Duration(milliseconds: 500),
-          curve: Curves.ease
-        );
+            duration: Duration(milliseconds: 500), curve: Curves.ease);
       }
     };
 
@@ -66,15 +61,13 @@ class ForgotPasswordController extends Controller {
     forgotPasswordPresenter.forgotPasswordOnError = (e) {
       print('forgot pass on error $e');
       AppConstant.showLoader(getContext(), false);
-      
-      if ( !e['error'] ) {
-        _statusDialog(false, 'Oops!', '${e['status'] ?? ''}');
-      }
-      else{
-        _statusDialog(false, 'Something went wrong', '${e.toString()}');
-      } 
-    };
 
+      if (!e['error']) {
+        _statusDialog(false, 'Oops!', '${e['status'] ?? ''}');
+      } else {
+        _statusDialog(false, 'Something went wrong', '${e.toString()}');
+      }
+    };
 
     //reset password
     forgotPasswordPresenter.resetPasswordOnNext = (res) {
@@ -92,13 +85,12 @@ class ForgotPasswordController extends Controller {
     forgotPasswordPresenter.resetPasswordOnError = (e) {
       print('reset pass on error $e');
       AppConstant.showLoader(getContext(), false);
-      
-      if ( !e['error'] ) {
+
+      if (!e['error']) {
         _statusDialog(false, 'Oops!', '${e['status'] ?? ''}');
-      }
-      else{
+      } else {
         _statusDialog(false, 'Something went wrong', '${e.toString()}');
-      } 
+      }
     };
   }
 
@@ -108,36 +100,35 @@ class ForgotPasswordController extends Controller {
 
     resendVerificationCode = resend;
 
-    forgotPasswordPresenter.forgotPassword(email: forgotPasswordEmailTextController.text);
+    forgotPasswordPresenter.forgotPassword(
+        email: forgotPasswordEmailTextController.text);
   }
 
   void verifyCode() {
     var userInputCode = verificationCodeTextController.text;
     print('verify code: $verificationCode, user code input: $userInputCode');
-    
+
     if (userInputCode.length != 4 || userInputCode != verificationCode) {
-      verificationCodeErrorController.add(ErrorAnimationType.shake); // Triggering error shake animation
-    }
-    else{
+      verificationCodeErrorController
+          .add(ErrorAnimationType.shake); // Triggering error shake animation
+    } else {
       forgotPasswordPageController.nextPage(
-        duration: Duration(milliseconds: 500),
-        curve: Curves.ease
-      );
+          duration: Duration(milliseconds: 500), curve: Curves.ease);
     }
   }
 
   void resetPassword() {
-    print('reset password ${forgotPasswordEmailTextController.text} ${verificationCodeTextController.text} ${resetPasswordTextController.text}');
+    print(
+        'reset password ${forgotPasswordEmailTextController.text} ${verificationCodeTextController.text} ${resetPasswordTextController.text}');
     AppConstant.showLoader(getContext(), true);
 
     forgotPasswordPresenter.resetPassword(
-      email: forgotPasswordEmailTextController.text,
-      code: verificationCodeTextController.text,
-      password: resetPasswordTextController.text
-    );
+        email: forgotPasswordEmailTextController.text,
+        code: verificationCodeTextController.text,
+        password: resetPasswordTextController.text);
   }
 
-  _statusDialog(bool success, String title, String text){
+  _statusDialog(bool success, String title, String text) {
     AppConstant.statusDialog(
       context: getContext(),
       success: success,
@@ -145,7 +136,6 @@ class ForgotPasswordController extends Controller {
       text: text,
     );
   }
-  
 
   @override
   void onResumed() => print('On resumed');
@@ -158,13 +148,13 @@ class ForgotPasswordController extends Controller {
 
   @override
   void onDisposed() {
-    forgotPasswordPresenter.dispose(); // don't forget to dispose of the presenter
-    
+    forgotPasswordPresenter
+        .dispose(); // don't forget to dispose of the presenter
+
     verificationCodeErrorController.close();
     forgotPasswordPageController.dispose();
 
     Loader.hide();
     super.onDisposed();
   }
-
 }

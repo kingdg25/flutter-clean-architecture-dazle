@@ -1,5 +1,6 @@
 class User {
   final String? aboutMe;
+  final String? accountStatus;
   final String? position;
   final String? brokerLicenseNumber;
   final String? mobileNumber;
@@ -17,6 +18,7 @@ class User {
 
   User(
       {this.aboutMe,
+      this.accountStatus,
       this.position,
       this.brokerLicenseNumber,
       this.mobileNumber,
@@ -30,6 +32,7 @@ class User {
 
   User.fromJson(Map<String, dynamic> json)
       : aboutMe = json['about_me'],
+        accountStatus = json['account_status'],
         mobileNumber = json['mobile_number'],
         brokerLicenseNumber = json['broker_license_number'],
         position = json['position'],
@@ -43,6 +46,7 @@ class User {
 
   Map<String, dynamic> toJson() => {
         'about_me': aboutMe,
+        'account_status': accountStatus,
         'broker_license_number': brokerLicenseNumber,
         'position': position,
         'mobile_number': mobileNumber,
