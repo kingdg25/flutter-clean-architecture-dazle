@@ -21,16 +21,15 @@ import 'package:mixpanel_flutter/mixpanel_flutter.dart';
 
 class AppConstant {
   // *** MixPanel [start]
-  static Mixpanel? _mixPanelInstance;
+  static Mixpanel? mixPanelInstance;
 
   static Future<Mixpanel> mixPanelInit() async {
-    if (_mixPanelInstance == null) {
-      _mixPanelInstance = await Mixpanel.init(
-          "30f8919ea459d5bc9530fa6428dbd457",
+    if (mixPanelInstance == null) {
+      mixPanelInstance = await Mixpanel.init("30f8919ea459d5bc9530fa6428dbd457",
           optOutTrackingDefault: false);
     }
-    print('MIXPANEL INIT: $_mixPanelInstance');
-    return _mixPanelInstance!;
+    print('MIXPANEL INIT: $mixPanelInstance');
+    return mixPanelInstance!;
   }
 // *** MixPanel [end]
 
@@ -254,8 +253,6 @@ class AppConstant {
       int maxAssets = 1}) async {
     List<AssetEntity> assets = <AssetEntity>[];
 
-    print("WWWWEEEWEWEWEWEEW");
-
     try {
       var result = await PhotoManager.requestPermissionExtend();
 
@@ -277,21 +274,11 @@ class AppConstant {
           assets = pickAssets;
         }
       } else {
-        if (Platform.isIOS) {
-          await statusDialog(
-              context: context,
-              text:
-                  "Please allow permission to read all your photos in settings and upload again.",
-              title: "Confirm",
-              onPressed: () async {
-                await PhotoManager.openSetting();
-              });
-        }
         // fail
         /// if result is fail, you can call `PhotoManager.openSetting();`  to open android/ios applicaton's setting to get permission
       }
     } catch (e) {
-      print('lWWWWEEEWEWEWEWEEW oadAssets error $e');
+      print('loadAssets error $e');
     }
 
     return assets;
