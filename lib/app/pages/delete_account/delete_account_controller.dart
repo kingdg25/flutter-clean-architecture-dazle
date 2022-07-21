@@ -300,7 +300,7 @@ class DeleteAccountController extends Controller {
     deleteAccountPresenter.deleteAccountCode(email: email);
 
     if (resendDeleteAccountcode == false) {
-      deleteAccountPageController.jumpToPage(2);
+      deleteAccountPageController.jumpToPage(1);
     }
   }
 
