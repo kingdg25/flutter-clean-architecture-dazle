@@ -21,16 +21,15 @@ import 'package:mixpanel_flutter/mixpanel_flutter.dart';
 
 class AppConstant {
   // *** MixPanel [start]
-  static Mixpanel? _mixPanelInstance;
+  static Mixpanel? mixPanelInstance;
 
   static Future<Mixpanel> mixPanelInit() async {
-    if (_mixPanelInstance == null) {
-      _mixPanelInstance = await Mixpanel.init(
-          "30f8919ea459d5bc9530fa6428dbd457",
+    if (mixPanelInstance == null) {
+      mixPanelInstance = await Mixpanel.init("30f8919ea459d5bc9530fa6428dbd457",
           optOutTrackingDefault: false);
     }
-    print('MIXPANEL INIT: $_mixPanelInstance');
-    return _mixPanelInstance!;
+    print('MIXPANEL INIT: $mixPanelInstance');
+    return mixPanelInstance!;
   }
 // *** MixPanel [end]
 

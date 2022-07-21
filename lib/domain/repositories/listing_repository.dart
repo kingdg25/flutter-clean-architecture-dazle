@@ -14,4 +14,6 @@ abstract class ListingRepository {
   Future<List<Property>> getMyCollection();
 
   Future<void> deleteListing({String? listingId});
+
+  Future<void> deleteAllUserListing({String? createdById});
 }

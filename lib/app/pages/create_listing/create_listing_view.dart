@@ -601,19 +601,21 @@ class _CreateListingPageState
                         controller.switchHandler();
                         // });
                         if (controller.mapSwitch == true) {
-                          LatLng mapCoordinates = await Navigator.push(
+                          LatLng? mapCoordinates = await Navigator.push(
                               context,
                               MaterialPageRoute(
                                   builder: (buildContext) =>
                                       MapLocationPicker()));
                           // setting propertyCoordinates
-                          controller.latitude = mapCoordinates.latitude;
-                          controller.longitude = mapCoordinates.longitude;
+                          if (mapCoordinates!=null){
+                            controller.latitude = mapCoordinates.latitude;
+                            controller.longitude = mapCoordinates.longitude;
 
-                          controller.propertyCoordinates = {
-                            'Latitude': mapCoordinates.latitude,
-                            'Longitude': mapCoordinates.longitude
-                          };
+                            controller.propertyCoordinates = {
+                              'Latitude': mapCoordinates.latitude,
+                              'Longitude': mapCoordinates.longitude
+                            };
+                          }
                         }
                         setState(() {});
                       },
@@ -655,26 +657,31 @@ class _CreateListingPageState
                           ),
                         ),
                         onTap: () async {
-                          CameraPosition initialCamPos = CameraPosition(
+                          final hasCoordinates = controller.latitude!=null && controller.longitude!=null;
+                          CameraPosition? initialCamPos = hasCoordinates ? CameraPosition(
                               target: LatLng(
                                   controller.latitude!, controller.longitude!),
                               tilt: 25.0,
-                              zoom: 19.151926040649414);
-                          LatLng mapCoordinates = await Navigator.push(
+                              zoom: 19.151926040649414) : null;
+                          LatLng? mapCoordinates = await Navigator.push(
                               context,
                               MaterialPageRoute(
                                   builder: (buildContext) => MapLocationPicker(
                                         initialCameraPosition: initialCamPos,
                                       )));
                           // setting propertyCoordinates after picking in google map
-                          controller.latitude = mapCoordinates.latitude;
-                          controller.longitude = mapCoordinates.longitude;
 
-                          controller.propertyCoordinates = {
-                            'Latitude': mapCoordinates.latitude,
-                            'Longitude': mapCoordinates.longitude
-                          };
-                          setState(() {});
+                          print("mapCoordinates $mapCoordinates");
+                          if (mapCoordinates!=null) { 
+                            controller.latitude = mapCoordinates.latitude;
+                            controller.longitude = mapCoordinates.longitude;
+
+                            controller.propertyCoordinates = {
+                              'Latitude': mapCoordinates.latitude,
+                              'Longitude': mapCoordinates.longitude
+                            };
+                            setState(() {});
+                          }
                         },
                       ),
                     )

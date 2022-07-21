@@ -48,7 +48,7 @@ class _FindMatchPageState
                     CustomFieldLayout(
                       child: CustomText(
                         text:
-                            "Find a match of your buyer's property preferences \n \n THIS FEATURE WILL BE COMING SOON!",
+                            "Find a Match for your Buyer's Property Preferences \n \n THIS FEATURE WILL BE COMING SOON!",
                         fontSize: 15,
                         fontWeight: FontWeight.w600,
                         textAlign: TextAlign.center,

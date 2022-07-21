@@ -33,4 +33,10 @@ abstract class AuthenticationRepository {
   Future<bool?> checkLicenseNumber({String? brokerLicenseNumber});
 
   Future<void> sendEmailVerification();
+
+  Future<String?> deleteAccountCode({String? email});
+
+  Future<void> checkDeleteAccountCode({String? email, String? code});
+
+  Future<void> verifyPassword({String? email, String? password});
 }

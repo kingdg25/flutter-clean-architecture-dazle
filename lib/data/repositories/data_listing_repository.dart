@@ -24,6 +24,42 @@ class DataListingRepository extends ListingRepository {
   factory DataListingRepository() => _instance;
 
   @override
+  Future<void> deleteAllUserListing({String? createdById}) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    var response = await http.delete(
+        Uri.parse(
+            "${Constants.siteURL}/api/listings/delete-all-user-listings/$createdById"),
+        headers: {
+          'Authorization': 'Bearer ${prefs.getString("accessToken")}',
+          'Content-Type': 'application/json'
+        });
+
+    var jsonResponse = await convert.jsonDecode(response.body);
+
+    if (response.statusCode == 200) {
+      print(jsonResponse);
+      bool success = jsonResponse['success'];
+
+      if (success == false) {
+        throw {
+          "error": false,
+          "error_type": "${jsonResponse['error_type'] ?? ''}",
+          "status": jsonResponse['status']
+        };
+      }
+    } else if (response.statusCode == 401) {
+      throw {
+        "error": false,
+        "error_type": "unauthorized",
+        "status": "Unauthorized. Signing out!"
+      };
+    } else {
+      throw {"error": true, "error_type": "dynamic", "status": "$jsonResponse"};
+    }
+  }
+
+  @override
   //======================= CREATE LISTING[START]
   Future<Property> create({Map? listing}) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();

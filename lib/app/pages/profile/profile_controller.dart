@@ -14,6 +14,7 @@ import '../../utils/app_constant.dart';
 import '../edit_profile/edit_profile_view.dart';
 import '../login/login_view.dart';
 import 'profile_presenter.dart';
+import 'package:dazle/app/pages/delete_account/delete_account_view.dart';
 
 class ProfileController extends Controller {
   final ProfilePresenter profilePresenter;
@@ -48,6 +49,10 @@ class ProfileController extends Controller {
     await getCurrentUser();
     await getUserToDisplay();
     await getListings();
+    print('-------------------------------------');
+    print(currentUser!.displayName);
+    print(currentUser!.accountStatus);
+    print('-------------------------------------');
     App.configLoading();
     _mediaQueryData = MediaQuery.of(getContext());
     screenWidth = _mediaQueryData!.size.width;
@@ -103,6 +108,23 @@ class ProfileController extends Controller {
             builder: (context) => ProfileWidget(
                   user: _userToDisplay,
                   listings: _listings,
+                )));
+  }
+
+  void deleteAccountPage() async {
+    String deleteAction = '';
+    if (currentUser?.accountStatus == 'Active') {
+      deleteAction = 'Delete Account';
+    } else {
+      deleteAction = 'Reactivate Account';
+    }
+
+    await Navigator.push(
+        getContext(),
+        MaterialPageRoute(
+            builder: (buildContext) => DeleteAccountPage(
+                  user: _currentUser,
+                  action: deleteAction,
                 )));
   }
 

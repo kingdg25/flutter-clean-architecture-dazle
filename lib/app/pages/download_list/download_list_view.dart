@@ -13,6 +13,7 @@ import 'package:dazle/app/widgets/form_fields/custom_button.dart';
 import 'package:dazle/app/widgets/form_fields/custom_button_reverse.dart';
 import 'package:dazle/data/repositories/data_listing_repository.dart';
 import 'package:dazle/domain/entities/property.dart';
+import 'package:dazle/domain/entities/user.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
@@ -303,19 +304,28 @@ class _DownloadListPageState
                       child: CustomButton(
                         text: 'Download',
                         onPressed: () async {
-                          //? Changed to open pdf
-                          controller.mixpanel?.track('Download Listing');
-                          AppConstant.showToast(
-                              msg: "Generating document please wait...",
-                              timeInSecForIosWeb: 3);
-                          Loader.show(context);
+                          User currentUser = await App.getUser();
+                          if (currentUser.accountStatus != 'Deactivated') {
+                            //? Changed to open pdf
+                            controller.mixpanel?.track('Download Listing');
+                            AppConstant.showToast(
+                                msg: "Generating document please wait...",
+                                timeInSecForIosWeb: 3);
+                            Loader.show(context);
 
-                          String? pdfFilePath = await PdfGenerator()
-                              .downloadPdf(property: widget.property);
-                          AppConstant.showToast(msg: "Launching document...");
-                          Loader.hide();
-                          await OpenFile.open(pdfFilePath);
-                          Fluttertoast.cancel();
+                            String? pdfFilePath = await PdfGenerator()
+                                .downloadPdf(property: widget.property);
+                            AppConstant.showToast(msg: "Launching document...");
+                            Loader.hide();
+                            await OpenFile.open(pdfFilePath);
+                            Fluttertoast.cancel();
+                          } else {
+                            AppConstant.statusDialog(
+                                context: context,
+                                title: 'Action not Allowed',
+                                text: 'Please Reactivate your account first.',
+                                success: false);
+                          }
                         },
                       ),
                     ),
@@ -328,30 +338,39 @@ class _DownloadListPageState
                       child: CustomButtonReverse(
                         text: 'Share',
                         onPressed: () async {
-                          controller.mixpanel?.track('Share Listing');
-                          Loader.show(context);
-                          AppConstant.showToast(
-                              msg: "Generating document please wait...",
-                              timeInSecForIosWeb: 3);
-                          String? pdfFilePath = await PdfGenerator()
-                              .sharePdf(property: widget.property);
-                          Loader.hide();
-                          List<String> filePaths = [];
-                          filePaths.add(pdfFilePath!);
-                          AppConstant.showToast(msg: "Launching document...");
-                          await Share.shareFiles(
-                            filePaths,
-                            mimeTypes: [
-                              Platform.isAndroid
-                                  ? "image/jpg"
-                                  : "application/pdf"
-                            ],
-                            subject:
-                                'Dazle Property Listing-${widget.property.id}',
-                            text:
-                                'Dazle Property Listing-${widget.property.id}',
-                          );
-                          Fluttertoast.cancel();
+                          User currentUser = await App.getUser();
+                          if (currentUser.accountStatus != 'Deactivated') {
+                            controller.mixpanel?.track('Share Listing');
+                            Loader.show(context);
+                            AppConstant.showToast(
+                                msg: "Generating document please wait...",
+                                timeInSecForIosWeb: 3);
+                            String? pdfFilePath = await PdfGenerator()
+                                .sharePdf(property: widget.property);
+                            Loader.hide();
+                            List<String> filePaths = [];
+                            filePaths.add(pdfFilePath!);
+                            AppConstant.showToast(msg: "Launching document...");
+                            await Share.shareFiles(
+                              filePaths,
+                              mimeTypes: [
+                                Platform.isAndroid
+                                    ? "image/jpg"
+                                    : "application/pdf"
+                              ],
+                              subject:
+                                  'Dazle Property Listing-${widget.property.id}',
+                              text:
+                                  'Dazle Property Listing-${widget.property.id}',
+                            );
+                            Fluttertoast.cancel();
+                          } else {
+                            AppConstant.statusDialog(
+                                context: context,
+                                title: 'Action not Allowed',
+                                text: 'Please Reactivate your account first.',
+                                success: false);
+                          }
                         },
                         backgroudColor: Colors.white,
                         textColor: App.mainColor,

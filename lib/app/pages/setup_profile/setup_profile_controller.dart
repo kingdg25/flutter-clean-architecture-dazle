@@ -148,7 +148,7 @@ class SetupProfileController extends Controller {
 
       firstNameTextController.text = user.firstName!;
       lastNameTextController.text = user.lastName!;
-      mobileNumberTextController.text = user.mobileNumber!;
+      mobileNumberTextController.text = user.mobileNumber ?? '';
       position = user.position;
       // brokerLicenseNumberTextController.text = user.brokerLicenseNumber!;
 
