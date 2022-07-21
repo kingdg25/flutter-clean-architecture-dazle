@@ -145,7 +145,7 @@ class DeleteAccount extends StatelessWidget {
                         print('Action is: ${controller.action}');
                         print('login type of user: ${controller.loginType}');
                         if (controller.loginType == 'email&pass') {
-                          controller.deleteAccountPageController.jumpToPage(3);
+                          controller.deleteAccountPageController.jumpToPage(2);
                         } else {
                           controller.sendDeleteAccountCode(
                               email: this.user!.email!);
