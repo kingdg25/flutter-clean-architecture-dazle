@@ -174,10 +174,16 @@ class ProfileController extends Controller {
   }
 
   void signOut() {
-    print('user logout home controller');
-    AppConstant.showLoader(getContext(), true);
+    AppConstant.deleteDialog(
+        context: getContext(),
+        title: 'Log Out',
+        text: 'Are you sure you want to log out?',
+        onConfirm: () {
+          print('user logout home controller');
+          AppConstant.showLoader(getContext(), true);
 
-    profilePresenter.logoutUser();
+          profilePresenter.logoutUser();
+        });
   }
 
   @override

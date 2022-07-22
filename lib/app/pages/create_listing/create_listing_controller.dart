@@ -289,7 +289,7 @@ class CreateListingController extends Controller {
     numOfBathroomsController.text = '${this.property!.totalBathRoom!}';
     priceTextController.text = this.property!.formatPrice;
     areaTextController.text = this.property!.formatArea;
-    frontageTextController.text = this.property!.formatFloorArea;
+    frontageTextController.text = this.property!.formatFrontageArea;
     floorAreaTextController.text = this.property!.formatFloorArea;
     descriptionTextController.text = this.property!.description!;
     streetTextController.text = this.property!.street!;
@@ -734,11 +734,12 @@ class CreateListingController extends Controller {
 
     numOfBedroomController.text = '';
     numOfBathroomsController.text = '';
-    floorAreaTextController.text = '';
 
     if (numberOfParking != null &&
         areaTextController.text.isNotEmpty &&
         areaTextController.text != '0' &&
+        floorAreaTextController.text.isNotEmpty &&
+        floorAreaTextController.text != '0' &&
         isYourProperty != null &&
         ownwership != null) {
       isValidated = true;
@@ -902,15 +903,15 @@ class CreateListingController extends Controller {
   }
 
   validatePage4() {
-    bool isValidated = false;
+    bool isValidated = true;
 
-    if (amenities!.length >= 1) {
-      isValidated = true;
-    } else
-      AppConstant.statusDialog(
-          context: getContext(),
-          text: "Choose at least 1 amenities.",
-          title: "Choose more amenities.");
+    // if (amenities!.length >= 1) {
+    //   isValidated = true;
+    // } else
+    //   AppConstant.statusDialog(
+    //       context: getContext(),
+    //       text: "Choose at least 1 amenities.",
+    //       title: "Choose more amenities.");
 
     return isValidated;
   }
