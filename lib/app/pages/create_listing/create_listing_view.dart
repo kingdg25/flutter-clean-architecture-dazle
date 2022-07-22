@@ -169,6 +169,7 @@ class _CreateListingPageState
           'Condo',
           'Villa',
           'Townhouse',
+          'Commercial Building',
           'Warehouse'
         ];
 
@@ -607,7 +608,7 @@ class _CreateListingPageState
                                   builder: (buildContext) =>
                                       MapLocationPicker()));
                           // setting propertyCoordinates
-                          if (mapCoordinates!=null){
+                          if (mapCoordinates != null) {
                             controller.latitude = mapCoordinates.latitude;
                             controller.longitude = mapCoordinates.longitude;
 
@@ -657,12 +658,15 @@ class _CreateListingPageState
                           ),
                         ),
                         onTap: () async {
-                          final hasCoordinates = controller.latitude!=null && controller.longitude!=null;
-                          CameraPosition? initialCamPos = hasCoordinates ? CameraPosition(
-                              target: LatLng(
-                                  controller.latitude!, controller.longitude!),
-                              tilt: 25.0,
-                              zoom: 19.151926040649414) : null;
+                          final hasCoordinates = controller.latitude != null &&
+                              controller.longitude != null;
+                          CameraPosition? initialCamPos = hasCoordinates
+                              ? CameraPosition(
+                                  target: LatLng(controller.latitude!,
+                                      controller.longitude!),
+                                  tilt: 25.0,
+                                  zoom: 19.151926040649414)
+                              : null;
                           LatLng? mapCoordinates = await Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -672,7 +676,7 @@ class _CreateListingPageState
                           // setting propertyCoordinates after picking in google map
 
                           print("mapCoordinates $mapCoordinates");
-                          if (mapCoordinates!=null) { 
+                          if (mapCoordinates != null) {
                             controller.latitude = mapCoordinates.latitude;
                             controller.longitude = mapCoordinates.longitude;
 
@@ -733,7 +737,7 @@ class _CreateListingPageState
               ),
               SizedBox(height: 12.0),
               AppConstant.customTitleFieldWithSwith(
-                title: 'City',
+                title: 'City/Municipality',
                 optionalText: 'required',
                 optionalTextColor: Colors.red,
                 switchValue: controller.showCity,
