@@ -14,7 +14,7 @@ class DeleteAccountCodeUseCase extends UseCase<DeleteAccountCodeUseCaseResponse,
     final controller = StreamController<DeleteAccountCodeUseCaseResponse>();
     try {
       final code = await dataAuthenticationRepository.deleteAccountCode(
-          email: params!.email);
+          email: params!.email, action: params.action);
 
       if (code != null) {
         controller.add(DeleteAccountCodeUseCaseResponse(code));
@@ -36,8 +36,9 @@ class DeleteAccountCodeUseCase extends UseCase<DeleteAccountCodeUseCaseResponse,
 
 class DeleteAccountCodeUseCaseParams {
   final String? email;
+  final String? action;
 
-  DeleteAccountCodeUseCaseParams(this.email);
+  DeleteAccountCodeUseCaseParams(this.email, this.action);
 }
 
 class DeleteAccountCodeUseCaseResponse {

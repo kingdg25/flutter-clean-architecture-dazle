@@ -67,9 +67,9 @@ class DeleteAccountPresenter extends Presenter {
         DeleteAccountUseCaseParams(userId));
   }
 
-  void deleteAccountCode({String? email}) {
+  void deleteAccountCode({String? email, String? action}) {
     deleteAccountCodeUseCase.execute(_DeleteAccountCodeUseCaseObserver(this),
-        DeleteAccountCodeUseCaseParams(email));
+        DeleteAccountCodeUseCaseParams(email, action));
   }
 
   void checkDeleteAccountCode({String? email, String? code}) {

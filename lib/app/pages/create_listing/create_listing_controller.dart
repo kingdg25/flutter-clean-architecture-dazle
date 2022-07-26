@@ -738,8 +738,6 @@ class CreateListingController extends Controller {
     if (numberOfParking != null &&
         areaTextController.text.isNotEmpty &&
         areaTextController.text != '0' &&
-        floorAreaTextController.text.isNotEmpty &&
-        floorAreaTextController.text != '0' &&
         isYourProperty != null &&
         ownwership != null) {
       isValidated = true;
