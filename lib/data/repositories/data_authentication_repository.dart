@@ -47,11 +47,9 @@ class DataAuthenticationRepository extends AuthenticationRepository {
   }
 
   @override
-  Future<String?> deleteAccountCode({String? email}) async {
+  Future<String?> deleteAccountCode({String? email, String? action}) async {
     Map params = {
-      "user": {
-        "email": email,
-      }
+      "user": {"email": email, "action": action}
     };
 
     var response = await http.post(
