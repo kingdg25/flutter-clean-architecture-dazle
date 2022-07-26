@@ -275,7 +275,11 @@ class _CreateListingPageState
               controller.propertyType == "Commercial" ||
                       controller.propertyType == "Commercial Lot" ||
                       controller.propertyType == "Commercial Building"
-                  ? AppConstant.customTitleField(title: 'Pricing')
+                  ? AppConstant.customTitleFieldWithSubtext(
+                      title: 'Pricing',
+                      optionalText: 'required',
+                      optionalTextColor: Colors.red,
+                    )
                   : Container(),
               controller.propertyType == "Commercial" ||
                       controller.propertyType == "Commercial Lot" ||
@@ -437,8 +441,14 @@ class _CreateListingPageState
               floorAreaRequiredProperties.contains(controller.propertyType)
                   ? AppConstant.customTitleFieldWithSubtext(
                       title: 'Floor Area',
-                      optionalText: 'required',
-                      optionalTextColor: Colors.red)
+                      optionalText:
+                          controller.propertyType != 'Commercial Building'
+                              ? 'required'
+                              : 'optional',
+                      optionalTextColor:
+                          controller.propertyType != 'Commercial Building'
+                              ? Colors.red
+                              : App.textColor)
                   : Container(),
               floorAreaRequiredProperties.contains(controller.propertyType)
                   ? Container(

@@ -34,7 +34,7 @@ abstract class AuthenticationRepository {
 
   Future<void> sendEmailVerification();
 
-  Future<String?> deleteAccountCode({String? email});
+  Future<String?> deleteAccountCode({String? email, String? action});
 
   Future<void> checkDeleteAccountCode({String? email, String? code});
 

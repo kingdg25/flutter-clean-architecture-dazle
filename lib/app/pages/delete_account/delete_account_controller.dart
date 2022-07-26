@@ -297,7 +297,7 @@ class DeleteAccountController extends Controller {
     print('Delete Account: $email ');
     resendDeleteAccountcode = resend;
 
-    deleteAccountPresenter.deleteAccountCode(email: email);
+    deleteAccountPresenter.deleteAccountCode(email: email, action: action);
 
     if (resendDeleteAccountcode == false) {
       deleteAccountPageController.jumpToPage(1);
