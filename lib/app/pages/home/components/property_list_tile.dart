@@ -2,6 +2,8 @@ import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dazle/app/pages/listing_details/listing_details_view.dart';
+import 'package:dazle/app/pages/main/main_controller.dart';
+import 'package:dazle/app/pages/main/main_view.dart';
 import 'package:dazle/app/widgets/property_text_info.dart';
 import 'package:dazle/app/utils/app.dart';
 import 'package:dazle/app/utils/app_constant.dart';
@@ -9,6 +11,7 @@ import 'package:dazle/app/widgets/custom_text.dart';
 import 'package:dazle/domain/entities/property.dart';
 import 'package:dazle/domain/entities/user.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:flutter_overlay_loader/flutter_overlay_loader.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:mixpanel_flutter/mixpanel_flutter.dart';
@@ -16,7 +19,8 @@ import 'package:open_file/open_file.dart';
 import 'package:share_plus/share_plus.dart';
 
 import '../../listing_details/components/listing_details_icon_button.dart';
-import 'package:dazle/app/pages/home/components/pdf_generator.dart';
+import 'package:dazle/app/widgets/pdf/pdf_generator.dart';
+import 'package:dazle/app/pages/home/home_controller.dart';
 
 class PropertyListTile extends StatelessWidget {
   final List<Property> items;
@@ -33,6 +37,8 @@ class PropertyListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Mixpanel mixpanel = await AppConstant.mixPanelInit();
+    MainController controller =
+        FlutterCleanArchitecture.getController<MainController>(context);
     return Container(
       height: height,
       child: ListView.builder(
@@ -170,17 +176,22 @@ class PropertyListTile extends StatelessWidget {
                             User currentUser = await App.getUser();
                             if (currentUser.accountStatus != 'Deactivated') {
                               mixpanel?.track('Download Listing');
-                              Loader.show(context);
-                              AppConstant.showToast(
-                                  msg: "Generating document please wait...",
-                                  timeInSecForIosWeb: 3);
+                              controller.showHideProgressBar();
+                              await Future.delayed(
+                                  const Duration(milliseconds: 700));
+                              controller.setProgressBarValue(.5);
+
                               String? pdfFilePath = await PdfGenerator()
                                   .downloadPdf(property: items[index]);
-                              Loader.hide();
-                              AppConstant.showToast(
-                                  msg: "Launching document...");
+                              controller.setProgressBarValue(1);
+                              await Future.delayed(const Duration(
+                                  seconds: 1, milliseconds: 300));
+
                               await OpenFile.open(pdfFilePath);
-                              Fluttertoast.cancel();
+
+                              controller.setProgressBarValue(.25);
+                              controller.showHideProgressBar();
+                              await OpenFile.open(pdfFilePath);
                             } else {
                               AppConstant.statusDialog(
                                   context: context,
@@ -199,17 +210,22 @@ class PropertyListTile extends StatelessWidget {
                             User currentUser = await App.getUser();
                             if (currentUser.accountStatus != 'Deactivated') {
                               mixpanel?.track('Share Listing');
-                              Loader.show(context);
-                              AppConstant.showToast(
-                                  msg: "Generating document please wait...",
-                                  timeInSecForIosWeb: 3);
+                              controller.showHideProgressBar();
+
+                              await Future.delayed(
+                                  const Duration(milliseconds: 700));
+                              controller.setProgressBarValue(.5);
+
                               String? pdfFilePath = await PdfGenerator()
                                   .sharePdf(property: items[index]);
-                              Loader.hide();
+
+                              controller.setProgressBarValue(1);
+                              await Future.delayed(const Duration(
+                                  seconds: 1, milliseconds: 300));
+
                               List<String> filePaths = [];
                               filePaths.add(pdfFilePath!);
-                              AppConstant.showToast(
-                                  msg: "Launching document...");
+
                               await Share.shareFiles(
                                 filePaths,
                                 mimeTypes: [
@@ -222,7 +238,8 @@ class PropertyListTile extends StatelessWidget {
                                 text:
                                     'Dazle Property Listing-${items[index].id}',
                               );
-                              Fluttertoast.cancel();
+                              controller.setProgressBarValue(.25);
+                              controller.showHideProgressBar();
                             } else {
                               AppConstant.statusDialog(
                                   context: context,

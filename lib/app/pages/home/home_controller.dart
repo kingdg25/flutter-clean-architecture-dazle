@@ -45,6 +45,9 @@ class HomeController extends Controller {
 
   TextEditingController? searchTextController;
 
+  double progressValue = .25;
+  bool showProgressBar = false;
+
   HomeController(userRepo)
       : _spotLight = <PhotoTile>[],
         _matchedProperties = <Property>[],
@@ -227,6 +230,27 @@ class HomeController extends Controller {
       print('logout on error $e');
       AppConstant.showLoader(getContext(), false);
     };
+  }
+
+  void showHideProgressBar() {
+    if (showProgressBar) {
+      showProgressBar = false;
+    } else {
+      showProgressBar = true;
+    }
+    refreshUI();
+  }
+
+  void setProgressBarValue(double newProgressValue) {
+    progressValue = newProgressValue;
+    refreshUI();
+  }
+
+  String progressPercentage() {
+    double initial = progressValue / 1;
+    double percent = initial * 100;
+
+    return '$percent';
   }
 
   // Mixpanel callback
