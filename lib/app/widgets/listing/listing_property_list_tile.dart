@@ -11,6 +11,7 @@ class ListingPropertyListTile extends StatelessWidget {
   final EdgeInsetsGeometry padding;
   final bool isCurrentUser;
   final Mixpanel? mixpanel;
+  String? page;
 
   ListingPropertyListTile(
       {required this.items,
@@ -18,6 +19,7 @@ class ListingPropertyListTile extends StatelessWidget {
       this.width = 322.0,
       this.isCurrentUser = true,
       this.mixpanel,
+      this.page,
       this.padding = const EdgeInsets.all(0.0)});
 
   @override
@@ -33,6 +35,7 @@ class ListingPropertyListTile extends StatelessWidget {
                 index: index,
                 padding: padding,
                 mixpanel: mixpanel,
+                page: page,
               )
             : items![index].viewType == "public"
                 ? ListingPropertyListTileDetails(

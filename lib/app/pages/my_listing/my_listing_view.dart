@@ -78,6 +78,7 @@ class _MyListingPageState
                   ? controller.myListing
                   : controller.searchResultListing,
               mixpanel: controller.mixpanel,
+              page: 'My Listing Page',
               height: 300,
               padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
             )

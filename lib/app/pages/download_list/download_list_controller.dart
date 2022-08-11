@@ -9,6 +9,9 @@ class DownloadListController extends Controller {
   Mixpanel? _mixpanel;
   Mixpanel? get mixpanel => _mixpanel;
 
+  double progressValue = .25;
+  bool showProgressBar = false;
+
   DownloadListController(userRepo)
       : downloadListPresenter = DownloadListPresenter(),
         super();
@@ -16,6 +19,27 @@ class DownloadListController extends Controller {
   @override
   void initListeners() {
     initMixpanel();
+  }
+
+  void showHideProgressBar() {
+    if (showProgressBar) {
+      showProgressBar = false;
+    } else {
+      showProgressBar = true;
+    }
+    refreshUI();
+  }
+
+  void setProgressBarValue(double newProgressValue) {
+    progressValue = newProgressValue;
+    refreshUI();
+  }
+
+  String progressPercentage() {
+    double initial = progressValue / 1;
+    double percent = initial * 100;
+
+    return '$percent';
   }
 
   Future<void> initMixpanel() async {
