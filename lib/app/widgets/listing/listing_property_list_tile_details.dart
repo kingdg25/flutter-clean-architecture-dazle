@@ -2,8 +2,11 @@ import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:dazle/app/pages/main/main_controller.dart';
+import 'package:dazle/app/widgets/profile/profile_info.dart';
 import 'package:dazle/domain/entities/user.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:flutter_overlay_loader/flutter_overlay_loader.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:mixpanel_flutter/mixpanel_flutter.dart';
@@ -17,7 +20,7 @@ import '../../utils/app.dart';
 import '../../utils/app_constant.dart';
 import '../custom_text.dart';
 import '../property_text_info.dart';
-import 'components/pdf_generator.dart';
+import 'package:dazle/app/widgets/pdf/pdf_generator.dart';
 
 class ListingPropertyListTileDetails extends StatelessWidget {
   final List<Property>? items;
@@ -26,6 +29,7 @@ class ListingPropertyListTileDetails extends StatelessWidget {
   final int index;
   final EdgeInsetsGeometry padding;
   final Mixpanel? mixpanel;
+  String? page;
   ListingPropertyListTileDetails(
       {required this.items,
       this.height = 255.0,
@@ -33,11 +37,17 @@ class ListingPropertyListTileDetails extends StatelessWidget {
       this.index = 0,
       this.mixpanel,
       this.padding = const EdgeInsets.all(0.0),
+      this.page,
       Key? key})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    var controller;
+    if (page == 'My Listing Page') {
+      controller =
+          FlutterCleanArchitecture.getController<MainController>(context);
+    } else if (page == 'Profile Page') {}
     return Padding(
       padding: padding,
       child: Stack(
@@ -216,81 +226,98 @@ class ListingPropertyListTileDetails extends StatelessWidget {
                       ))
                 ],
               )),
-          Positioned(
-            top: 5,
-            right: 25,
-            child: Row(
-              children: [
-                ListingDetailsIconButton(
-                  iconPadding: 6,
-                  iconSize: 19,
-                  iconData: Icons.file_download_outlined,
-                  tooltip: "Download",
-                  onPressed: () async {
-                    User currentUser = await App.getUser();
-                    if (currentUser.accountStatus != 'Deactivated') {
-                      //? Changed to open pdf
-                      mixpanel?.track('Download Listing');
-                      print('ashjkfdjasdhfkljashdfljkhasf');
-                      Loader.show(context);
-                      AppConstant.showToast(
-                          msg: "Generating document please wait...",
-                          timeInSecForIosWeb: 3);
-                      String? pdfFilePath = await PdfGenerator()
-                          .downloadPdf(property: items![index]);
-                      Loader.hide();
-                      AppConstant.showToast(msg: "Launching document...");
-                      await OpenFile.open(pdfFilePath);
-                      Fluttertoast.cancel();
-                    } else {
-                      AppConstant.statusDialog(
-                          context: context,
-                          title: 'Action not Allowed',
-                          text: 'Please Reactivate your account first.',
-                          success: false);
-                    }
-                  },
+          page == 'Profile Page'
+              ? Container()
+              : Positioned(
+                  top: 5,
+                  right: 25,
+                  child: Row(
+                    children: [
+                      ListingDetailsIconButton(
+                        iconPadding: 6,
+                        iconSize: 19,
+                        iconData: Icons.file_download_outlined,
+                        tooltip: "Download",
+                        onPressed: () async {
+                          User currentUser = await App.getUser();
+                          if (currentUser.accountStatus != 'Deactivated') {
+                            mixpanel?.track('Download Listing');
+                            controller.showHideProgressBar();
+                            await Future.delayed(
+                                const Duration(milliseconds: 700));
+                            controller.setProgressBarValue(.5);
+
+                            String? pdfFilePath = await PdfGenerator()
+                                .downloadPdf(property: items![index]);
+                            controller.setProgressBarValue(1.0);
+                            await Future.delayed(
+                                const Duration(seconds: 1, milliseconds: 300));
+
+                            await OpenFile.open(pdfFilePath);
+
+                            controller.setProgressBarValue(.25);
+                            controller.showHideProgressBar();
+                            await OpenFile.open(pdfFilePath);
+                          } else {
+                            AppConstant.statusDialog(
+                                context: context,
+                                title: 'Action not Allowed',
+                                text: 'Please Reactivate your account first.',
+                                success: false);
+                          }
+                        },
+                      ),
+                      ListingDetailsIconButton(
+                        iconPadding: 6,
+                        iconSize: 19,
+                        iconData: Icons.share,
+                        tooltip: "Share",
+                        onPressed: () async {
+                          User currentUser = await App.getUser();
+                          if (currentUser.accountStatus != 'Deactivated') {
+                            mixpanel?.track('Share Listing');
+                            controller.showHideProgressBar();
+
+                            await Future.delayed(
+                                const Duration(milliseconds: 700));
+                            controller.setProgressBarValue(.5);
+
+                            String? pdfFilePath = await PdfGenerator()
+                                .sharePdf(property: items![index]);
+
+                            controller.setProgressBarValue(1.0);
+                            await Future.delayed(
+                                const Duration(seconds: 1, milliseconds: 300));
+
+                            List<String> filePaths = [];
+                            filePaths.add(pdfFilePath!);
+
+                            await Share.shareFiles(
+                              filePaths,
+                              mimeTypes: [
+                                Platform.isAndroid
+                                    ? "image/jpg"
+                                    : "application/pdf"
+                              ],
+                              subject:
+                                  'Dazle Property Listing-${items![index].id}',
+                              text:
+                                  'Dazle Property Listing-${items![index].id}',
+                            );
+                            controller.setProgressBarValue(.25);
+                            controller.showHideProgressBar();
+                          } else {
+                            AppConstant.statusDialog(
+                                context: context,
+                                title: 'Action not Allowed',
+                                text: 'Please Reactivate your account first.',
+                                success: false);
+                          }
+                        },
+                      ),
+                    ],
+                  ),
                 ),
-                ListingDetailsIconButton(
-                  iconPadding: 6,
-                  iconSize: 19,
-                  iconData: Icons.share,
-                  tooltip: "Share",
-                  onPressed: () async {
-                    User currentUser = await App.getUser();
-                    if (currentUser.accountStatus != 'Deactivated') {
-                      mixpanel?.track('Share Listing');
-                      Loader.show(context);
-                      AppConstant.showToast(
-                          msg: "Generating document please wait...",
-                          timeInSecForIosWeb: 3);
-                      String? pdfFilePath = await PdfGenerator()
-                          .sharePdf(property: items![index]);
-                      Loader.hide();
-                      List<String> filePaths = [];
-                      filePaths.add(pdfFilePath!);
-                      AppConstant.showToast(msg: "Launching document...");
-                      await Share.shareFiles(
-                        filePaths,
-                        mimeTypes: [
-                          Platform.isAndroid ? "image/jpg" : "application/pdf"
-                        ],
-                        subject: 'Dazle Property Listing-${items![index].id}',
-                        text: 'Dazle Property Listing-${items![index].id}',
-                      );
-                      Fluttertoast.cancel();
-                    } else {
-                      AppConstant.statusDialog(
-                          context: context,
-                          title: 'Action not Allowed',
-                          text: 'Please Reactivate your account first.',
-                          success: false);
-                    }
-                  },
-                ),
-              ],
-            ),
-          ),
         ],
       ),
     );

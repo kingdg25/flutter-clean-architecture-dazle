@@ -10,7 +10,7 @@ import '../../../../domain/entities/property.dart';
 import 'pdf_widgets.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:dio/dio.dart';
-import '../../../utils/app.dart';
+import 'package:dazle/app/utils/app.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'dart:async';
 import 'package:flutter/material.dart';
@@ -42,7 +42,7 @@ class PdfGenerator {
       latitude = mapCoordinates?["Latitude"];
       longitude = mapCoordinates?["Longitude"];
       mapLink =
-          "https://maps.googleapis.com/maps/api/staticmap?center=$latitude,%20$longitude&zoom=19&size=600x400&markers=color:0x33D49D|$latitude,$longitude&key=AIzaSyCSacvsau8vEncNbORdwU0buakm7Mx2rbE";
+          "https://maps.googleapis.com/maps/api/staticmap?center=$latitude,%20$longitude&zoom=19&size=600x400&markers=color:0x33D49D|$latitude,$longitude&key=AIzaSyCSacvsau8vEncNbORdwU0buakm7Mx2rbE&maptype=hybrid";
       mapImage = await generateMapImage(mapLink);
     }
 
@@ -105,8 +105,8 @@ class PdfGenerator {
                           property.floorArea == 0
                               ? pw.Container()
                               : PdfWidgets().pdfCustomRichText(
-                                  mainText: 'Floor area: ',
-                                  valueText: '${property.floorArea}',
+                                  mainText: 'Floor area (sqm): ',
+                                  valueText: '${property.formatFloorArea}',
                                 ),
                           property.frontageArea == 0
                               ? pw.Container()
@@ -116,8 +116,8 @@ class PdfGenerator {
                           property.frontageArea == 0
                               ? pw.Container()
                               : PdfWidgets().pdfCustomRichText(
-                                  mainText: 'Frontage area: ',
-                                  valueText: '${property.frontageArea}',
+                                  mainText: 'Frontage (meters): ',
+                                  valueText: '${property.formatFrontageArea}',
                                 ),
                           pw.SizedBox(
                             height: 10,

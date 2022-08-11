@@ -465,7 +465,7 @@ class _CreateListingPageState
                     )
                   : Container(),
               AppConstant.customTitleFieldWithSubtext(
-                title: 'Frontage Area',
+                title: 'Frontage',
                 optionalText: 'optional',
               ),
               Container(
@@ -474,7 +474,7 @@ class _CreateListingPageState
                   controller: controller.frontageTextController,
                   keyboardType:
                       const TextInputType.numberWithOptions(decimal: true),
-                  hintText: 'Frontage Area (sqm)',
+                  hintText: 'Frontage (meters)',
                   inputFormatters: [ThousandsFormatter(allowFraction: true)],
                 ),
               ),
