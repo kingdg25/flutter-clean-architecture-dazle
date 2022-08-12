@@ -405,52 +405,50 @@ class _DownloadListPageState
             );
           }),
         ),
-        SafeArea(
-          child: ControlledWidgetBuilder<DownloadListController>(
-            builder: (context, controller) {
-              return controller.showProgressBar == false
-                  ? Container()
-                  : Positioned(
-                      top: 0,
-                      left: 0,
-                      child: Container(
-                        // color: Color.fromARGB(162, 154, 160, 166),
-                        color: Colors.white,
-                        width: MediaQuery.of(context).size.width,
-                        height: MediaQuery.of(context).size.height,
-                        // height: MediaQuery.of(context).size.height,
-                        child: Center(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Image(
-                                  image: AssetImage(
-                                      'assets/icons/dazle_icon.png')),
-                              SizedBox(
-                                height: 10,
+        ControlledWidgetBuilder<DownloadListController>(
+          builder: (context, controller) {
+            return controller.showProgressBar == false
+                ? Container()
+                : Positioned(
+                    top: 0,
+                    left: 0,
+                    child: Container(
+                      // color: Color.fromARGB(162, 154, 160, 166),
+                      color: Colors.white,
+                      width: MediaQuery.of(context).size.width,
+                      height: MediaQuery.of(context).size.height,
+                      // height: MediaQuery.of(context).size.height,
+                      child: Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Image(
+                                image:
+                                    AssetImage('assets/icons/dazle_icon.png')),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Container(
+                              height: 50,
+                              width: MediaQuery.of(context).size.width * 0.70,
+                              alignment: Alignment.center,
+                              child: CustomProgressBar(
+                                text:
+                                    'Generating PDF ${controller.progressPercentage()}%',
+                                progressValue: controller.progressValue,
                               ),
-                              Container(
-                                height: 50,
-                                width: MediaQuery.of(context).size.width * 0.70,
-                                alignment: Alignment.center,
-                                child: CustomProgressBar(
-                                  text:
-                                      'Generating PDF ${controller.progressPercentage()}%',
-                                  progressValue: controller.progressValue,
-                                ),
-                              ),
-                              CustomText(
-                                text: 'Generating PDF . . . .',
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ],
-                          ),
+                            ),
+                            CustomText(
+                              text: 'Generating PDF . . . .',
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ],
                         ),
                       ),
-                    );
-            },
-          ),
+                    ),
+                  );
+          },
         ),
       ],
     );
