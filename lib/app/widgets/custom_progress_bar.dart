@@ -1,7 +1,6 @@
 import 'package:dazle/app/utils/app.dart';
 import 'package:dazle/app/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
-import 'package:liquid_progress_indicator/liquid_progress_indicator.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
 class CustomProgressBar extends StatelessWidget {
