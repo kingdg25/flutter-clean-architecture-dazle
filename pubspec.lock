@@ -630,13 +630,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.2.0+1"
-  liquid_progress_indicator:
-    dependency: "direct main"
-    description:
-      name: liquid_progress_indicator
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.4.0"
   logging:
     dependency: transitive
     description:
@@ -846,7 +839,7 @@ packages:
       name: percent_indicator
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "4.2.1"
+    version: "3.4.0"
   permission_handler:
     dependency: "direct main"
     description:
