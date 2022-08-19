@@ -1048,7 +1048,7 @@ class _CreateListingPageState
                   padding: EdgeInsets.all(20.0),
                   child: CustomText(
                     text:
-                        'You can only upload up to 5 photos. The first photo that you will select will be the cover photo of the listing.',
+                        'You can only upload up to 10 photos. The first photo that you will select will be the cover photo of the listing.',
                     textAlign: TextAlign.justify,
                   ),
                 ),
@@ -1170,7 +1170,7 @@ class _CreateListingPageState
                     : 'Add more Images',
                 maxImages: widget.property == null
                     ? null
-                    : (5 - _currentPhotos.length),
+                    : (10 - _currentPhotos.length),
                 onAssetValue: (result) {
                   controller.assets = result;
                 },
