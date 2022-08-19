@@ -34,6 +34,7 @@ class _MainPageState extends ViewState<MainPage, MainController> {
         return Stack(
           children: [
             Scaffold(
+              key: globalKey,
               // body: _navs[_currentIndex][_navs[_currentIndex].keys.first],
               body: navs[currentIndex][navs[currentIndex].keys.first],
               bottomNavigationBar: BottomNavigationBar(

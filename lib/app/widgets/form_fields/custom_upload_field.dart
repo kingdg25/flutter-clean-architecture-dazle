@@ -62,7 +62,7 @@ class _CustomUploadFieldState extends State<CustomUploadField> {
                       var result = await AppConstant.loadAssets(
                           context: context,
                           selectedAssets: selectedAssets,
-                          maxAssets: widget.maxImages ?? 5);
+                          maxAssets: widget.maxImages ?? 10);
 
                       setState(() {
                         selectedAssets = result;
@@ -73,7 +73,7 @@ class _CustomUploadFieldState extends State<CustomUploadField> {
                       //TODO: Add a status dialog saying user needs to delete photos to upload additional images
                       AppConstant.statusDialog(
                           success: false,
-                          title: 'Connot upload more than 5 photos.',
+                          title: 'Connot upload more than 10 photos.',
                           text: 'Delete some photos to upload more.',
                           context: context);
                     }
@@ -81,7 +81,7 @@ class _CustomUploadFieldState extends State<CustomUploadField> {
                     var result = await AppConstant.loadAssets(
                         context: context,
                         selectedAssets: selectedAssets,
-                        maxAssets: 5);
+                        maxAssets: 10);
 
                     setState(() {
                       selectedAssets = result;

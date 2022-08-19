@@ -1,11 +1,17 @@
+import 'dart:io';
+
 import 'package:dazle/app/pages/listing_details/listing_details_presenter.dart';
 import 'package:dazle/app/utils/app.dart';
+import 'package:dazle/app/widgets/custom_text.dart';
+import 'package:dazle/app/widgets/pdf/pdf_generator.dart';
 import 'package:dazle/data/repositories/data_listing_repository.dart';
 import 'package:dazle/domain/entities/user.dart';
 import 'package:dazle/domain/entities/property.dart';
 import 'package:dazle/app/utils/app_constant.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
+import 'package:share_plus/share_plus.dart';
 
 class ListingDetailsController extends Controller {
   final ListingDetailsPresenter listingDetailsPresenter;
@@ -16,6 +22,9 @@ class ListingDetailsController extends Controller {
 
   Property? _selectedListing;
   Property? get selectedListing => _selectedListing;
+
+  double progressValue = .25;
+  bool showProgressBar = false;
 
   final listingId;
 
@@ -104,6 +113,129 @@ class ListingDetailsController extends Controller {
         title: title,
         text: text,
         onPressed: onPressed);
+  }
+
+  void showHideProgressBar() {
+    if (showProgressBar) {
+      showProgressBar = false;
+    } else {
+      showProgressBar = true;
+    }
+    refreshUI();
+  }
+
+  void setProgressBarValue(double newProgressValue) {
+    progressValue = newProgressValue;
+    refreshUI();
+  }
+
+  String progressPercentage() {
+    double initial = progressValue / 1;
+    double percent = initial * 100;
+
+    return '$percent';
+  }
+
+  showModal() {
+    showModalBottomSheet(
+      context: getContext(),
+      builder: ((builder) => bottomSheet()),
+    );
+  }
+
+  Widget bottomSheet() {
+    return Container(
+      height: 100.0,
+      width: MediaQuery.of(getContext()).size.width,
+      margin: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+      child: Column(
+        children: [
+          CustomText(
+            text: 'Share Listing as',
+            fontSize: 18,
+            fontWeight: FontWeight.w600,
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          Row(
+            children: [
+              Expanded(
+                child: TextButton.icon(
+                  icon: Icon(
+                    Icons.picture_as_pdf,
+                    color: App.mainColor,
+                    size: 30,
+                  ),
+                  label: CustomText(
+                    text: 'PDF',
+                    fontWeight: FontWeight.w500,
+                  ),
+                  onPressed: () async {
+                    Navigator.pop(getContext());
+                    User currentUser = await App.getUser();
+                    if (currentUser.accountStatus != 'Deactivated') {
+                      // mixpanel?.track('Share Listing');
+                      showHideProgressBar();
+
+                      await Future.delayed(const Duration(milliseconds: 700));
+                      setProgressBarValue(.5);
+
+                      String? pdfFilePath = await PdfGenerator()
+                          .sharePdf(property: this._selectedListing!);
+
+                      setProgressBarValue(1);
+                      await Future.delayed(
+                          const Duration(seconds: 1, milliseconds: 300));
+
+                      List<String> filePaths = [];
+                      filePaths.add(pdfFilePath!);
+
+                      await Share.shareFiles(
+                        filePaths,
+                        mimeTypes: [
+                          Platform.isAndroid ? "image/jpg" : "application/pdf"
+                        ],
+                        subject:
+                            'Dazle Property Listing-${this.selectedListing!.id}',
+                        text:
+                            'Dazle Property Listing-${this._selectedListing!.id}',
+                      );
+                      setProgressBarValue(.25);
+                      showHideProgressBar();
+                    } else {
+                      AppConstant.statusDialog(
+                          context: getContext(),
+                          title: 'Action not Allowed',
+                          text: 'Please Reactivate your account first.',
+                          success: false);
+                    }
+                  },
+                ),
+              ),
+              Expanded(
+                child: TextButton.icon(
+                  icon: Icon(
+                    Icons.share,
+                    color: App.mainColor,
+                  ),
+                  label: CustomText(
+                    text: 'Link',
+                    fontWeight: FontWeight.w500,
+                  ),
+                  onPressed: () async {
+                    await Share.share(
+                        'https://dazle-links.web.app/web_listing_details?listingId=${this.selectedListing!.id}',
+                        subject: 'TestShare');
+                    Navigator.pop(getContext());
+                  },
+                ),
+              ),
+            ],
+          )
+        ],
+      ),
+    );
   }
 
   @override

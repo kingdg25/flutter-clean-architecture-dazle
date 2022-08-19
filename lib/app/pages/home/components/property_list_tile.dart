@@ -207,46 +207,48 @@ class PropertyListTile extends StatelessWidget {
                           iconData: Icons.share,
                           tooltip: "Share",
                           onPressed: () async {
-                            User currentUser = await App.getUser();
-                            if (currentUser.accountStatus != 'Deactivated') {
-                              mixpanel?.track('Share Listing');
-                              controller.showHideProgressBar();
+                            controller.showModal();
+                            controller.listingToShare = items[index];
+                            // User currentUser = await App.getUser();
+                            // if (currentUser.accountStatus != 'Deactivated') {
+                            //   mixpanel?.track('Share Listing');
+                            //   controller.showHideProgressBar();
 
-                              await Future.delayed(
-                                  const Duration(milliseconds: 700));
-                              controller.setProgressBarValue(.5);
+                            //   await Future.delayed(
+                            //       const Duration(milliseconds: 700));
+                            //   controller.setProgressBarValue(.5);
 
-                              String? pdfFilePath = await PdfGenerator()
-                                  .sharePdf(property: items[index]);
+                            //   String? pdfFilePath = await PdfGenerator()
+                            //       .sharePdf(property: items[index]);
 
-                              controller.setProgressBarValue(1);
-                              await Future.delayed(const Duration(
-                                  seconds: 1, milliseconds: 300));
+                            //   controller.setProgressBarValue(1);
+                            //   await Future.delayed(const Duration(
+                            //       seconds: 1, milliseconds: 300));
 
-                              List<String> filePaths = [];
-                              filePaths.add(pdfFilePath!);
+                            //   List<String> filePaths = [];
+                            //   filePaths.add(pdfFilePath!);
 
-                              await Share.shareFiles(
-                                filePaths,
-                                mimeTypes: [
-                                  Platform.isAndroid
-                                      ? "image/jpg"
-                                      : "application/pdf"
-                                ],
-                                subject:
-                                    'Dazle Property Listing-${items[index].id}',
-                                text:
-                                    'Dazle Property Listing-${items[index].id}',
-                              );
-                              controller.setProgressBarValue(.25);
-                              controller.showHideProgressBar();
-                            } else {
-                              AppConstant.statusDialog(
-                                  context: context,
-                                  title: 'Action not Allowed',
-                                  text: 'Please Reactivate your account first.',
-                                  success: false);
-                            }
+                            //   await Share.shareFiles(
+                            //     filePaths,
+                            //     mimeTypes: [
+                            //       Platform.isAndroid
+                            //           ? "image/jpg"
+                            //           : "application/pdf"
+                            //     ],
+                            //     subject:
+                            //         'Dazle Property Listing-${items[index].id}',
+                            //     text:
+                            //         'Dazle Property Listing-${items[index].id}',
+                            //   );
+                            //   controller.setProgressBarValue(.25);
+                            //   controller.showHideProgressBar();
+                            // } else {
+                            //   AppConstant.statusDialog(
+                            //       context: context,
+                            //       title: 'Action not Allowed',
+                            //       text: 'Please Reactivate your account first.',
+                            //       success: false);
+                            // }
                           },
                         ),
                       ],
@@ -264,4 +266,5 @@ class PropertyListTile extends StatelessWidget {
   // Future<void> initMixpanel() async {
   //   _mixpanel = await AppConstant.mixPanelInit();
   // }
+
 }
