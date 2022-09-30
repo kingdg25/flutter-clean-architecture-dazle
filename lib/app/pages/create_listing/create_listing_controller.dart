@@ -954,10 +954,10 @@ class CreateListingController extends Controller {
       if (totalPhotos >= 1) {
         isValidated = true;
       } else {
-        int neededPhotos = 1 - (totalPhotos + 1);
+        int neededPhotos = 10 - (totalPhotos + 1);
         await AppConstant.statusDialog(
             context: getContext(),
-            text: "Upload at least $neededPhotos more photo/s.",
+            text: "Upload at least 1 photo.",
             title: "Upload Photos.");
         return false;
       }

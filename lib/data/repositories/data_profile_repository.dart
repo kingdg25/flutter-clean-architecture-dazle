@@ -179,7 +179,7 @@ class DataProfileRepository extends ProfileRepository {
   @override
   Future<void> update({User? user, File? profilePicture}) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    print('update user update user ${user!.toJson()}');
+    print('UPDATED USER: ${user!.toJson()}');
     print(prefs.getString("accessToken"));
 
     if (profilePicture != null) {

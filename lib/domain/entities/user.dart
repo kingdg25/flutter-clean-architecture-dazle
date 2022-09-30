@@ -11,6 +11,9 @@ class User {
   final bool? emailVerified;
   final String? id;
   String? profilePicture;
+  final String? displayMobileNumber;
+  final String? displayEmail;
+  final licenseDetails;
 
   String get displayName {
     return "$firstName $lastName";
@@ -28,7 +31,10 @@ class User {
       this.email,
       this.emailVerified,
       this.id,
-      this.profilePicture});
+      this.profilePicture,
+      this.displayMobileNumber,
+      this.displayEmail,
+      this.licenseDetails});
 
   User.fromJson(Map<String, dynamic> json)
       : aboutMe = json['about_me'],
@@ -42,7 +48,10 @@ class User {
         email = json['email'],
         emailVerified = json['email_verified'],
         id = json['_id'],
-        profilePicture = json['profile_picture'];
+        profilePicture = json['profile_picture'],
+        displayMobileNumber = json['display_mobile_number'],
+        displayEmail = json['display_email'],
+        licenseDetails = json['license_details'];
 
   Map<String, dynamic> toJson() => {
         'about_me': aboutMe,
@@ -56,7 +65,10 @@ class User {
         'email': email,
         'email_verified': emailVerified,
         '_id': id,
-        'profile_picture': profilePicture
+        'profile_picture': profilePicture,
+        'display_mobile_number': displayMobileNumber,
+        'display_email': displayEmail,
+        'license_details': licenseDetails
       };
 }
 

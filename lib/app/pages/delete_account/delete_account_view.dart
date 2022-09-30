@@ -43,7 +43,8 @@ class _DeleteAccountPageState
             var _pageController = controller.deleteAccountPageController;
 
             return PageView(
-              physics: NeverScrollableScrollPhysics(),
+              physics: PageScrollPhysics(),
+              // physics: NeverScrollableScrollPhysics(),
               controller: _pageController,
               children: [
                 DeleteAccount(

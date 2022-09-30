@@ -15,6 +15,7 @@ import 'package:permission_handler/permission_handler.dart';
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:printing/printing.dart';
+import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 
 // import 'package:downloads_path_provider/downloads_path_provider.dart';
 // import 'package:ext_storage/ext_storage.dart';
@@ -25,11 +26,25 @@ class PdfGenerator {
 
   Future<pw.Document> buildPdf({required Property property}) async {
     final pdf = pw.Document();
-    final image = (await rootBundle.load('assets/dazle_sample_logo.png'))
+    final dazleLogo = (await rootBundle.load('assets/dazle_sample_logo.png'))
         .buffer
         .asUint8List();
+    final defaultProfilePic =
+        (await rootBundle.load('assets/user_profile.png')).buffer.asUint8List();
+
     final List<pw.Widget> pdfImages = await pdfImageGenerator(property.photos!);
     final User currentUser = await App.getUser();
+    pw.MemoryImage userProfilePic = pw.MemoryImage(defaultProfilePic);
+
+    final pw.Widget coverPhoto = await pdfCoverPhoto(property.photos!);
+    final double rowImageHeight = 120;
+    final pw.Widget listingImages =
+        await pdfRowImages(property.photos!, rowImageHeight);
+
+    if (currentUser.profilePicture != null) {
+      userProfilePic =
+          pw.MemoryImage(await imageConverter(currentUser.profilePicture!));
+    }
 
     Map<dynamic, dynamic>? mapCoordinates = {};
     double? latitude;
@@ -51,311 +66,591 @@ class PdfGenerator {
         theme: pw.ThemeData.withFont(
           icons: await PdfGoogleFonts.materialIcons(),
         ),
-        pageFormat: PdfPageFormat.a4,
+        pageFormat: PdfPageFormat.legal,
+
         build: (pw.Context context) => <pw.Widget>[
           pw.Container(
             child: pw.Column(
               crossAxisAlignment: pw.CrossAxisAlignment.start,
               children: [
                 //*======== PDF Title [start]
-                pw.Center(
-                    child: PdfWidgets().pdfCustomText(
-                        text: property.title == null
-                            ? '(No Listing Title)'
-                            : property.title!,
-                        fontSize: 27,
-                        fontWeight: pw.FontWeight.bold,
-                        textAlign: pw.TextAlign.center)),
+                pw.Container(
+                  decoration: pw.BoxDecoration(
+                    borderRadius: pw.BorderRadius.circular(10),
+                    color: PdfColor.fromHex('#1f4bc6'),
+                  ),
+                  padding: pw.EdgeInsets.all(15),
+                  child: pw.Column(
+                    crossAxisAlignment: pw.CrossAxisAlignment.stretch,
+                    children: [
+                      PdfWidgets().pdfCustomText(
+                          text: property.title == null
+                              ? '(No Listing Title)'
+                              : property.title!,
+                          fontSize: 27,
+                          textColor: PdfColor.fromHex('#FFFFFF'),
+                          fontWeight: pw.FontWeight.bold,
+                          textAlign: pw.TextAlign.center),
+                      PdfWidgets().pdfCustomText(
+                        text: 'Location: ' + property.completeAddress,
+                        fontSize: 14,
+                        textAlign: pw.TextAlign.center,
+                        textColor: PdfColor.fromHex('#FFFFFF'),
+                      ),
+                      pw.SizedBox(height: 5),
+                      pw.Divider(
+                        height: 2,
+                        color: PdfColor.fromHex('#FFFFFF'),
+                      ),
+                      pw.SizedBox(height: 5),
+                      PdfWidgets().pdfCustomText(
+                          text: property.propertyFor == 'Sell'
+                              ? '${property.formatPrice} PHP'
+                              : '${property.formatPrice} PHP /${property.timePeriod}',
+                          fontSize: 25,
+                          textColor: PdfColor.fromHex('#FFFFFF'),
+                          fontWeight: pw.FontWeight.bold,
+                          textAlign: pw.TextAlign.center),
+                    ],
+                  ),
+                ),
                 pw.SizedBox(height: 30),
-                pw.Row(
+                coverPhoto,
+                //*======== PDF Title [end]
+                pw.SizedBox(height: 5),
+                pw.Column(
                   crossAxisAlignment: pw.CrossAxisAlignment.start,
                   children: [
-                    pw.Expanded(
-                      flex: 4,
-                      //*===== Pdf Property Details Column [start]
-                      child: pw.Column(
-                        crossAxisAlignment: pw.CrossAxisAlignment.start,
-                        children: [
-                          pw.SizedBox(
-                            height: 10,
-                          ),
-                          PdfWidgets().pdfCustomRichText(
-                            mainText: 'Property Type: ',
-                            valueText: property.propertyType,
-                          ),
-                          pw.SizedBox(
-                            height: 10,
-                          ),
-                          PdfWidgets().pdfCustomRichText(
-                            mainText: 'Property for: ',
-                            valueText: property.propertyFor,
-                          ),
-                          pw.SizedBox(
-                            height: 10,
-                          ),
-                          PdfWidgets().pdfCustomRichText(
-                            mainText: 'Lot area (sqm): ',
-                            valueText: property.formatArea,
-                          ),
-                          property.floorArea == 0
-                              ? pw.Container()
-                              : pw.SizedBox(
-                                  height: 10,
-                                ),
-                          property.floorArea == 0
-                              ? pw.Container()
-                              : PdfWidgets().pdfCustomRichText(
-                                  mainText: 'Floor area (sqm): ',
-                                  valueText: '${property.formatFloorArea}',
-                                ),
-                          property.frontageArea == 0
-                              ? pw.Container()
-                              : pw.SizedBox(
-                                  height: 10,
-                                ),
-                          property.frontageArea == 0
-                              ? pw.Container()
-                              : PdfWidgets().pdfCustomRichText(
-                                  mainText: 'Frontage (meters): ',
-                                  valueText: '${property.formatFrontageArea}',
-                                ),
-                          pw.SizedBox(
-                            height: 10,
-                          ),
-                          PdfWidgets().pdfCustomRichText(
-                            mainText: 'Location: ',
-                            valueText: '${property.visibilityAddress}',
-                          ),
-                          pw.SizedBox(
-                            height: 10,
-                          ),
-                          PdfWidgets().pdfCustomRichText(
-                            mainText: 'Property Description: ',
-                            valueText: property.description,
-                          ),
-                          property.isYourProperty == null ||
-                                  property.isYourProperty == ''
-                              ? pw.Container()
-                              : pw.SizedBox(
-                                  height: 10,
-                                ),
-                          property.isYourProperty == null ||
-                                  property.isYourProperty == ''
-                              ? pw.Container()
-                              : PdfWidgets().pdfCustomRichText(
-                                  mainText: 'Property: ',
-                                  valueText: property.isYourProperty,
-                                ),
-                          property.propertyType!.contains('Lot') ||
-                                  property.propertyType!.contains('Building')
-                              ? pw.Container()
-                              : pw.SizedBox(
-                                  height: 10,
-                                ),
-                          property.propertyType!.contains('Lot') ||
-                                  property.propertyType!.contains('Building')
-                              ? pw.Container()
-                              : PdfWidgets().pdfCustomRichText(
-                                  mainText: 'No. of bedrooms: ',
-                                  valueText: '${property.totalBedRoom}',
-                                ),
-                          property.propertyType!.contains('Lot') ||
-                                  property.propertyType!.contains('Building')
-                              ? pw.Container()
-                              : pw.SizedBox(
-                                  height: 10,
-                                ),
-                          property.propertyType!.contains('Lot') ||
-                                  property.propertyType!.contains('Building')
-                              ? pw.Container()
-                              : PdfWidgets().pdfCustomRichText(
-                                  mainText: 'No. of bathrooms: ',
-                                  valueText: '${property.totalBathRoom}',
-                                ),
-                          pw.SizedBox(
-                            height: 10,
-                          ),
-                          PdfWidgets().pdfCustomRichText(
-                            mainText: 'No. of parking spots: ',
-                            valueText: property.totalParkingSpace,
-                          ),
-                          pw.SizedBox(
-                            height: 10,
-                          ),
-                          PdfWidgets().pdfCustomRichText(
-                            mainText: 'Features and amenities: ',
-                            valueText: property.amenities!.join(", "),
-                          ),
-                          property.coordinates == null
-                              ? PdfWidgets().pdfCustomRichText(
-                                  mainText: 'Map Location:',
-                                  valueText: 'No Map Location provided.',
-                                )
-                              : pw.Container(),
-                        ],
-                      ),
+                    pw.SizedBox(
+                      height: 5,
                     ),
-                    //*===== Pdf Property Details Column [end]
+                    PdfWidgets().pdfCustomRichText(
+                      mainText: 'Property Type: ',
+                      valueText: property.propertyType,
+                    ),
+                    pw.SizedBox(
+                      height: 5,
+                    ),
+                    PdfWidgets().pdfCustomRichText(
+                      mainText: 'Property for: ',
+                      valueText: property.propertyFor,
+                    ),
+                    pw.SizedBox(
+                      height: 5,
+                    ),
+                    PdfWidgets().pdfCustomRichText(
+                      mainText: 'Lot area (sqm): ',
+                      valueText: property.formatArea,
+                    ),
+                    property.floorArea == 0
+                        ? pw.Container()
+                        : pw.SizedBox(
+                            height: 10,
+                          ),
+                    property.floorArea == 0
+                        ? pw.Container()
+                        : PdfWidgets().pdfCustomRichText(
+                            mainText: 'Floor area (sqm): ',
+                            valueText: '${property.formatFloorArea}',
+                          ),
+                    property.frontageArea == 0
+                        ? pw.Container()
+                        : pw.SizedBox(
+                            height: 5,
+                          ),
+                    property.frontageArea == 0
+                        ? pw.Container()
+                        : PdfWidgets().pdfCustomRichText(
+                            mainText: 'Frontage (meters): ',
+                            valueText: '${property.formatFrontageArea}',
+                          ),
+                    pw.SizedBox(
+                      height: 5,
+                    ),
+                    PdfWidgets().pdfCustomRichText(
+                      mainText: 'Property Description: ',
+                      valueText: property.description,
+                    ),
+                    property.isYourProperty == null ||
+                            property.isYourProperty == ''
+                        ? pw.Container()
+                        : pw.SizedBox(
+                            height: 5,
+                          ),
+                    property.isYourProperty == null ||
+                            property.isYourProperty == ''
+                        ? pw.Container()
+                        : PdfWidgets().pdfCustomRichText(
+                            mainText: 'Property: ',
+                            valueText: property.isYourProperty,
+                          ),
+                    property.propertyType!.contains('Lot') ||
+                            property.propertyType!.contains('Building')
+                        ? pw.Container()
+                        : pw.SizedBox(
+                            height: 5,
+                          ),
+                    property.propertyType!.contains('Lot') ||
+                            property.propertyType!.contains('Building')
+                        ? pw.Container()
+                        : PdfWidgets().pdfCustomRichText(
+                            mainText: 'No. of bedrooms: ',
+                            valueText: '${property.totalBedRoom}',
+                          ),
+                    property.propertyType!.contains('Lot') ||
+                            property.propertyType!.contains('Building')
+                        ? pw.Container()
+                        : pw.SizedBox(
+                            height: 5,
+                          ),
+                    property.propertyType!.contains('Lot') ||
+                            property.propertyType!.contains('Building')
+                        ? pw.Container()
+                        : PdfWidgets().pdfCustomRichText(
+                            mainText: 'No. of bathrooms: ',
+                            valueText: '${property.totalBathRoom}',
+                          ),
+                    pw.SizedBox(
+                      height: 5,
+                    ),
+                    PdfWidgets().pdfCustomRichText(
+                      mainText: 'No. of parking spots: ',
+                      valueText: property.totalParkingSpace,
+                    ),
+                    pw.SizedBox(
+                      height: 5,
+                    ),
+                    PdfWidgets().pdfCustomRichText(
+                      mainText: 'Features and amenities: ',
+                      valueText: property.amenities!.join(", "),
+                    ),
+                    pw.SizedBox(
+                      height: 5,
+                    ),
+                    property.coordinates == null
+                        ? PdfWidgets().pdfCustomRichText(
+                            mainText: 'Map Location:',
+                            valueText: 'No Map Location provided.',
+                          )
+                        : pw.Container(),
+                  ],
+                ),
 
-                    //------------------------------------------------------
-
-                    //*===== Pdf Property Photos Column [start]
-                    pw.Expanded(
-                      flex: 6,
-                      child: pw.Padding(
-                        padding: pw.EdgeInsets.symmetric(vertical: 10),
-                        child: pw.Stack(
-                          overflow: pw.Overflow.visible,
-                          alignment: pw.Alignment.center,
+                property.photos!.length > 1 ? listingImages : pw.Container(),
+                pw.SizedBox(height: 20),
+                property.coordinates == null
+                    ? pw.Container()
+                    : pw.Container(
+                        child: pw.Column(
+                          crossAxisAlignment: pw.CrossAxisAlignment.start,
                           children: [
-                            pw.Column(
-                              crossAxisAlignment: pw.CrossAxisAlignment.stretch,
-                              children: pdfImages,
+                            //*======== PDF Title [start]
+                            PdfWidgets().pdfCustomRichText(
+                              mainText: 'Map Location:',
+                              valueText: '',
                             ),
-                            // pw.Positioned(
-                            //   top: -20,
-                            //   child: PdfWidgets().pdfAddressContainer(
-                            //       text: '${property.city} '),
-                            // ),
-                            pw.Positioned(
-                              top: -20,
-                              child: PdfWidgets().pdfAddressContainer(
-                                  text: property.propertyFor == 'Sell'
-                                      ? '${property.formatPrice} PHP'
-                                      : '${property.formatPrice} PHP /${property.timePeriod}'),
+                            pw.SizedBox(height: 10),
+                            pw.Center(
+                              child: mapImage,
                             ),
-                            // pw.Positioned(
-                            //   bottom: -18,
-                            //   child: PdfWidgets()
-                            //       .pdfPriceContainer(price: property.price!),
-                            // )
                           ],
                         ),
                       ),
-                    ),
-                    //*===== Pdf Property Photos Column [end]
-                  ],
-                ),
+                // pw.Row(
+                //   crossAxisAlignment: pw.CrossAxisAlignment.start,
+                //   children: [
+                //     pw.Expanded(
+                //       flex: 4,
+                //       //*===== Pdf Property Details Column [start]
+                //       child: pw.Column(
+                //         crossAxisAlignment: pw.CrossAxisAlignment.start,
+                //         children: [
+                //           pw.SizedBox(
+                //             height: 10,
+                //           ),
+                //           PdfWidgets().pdfCustomRichText(
+                //             mainText: 'Property Type: ',
+                //             valueText: property.propertyType,
+                //           ),
+                //           pw.SizedBox(
+                //             height: 10,
+                //           ),
+                //           PdfWidgets().pdfCustomRichText(
+                //             mainText: 'Property for: ',
+                //             valueText: property.propertyFor,
+                //           ),
+                //           pw.SizedBox(
+                //             height: 10,
+                //           ),
+                //           PdfWidgets().pdfCustomRichText(
+                //             mainText: 'Lot area (sqm): ',
+                //             valueText: property.formatArea,
+                //           ),
+                //           property.floorArea == 0
+                //               ? pw.Container()
+                //               : pw.SizedBox(
+                //                   height: 10,
+                //                 ),
+                //           property.floorArea == 0
+                //               ? pw.Container()
+                //               : PdfWidgets().pdfCustomRichText(
+                //                   mainText: 'Floor area (sqm): ',
+                //                   valueText: '${property.formatFloorArea}',
+                //                 ),
+                //           property.frontageArea == 0
+                //               ? pw.Container()
+                //               : pw.SizedBox(
+                //                   height: 10,
+                //                 ),
+                //           property.frontageArea == 0
+                //               ? pw.Container()
+                //               : PdfWidgets().pdfCustomRichText(
+                //                   mainText: 'Frontage (meters): ',
+                //                   valueText: '${property.formatFrontageArea}',
+                //                 ),
+                //           pw.SizedBox(
+                //             height: 10,
+                //           ),
+                //           // PdfWidgets().pdfCustomRichText(
+                //           //   mainText: 'Location: ',
+                //           //   valueText: '${property.visibilityAddress}',
+                //           // ),
+                //           pw.SizedBox(
+                //             height: 10,
+                //           ),
+                //           PdfWidgets().pdfCustomRichText(
+                //             mainText: 'Property Description: ',
+                //             valueText: property.description,
+                //           ),
+                //           property.isYourProperty == null ||
+                //                   property.isYourProperty == ''
+                //               ? pw.Container()
+                //               : pw.SizedBox(
+                //                   height: 10,
+                //                 ),
+                //           property.isYourProperty == null ||
+                //                   property.isYourProperty == ''
+                //               ? pw.Container()
+                //               : PdfWidgets().pdfCustomRichText(
+                //                   mainText: 'Property: ',
+                //                   valueText: property.isYourProperty,
+                //                 ),
+                //           property.propertyType!.contains('Lot') ||
+                //                   property.propertyType!.contains('Building')
+                //               ? pw.Container()
+                //               : pw.SizedBox(
+                //                   height: 10,
+                //                 ),
+                //           property.propertyType!.contains('Lot') ||
+                //                   property.propertyType!.contains('Building')
+                //               ? pw.Container()
+                //               : PdfWidgets().pdfCustomRichText(
+                //                   mainText: 'No. of bedrooms: ',
+                //                   valueText: '${property.totalBedRoom}',
+                //                 ),
+                //           property.propertyType!.contains('Lot') ||
+                //                   property.propertyType!.contains('Building')
+                //               ? pw.Container()
+                //               : pw.SizedBox(
+                //                   height: 10,
+                //                 ),
+                //           property.propertyType!.contains('Lot') ||
+                //                   property.propertyType!.contains('Building')
+                //               ? pw.Container()
+                //               : PdfWidgets().pdfCustomRichText(
+                //                   mainText: 'No. of bathrooms: ',
+                //                   valueText: '${property.totalBathRoom}',
+                //                 ),
+                //           pw.SizedBox(
+                //             height: 10,
+                //           ),
+                //           PdfWidgets().pdfCustomRichText(
+                //             mainText: 'No. of parking spots: ',
+                //             valueText: property.totalParkingSpace,
+                //           ),
+                //           pw.SizedBox(
+                //             height: 10,
+                //           ),
+                //           PdfWidgets().pdfCustomRichText(
+                //             mainText: 'Features and amenities: ',
+                //             valueText: property.amenities!.join(", "),
+                //           ),
+                //           property.coordinates == null
+                //               ? PdfWidgets().pdfCustomRichText(
+                //                   mainText: 'Map Location:',
+                //                   valueText: 'No Map Location provided.',
+                //                 )
+                //               : pw.Container(),
+                //         ],
+                //       ),
+                //     ),
+                //     //*===== Pdf Property Details Column [end]
+
+                //     //------------------------------------------------------
+
+                //     //*===== Pdf Property Photos Column [start]
+                //     pw.Expanded(
+                //       flex: 6,
+                //       child: pw.Padding(
+                //         padding: pw.EdgeInsets.symmetric(vertical: 10),
+                //         child: pw.Stack(
+                //           overflow: pw.Overflow.visible,
+                //           alignment: pw.Alignment.center,
+                //           children: [
+                //             pw.Column(
+                //               crossAxisAlignment: pw.CrossAxisAlignment.stretch,
+                //               children: pdfImages,
+                //             ),
+                //             // pw.Positioned(
+                //             //   top: -20,
+                //             //   child: PdfWidgets().pdfAddressContainer(
+                //             //       text: '${property.city} '),
+                //             // ),
+                //             // pw.Positioned(
+                //             //   top: -20,
+                //             //   child: PdfWidgets().pdfAddressContainer(
+                //             //       text: property.propertyFor == 'Sell'
+                //             //           ? '${property.formatPrice} PHP'
+                //             //           : '${property.formatPrice} PHP /${property.timePeriod}'),
+                //             // ),
+                //             // pw.Positioned(
+                //             //   bottom: -18,
+                //             //   child: PdfWidgets()
+                //             //       .pdfPriceContainer(price: property.price!),
+                //             // )
+                //           ],
+                //         ),
+                //       ),
+                //     ),
+                //     //*===== Pdf Property Photos Column [end]
+                //   ],
+                // ),
               ],
             ),
           ),
         ],
         //*===== Pdf Property Footer [start]
         footer: (pw.Context context) {
-          return pw.Row(children: [
-            pw.Expanded(
-              flex: 2,
-              child: pw.Image(
-                pw.MemoryImage(image),
-                height: 40,
+          return pw.Column(
+            // crossAxisAlignment: pw.CrossAxisAlignment.stretch,
+            children: [
+              pw.Divider(
+                color: PdfColor.fromHex('#9aa0a6'),
+                thickness: .5,
+                height: 0,
               ),
-            ),
-            pw.Expanded(
-              flex: 5,
-              child: pw.Container(
-                alignment: pw.Alignment.centerRight,
-                margin: pw.EdgeInsets.only(top: 1 * PdfPageFormat.cm),
-                child: pw.Column(
-                  crossAxisAlignment: pw.CrossAxisAlignment.end,
-                  children: [
-                    PdfWidgets().pdfCustomRichText(
-                      mainText: 'Selling Agent: ',
-                      valueText: currentUser.displayName,
-                    ),
-                    pw.Row(
-                        mainAxisAlignment: pw.MainAxisAlignment.end,
+              pw.Row(
+                children: [
+                  pw.Expanded(
+                    flex: 5,
+                    child: pw.Container(
+                      padding: pw.EdgeInsets.only(top: 10),
+                      child: pw.Column(
                         children: [
-                          pw.Icon(pw.IconData(0xe0cd), size: 13),
+                          pw.Center(
+                            child: pw.ClipRRect(
+                              verticalRadius: 5,
+                              horizontalRadius: 5,
+                              child: pw.Image(
+                                userProfilePic,
+                                height: 80,
+                                width: 80,
+                                fit: pw.BoxFit.cover,
+                              ),
+                            ),
+                          ),
+                          pw.SizedBox(height: 5),
                           PdfWidgets().pdfCustomText(
-                              text: ' ${currentUser.mobileNumber}')
-                        ]),
-                    pw.Row(
-                        mainAxisAlignment: pw.MainAxisAlignment.end,
-                        children: [
-                          pw.Icon(pw.IconData(0xe0be), size: 13),
-                          PdfWidgets()
-                              .pdfCustomText(text: ' ${currentUser.email}')
-                        ]),
-                  ],
-                ),
+                            text: currentUser.displayName,
+                            fontSize: 18,
+                            textAlign: pw.TextAlign.center,
+                            fontWeight: pw.FontWeight.bold,
+                          ),
+                          pw.SizedBox(height: 5),
+                          pw.Row(
+                              mainAxisAlignment: pw.MainAxisAlignment.center,
+                              children: [
+                                pw.Icon(pw.IconData(0xe0cd), size: 13),
+                                pw.SizedBox(
+                                  width: 5,
+                                ),
+                                PdfWidgets().pdfCustomText(
+                                    text: currentUser.displayMobileNumber !=
+                                            null
+                                        ? '${currentUser.displayMobileNumber}'
+                                        : '${currentUser.mobileNumber}')
+                              ]),
+                          pw.SizedBox(height: 5),
+                          pw.Row(
+                              mainAxisAlignment: pw.MainAxisAlignment.center,
+                              children: [
+                                pw.Icon(pw.IconData(0xe0be), size: 13),
+                                PdfWidgets().pdfCustomText(
+                                    text: currentUser.displayEmail != null
+                                        ? '${currentUser.displayEmail}'
+                                        : '${currentUser.email}')
+                              ]),
+                        ],
+                      ),
+                    ),
+                  ),
+                  pw.Expanded(
+                      flex: 5,
+                      child: pw.Container(
+                        padding: pw.EdgeInsets.only(top: 10, left: 15),
+                        decoration: pw.BoxDecoration(
+                          border: pw.Border(
+                            left: pw.BorderSide(
+                              width: .5,
+                              color: PdfColor.fromHex('#9aa0a6'),
+                            ),
+                          ),
+                        ),
+                        child: pw.Column(
+                          // crossAxisAlignment: pw.CrossAxisAlignment.start,
+                          mainAxisAlignment: pw.MainAxisAlignment.start,
+                          crossAxisAlignment: pw.CrossAxisAlignment.start,
+                          mainAxisSize: pw.MainAxisSize.min,
+                          children: [
+                            PdfWidgets().pdfCustomRichText(
+                                mainText: 'REB PRC License No: ',
+                                valueText: '0007756'),
+                            pw.SizedBox(height: 1),
+                            PdfWidgets().pdfCustomRichText(
+                                mainText: 'REB PRC ID No: ',
+                                valueText: '20-3990078'),
+                            pw.SizedBox(height: 1),
+                            PdfWidgets().pdfCustomRichText(
+                                mainText: 'Valid Until: ',
+                                valueText: '08/01/2024'),
+                            pw.SizedBox(height: 1),
+                            PdfWidgets().pdfCustomRichText(
+                                mainText: 'REB PTR No:',
+                                valueText: '111111111'),
+                            pw.SizedBox(height: 1),
+                            PdfWidgets().pdfCustomRichText(
+                                mainText: 'Valid Until: ',
+                                valueText: '08/01/2024'),
+                            pw.SizedBox(height: 1),
+                            PdfWidgets().pdfCustomRichText(
+                                mainText: 'DHSUD No: ', valueText: '111111111'),
+                            pw.SizedBox(height: 1),
+                            PdfWidgets().pdfCustomRichText(
+                                mainText: 'Valid Until: ',
+                                valueText: '08/01/2024'),
+                            pw.SizedBox(height: 1),
+                            PdfWidgets().pdfCustomRichText(
+                              mainText: 'AIPO No: ',
+                              valueText: '111111111',
+                            ),
+                            pw.SizedBox(height: 1),
+                            PdfWidgets().pdfCustomRichText(
+                                mainText: 'Valid Until: ',
+                                valueText: '08/01/2024'),
+                            pw.SizedBox(height: 1),
+                          ],
+                        ),
+                      )),
+                ],
               ),
-            ),
-          ]);
+              pw.SizedBox(
+                height: 10,
+              ),
+              pw.Row(
+                mainAxisAlignment: pw.MainAxisAlignment.end,
+                crossAxisAlignment: pw.CrossAxisAlignment.center,
+                children: [
+                  pw.Image(
+                    pw.MemoryImage(dazleLogo),
+                    height: 20,
+                  ),
+                  pw.SizedBox(width: 10),
+                  pw.Container(
+                    alignment: pw.Alignment.centerRight,
+                    child: PdfWidgets().pdfCustomText(
+                        textColor: PdfWidgets().hintColor,
+                        text:
+                            'Page ${context.pageNumber} of ${context.pagesCount}'),
+                  ),
+                ],
+              ),
+            ],
+          );
         },
         //*===== Pdf Property Footer [start]
       ),
     );
 
-    if (property.coordinates != null) {
-      //Adding google map Image
-      pdf.addPage(
-        pw.MultiPage(
-          theme: pw.ThemeData.withFont(
-            icons: await PdfGoogleFonts.materialIcons(),
-          ),
-          pageFormat: PdfPageFormat.a4,
-          build: (pw.Context context) => <pw.Widget>[
-            pw.Container(
-              child: pw.Column(
-                crossAxisAlignment: pw.CrossAxisAlignment.start,
-                children: [
-                  //*======== PDF Title [start]
-                  PdfWidgets().pdfCustomRichText(
-                    mainText: 'Map Location:',
-                    valueText: '',
-                  ),
-                  pw.SizedBox(height: 10),
-                  mapImage,
-                ],
-              ),
-            ),
-          ],
-          //*===== Pdf Property Footer [start]
-          footer: (pw.Context context) {
-            return pw.Row(children: [
-              pw.Expanded(
-                flex: 2,
-                child: pw.Image(
-                  pw.MemoryImage(image),
-                  height: 40,
-                ),
-              ),
-              pw.Expanded(
-                flex: 5,
-                child: pw.Container(
-                  alignment: pw.Alignment.centerRight,
-                  margin: pw.EdgeInsets.only(top: 1 * PdfPageFormat.cm),
-                  child: pw.Column(
-                    crossAxisAlignment: pw.CrossAxisAlignment.end,
-                    children: [
-                      PdfWidgets().pdfCustomRichText(
-                        mainText: 'Selling Agent: ',
-                        valueText: currentUser.displayName,
-                      ),
-                      pw.Row(
-                          mainAxisAlignment: pw.MainAxisAlignment.end,
-                          children: [
-                            pw.Icon(pw.IconData(0xe0cd), size: 13),
-                            PdfWidgets().pdfCustomText(
-                                text: ' ${currentUser.mobileNumber}')
-                          ]),
-                      pw.Row(
-                          mainAxisAlignment: pw.MainAxisAlignment.end,
-                          children: [
-                            pw.Icon(pw.IconData(0xe0be), size: 13),
-                            PdfWidgets()
-                                .pdfCustomText(text: ' ${currentUser.email}')
-                          ]),
-                    ],
-                  ),
-                ),
-              ),
-            ]);
-          },
-          //*===== Pdf Property Footer [End]
-        ),
-      );
-    }
+    // if (property.coordinates != null) {
+    //   //Adding google map Image
+    //   pdf.addPage(
+    //     pw.MultiPage(
+    //       theme: pw.ThemeData.withFont(
+    //         icons: await PdfGoogleFonts.materialIcons(),
+    //       ),
+    //       pageFormat: PdfPageFormat.a4,
+    //       build: (pw.Context context) => <pw.Widget>[
+    //         pw.Container(
+    //           child: pw.Column(
+    //             crossAxisAlignment: pw.CrossAxisAlignment.start,
+    //             children: [
+    //               //*======== PDF Title [start]
+    //               PdfWidgets().pdfCustomRichText(
+    //                 mainText: 'Map Location:',
+    //                 valueText: '',
+    //               ),
+    //               pw.SizedBox(height: 10),
+    //               mapImage,
+    //             ],
+    //           ),
+    //         ),
+    //       ],
+    //       //*===== Pdf Property Footer [start]
+    //       footer: (pw.Context context) {
+    //         return pw.Row(children: [
+    //           pw.Expanded(
+    //             flex: 2,
+    //             child: pw.Image(
+    //               pw.MemoryImage(image),
+    //               height: 40,
+    //             ),
+    //           ),
+    //           pw.Expanded(
+    //             flex: 5,
+    //             child: pw.Container(
+    //               alignment: pw.Alignment.centerRight,
+    //               margin: pw.EdgeInsets.only(top: 1 * PdfPageFormat.cm),
+    //               child: pw.Column(
+    //                 crossAxisAlignment: pw.CrossAxisAlignment.end,
+    //                 children: [
+    //                   PdfWidgets().pdfCustomRichText(
+    //                     mainText: 'Selling Agent: ',
+    //                     valueText: currentUser.displayName,
+    //                   ),
+    //                   pw.Row(
+    //                       mainAxisAlignment: pw.MainAxisAlignment.end,
+    //                       children: [
+    //                         pw.Icon(pw.IconData(0xe0cd), size: 13),
+    //                         PdfWidgets().pdfCustomText(
+    //                             text: ' ${currentUser.mobileNumber}')
+    //                       ]),
+    //                   pw.Row(
+    //                       mainAxisAlignment: pw.MainAxisAlignment.end,
+    //                       children: [
+    //                         pw.Icon(pw.IconData(0xe0be), size: 13),
+    //                         PdfWidgets()
+    //                             .pdfCustomText(text: ' ${currentUser.email}')
+    //                       ]),
+    //                 ],
+    //               ),
+    //             ),
+    //           ),
+    //         ]);
+    //       },
+    //       //*===== Pdf Property Footer [End]
+    //     ),
+    //   );
+    // }
     return pdf;
   }
 
@@ -365,7 +660,7 @@ class PdfGenerator {
         child: pw.Image(
           pw.MemoryImage(await imageConverter(mapLink)),
           // fit: pw.BoxFit.cover,
-          height: 400,
+          height: 200,
         ),
       ),
     );
@@ -431,6 +726,196 @@ class PdfGenerator {
     return filePath;
   }
 
+  Future<pw.Widget> pdfCoverPhoto(List photos) async {
+    return pw.Container(
+      // margin: pw.EdgeInsets.fromLTRB(5, 0, 5, 5),
+      child: pw.ClipRRect(
+        // horizontalRadius: 5.0,
+        // verticalRadius: 5.0,
+        child: pw.Image(
+          pw.MemoryImage(await imageConverter(photos[0])),
+          fit: pw.BoxFit.cover,
+          height: 200,
+        ),
+      ),
+    );
+  }
+
+  Future<pw.Widget> pdfRowImages(List photos, double imgHeight) async {
+    return pw.Column(
+        crossAxisAlignment: pw.CrossAxisAlignment.start,
+        children: [
+          PdfWidgets().pdfCustomText(
+              text: "Listing Photos",
+              textAlign: pw.TextAlign.left,
+              fontSize: 20,
+              fontWeight: pw.FontWeight.bold),
+          // Row 1 of images
+          photos.length > 1
+              ? pw.Row(children: [
+                  pw.Expanded(
+                    flex: 1,
+                    child: pw.Container(
+                      margin: pw.EdgeInsets.fromLTRB(5, 5, 5, 5),
+                      child: pw.ClipRRect(
+                        horizontalRadius: 5.0,
+                        verticalRadius: 5.0,
+                        child: pw.Image(
+                          pw.MemoryImage(await imageConverter(photos[1])),
+                          fit: pw.BoxFit.cover,
+                          height: imgHeight,
+                        ),
+                      ),
+                    ),
+                  ),
+                  photos.length >= 3
+                      ? pw.Expanded(
+                          flex: 1,
+                          child: pw.Container(
+                            margin: pw.EdgeInsets.fromLTRB(5, 5, 5, 5),
+                            child: pw.ClipRRect(
+                              horizontalRadius: 5.0,
+                              verticalRadius: 5.0,
+                              child: pw.Image(
+                                pw.MemoryImage(await imageConverter(photos[2])),
+                                fit: pw.BoxFit.cover,
+                                height: imgHeight,
+                              ),
+                            ),
+                          ),
+                        )
+                      : pw.Container(),
+                  // : pw.Expanded(flex: 1, child: pw.Container()),
+                  photos.length >= 4
+                      ? pw.Expanded(
+                          flex: 1,
+                          child: pw.Container(
+                            margin: pw.EdgeInsets.fromLTRB(5, 5, 5, 5),
+                            child: pw.ClipRRect(
+                              horizontalRadius: 5.0,
+                              verticalRadius: 5.0,
+                              child: pw.Image(
+                                pw.MemoryImage(await imageConverter(photos[3])),
+                                fit: pw.BoxFit.cover,
+                                height: imgHeight,
+                              ),
+                            ),
+                          ),
+                        )
+                      : pw.Expanded(flex: 1, child: pw.Container()),
+                ])
+              : pw.Expanded(flex: 1, child: pw.Container()),
+          // 2nd row of images
+          photos.length > 4
+              ? pw.Row(children: [
+                  pw.Expanded(
+                    flex: 1,
+                    child: pw.Container(
+                      margin: pw.EdgeInsets.fromLTRB(5, 5, 5, 5),
+                      child: pw.ClipRRect(
+                        horizontalRadius: 5.0,
+                        verticalRadius: 5.0,
+                        child: pw.Image(
+                          pw.MemoryImage(await imageConverter(photos[4])),
+                          fit: pw.BoxFit.cover,
+                          height: imgHeight,
+                        ),
+                      ),
+                    ),
+                  ),
+                  photos.length >= 6
+                      ? pw.Expanded(
+                          flex: 1,
+                          child: pw.Container(
+                            margin: pw.EdgeInsets.fromLTRB(5, 5, 5, 5),
+                            child: pw.ClipRRect(
+                              horizontalRadius: 5.0,
+                              verticalRadius: 5.0,
+                              child: pw.Image(
+                                pw.MemoryImage(await imageConverter(photos[5])),
+                                fit: pw.BoxFit.cover,
+                                height: imgHeight,
+                              ),
+                            ),
+                          ),
+                        )
+                      : pw.Expanded(flex: 1, child: pw.Container()),
+                  photos.length >= 7
+                      ? pw.Expanded(
+                          flex: 1,
+                          child: pw.Container(
+                            margin: pw.EdgeInsets.fromLTRB(5, 5, 5, 5),
+                            child: pw.ClipRRect(
+                              horizontalRadius: 5.0,
+                              verticalRadius: 5.0,
+                              child: pw.Image(
+                                pw.MemoryImage(await imageConverter(photos[6])),
+                                fit: pw.BoxFit.cover,
+                                height: imgHeight,
+                              ),
+                            ),
+                          ),
+                        )
+                      : pw.Expanded(flex: 1, child: pw.Container()),
+                ])
+              : pw.Container(),
+          // 3rd row of images
+          photos.length > 7
+              ? pw.Row(children: [
+                  pw.Expanded(
+                    flex: 1,
+                    child: pw.Container(
+                      margin: pw.EdgeInsets.fromLTRB(5, 5, 5, 5),
+                      child: pw.ClipRRect(
+                        horizontalRadius: 5.0,
+                        verticalRadius: 5.0,
+                        child: pw.Image(
+                          pw.MemoryImage(await imageConverter(photos[7])),
+                          fit: pw.BoxFit.cover,
+                          height: imgHeight,
+                        ),
+                      ),
+                    ),
+                  ),
+                  photos.length >= 9
+                      ? pw.Expanded(
+                          flex: 1,
+                          child: pw.Container(
+                            margin: pw.EdgeInsets.fromLTRB(5, 5, 5, 5),
+                            child: pw.ClipRRect(
+                              horizontalRadius: 5.0,
+                              verticalRadius: 5.0,
+                              child: pw.Image(
+                                pw.MemoryImage(await imageConverter(photos[8])),
+                                fit: pw.BoxFit.cover,
+                                height: imgHeight,
+                              ),
+                            ),
+                          ),
+                        )
+                      : pw.Expanded(flex: 1, child: pw.Container()),
+                  photos.length >= 10
+                      ? pw.Expanded(
+                          flex: 1,
+                          child: pw.Container(
+                            margin: pw.EdgeInsets.fromLTRB(5, 5, 5, 5),
+                            child: pw.ClipRRect(
+                              horizontalRadius: 5.0,
+                              verticalRadius: 5.0,
+                              child: pw.Image(
+                                pw.MemoryImage(await imageConverter(photos[9])),
+                                fit: pw.BoxFit.cover,
+                                height: imgHeight,
+                              ),
+                            ),
+                          ),
+                        )
+                      : pw.Expanded(flex: 1, child: pw.Container()),
+                ])
+              : pw.Container(),
+        ]);
+  }
+
   /// Takes the List of links(of the photos) from the
   /// Property Object and returns a List<pw.Widget> to be
   /// inserted in the 2nd column of the pdf.
@@ -441,7 +926,7 @@ class PdfGenerator {
     //* First/cover image
     pdfImages.add(
       pw.Container(
-        margin: pw.EdgeInsets.fromLTRB(5, 0, 5, 5),
+        margin: pw.EdgeInsets.fromLTRB(5, 5, 5, 5),
         child: pw.ClipRRect(
           horizontalRadius: 5.0,
           verticalRadius: 5.0,
