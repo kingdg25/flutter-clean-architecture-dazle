@@ -231,34 +231,38 @@ class EditProfileController extends Controller {
       aipoDate = DateTime.parse(user.licenseDetails["AIPO Date"]);
       aipoDateTextController.text = customDateFormat1.format(aipoDate!);
 
-      brokerFirstNameTextController.text =
-          user.licenseDetails["Broker First Name"];
-      brokerLastNameTextController.text =
-          user.licenseDetails["Broker Last Name"];
+      if (user.position == "Salesperson") {
+        brokerFirstNameTextController.text =
+            user.licenseDetails["Broker First Name"];
+        brokerLastNameTextController.text =
+            user.licenseDetails["Broker Last Name"];
 
-      salesResAccNumTextController.text =
-          user.licenseDetails["Sales RES Accreditation No."];
-      salesResIdNumTextController.text =
-          user.licenseDetails["Sales RES PRC Id No."];
+        salesResAccNumTextController.text =
+            user.licenseDetails["Sales RES Accreditation No."];
+        salesResIdNumTextController.text =
+            user.licenseDetails["Sales RES PRC Id No."];
 
-      salesResDate = DateTime.parse(user.licenseDetails["Sales RES PRC Date"]);
-      salesResDateTextController.text =
-          salesResDate == null ? '' : customDateFormat1.format(salesResDate!);
+        salesResDate =
+            DateTime.parse(user.licenseDetails["Sales RES PRC Date"]);
+        salesResDateTextController.text =
+            salesResDate == null ? '' : customDateFormat1.format(salesResDate!);
 
-      salesRebPTRNumTextController.text =
-          user.licenseDetails["Sales REB PTR No."];
+        salesRebPTRNumTextController.text =
+            user.licenseDetails["Sales REB PTR No."];
 
-      salesRebPtrDate =
-          DateTime.parse(user.licenseDetails["Sales REB PTR Date"]);
-      salesRebPtrDateTextController.text = salesRebPtrDate == null
-          ? ''
-          : customDateFormat2.format(salesRebPtrDate!);
+        salesRebPtrDate =
+            DateTime.parse(user.licenseDetails["Sales REB PTR Date"]);
+        salesRebPtrDateTextController.text = salesRebPtrDate == null
+            ? ''
+            : customDateFormat2.format(salesRebPtrDate!);
 
-      salesAipoNumTextController.text = user.licenseDetails["Sales AIPO No."];
+        salesAipoNumTextController.text = user.licenseDetails["Sales AIPO No."];
 
-      salesAipoDate = DateTime.parse(user.licenseDetails["Sales AIPO Date"]);
-      salesAipoDateTextController.text =
-          salesAipoDate == null ? '' : customDateFormat1.format(salesAipoDate!);
+        salesAipoDate = DateTime.parse(user.licenseDetails["Sales AIPO Date"]);
+        salesAipoDateTextController.text = salesAipoDate == null
+            ? ''
+            : customDateFormat1.format(salesAipoDate!);
+      }
     }
 
     print('BROKER: ${user.brokerLicenseNumber}');
@@ -313,13 +317,15 @@ class EditProfileController extends Controller {
           position: _user!.position,
           isNewUser: false);
     } else {
+      //
       updatedUser = User(
+          // formSaving == "Business Information"
           //retain value
           id: _user!.id,
           firstName: _user!.firstName,
           lastName: _user!.lastName,
           aboutMe: _user!.aboutMe,
-          profilePicture: user?.profilePicture,
+          profilePicture: _user?.profilePicture,
           brokerLicenseNumber: _user!.brokerLicenseNumber,
           licenseDetails: _user!.licenseDetails,
 
@@ -371,6 +377,7 @@ class EditProfileController extends Controller {
 
     editProfilePresenter.updateUser(
         user: updatedUser, profilePicture: profilePicturePath);
+    getCurrentUser();
   }
 
   _statusDialog(String title, String text,

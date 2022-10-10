@@ -43,14 +43,14 @@ class PdfWidgets {
             style: pw.TextStyle(
               color: mainTextColor,
               fontWeight: pw.FontWeight.bold,
-              fontSize: 13,
+              fontSize: fontSize ?? 13,
             ),
           ),
           pw.TextSpan(
             text: valueText,
             style: pw.TextStyle(
               color: mainTextColor,
-              fontSize: 13,
+              fontSize: fontSize ?? 13,
             ),
           ),
         ],

@@ -3,6 +3,7 @@ import 'dart:typed_data';
 
 import 'package:dazle/domain/entities/user.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:intl/intl.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:flutter/services.dart';
@@ -46,6 +47,9 @@ class PdfGenerator {
           pw.MemoryImage(await imageConverter(currentUser.profilePicture!));
     }
 
+    final customDateFormat1 = new DateFormat('MM/dd/yyyy');
+    final customDateFormat2 = new DateFormat('MMM yyyy');
+
     Map<dynamic, dynamic>? mapCoordinates = {};
     double? latitude;
     double? longitude;
@@ -73,7 +77,7 @@ class PdfGenerator {
             child: pw.Column(
               crossAxisAlignment: pw.CrossAxisAlignment.start,
               children: [
-                //*======== PDF Title [start]
+                //*============================================================= PDF Title [START]
                 pw.Container(
                   decoration: pw.BoxDecoration(
                     borderRadius: pw.BorderRadius.circular(10),
@@ -116,7 +120,9 @@ class PdfGenerator {
                 ),
                 pw.SizedBox(height: 30),
                 coverPhoto,
-                //*======== PDF Title [end]
+                //*============================================================= PDF Title [END]
+                //***************
+                //*============================================================= Listing Details [START]
                 pw.SizedBox(height: 5),
                 pw.Column(
                   crossAxisAlignment: pw.CrossAxisAlignment.start,
@@ -235,16 +241,21 @@ class PdfGenerator {
                         : pw.Container(),
                   ],
                 ),
-
+                //*============================================================= Listing Details [END]
+                //***************
+                //*============================================================= Listing Images [START]
                 property.photos!.length > 1 ? listingImages : pw.Container(),
                 pw.SizedBox(height: 20),
+                //*============================================================= Listing Images [END]
+                //***************
+                //*============================================================= Listing Map Location [START]
                 property.coordinates == null
                     ? pw.Container()
                     : pw.Container(
                         child: pw.Column(
                           crossAxisAlignment: pw.CrossAxisAlignment.start,
                           children: [
-                            //*======== PDF Title [start]
+                            //*---------- PDF Title [start]
                             PdfWidgets().pdfCustomRichText(
                               mainText: 'Map Location:',
                               valueText: '',
@@ -256,183 +267,17 @@ class PdfGenerator {
                           ],
                         ),
                       ),
-                // pw.Row(
-                //   crossAxisAlignment: pw.CrossAxisAlignment.start,
-                //   children: [
-                //     pw.Expanded(
-                //       flex: 4,
-                //       //*===== Pdf Property Details Column [start]
-                //       child: pw.Column(
-                //         crossAxisAlignment: pw.CrossAxisAlignment.start,
-                //         children: [
-                //           pw.SizedBox(
-                //             height: 10,
-                //           ),
-                //           PdfWidgets().pdfCustomRichText(
-                //             mainText: 'Property Type: ',
-                //             valueText: property.propertyType,
-                //           ),
-                //           pw.SizedBox(
-                //             height: 10,
-                //           ),
-                //           PdfWidgets().pdfCustomRichText(
-                //             mainText: 'Property for: ',
-                //             valueText: property.propertyFor,
-                //           ),
-                //           pw.SizedBox(
-                //             height: 10,
-                //           ),
-                //           PdfWidgets().pdfCustomRichText(
-                //             mainText: 'Lot area (sqm): ',
-                //             valueText: property.formatArea,
-                //           ),
-                //           property.floorArea == 0
-                //               ? pw.Container()
-                //               : pw.SizedBox(
-                //                   height: 10,
-                //                 ),
-                //           property.floorArea == 0
-                //               ? pw.Container()
-                //               : PdfWidgets().pdfCustomRichText(
-                //                   mainText: 'Floor area (sqm): ',
-                //                   valueText: '${property.formatFloorArea}',
-                //                 ),
-                //           property.frontageArea == 0
-                //               ? pw.Container()
-                //               : pw.SizedBox(
-                //                   height: 10,
-                //                 ),
-                //           property.frontageArea == 0
-                //               ? pw.Container()
-                //               : PdfWidgets().pdfCustomRichText(
-                //                   mainText: 'Frontage (meters): ',
-                //                   valueText: '${property.formatFrontageArea}',
-                //                 ),
-                //           pw.SizedBox(
-                //             height: 10,
-                //           ),
-                //           // PdfWidgets().pdfCustomRichText(
-                //           //   mainText: 'Location: ',
-                //           //   valueText: '${property.visibilityAddress}',
-                //           // ),
-                //           pw.SizedBox(
-                //             height: 10,
-                //           ),
-                //           PdfWidgets().pdfCustomRichText(
-                //             mainText: 'Property Description: ',
-                //             valueText: property.description,
-                //           ),
-                //           property.isYourProperty == null ||
-                //                   property.isYourProperty == ''
-                //               ? pw.Container()
-                //               : pw.SizedBox(
-                //                   height: 10,
-                //                 ),
-                //           property.isYourProperty == null ||
-                //                   property.isYourProperty == ''
-                //               ? pw.Container()
-                //               : PdfWidgets().pdfCustomRichText(
-                //                   mainText: 'Property: ',
-                //                   valueText: property.isYourProperty,
-                //                 ),
-                //           property.propertyType!.contains('Lot') ||
-                //                   property.propertyType!.contains('Building')
-                //               ? pw.Container()
-                //               : pw.SizedBox(
-                //                   height: 10,
-                //                 ),
-                //           property.propertyType!.contains('Lot') ||
-                //                   property.propertyType!.contains('Building')
-                //               ? pw.Container()
-                //               : PdfWidgets().pdfCustomRichText(
-                //                   mainText: 'No. of bedrooms: ',
-                //                   valueText: '${property.totalBedRoom}',
-                //                 ),
-                //           property.propertyType!.contains('Lot') ||
-                //                   property.propertyType!.contains('Building')
-                //               ? pw.Container()
-                //               : pw.SizedBox(
-                //                   height: 10,
-                //                 ),
-                //           property.propertyType!.contains('Lot') ||
-                //                   property.propertyType!.contains('Building')
-                //               ? pw.Container()
-                //               : PdfWidgets().pdfCustomRichText(
-                //                   mainText: 'No. of bathrooms: ',
-                //                   valueText: '${property.totalBathRoom}',
-                //                 ),
-                //           pw.SizedBox(
-                //             height: 10,
-                //           ),
-                //           PdfWidgets().pdfCustomRichText(
-                //             mainText: 'No. of parking spots: ',
-                //             valueText: property.totalParkingSpace,
-                //           ),
-                //           pw.SizedBox(
-                //             height: 10,
-                //           ),
-                //           PdfWidgets().pdfCustomRichText(
-                //             mainText: 'Features and amenities: ',
-                //             valueText: property.amenities!.join(", "),
-                //           ),
-                //           property.coordinates == null
-                //               ? PdfWidgets().pdfCustomRichText(
-                //                   mainText: 'Map Location:',
-                //                   valueText: 'No Map Location provided.',
-                //                 )
-                //               : pw.Container(),
-                //         ],
-                //       ),
-                //     ),
-                //     //*===== Pdf Property Details Column [end]
-
-                //     //------------------------------------------------------
-
-                //     //*===== Pdf Property Photos Column [start]
-                //     pw.Expanded(
-                //       flex: 6,
-                //       child: pw.Padding(
-                //         padding: pw.EdgeInsets.symmetric(vertical: 10),
-                //         child: pw.Stack(
-                //           overflow: pw.Overflow.visible,
-                //           alignment: pw.Alignment.center,
-                //           children: [
-                //             pw.Column(
-                //               crossAxisAlignment: pw.CrossAxisAlignment.stretch,
-                //               children: pdfImages,
-                //             ),
-                //             // pw.Positioned(
-                //             //   top: -20,
-                //             //   child: PdfWidgets().pdfAddressContainer(
-                //             //       text: '${property.city} '),
-                //             // ),
-                //             // pw.Positioned(
-                //             //   top: -20,
-                //             //   child: PdfWidgets().pdfAddressContainer(
-                //             //       text: property.propertyFor == 'Sell'
-                //             //           ? '${property.formatPrice} PHP'
-                //             //           : '${property.formatPrice} PHP /${property.timePeriod}'),
-                //             // ),
-                //             // pw.Positioned(
-                //             //   bottom: -18,
-                //             //   child: PdfWidgets()
-                //             //       .pdfPriceContainer(price: property.price!),
-                //             // )
-                //           ],
-                //         ),
-                //       ),
-                //     ),
-                //     //*===== Pdf Property Photos Column [end]
-                //   ],
-                // ),
               ],
             ),
           ),
         ],
-        //*===== Pdf Property Footer [start]
+        //*===================================================================== Listing Images [END]
+        //***************
+        //*===================================================================== PDF Footer [START]
         footer: (pw.Context context) {
           return pw.Column(
             // crossAxisAlignment: pw.CrossAxisAlignment.stretch,
+            mainAxisAlignment: pw.MainAxisAlignment.start,
             children: [
               pw.Divider(
                 color: PdfColor.fromHex('#9aa0a6'),
@@ -441,11 +286,21 @@ class PdfGenerator {
               ),
               pw.Row(
                 children: [
+                  //* ================= Broker Contact Details [START]
                   pw.Expanded(
-                    flex: 5,
+                    flex: 4,
                     child: pw.Container(
                       padding: pw.EdgeInsets.only(top: 10),
+                      decoration: pw.BoxDecoration(
+                        border: pw.Border(
+                          right: pw.BorderSide(
+                            width: .5,
+                            color: PdfColor.fromHex('#9aa0a6'),
+                          ),
+                        ),
+                      ),
                       child: pw.Column(
+                        mainAxisAlignment: pw.MainAxisAlignment.start,
                         children: [
                           pw.Center(
                             child: pw.ClipRRect(
@@ -453,104 +308,217 @@ class PdfGenerator {
                               horizontalRadius: 5,
                               child: pw.Image(
                                 userProfilePic,
-                                height: 80,
-                                width: 80,
+                                height: 65,
+                                width: 65,
                                 fit: pw.BoxFit.cover,
                               ),
                             ),
                           ),
-                          pw.SizedBox(height: 5),
+                          pw.SizedBox(height: 2),
                           PdfWidgets().pdfCustomText(
                             text: currentUser.displayName,
-                            fontSize: 18,
+                            fontSize: 11,
                             textAlign: pw.TextAlign.center,
                             fontWeight: pw.FontWeight.bold,
                           ),
-                          pw.SizedBox(height: 5),
-                          pw.Row(
-                              mainAxisAlignment: pw.MainAxisAlignment.center,
-                              children: [
-                                pw.Icon(pw.IconData(0xe0cd), size: 13),
-                                pw.SizedBox(
-                                  width: 5,
-                                ),
-                                PdfWidgets().pdfCustomText(
-                                    text: currentUser.displayMobileNumber !=
-                                            null
-                                        ? '${currentUser.displayMobileNumber}'
-                                        : '${currentUser.mobileNumber}')
-                              ]),
-                          pw.SizedBox(height: 5),
-                          pw.Row(
-                              mainAxisAlignment: pw.MainAxisAlignment.center,
-                              children: [
-                                pw.Icon(pw.IconData(0xe0be), size: 13),
-                                PdfWidgets().pdfCustomText(
-                                    text: currentUser.displayEmail != null
-                                        ? '${currentUser.displayEmail}'
-                                        : '${currentUser.email}')
-                              ]),
+                          pw.SizedBox(height: 2),
+                          PdfWidgets().pdfCustomText(
+                            text: currentUser.position!,
+                            fontSize: 10,
+                            textAlign: pw.TextAlign.center,
+                            fontWeight: pw.FontWeight.bold,
+                          ),
+                          pw.SizedBox(height: 2),
+                          PdfWidgets().pdfCustomText(
+                              text: '${currentUser.mobileNumber}',
+                              fontSize: 10),
+                          pw.SizedBox(height: 2),
+                          PdfWidgets().pdfCustomText(
+                              text: currentUser.displayEmail != null
+                                  ? '${currentUser.displayEmail}'
+                                  : '${currentUser.email}',
+                              fontSize: 10),
+
+                          // pw.Row(
+                          //     mainAxisAlignment: pw.MainAxisAlignment.center,
+                          //     children: [
+                          //       pw.Icon(pw.IconData(0xe0cd), size: 13),
+                          //       pw.SizedBox(
+                          //         width: 5,
+                          //       ),
+                          //       PdfWidgets().pdfCustomText(
+                          //           text: currentUser.displayMobileNumber !=
+                          //                   null
+                          //               ? '${currentUser.displayMobileNumber}'
+                          //               : '${currentUser.mobileNumber}')
+                          //     ]),
+                          // pw.SizedBox(height: 5),
+                          // pw.Row(
+                          //     mainAxisAlignment: pw.MainAxisAlignment.center,
+                          //     children: [
+                          //       pw.Icon(pw.IconData(0xe0be), size: 13),
+                          //       PdfWidgets().pdfCustomText(
+                          //           text: currentUser.displayEmail != null
+                          //               ? '${currentUser.displayEmail}'
+                          //               : '${currentUser.email}')
+                          //     ]),
                         ],
                       ),
                     ),
                   ),
-                  pw.Expanded(
-                      flex: 5,
-                      child: pw.Container(
-                        padding: pw.EdgeInsets.only(top: 10, left: 15),
-                        decoration: pw.BoxDecoration(
-                          border: pw.Border(
-                            left: pw.BorderSide(
-                              width: .5,
-                              color: PdfColor.fromHex('#9aa0a6'),
+                  //* ================= Broker Contact Details [END]
+                  // **********
+                  //* ================= Salesperson licence Details [START]
+                  currentUser.position != 'Salesperson'
+                      ? pw.Container()
+                      : pw.Expanded(
+                          flex: 5,
+                          child: pw.Container(
+                            padding: pw.EdgeInsets.only(top: 10, left: 15),
+                            child: pw.Column(
+                              // crossAxisAlignment: pw.CrossAxisAlignment.start,
+                              mainAxisAlignment: pw.MainAxisAlignment.start,
+                              crossAxisAlignment: pw.CrossAxisAlignment.start,
+                              mainAxisSize: pw.MainAxisSize.min,
+                              children: [
+                                PdfWidgets().pdfCustomRichText(
+                                    mainText: 'RES Accreditation No: ',
+                                    fontSize: 10,
+                                    valueText: currentUser.licenseDetails[
+                                        "Sales RES Accreditation No."]),
+                                pw.SizedBox(height: 1),
+                                PdfWidgets().pdfCustomRichText(
+                                    mainText: 'RES PRC ID No: ',
+                                    fontSize: 10,
+                                    valueText: currentUser.licenseDetails[
+                                        "Sales RES PRC Id No."]),
+                                pw.SizedBox(height: 1),
+                                PdfWidgets().pdfCustomRichText(
+                                    mainText: 'Valid Until: ',
+                                    fontSize: 10,
+                                    valueText: customDateFormat1.format(
+                                        DateTime.parse(
+                                            currentUser.licenseDetails[
+                                                "Sales RES PRC Date"]))),
+                                pw.SizedBox(height: 1),
+                                PdfWidgets().pdfCustomRichText(
+                                    mainText: 'REB PTR No:',
+                                    fontSize: 10,
+                                    valueText: currentUser
+                                        .licenseDetails["Sales REB PTR No."]),
+                                pw.SizedBox(height: 1),
+                                PdfWidgets().pdfCustomRichText(
+                                    mainText: 'Valid Until: ',
+                                    fontSize: 10,
+                                    valueText: customDateFormat2.format(
+                                        DateTime.parse(
+                                            currentUser.licenseDetails[
+                                                "Sales REB PTR Date"]))),
+                                pw.SizedBox(height: 1),
+                                PdfWidgets().pdfCustomRichText(
+                                  mainText: 'AIPO No: ',
+                                  fontSize: 10,
+                                  valueText: currentUser
+                                      .licenseDetails["Sales AIPO No."],
+                                ),
+                                pw.SizedBox(height: 1),
+                                PdfWidgets().pdfCustomRichText(
+                                    mainText: 'Valid Until: ',
+                                    fontSize: 10,
+                                    valueText: customDateFormat1.format(
+                                        DateTime.parse(
+                                            currentUser.licenseDetails[
+                                                "Sales AIPO Date"]))),
+                                pw.SizedBox(height: 1),
+                              ],
                             ),
                           ),
                         ),
-                        child: pw.Column(
-                          // crossAxisAlignment: pw.CrossAxisAlignment.start,
-                          mainAxisAlignment: pw.MainAxisAlignment.start,
-                          crossAxisAlignment: pw.CrossAxisAlignment.start,
-                          mainAxisSize: pw.MainAxisSize.min,
-                          children: [
-                            PdfWidgets().pdfCustomRichText(
-                                mainText: 'REB PRC License No: ',
-                                valueText: '0007756'),
-                            pw.SizedBox(height: 1),
-                            PdfWidgets().pdfCustomRichText(
-                                mainText: 'REB PRC ID No: ',
-                                valueText: '20-3990078'),
-                            pw.SizedBox(height: 1),
-                            PdfWidgets().pdfCustomRichText(
-                                mainText: 'Valid Until: ',
-                                valueText: '08/01/2024'),
-                            pw.SizedBox(height: 1),
-                            PdfWidgets().pdfCustomRichText(
-                                mainText: 'REB PTR No:',
-                                valueText: '111111111'),
-                            pw.SizedBox(height: 1),
-                            PdfWidgets().pdfCustomRichText(
-                                mainText: 'Valid Until: ',
-                                valueText: '08/01/2024'),
-                            pw.SizedBox(height: 1),
-                            PdfWidgets().pdfCustomRichText(
-                                mainText: 'DHSUD No: ', valueText: '111111111'),
-                            pw.SizedBox(height: 1),
-                            PdfWidgets().pdfCustomRichText(
-                                mainText: 'Valid Until: ',
-                                valueText: '08/01/2024'),
-                            pw.SizedBox(height: 1),
-                            PdfWidgets().pdfCustomRichText(
-                              mainText: 'AIPO No: ',
-                              valueText: '111111111',
-                            ),
-                            pw.SizedBox(height: 1),
-                            PdfWidgets().pdfCustomRichText(
-                                mainText: 'Valid Until: ',
-                                valueText: '08/01/2024'),
-                            pw.SizedBox(height: 1),
-                          ],
-                        ),
-                      )),
+                  //* ================= Salesperson licence Details [END]
+                  // **********
+                  //* ================= Broker licence Details [START]
+                  pw.Expanded(
+                    flex: 5,
+                    child: pw.Container(
+                      padding: pw.EdgeInsets.only(top: 10, left: 15),
+                      child: pw.Column(
+                        // crossAxisAlignment: pw.CrossAxisAlignment.start,
+                        mainAxisAlignment: pw.MainAxisAlignment.start,
+                        crossAxisAlignment: pw.CrossAxisAlignment.start,
+                        mainAxisSize: pw.MainAxisSize.min,
+                        children: [
+                          currentUser.position != 'Salesperson'
+                              ? Container()
+                              : PdfWidgets().pdfCustomText(
+                                  text:
+                                      '${currentUser.licenseDetails['Broker First Name']} ${currentUser.licenseDetails['Broker Last Name']} ',
+                                  fontSize: 11,
+                                  textAlign: pw.TextAlign.center,
+                                  fontWeight: pw.FontWeight.bold,
+                                ),
+                          PdfWidgets().pdfCustomRichText(
+                              mainText: 'REB PRC License No: ',
+                              fontSize: 10,
+                              valueText: currentUser
+                                  .licenseDetails["REB PRC License No."]),
+                          pw.SizedBox(height: 1),
+                          PdfWidgets().pdfCustomRichText(
+                              mainText: 'REB PRC ID No: ',
+                              fontSize: 10,
+                              valueText:
+                                  currentUser.licenseDetails["REB PRC Id No."]),
+                          pw.SizedBox(height: 1),
+                          PdfWidgets().pdfCustomRichText(
+                              mainText: 'Valid Until: ',
+                              fontSize: 10,
+                              valueText: customDateFormat1.format(
+                                  DateTime.parse(currentUser
+                                      .licenseDetails["REB PRC Date"]))),
+                          pw.SizedBox(height: 1),
+                          PdfWidgets().pdfCustomRichText(
+                              mainText: 'REB PTR No:',
+                              fontSize: 10,
+                              valueText:
+                                  currentUser.licenseDetails["REB PTR No."]),
+                          pw.SizedBox(height: 1),
+                          PdfWidgets().pdfCustomRichText(
+                              mainText: 'Valid Until: ',
+                              fontSize: 10,
+                              valueText: customDateFormat2.format(
+                                  DateTime.parse(currentUser
+                                      .licenseDetails["REB PTR Date"]))),
+                          pw.SizedBox(height: 1),
+                          PdfWidgets().pdfCustomRichText(
+                              mainText: 'DHSUD No: ',
+                              fontSize: 10,
+                              valueText:
+                                  currentUser.licenseDetails["DHSUD No."]),
+                          pw.SizedBox(height: 1),
+                          PdfWidgets().pdfCustomRichText(
+                              mainText: 'Valid Until: ',
+                              fontSize: 10,
+                              valueText: customDateFormat2.format(
+                                  DateTime.parse(currentUser
+                                      .licenseDetails["DHSUD Date"]))),
+                          pw.SizedBox(height: 1),
+                          PdfWidgets().pdfCustomRichText(
+                            mainText: 'AIPO No: ',
+                            fontSize: 10,
+                            valueText: currentUser.licenseDetails["AIPO No."],
+                          ),
+                          pw.SizedBox(height: 1),
+                          PdfWidgets().pdfCustomRichText(
+                              mainText: 'Valid Until: ',
+                              fontSize: 10,
+                              valueText: customDateFormat1.format(
+                                  DateTime.parse(currentUser
+                                      .licenseDetails["AIPO Date"]))),
+                          pw.SizedBox(height: 1),
+                        ],
+                      ),
+                    ),
+                  ),
+                  //* ================= Broker licence Details [END]
                 ],
               ),
               pw.SizedBox(
@@ -577,80 +545,10 @@ class PdfGenerator {
             ],
           );
         },
-        //*===== Pdf Property Footer [start]
       ),
     );
+    //*========================================================================= PDF Footer [END]
 
-    // if (property.coordinates != null) {
-    //   //Adding google map Image
-    //   pdf.addPage(
-    //     pw.MultiPage(
-    //       theme: pw.ThemeData.withFont(
-    //         icons: await PdfGoogleFonts.materialIcons(),
-    //       ),
-    //       pageFormat: PdfPageFormat.a4,
-    //       build: (pw.Context context) => <pw.Widget>[
-    //         pw.Container(
-    //           child: pw.Column(
-    //             crossAxisAlignment: pw.CrossAxisAlignment.start,
-    //             children: [
-    //               //*======== PDF Title [start]
-    //               PdfWidgets().pdfCustomRichText(
-    //                 mainText: 'Map Location:',
-    //                 valueText: '',
-    //               ),
-    //               pw.SizedBox(height: 10),
-    //               mapImage,
-    //             ],
-    //           ),
-    //         ),
-    //       ],
-    //       //*===== Pdf Property Footer [start]
-    //       footer: (pw.Context context) {
-    //         return pw.Row(children: [
-    //           pw.Expanded(
-    //             flex: 2,
-    //             child: pw.Image(
-    //               pw.MemoryImage(image),
-    //               height: 40,
-    //             ),
-    //           ),
-    //           pw.Expanded(
-    //             flex: 5,
-    //             child: pw.Container(
-    //               alignment: pw.Alignment.centerRight,
-    //               margin: pw.EdgeInsets.only(top: 1 * PdfPageFormat.cm),
-    //               child: pw.Column(
-    //                 crossAxisAlignment: pw.CrossAxisAlignment.end,
-    //                 children: [
-    //                   PdfWidgets().pdfCustomRichText(
-    //                     mainText: 'Selling Agent: ',
-    //                     valueText: currentUser.displayName,
-    //                   ),
-    //                   pw.Row(
-    //                       mainAxisAlignment: pw.MainAxisAlignment.end,
-    //                       children: [
-    //                         pw.Icon(pw.IconData(0xe0cd), size: 13),
-    //                         PdfWidgets().pdfCustomText(
-    //                             text: ' ${currentUser.mobileNumber}')
-    //                       ]),
-    //                   pw.Row(
-    //                       mainAxisAlignment: pw.MainAxisAlignment.end,
-    //                       children: [
-    //                         pw.Icon(pw.IconData(0xe0be), size: 13),
-    //                         PdfWidgets()
-    //                             .pdfCustomText(text: ' ${currentUser.email}')
-    //                       ]),
-    //                 ],
-    //               ),
-    //             ),
-    //           ),
-    //         ]);
-    //       },
-    //       //*===== Pdf Property Footer [End]
-    //     ),
-    //   );
-    // }
     return pdf;
   }
 
@@ -711,8 +609,6 @@ class PdfGenerator {
       final dir = Platform.isAndroid
           ? await getExternalStorageDirectory()
           : await getApplicationDocumentsDirectory();
-      // localPath =
-      // '${dir.path}/Dazle Property List - ${property.street} - ${property.city} ${DateTime.now().toIso8601String()}.pdf';
       filePath = '${dir!.path}/Dazle Property Listing-${property.id}.pdf';
 
       final file = File(filePath);
