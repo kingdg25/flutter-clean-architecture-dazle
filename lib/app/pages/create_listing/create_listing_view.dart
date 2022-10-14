@@ -645,7 +645,8 @@ class _CreateListingPageState
                         child: CachedNetworkImage(
                           imageUrl:
                               // "https://maps.googleapis.com/maps/api/staticmap?center=8.482298546726664,%20124.64927255100129&zoom=19&size=400x400&key=AIzaSyCSacvsau8vEncNbORdwU0buakm7Mx2rbE",
-                              "https://maps.googleapis.com/maps/api/staticmap?center=${controller.latitude},%20${controller.longitude}&zoom=16&size=400x400&markers=color:0x33D49D|${controller.latitude},${controller.longitude}&key=AIzaSyCSacvsau8vEncNbORdwU0buakm7Mx2rbE",
+                              // "https://maps.googleapis.com/maps/api/staticmap?center=${controller.latitude},%20${controller.longitude}&zoom=16&size=400x400&markers=color:0x33D49D|${controller.latitude},${controller.longitude}&key=AIzaSyCSacvsau8vEncNbORdwU0buakm7Mx2rbE",
+                              "https://maps.googleapis.com/maps/api/staticmap?center=${controller.latitude},%20${controller.longitude}&zoom=17&size=400x400&markers=color:0x33D49D|${controller.latitude},${controller.longitude}&key=AIzaSyCSacvsau8vEncNbORdwU0buakm7Mx2rbE&maptype=hybrid",
                           imageBuilder: (context, imageProvider) => Container(
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10),

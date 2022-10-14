@@ -6,8 +6,11 @@ import 'package:dazle/app/pages/welcome/welcome_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:month_year_picker/month_year_picker.dart';
 
 import 'app/pages/chat/chat_view.dart';
+
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -34,6 +37,10 @@ class MyApp extends StatelessWidget {
     FlutterCleanArchitecture.debugModeOn();
 
     return MaterialApp(
+      localizationsDelegates: [
+        GlobalMaterialLocalizations.delegate,
+        MonthYearPickerLocalizations.delegate,
+      ],
       builder: EasyLoading.init(),
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,

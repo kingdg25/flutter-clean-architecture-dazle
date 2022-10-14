@@ -69,13 +69,14 @@ class _ProfilePageState extends ViewState<ProfilePage, ProfileController> {
                     //
                     CustomImage(
                         assetImage: 'assets/user_profile.png',
-                        imageUrl: user!.profilePicture.toString()),
+                        imageUrl:
+                            controller.currentUser!.profilePicture.toString()),
                     SizedBox(
                       height: controller.getProportionateScreenHeight(8.0),
                     ),
                     FittedBox(
                       child: CustomText(
-                        text: user!.displayName,
+                        text: controller.currentUser!.displayName,
                         fontSize: 18,
                         fontWeight: FontWeight.w600,
                       ),
@@ -164,42 +165,54 @@ class _ProfilePageState extends ViewState<ProfilePage, ProfileController> {
                       height: controller.getProportionateScreenHeight(15.0),
                     ),
                     BoxContainer(
-                        widget: Column(
-                      children: [
-                        ProfileCard(
-                          icon: Icons.exit_to_app_outlined,
-                          color: Colors.redAccent,
-                          title: 'Logout',
-                          tapHandler: controller.signOut,
-                        ),
-                        Divider(
-                          // color: App.hintColor,
-                          color: Colors.black,
-                          thickness: 0.1,
-                          height: controller.getProportionateScreenHeight(15.0),
-                        ),
-                        ProfileCard(
-                          icon: controller.currentUser?.accountStatus == null ||
-                                  controller.currentUser?.accountStatus ==
-                                      'Active'
-                              ? Icons.delete_forever
-                              : Icons.account_circle,
-                          color:
-                              controller.currentUser?.accountStatus == null ||
-                                      controller.currentUser?.accountStatus ==
-                                          'Active'
-                                  ? Colors.redAccent
-                                  : Colors.green,
-                          title:
-                              controller.currentUser?.accountStatus == null ||
-                                      controller.currentUser?.accountStatus ==
-                                          'Active'
-                                  ? 'Delete Account'
-                                  : 'Reactivate Account',
-                          tapHandler: controller.deleteAccountPage,
-                        ),
-                      ],
-                    )),
+                      widget: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          ProfileCard(
+                            icon: Icons.exit_to_app_outlined,
+                            color: Colors.redAccent,
+                            title: 'Logout',
+                            tapHandler: controller.signOut,
+                          ),
+                          Divider(
+                            // color: App.hintColor,
+                            color: Colors.black,
+                            thickness: 0.1,
+                            height:
+                                controller.getProportionateScreenHeight(15.0),
+                          ),
+                          ProfileCard(
+                            icon:
+                                controller.currentUser?.accountStatus == null ||
+                                        controller.currentUser?.accountStatus ==
+                                            'Active'
+                                    ? Icons.delete_forever
+                                    : Icons.account_circle,
+                            color:
+                                controller.currentUser?.accountStatus == null ||
+                                        controller.currentUser?.accountStatus ==
+                                            'Active'
+                                    ? Colors.redAccent
+                                    : Colors.green,
+                            title:
+                                controller.currentUser?.accountStatus == null ||
+                                        controller.currentUser?.accountStatus ==
+                                            'Active'
+                                    ? 'Delete Account'
+                                    : 'Reactivate Account',
+                            tapHandler: controller.deleteAccountPage,
+                          ),
+                          SizedBox(
+                            height:
+                                controller.getProportionateScreenHeight(20.0),
+                          ),
+                          CustomText(
+                            text: 'V1.2.3',
+                            color: App.hintColor,
+                          ),
+                        ],
+                      ),
+                    ),
                     SizedBox(
                       height: controller.getProportionateScreenHeight(50.0),
                     ),

@@ -435,12 +435,12 @@ class _DownloadListPageState
                               alignment: Alignment.center,
                               child: CustomProgressBar(
                                 text:
-                                    'Generating PDF ${controller.progressPercentage()}%',
+                                    'Generating Document ${controller.progressPercentage()}%',
                                 progressValue: controller.progressValue,
                               ),
                             ),
                             CustomText(
-                              text: 'Generating PDF . . . .',
+                              text: 'Generating Document . . . .',
                               fontWeight: FontWeight.bold,
                             ),
                           ],

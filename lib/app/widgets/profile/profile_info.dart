@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dazle/app/pages/edit_profile/edit_profile_view.dart';
 import 'package:dazle/app/widgets/custom_progress_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:printing/printing.dart';
 
 import '../../../domain/entities/property.dart';
 import '../../../domain/entities/user.dart';
@@ -73,7 +74,7 @@ class _ProfileInfoState extends State<ProfileInfo> {
                   children: [
                     Center(
                       child: CachedNetworkImage(
-                        imageUrl: widget.user.profilePicture.toString(),
+                        imageUrl: _currentUser!.profilePicture.toString(),
                         imageBuilder: (context, imageProvider) => CircleAvatar(
                           radius: 95,
                           backgroundImage: imageProvider,
@@ -96,7 +97,7 @@ class _ProfileInfoState extends State<ProfileInfo> {
                       ),
                     ),
                     CustomText(
-                      text: widget.user.displayName,
+                      text: _currentUser!.displayName,
                       fontSize: 25,
                       fontWeight: FontWeight.w600,
                       overflow: TextOverflow.ellipsis,
@@ -104,14 +105,14 @@ class _ProfileInfoState extends State<ProfileInfo> {
                     ),
                     SizedBox(height: 5),
                     CustomText(
-                      text: 'Real Estate ${widget.user.position ?? ''}',
+                      text: 'Real Estate ${_currentUser!.position ?? ''}',
                       fontSize: 13,
                       fontWeight: FontWeight.w500,
                     ),
                     SizedBox(height: 10),
                     CustomFieldLayout(
                       child: CustomText(
-                        text: widget.user.aboutMe ?? '',
+                        text: _currentUser!.aboutMe ?? '',
                         fontSize: 11,
                         color: App.hintColor,
                         fontWeight: FontWeight.w500,
@@ -126,7 +127,9 @@ class _ProfileInfoState extends State<ProfileInfo> {
                             width: 120,
                             borderRadius: 10,
                             onPressed: () async {
-                              Navigator.push(
+                              // print(_currentUser!.brokerLicenseNumber);
+
+                              await Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                   builder: (buildContext) => EditProfilePage(
@@ -134,6 +137,8 @@ class _ProfileInfoState extends State<ProfileInfo> {
                                   ),
                                 ),
                               );
+
+                              await getCurrentUser();
                             }),
                         // SizedBox(width: 8),
                         // CustomButton(
@@ -284,12 +289,12 @@ class _ProfileInfoState extends State<ProfileInfo> {
         //                         alignment: Alignment.center,
         //                         child: CustomProgressBar(
         //                           text:
-        //                               'Generating PDF ${controller.progressPercentage()}%',
+        //                               'Generating Document ${controller.progressPercentage()}%',
         //                           progressValue: controller.progressValue,
         //                         ),
         //                       ),
         //                       CustomText(
-        //                         text: 'Generating PDF . . . .',
+        //                         text: 'Generating Document . . . .',
         //                         fontWeight: FontWeight.bold,
         //                       ),
         //                     ],

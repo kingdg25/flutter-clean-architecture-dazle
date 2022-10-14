@@ -7,6 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_overlay_loader/flutter_overlay_loader.dart';
+import 'package:intl/intl.dart';
+import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 
 import '../../utils/app_constant.dart';
 import '../main/main_view.dart';
@@ -19,8 +21,13 @@ class EditProfileController extends Controller {
   String? userProfilePicture;
   File? profilePicturePath;
   final double maxFileSize = 5.0;
+  //---- Display number and mobile number
+  String? updatedDisplayMobileNum;
+  String? updatedMobileNum;
 
-  GlobalKey<FormState> editProfileFormKey;
+  GlobalKey<FormState> perfonalInfoFormKey;
+  GlobalKey<FormState> businessInfoFormKey;
+  GlobalKey<FormState> licenseInfoFormKey;
   final TextEditingController firstNameTextController;
   final TextEditingController lastNameTextController;
   final TextEditingController professionTextController;
@@ -28,10 +35,60 @@ class EditProfileController extends Controller {
   final TextEditingController mobileNumberTextController;
   final TextEditingController brokerLicenseNumberTextController;
   final TextEditingController aboutMeTextController;
+  //---- Display number and email text controller
+  final TextEditingController displayMobileNumberTextController;
+  final TextEditingController displayEmailTextController;
+
+  //---- License Numbers text Controller [Broker]
+  final TextEditingController rebPrcLicenseNumTextController;
+  final TextEditingController rebPrcIdNumTextController;
+  final TextEditingController rebPTRNumTextController;
+  final TextEditingController dhsudNumTextController;
+  final TextEditingController aipoNumTextController;
+
+  //---- License Dates Text Controller [Broker]
+  final TextEditingController rebPrcDateTextController;
+  final TextEditingController rebPtrDateTextController;
+  final TextEditingController dhsudDateTextController;
+  final TextEditingController aipoDateTextController;
+
+  //---- License Numbers text Controller [Sales Person]
+  final TextEditingController salesResAccNumTextController;
+  final TextEditingController salesResIdNumTextController;
+  final TextEditingController salesRebPTRNumTextController;
+  final TextEditingController salesAipoNumTextController;
+
+  //---- License Dates Text Controller [Sales Person]
+  final TextEditingController salesResDateTextController;
+  final TextEditingController salesRebPtrDateTextController;
+  final TextEditingController salesAipoDateTextController;
+
+  final TextEditingController brokerFirstNameTextController;
+  final TextEditingController brokerLastNameTextController;
+
+  //---- License Dates [Broker]
+  DateTime? rebPrcDate;
+  DateTime? rebPtrDate;
+  DateTime? dhsudDate;
+  DateTime? aipoDate;
+
+  //---- License Dates [Sales Person]
+  DateTime? salesResDate;
+  DateTime? salesRebPtrDate;
+  DateTime? salesAipoDate;
+
+  //---- Licence info
+  Map<String, dynamic> licenseDetails;
+
+  String formSaving = '';
+
+  String? formEditing;
 
   EditProfileController(userRepo)
       : editProfilePresenter = EditProfilePresenter(userRepo),
-        editProfileFormKey = GlobalKey<FormState>(),
+        perfonalInfoFormKey = GlobalKey<FormState>(),
+        businessInfoFormKey = GlobalKey<FormState>(),
+        licenseInfoFormKey = GlobalKey<FormState>(),
         firstNameTextController = TextEditingController(),
         lastNameTextController = TextEditingController(),
         professionTextController = TextEditingController(),
@@ -39,18 +96,32 @@ class EditProfileController extends Controller {
         mobileNumberTextController = TextEditingController(),
         brokerLicenseNumberTextController = TextEditingController(),
         aboutMeTextController = TextEditingController(),
+        displayMobileNumberTextController = TextEditingController(),
+        displayEmailTextController = TextEditingController(),
+        rebPrcDateTextController = TextEditingController(),
+        rebPtrDateTextController = TextEditingController(),
+        dhsudDateTextController = TextEditingController(),
+        aipoDateTextController = TextEditingController(),
+        rebPrcLicenseNumTextController = TextEditingController(),
+        rebPrcIdNumTextController = TextEditingController(),
+        rebPTRNumTextController = TextEditingController(),
+        dhsudNumTextController = TextEditingController(),
+        aipoNumTextController = TextEditingController(),
+        salesResAccNumTextController = TextEditingController(),
+        salesResIdNumTextController = TextEditingController(),
+        salesRebPTRNumTextController = TextEditingController(),
+        salesAipoNumTextController = TextEditingController(),
+        salesResDateTextController = TextEditingController(),
+        salesRebPtrDateTextController = TextEditingController(),
+        salesAipoDateTextController = TextEditingController(),
+        brokerFirstNameTextController = TextEditingController(),
+        brokerLastNameTextController = TextEditingController(),
+        licenseDetails = {},
         super();
 
   @override
   void initListeners() {
     getCurrentUser();
-    // App.configLoading();
-    // EasyLoading.addStatusCallback((status) {
-    //   print('EasyLoading Status $status');
-    //   if (status == EasyLoadingStatus.dismiss) {
-    //     _timer?.cancel();
-    //   }
-    // });
 
     // update user
     editProfilePresenter.updateUserOnNext = () {
@@ -59,31 +130,17 @@ class EditProfileController extends Controller {
 
     editProfilePresenter.updateUserOnComplete = () async {
       print('update user on complete');
+
       AppConstant.showLoader(getContext(), false);
-      await _statusDialog('Done!', 'Your Profile has been Updated.',
-          success: false);
-
-      // Navigator.pushReplacement(
-      //     getContext(),
-      //     MaterialPageRoute(
-      //       builder: (context) => MainPage(
-      //         backCurrentIndex: "HomePage",
-      //       ),
-      //     ));
-
-      // await EasyLoading.showSuccess('Profile Updated Successfully')
-      //     .then((value) => Navigator.pushReplacement(
-      //         getContext(),
-      //         MaterialPageRoute(
-      //           builder: (context) => MainPage(
-      //             backCurrentIndex: "ProfilePage",
-      //           ),
-      //         )));
-      // EasyLoading.dismiss();
+      await _statusDialog(
+        'Done!',
+        'Your $formSaving has been Updated.',
+        success: false,
+      );
+      await getCurrentUser();
     };
     editProfilePresenter.updateUserOnError = (e) {
       print('update user on error $e');
-      // EasyLoading.dismiss();
       AppConstant.showLoader(getContext(), false);
       if (!e['error']) {
         _statusDialog('Oops!', '${e['status'] ?? ''}', success: false);
@@ -91,9 +148,55 @@ class EditProfileController extends Controller {
         _statusDialog('Something went wrong', '${e.toString()}',
             success: false);
       }
-      // EasyLoading.showError('Failed with Error');
-      // EasyLoading.dismiss();
     };
+  }
+
+  setFormEditing(String? formName) {
+    formEditing = formName;
+    refreshUI();
+  }
+
+  saveLicenseInfo() async {
+    DateFormat dateFormat = DateFormat("yyyy-MM-dd HH:mm:ss");
+
+    if (user!.position == "Broker") {
+      licenseDetails = {
+        "REB PRC License No.": rebPrcLicenseNumTextController.text,
+        "REB PRC Id No.": rebPrcIdNumTextController.text,
+        "REB PRC Date": dateFormat.format(rebPrcDate!),
+        "REB PTR No.": rebPTRNumTextController.text,
+        "REB PTR Date": dateFormat.format(rebPtrDate!),
+        "DHSUD No.": dhsudNumTextController.text,
+        "DHSUD Date": dateFormat.format(dhsudDate!),
+        "AIPO No.": aipoNumTextController.text,
+        "AIPO Date": dateFormat.format(aipoDate!)
+      };
+    } else {
+      licenseDetails = {
+        "REB PRC License No.": rebPrcLicenseNumTextController.text,
+        "REB PRC Id No.": rebPrcIdNumTextController.text,
+        "REB PRC Date": dateFormat.format(rebPrcDate!),
+        "REB PTR No.": rebPTRNumTextController.text,
+        "REB PTR Date": dateFormat.format(rebPtrDate!),
+        "DHSUD No.": dhsudNumTextController.text,
+        "DHSUD Date": dateFormat.format(dhsudDate!),
+        "AIPO No.": aipoNumTextController.text,
+        "AIPO Date": dateFormat.format(aipoDate!),
+        // --- For Salesperson
+        "Broker First Name": brokerFirstNameTextController.text,
+        "Broker Last Name": brokerLastNameTextController.text,
+        "Sales RES Accreditation No.": salesResAccNumTextController.text,
+        "Sales RES PRC Id No.": salesResIdNumTextController.text,
+        "Sales RES PRC Date": dateFormat.format(salesResDate!),
+        "Sales REB PTR No.": salesRebPTRNumTextController.text,
+        "Sales REB PTR Date": dateFormat.format(salesRebPtrDate!),
+        "Sales AIPO No.": salesAipoNumTextController.text,
+        "Sales AIPO Date": dateFormat.format(salesAipoDate!)
+      };
+    }
+
+    print(licenseDetails.toString());
+    updateUser();
   }
 
   getCurrentUser() async {
@@ -112,6 +215,67 @@ class EditProfileController extends Controller {
     aboutMeTextController.text = user.aboutMe ?? '';
 
     userProfilePicture = user.profilePicture;
+
+    displayMobileNumberTextController.text = user.displayMobileNumber ?? '';
+    displayEmailTextController.text = user.displayEmail ?? '';
+    userProfilePicture = user.profilePicture;
+
+    //Load License Details
+    final customDateFormat1 = new DateFormat('MM/dd/yyyy');
+    final customDateFormat2 = new DateFormat('MMM yyyy');
+    if (user.licenseDetails != null) {
+      rebPrcLicenseNumTextController.text =
+          user.licenseDetails["REB PRC License No."];
+      rebPrcIdNumTextController.text = user.licenseDetails["REB PRC Id No."];
+      rebPrcDate = DateTime.parse(user.licenseDetails["REB PRC Date"]);
+      rebPrcDateTextController.text = customDateFormat1.format(rebPrcDate!);
+
+      rebPTRNumTextController.text = user.licenseDetails["REB PTR No."];
+      rebPtrDate = DateTime.parse(user.licenseDetails["REB PTR Date"]);
+      rebPtrDateTextController.text = customDateFormat2.format(rebPtrDate!);
+
+      dhsudNumTextController.text = user.licenseDetails["DHSUD No."];
+      dhsudDate = DateTime.parse(user.licenseDetails["DHSUD Date"]);
+      dhsudDateTextController.text = customDateFormat2.format(dhsudDate!);
+
+      aipoNumTextController.text = user.licenseDetails["AIPO No."];
+      aipoDate = DateTime.parse(user.licenseDetails["AIPO Date"]);
+      aipoDateTextController.text = customDateFormat1.format(aipoDate!);
+
+      if (user.position == "Salesperson") {
+        brokerFirstNameTextController.text =
+            user.licenseDetails["Broker First Name"];
+        brokerLastNameTextController.text =
+            user.licenseDetails["Broker Last Name"];
+
+        salesResAccNumTextController.text =
+            user.licenseDetails["Sales RES Accreditation No."];
+        salesResIdNumTextController.text =
+            user.licenseDetails["Sales RES PRC Id No."];
+
+        salesResDate =
+            DateTime.parse(user.licenseDetails["Sales RES PRC Date"]);
+        salesResDateTextController.text =
+            salesResDate == null ? '' : customDateFormat1.format(salesResDate!);
+
+        salesRebPTRNumTextController.text =
+            user.licenseDetails["Sales REB PTR No."];
+
+        salesRebPtrDate =
+            DateTime.parse(user.licenseDetails["Sales REB PTR Date"]);
+        salesRebPtrDateTextController.text = salesRebPtrDate == null
+            ? ''
+            : customDateFormat2.format(salesRebPtrDate!);
+
+        salesAipoNumTextController.text = user.licenseDetails["Sales AIPO No."];
+
+        salesAipoDate = DateTime.parse(user.licenseDetails["Sales AIPO Date"]);
+        salesAipoDateTextController.text = salesAipoDate == null
+            ? ''
+            : customDateFormat1.format(salesAipoDate!);
+      }
+    }
+
     print('BROKER: ${user.brokerLicenseNumber}');
     if (user.brokerLicenseNumber != null) {
       brokerLicenseNumberTextController.text = user.brokerLicenseNumber!;
@@ -121,32 +285,62 @@ class EditProfileController extends Controller {
   }
 
   void updateUser() async {
-    // EasyLoading.show(status: 'loading...');
     AppConstant.showLoader(getContext(), true);
     User updatedUser;
-    if (brokerLicenseNumberTextController.text != '') {
+    if (formSaving == "License Information") {
       updatedUser = User(
+          //retain value
           id: _user!.id,
+          firstName: _user!.firstName,
+          lastName: _user!.lastName,
+          mobileNumber: _user!.mobileNumber,
+          aboutMe: _user!.aboutMe,
+          profilePicture: user?.profilePicture,
+          brokerLicenseNumber: _user!.brokerLicenseNumber,
+          displayEmail: _user!.displayEmail,
+
+          //update/changes
+          licenseDetails: licenseDetails,
+
+          // retain value
+          email: _user!.email,
+          position: _user!.position,
+          isNewUser: false);
+    } else if (formSaving == "Personal Information") {
+      updatedUser = User(
+          //retain value
+          id: _user!.id,
+          mobileNumber: _user!.mobileNumber,
+          profilePicture: user?.profilePicture,
+          brokerLicenseNumber: _user!.brokerLicenseNumber,
+          displayEmail: _user!.displayEmail,
+          licenseDetails: _user!.licenseDetails,
+
+          //update/changes
           firstName: firstNameTextController.text,
           lastName: lastNameTextController.text,
-          mobileNumber: mobileNumberTextController.text,
           aboutMe: aboutMeTextController.text,
-          profilePicture: user?.profilePicture,
-          brokerLicenseNumber: brokerLicenseNumberTextController.text,
 
           // retain value
           email: _user!.email,
           position: _user!.position,
           isNewUser: false);
     } else {
+      //
       updatedUser = User(
+          // formSaving == "Business Information"
+          //retain value
           id: _user!.id,
-          firstName: firstNameTextController.text,
-          lastName: lastNameTextController.text,
-          mobileNumber: mobileNumberTextController.text,
-          aboutMe: aboutMeTextController.text,
-          profilePicture: user?.profilePicture,
+          firstName: _user!.firstName,
+          lastName: _user!.lastName,
+          aboutMe: _user!.aboutMe,
+          profilePicture: _user?.profilePicture,
+          brokerLicenseNumber: _user!.brokerLicenseNumber,
+          licenseDetails: _user!.licenseDetails,
 
+          //update/changes
+          mobileNumber: updatedMobileNum,
+          displayEmail: displayEmailTextController.text,
           // retain value
           email: _user!.email,
           position: _user!.position,
@@ -155,6 +349,8 @@ class EditProfileController extends Controller {
 
     editProfilePresenter.updateUser(
         user: updatedUser, profilePicture: profilePicturePath);
+    // getCurrentUser();
+    setFormEditing(null);
   }
 
   _statusDialog(String title, String text,
@@ -181,6 +377,7 @@ class EditProfileController extends Controller {
     editProfilePresenter.dispose(); // don't forget to dispose of the presenter
     EasyLoading.dismiss();
     EasyLoading.removeAllCallbacks();
+
     firstNameTextController.dispose();
     lastNameTextController.dispose();
     professionTextController.dispose();
@@ -188,6 +385,21 @@ class EditProfileController extends Controller {
     mobileNumberTextController.dispose();
     brokerLicenseNumberTextController.dispose();
     aboutMeTextController.dispose();
+    rebPrcLicenseNumTextController.dispose();
+    rebPrcIdNumTextController.dispose();
+    rebPTRNumTextController.dispose();
+    dhsudNumTextController.dispose();
+    aipoNumTextController.dispose();
+    salesResAccNumTextController.dispose();
+    salesResIdNumTextController.dispose();
+    salesRebPTRNumTextController.dispose();
+    salesAipoNumTextController.dispose();
+    salesResDateTextController.dispose();
+    salesRebPtrDateTextController.dispose();
+    salesAipoDateTextController.dispose();
+    brokerFirstNameTextController.dispose();
+    brokerLastNameTextController.dispose();
+
     Loader.hide();
     super.onDisposed();
   }

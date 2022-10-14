@@ -6,24 +6,25 @@ import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 
 class PdfWidgets {
-  PdfColor _textColor = PdfColor.fromHex('#2e353d');
-  PdfColor _hintColor = PdfColor.fromHex('#9aa0a6');
-  PdfColor _mainColor = PdfColor.fromHex('#33d49d');
+  PdfColor mainTextColor = PdfColor.fromHex('#2e353d');
+  PdfColor hintColor = PdfColor.fromHex('#9aa0a6');
+  PdfColor mainColor = PdfColor.fromHex('#33d49d');
 
   /// Custom Text for the pdf file
-  pdfCustomText({
-    required String text,
-    double fontSize = 13,
-    pw.FontWeight? fontWeight,
-    pw.TextAlign? textAlign,
-  }) {
+  pdfCustomText(
+      {required String text,
+      double fontSize = 13,
+      pw.FontWeight? fontWeight,
+      pw.TextAlign? textAlign,
+      PdfColor? textColor,
+      pw.FontStyle? fontstyle}) {
     return pw.Text(
       text,
       textAlign: textAlign ?? pw.TextAlign.left,
       style: pw.TextStyle(
-        color: _textColor,
+        color: textColor ?? mainTextColor,
         fontWeight: fontWeight,
-        fontStyle: pw.FontStyle.normal,
+        fontStyle: fontstyle ?? pw.FontStyle.normal,
         fontSize: fontSize,
       ),
     );
@@ -41,16 +42,16 @@ class PdfWidgets {
           pw.TextSpan(
             text: mainText,
             style: pw.TextStyle(
-              color: _textColor,
+              color: mainTextColor,
               fontWeight: pw.FontWeight.bold,
-              fontSize: 13,
+              fontSize: fontSize ?? 13,
             ),
           ),
           pw.TextSpan(
             text: valueText,
             style: pw.TextStyle(
-              color: _textColor,
-              fontSize: 13,
+              color: mainTextColor,
+              fontSize: fontSize ?? 13,
             ),
           ),
         ],
@@ -74,7 +75,7 @@ class PdfWidgets {
           color: PdfColors.white,
           width: 2,
         ),
-        color: _mainColor,
+        color: mainColor,
       ),
       child: pw.Center(
         child: pw.Text(
@@ -106,7 +107,7 @@ class PdfWidgets {
           width: 2,
         ),
         borderRadius: pw.BorderRadius.all(pw.Radius.circular(25)),
-        color: _mainColor,
+        color: mainColor,
       ),
       child: pw.Center(
         child: pw.Column(children: [

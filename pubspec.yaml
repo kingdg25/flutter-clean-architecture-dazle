@@ -53,6 +53,7 @@ dependencies:
   update_available: ^2.1.0
   upgrader: ^4.4.0
   percent_indicator: ^3.0.1
+  month_year_picker: ^0.1.0+3
   
 
 

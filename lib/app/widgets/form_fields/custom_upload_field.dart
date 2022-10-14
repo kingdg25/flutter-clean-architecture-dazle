@@ -70,7 +70,6 @@ class _CustomUploadFieldState extends State<CustomUploadField> {
 
                       widget.onAssetValue(selectedAssets);
                     } else {
-                      //TODO: Add a status dialog saying user needs to delete photos to upload additional images
                       AppConstant.statusDialog(
                           success: false,
                           title: 'Connot upload more than 10 photos.',
