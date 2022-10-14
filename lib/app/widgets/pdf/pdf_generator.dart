@@ -323,7 +323,7 @@ class PdfGenerator {
                           ),
                           pw.SizedBox(height: 2),
                           PdfWidgets().pdfCustomText(
-                            text: currentUser.position!,
+                            text: 'Real Estate ' + currentUser.position!,
                             fontSize: 10,
                             textAlign: pw.TextAlign.center,
                             fontWeight: pw.FontWeight.bold,
@@ -369,8 +369,23 @@ class PdfGenerator {
                   //* ================= Broker Contact Details [END]
                   // **********
                   //* ================= Salesperson licence Details [START]
-                  currentUser.position != 'Salesperson'
-                      ? pw.Container()
+                  currentUser.position != 'Salesperson' ||
+                          currentUser.licenseDetails == null
+                      ? pw.Expanded(
+                          flex: 5,
+                          child: true
+                              ? pw.Container()
+                              : pw.Container(
+                                  padding: pw.EdgeInsets.only(left: 10),
+                                  child: pw.Center(
+                                    child: PdfWidgets().pdfCustomText(
+                                        fontSize: 10,
+                                        fontstyle: pw.FontStyle.italic,
+                                        text:
+                                            '"No License Details Provided by Broker."'),
+                                  ),
+                                ),
+                        )
                       : pw.Expanded(
                           flex: 5,
                           child: pw.Container(
@@ -437,87 +452,90 @@ class PdfGenerator {
                   //* ================= Salesperson licence Details [END]
                   // **********
                   //* ================= Broker licence Details [START]
-                  pw.Expanded(
-                    flex: 5,
-                    child: pw.Container(
-                      padding: pw.EdgeInsets.only(top: 10, left: 15),
-                      child: pw.Column(
-                        // crossAxisAlignment: pw.CrossAxisAlignment.start,
-                        mainAxisAlignment: pw.MainAxisAlignment.start,
-                        crossAxisAlignment: pw.CrossAxisAlignment.start,
-                        mainAxisSize: pw.MainAxisSize.min,
-                        children: [
-                          currentUser.position != 'Salesperson'
-                              ? Container()
-                              : PdfWidgets().pdfCustomText(
-                                  text:
-                                      '${currentUser.licenseDetails['Broker First Name']} ${currentUser.licenseDetails['Broker Last Name']} ',
-                                  fontSize: 11,
-                                  textAlign: pw.TextAlign.center,
-                                  fontWeight: pw.FontWeight.bold,
+                  currentUser.licenseDetails == null
+                      ? pw.Container()
+                      : pw.Expanded(
+                          flex: 5,
+                          child: pw.Container(
+                            padding: pw.EdgeInsets.only(top: 10, left: 15),
+                            child: pw.Column(
+                              // crossAxisAlignment: pw.CrossAxisAlignment.start,
+                              mainAxisAlignment: pw.MainAxisAlignment.start,
+                              crossAxisAlignment: pw.CrossAxisAlignment.start,
+                              mainAxisSize: pw.MainAxisSize.min,
+                              children: [
+                                currentUser.position != 'Salesperson'
+                                    ? Container()
+                                    : PdfWidgets().pdfCustomText(
+                                        text:
+                                            '${currentUser.licenseDetails['Broker First Name']} ${currentUser.licenseDetails['Broker Last Name']} ',
+                                        fontSize: 11,
+                                        textAlign: pw.TextAlign.center,
+                                        fontWeight: pw.FontWeight.bold,
+                                      ),
+                                PdfWidgets().pdfCustomRichText(
+                                    mainText: 'REB PRC License No: ',
+                                    fontSize: 10,
+                                    valueText: currentUser
+                                        .licenseDetails["REB PRC License No."]),
+                                pw.SizedBox(height: 1),
+                                PdfWidgets().pdfCustomRichText(
+                                    mainText: 'REB PRC ID No: ',
+                                    fontSize: 10,
+                                    valueText: currentUser
+                                        .licenseDetails["REB PRC Id No."]),
+                                pw.SizedBox(height: 1),
+                                PdfWidgets().pdfCustomRichText(
+                                    mainText: 'Valid Until: ',
+                                    fontSize: 10,
+                                    valueText: customDateFormat1.format(
+                                        DateTime.parse(currentUser
+                                            .licenseDetails["REB PRC Date"]))),
+                                pw.SizedBox(height: 1),
+                                PdfWidgets().pdfCustomRichText(
+                                    mainText: 'REB PTR No:',
+                                    fontSize: 10,
+                                    valueText: currentUser
+                                        .licenseDetails["REB PTR No."]),
+                                pw.SizedBox(height: 1),
+                                PdfWidgets().pdfCustomRichText(
+                                    mainText: 'Valid Until: ',
+                                    fontSize: 10,
+                                    valueText: customDateFormat2.format(
+                                        DateTime.parse(currentUser
+                                            .licenseDetails["REB PTR Date"]))),
+                                pw.SizedBox(height: 1),
+                                PdfWidgets().pdfCustomRichText(
+                                    mainText: 'DHSUD No: ',
+                                    fontSize: 10,
+                                    valueText: currentUser
+                                        .licenseDetails["DHSUD No."]),
+                                pw.SizedBox(height: 1),
+                                PdfWidgets().pdfCustomRichText(
+                                    mainText: 'Valid Until: ',
+                                    fontSize: 10,
+                                    valueText: customDateFormat2.format(
+                                        DateTime.parse(currentUser
+                                            .licenseDetails["DHSUD Date"]))),
+                                pw.SizedBox(height: 1),
+                                PdfWidgets().pdfCustomRichText(
+                                  mainText: 'AIPO No: ',
+                                  fontSize: 10,
+                                  valueText:
+                                      currentUser.licenseDetails["AIPO No."],
                                 ),
-                          PdfWidgets().pdfCustomRichText(
-                              mainText: 'REB PRC License No: ',
-                              fontSize: 10,
-                              valueText: currentUser
-                                  .licenseDetails["REB PRC License No."]),
-                          pw.SizedBox(height: 1),
-                          PdfWidgets().pdfCustomRichText(
-                              mainText: 'REB PRC ID No: ',
-                              fontSize: 10,
-                              valueText:
-                                  currentUser.licenseDetails["REB PRC Id No."]),
-                          pw.SizedBox(height: 1),
-                          PdfWidgets().pdfCustomRichText(
-                              mainText: 'Valid Until: ',
-                              fontSize: 10,
-                              valueText: customDateFormat1.format(
-                                  DateTime.parse(currentUser
-                                      .licenseDetails["REB PRC Date"]))),
-                          pw.SizedBox(height: 1),
-                          PdfWidgets().pdfCustomRichText(
-                              mainText: 'REB PTR No:',
-                              fontSize: 10,
-                              valueText:
-                                  currentUser.licenseDetails["REB PTR No."]),
-                          pw.SizedBox(height: 1),
-                          PdfWidgets().pdfCustomRichText(
-                              mainText: 'Valid Until: ',
-                              fontSize: 10,
-                              valueText: customDateFormat2.format(
-                                  DateTime.parse(currentUser
-                                      .licenseDetails["REB PTR Date"]))),
-                          pw.SizedBox(height: 1),
-                          PdfWidgets().pdfCustomRichText(
-                              mainText: 'DHSUD No: ',
-                              fontSize: 10,
-                              valueText:
-                                  currentUser.licenseDetails["DHSUD No."]),
-                          pw.SizedBox(height: 1),
-                          PdfWidgets().pdfCustomRichText(
-                              mainText: 'Valid Until: ',
-                              fontSize: 10,
-                              valueText: customDateFormat2.format(
-                                  DateTime.parse(currentUser
-                                      .licenseDetails["DHSUD Date"]))),
-                          pw.SizedBox(height: 1),
-                          PdfWidgets().pdfCustomRichText(
-                            mainText: 'AIPO No: ',
-                            fontSize: 10,
-                            valueText: currentUser.licenseDetails["AIPO No."],
+                                pw.SizedBox(height: 1),
+                                PdfWidgets().pdfCustomRichText(
+                                    mainText: 'Valid Until: ',
+                                    fontSize: 10,
+                                    valueText: customDateFormat1.format(
+                                        DateTime.parse(currentUser
+                                            .licenseDetails["AIPO Date"]))),
+                                pw.SizedBox(height: 1),
+                              ],
+                            ),
                           ),
-                          pw.SizedBox(height: 1),
-                          PdfWidgets().pdfCustomRichText(
-                              mainText: 'Valid Until: ',
-                              fontSize: 10,
-                              valueText: customDateFormat1.format(
-                                  DateTime.parse(currentUser
-                                      .licenseDetails["AIPO Date"]))),
-                          pw.SizedBox(height: 1),
-                        ],
-                      ),
-                    ),
-                  ),
+                        ),
                   //* ================= Broker licence Details [END]
                 ],
               ),

@@ -338,6 +338,7 @@ class _EditProfilePageState
                                             onPressed: () {
                                               _personalInfoFormKey.currentState!
                                                   .reset();
+                                              _profilePicture = null;
                                               controller.setFormEditing(null);
                                             },
                                           ),

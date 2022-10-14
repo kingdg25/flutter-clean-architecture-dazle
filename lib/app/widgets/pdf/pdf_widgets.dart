@@ -16,14 +16,15 @@ class PdfWidgets {
       double fontSize = 13,
       pw.FontWeight? fontWeight,
       pw.TextAlign? textAlign,
-      PdfColor? textColor}) {
+      PdfColor? textColor,
+      pw.FontStyle? fontstyle}) {
     return pw.Text(
       text,
       textAlign: textAlign ?? pw.TextAlign.left,
       style: pw.TextStyle(
         color: textColor ?? mainTextColor,
         fontWeight: fontWeight,
-        fontStyle: pw.FontStyle.normal,
+        fontStyle: fontstyle ?? pw.FontStyle.normal,
         fontSize: fontSize,
       ),
     );

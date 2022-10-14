@@ -69,13 +69,14 @@ class _ProfilePageState extends ViewState<ProfilePage, ProfileController> {
                     //
                     CustomImage(
                         assetImage: 'assets/user_profile.png',
-                        imageUrl: user!.profilePicture.toString()),
+                        imageUrl:
+                            controller.currentUser!.profilePicture.toString()),
                     SizedBox(
                       height: controller.getProportionateScreenHeight(8.0),
                     ),
                     FittedBox(
                       child: CustomText(
-                        text: user!.displayName,
+                        text: controller.currentUser!.displayName,
                         fontSize: 18,
                         fontWeight: FontWeight.w600,
                       ),

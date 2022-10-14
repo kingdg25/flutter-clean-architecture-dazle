@@ -101,14 +101,15 @@ class ProfileController extends Controller {
     Navigator.popAndPushNamed(getContext(), LoginPage.id);
   }
 
-  void profilePage() {
-    Navigator.push(
+  void profilePage() async {
+    await Navigator.push(
         getContext(),
         MaterialPageRoute(
             builder: (context) => ProfileWidget(
                   user: _userToDisplay,
                   listings: _listings,
                 )));
+    getCurrentUser();
   }
 
   void deleteAccountPage() async {
