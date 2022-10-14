@@ -82,6 +82,8 @@ class EditProfileController extends Controller {
 
   String formSaving = '';
 
+  String? formEditing;
+
   EditProfileController(userRepo)
       : editProfilePresenter = EditProfilePresenter(userRepo),
         perfonalInfoFormKey = GlobalKey<FormState>(),
@@ -130,8 +132,12 @@ class EditProfileController extends Controller {
       print('update user on complete');
 
       AppConstant.showLoader(getContext(), false);
-      await _statusDialog('Done!', 'Your $formSaving has been Updated.',
-          success: false);
+      await _statusDialog(
+        'Done!',
+        'Your $formSaving has been Updated.',
+        success: false,
+      );
+      await getCurrentUser();
     };
     editProfilePresenter.updateUserOnError = (e) {
       print('update user on error $e');
@@ -143,6 +149,11 @@ class EditProfileController extends Controller {
             success: false);
       }
     };
+  }
+
+  setFormEditing(String? formName) {
+    formEditing = formName;
+    refreshUI();
   }
 
   saveLicenseInfo() async {
@@ -273,8 +284,6 @@ class EditProfileController extends Controller {
     refreshUI();
   }
 
-  void setLicenseDetails() {}
-
   void updateUser() async {
     AppConstant.showLoader(getContext(), true);
     User updatedUser;
@@ -337,47 +346,11 @@ class EditProfileController extends Controller {
           position: _user!.position,
           isNewUser: false);
     }
-    // else {
-    //   if (brokerLicenseNumberTextController.text != '') {
-    //     updatedUser = User(
-    //         id: _user!.id,
-    //         firstName: firstNameTextController.text,
-    //         lastName: lastNameTextController.text,
-    //         mobileNumber: updatedMobileNum,
-    //         // mobileNumber: updatedMobileNum,
-    //         aboutMe: aboutMeTextController.text,
-    //         profilePicture: user?.profilePicture,
-    //         brokerLicenseNumber: brokerLicenseNumberTextController.text,
-    //         // displayMobileNumber: updatedDisplayMobileNum,
-    //         displayEmail: displayEmailTextController.text,
-    //         licenseDetails: licenseDetails,
-
-    //         // retain value
-    //         email: _user!.email,
-    //         position: _user!.position,
-    //         isNewUser: false);
-    //   } else {
-    //     updatedUser = User(
-    //         id: _user!.id,
-    //         firstName: firstNameTextController.text,
-    //         lastName: lastNameTextController.text,
-    //         mobileNumber: updatedMobileNum,
-    //         aboutMe: aboutMeTextController.text,
-    //         profilePicture: user?.profilePicture,
-    //         // displayMobileNumber: displayMobileNumberTextController.text,
-    //         displayEmail: displayEmailTextController.text,
-    //         licenseDetails: licenseDetails,
-
-    //         // retain value
-    //         email: _user!.email,
-    //         position: _user!.position,
-    //         isNewUser: false);
-    //   }
-    // }
 
     editProfilePresenter.updateUser(
         user: updatedUser, profilePicture: profilePicturePath);
-    getCurrentUser();
+    // getCurrentUser();
+    setFormEditing(null);
   }
 
   _statusDialog(String title, String text,

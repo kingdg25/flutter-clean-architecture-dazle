@@ -94,11 +94,42 @@ class _EditProfilePageState
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              //================================================== Profile pic, email and profession
+              //*=============================================================== Profile pic, email and profession [START]
               ControlledWidgetBuilder<EditProfileController>(
                 builder: (context, controller) {
                   return Column(
                     children: [
+                      CustomFieldLayout(
+                        margin: EdgeInsets.only(bottom: 6),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Flexible(
+                              flex: 5,
+                              child: TitleField(
+                                title: 'PERSONAL INFO',
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20,
+                                color: _textColor,
+                              ),
+                            ),
+                            Flexible(
+                              flex: 5,
+                              child: TextButton(
+                                child: controller.formEditing == 'Personal'
+                                    ? Container()
+                                    : CustomText(
+                                        text: 'Edit',
+                                        color: App.mainColor,
+                                        fontSize: 19),
+                                onPressed: () {
+                                  controller.setFormEditing('Personal');
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                       Stack(
                         children: [
                           CircleAvatar(
@@ -116,23 +147,25 @@ class _EditProfilePageState
                           Positioned(
                             right: 0,
                             bottom: 1,
-                            child: CircleAvatar(
-                                backgroundColor: App.mainColor,
-                                // backgroundColor: Colors.grey[200],?
-                                radius: 25,
-                                child: IconButton(
-                                  icon: Icon(
-                                    Icons.photo_camera_rounded,
-                                    color: Colors.white,
-                                    size: 30,
-                                  ),
-                                  onPressed: () {
-                                    showModalBottomSheet(
-                                      context: context,
-                                      builder: ((builder) => bottomSheet()),
-                                    );
-                                  },
-                                )),
+                            child: controller.formEditing != 'Personal'
+                                ? Container()
+                                : CircleAvatar(
+                                    backgroundColor: App.mainColor,
+                                    // backgroundColor: Colors.grey[200],?
+                                    radius: 25,
+                                    child: IconButton(
+                                      icon: Icon(
+                                        Icons.photo_camera_rounded,
+                                        color: Colors.white,
+                                        size: 30,
+                                      ),
+                                      onPressed: () {
+                                        showModalBottomSheet(
+                                          context: context,
+                                          builder: ((builder) => bottomSheet()),
+                                        );
+                                      },
+                                    )),
                           )
                         ],
                       ),
@@ -154,29 +187,20 @@ class _EditProfilePageState
                   );
                 },
               ),
-              _customDivider,
+              //*=============================================================== Profile pic, email and profession [END]
+              // _customDivider,
               ControlledWidgetBuilder<EditProfileController>(
                 builder: (context, controller) {
                   var _personalInfoFormKey = controller.perfonalInfoFormKey;
 
                   return Column(
                     children: [
-                      // ================================== PERSONAL INFO FORM
+                      //* ============================= PERSONAL INFO FORM
                       Form(
                         key: _personalInfoFormKey,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
-                            //--- Full Name [start]
-                            CustomFieldLayout(
-                              margin: EdgeInsets.only(bottom: 6),
-                              child: TitleField(
-                                title: 'PERSONAL INFO',
-                                fontWeight: FontWeight.bold,
-                                fontSize: 20,
-                                color: _textColor,
-                              ),
-                            ),
                             CustomFieldLayout(
                               margin: EdgeInsets.all(0),
                               child: TitleField(
@@ -193,8 +217,11 @@ class _EditProfilePageState
                                 children: [
                                   Flexible(
                                     child: CustomTextField(
-                                      filled: true,
+                                      filled:
+                                          controller.formEditing != 'Personal',
                                       fillColor: _textFieldBg,
+                                      readOnly:
+                                          controller.formEditing != 'Personal',
                                       controller:
                                           controller.firstNameTextController,
                                       hintText: 'First Name',
@@ -226,8 +253,11 @@ class _EditProfilePageState
                                     child: CustomTextField(
                                       controller:
                                           controller.lastNameTextController,
-                                      filled: true,
+                                      filled:
+                                          controller.formEditing != 'Personal',
                                       fillColor: _textFieldBg,
+                                      readOnly:
+                                          controller.formEditing != 'Personal',
                                       validator: (val) {
                                         final namePattern = r'^[a-zA-Z_ ]*$';
                                         final regExp = RegExp(namePattern);
@@ -255,7 +285,7 @@ class _EditProfilePageState
                                 ],
                               ),
                             ),
-                            //--- Full Name [end]
+                            //* ------------------- Full Name [start]
                             //***********************
                             //  --- About Me [start]
                             CustomFieldLayout(
@@ -269,8 +299,9 @@ class _EditProfilePageState
                             ),
                             CustomTextField(
                               controller: controller.aboutMeTextController,
-                              filled: true,
+                              filled: controller.formEditing != 'Personal',
                               fillColor: _textFieldBg,
+                              readOnly: controller.formEditing != 'Personal',
                               hintText: 'About Me',
                               isRequired: true,
                               maxLength: 150,
@@ -292,47 +323,93 @@ class _EditProfilePageState
                             //  --- About Me [end]
                             //  *********************
                             _space,
-                            //  --- Save Changes (Personal Info) [start]
-                            CustomButton(
-                              text: 'Save',
-                              expanded: false,
-                              onPressed: () {
-                                controller.profilePicturePath = _profilePicture;
-                                FocusScope.of(context).unfocus();
-                                controller.formSaving = 'Personal Information';
+                            //*  ---- Save Button - Personal Info  [START]
+                            controller.formEditing != 'Personal'
+                                ? Container()
+                                : Column(
+                                    children: [
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.end,
+                                        children: [
+                                          CustomButton(
+                                            text: 'Cancel',
+                                            expanded: false,
+                                            onPressed: () {
+                                              _personalInfoFormKey.currentState!
+                                                  .reset();
+                                              controller.setFormEditing(null);
+                                            },
+                                          ),
+                                          SizedBox(width: 10),
+                                          CustomButton(
+                                            text: 'Save',
+                                            expanded: false,
+                                            onPressed: () {
+                                              controller.profilePicturePath =
+                                                  _profilePicture;
+                                              FocusScope.of(context).unfocus();
+                                              controller.formSaving =
+                                                  'Personal Information';
 
-                                if (_personalInfoFormKey.currentState!
-                                    .validate()) {
-                                  _personalInfoFormKey.currentState!.save();
+                                              if (_personalInfoFormKey
+                                                  .currentState!
+                                                  .validate()) {
+                                                _personalInfoFormKey
+                                                    .currentState!
+                                                    .save();
 
-                                  controller.updateUser();
-                                }
-                              },
-                            ),
-                            //  --- Save Changes (Personal Info) [end]
+                                                controller.updateUser();
+                                              }
+                                            },
+                                          ),
+                                        ],
+                                      ),
+                                      // for spacing
+                                      _space,
+                                    ],
+                                  ),
+                            //*  ---- Save Button - Personal Info  [START]
                             //  ****************
-                            // for spacing
-                            _space,
                             _customDivider,
                           ],
                         ),
                       ),
-                      // ================================== BUSINESS INFO FORM
+                      //* =================================== BUSINESS INFO FORM
                       Form(
                         key: controller.businessInfoFormKey,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
-                            CustomFieldLayout(
-                              margin: EdgeInsets.only(bottom: 6),
-                              child: TitleField(
-                                title: 'BUSINESS INFO',
-                                fontWeight: FontWeight.bold,
-                                fontSize: 20,
-                                color: _textColor,
-                              ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Flexible(
+                                  flex: 5,
+                                  child: TitleField(
+                                    title: 'BUSINESS INFO',
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 20,
+                                    color: _textColor,
+                                  ),
+                                ),
+                                Flexible(
+                                  flex: 5,
+                                  child: TextButton(
+                                    child: controller.formEditing == 'Business'
+                                        ? Container()
+                                        : CustomText(
+                                            text: 'Edit',
+                                            color: App.mainColor,
+                                            fontSize: 19),
+                                    onPressed: () {
+                                      controller.setFormEditing('Business');
+                                    },
+                                  ),
+                                ),
+                              ],
                             ),
-                            //  --- number [start]
+                            //*  --- Mobile Number [start]
                             CustomFieldLayout(
                               margin: EdgeInsets.all(0),
                               child: TitleField(
@@ -345,6 +422,7 @@ class _EditProfilePageState
                             CustomFieldLayout(
                               margin: EdgeInsets.only(bottom: 15),
                               child: InternationalPhoneNumberInput(
+                                isEnabled: controller.formEditing == 'Business',
                                 countries: ['PH'],
                                 textFieldController:
                                     controller.mobileNumberTextController,
@@ -357,17 +435,18 @@ class _EditProfilePageState
                                   selectorType: PhoneInputSelectorType.DIALOG,
                                 ),
                                 inputDecoration: InputDecoration(
-                                  filled: true,
+                                  filled: controller.formEditing != 'Business',
                                   fillColor: _textFieldBg,
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(5.0),
                                   ),
-                                  enabledBorder: OutlineInputBorder(
+                                  disabledBorder: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(5.0),
                                       borderSide: BorderSide.none),
                                   focusedBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(5.0),
-                                      borderSide: BorderSide.none),
+                                    borderRadius: BorderRadius.circular(5.0),
+                                    // borderSide: BorderSide.none
+                                  ),
                                 ),
                                 onInputChanged: (number) {
                                   print(number.phoneNumber);
@@ -383,9 +462,9 @@ class _EditProfilePageState
                                 ),
                               ),
                             ),
-                            //  --- number [end]
+                            //*  --- Mobile Number [end]
                             //  *********************
-                            //  --- Display email [start]
+                            //*  --- Display email [start]
                             CustomFieldLayout(
                               margin: EdgeInsets.all(0),
                               child: TitleField(
@@ -398,29 +477,54 @@ class _EditProfilePageState
                             CustomFieldLayout(
                               margin: EdgeInsets.all(0),
                               child: CustomEmailField(
+                                  filled: controller.formEditing != 'Business',
+                                  fillColor: _textFieldBg,
+                                  readOnly:
+                                      controller.formEditing != 'Business',
                                   controller:
                                       controller.displayEmailTextController,
-                                  filled: true,
-                                  fillColor: _textFieldBg,
                                   hintText: 'Email Address'),
                             ),
                             _space,
-                            //  --- Display email [end]
-                            CustomButton(
-                              text: 'Save',
-                              expanded: false,
-                              onPressed: () {
-                                FocusScope.of(context).unfocus();
-                                controller.formSaving = 'Business Information';
-                                if (controller.businessInfoFormKey.currentState!
-                                    .validate()) {
-                                  controller.businessInfoFormKey.currentState!
-                                      .save();
+                            //*  --- Display email [end]
+                            //*  ---- Save Button - Business Info  [START]
+                            controller.formEditing != 'Business'
+                                ? Container()
+                                : Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      CustomButton(
+                                        text: 'Cancel',
+                                        expanded: false,
+                                        onPressed: () {
+                                          controller
+                                              .businessInfoFormKey.currentState!
+                                              .reset();
+                                          controller.setFormEditing(null);
+                                        },
+                                      ),
+                                      SizedBox(width: 10),
+                                      CustomButton(
+                                        text: 'Save',
+                                        expanded: false,
+                                        onPressed: () {
+                                          FocusScope.of(context).unfocus();
+                                          controller.formSaving =
+                                              'Business Information';
+                                          if (controller
+                                              .businessInfoFormKey.currentState!
+                                              .validate()) {
+                                            controller.businessInfoFormKey
+                                                .currentState!
+                                                .save();
 
-                                  controller.updateUser();
-                                }
-                              },
-                            ),
+                                            controller.updateUser();
+                                          }
+                                        },
+                                      ),
+                                    ],
+                                  ),
+                            //*  ---- Save Button - Business Info  [END]
                           ],
                         ),
                       ),
@@ -432,14 +536,34 @@ class _EditProfilePageState
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
-                              CustomFieldLayout(
-                                margin: EdgeInsets.only(bottom: 6),
-                                child: TitleField(
-                                  title: 'LICENSE INFO',
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 20,
-                                  color: _textColor,
-                                ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Flexible(
+                                    flex: 5,
+                                    child: TitleField(
+                                      title: 'LICENSE INFO',
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 20,
+                                      color: _textColor,
+                                    ),
+                                  ),
+                                  Flexible(
+                                    flex: 5,
+                                    child: TextButton(
+                                      child: controller.formEditing == 'License'
+                                          ? Container()
+                                          : CustomText(
+                                              text: 'Edit',
+                                              color: App.mainColor,
+                                              fontSize: 19),
+                                      onPressed: () {
+                                        controller.setFormEditing('License');
+                                      },
+                                    ),
+                                  ),
+                                ],
                               ),
                               // ========================== SALESPERSON LICENSE DETAILS
                               controller.professionTextController.text !=
@@ -473,8 +597,13 @@ class _EditProfilePageState
                                                       controller: controller
                                                           .salesResAccNumTextController,
                                                       isRequired: true,
-                                                      filled: true,
+                                                      filled: controller
+                                                              .formEditing !=
+                                                          'License',
                                                       fillColor: _textFieldBg,
+                                                      readOnly: controller
+                                                              .formEditing !=
+                                                          'License',
                                                       hintText:
                                                           'RES Accreditation #',
                                                       keyboardType:
@@ -509,9 +638,14 @@ class _EditProfilePageState
                                                     child: CustomTextField(
                                                       controller: controller
                                                           .salesResIdNumTextController,
-                                                      filled: true,
                                                       isRequired: true,
+                                                      filled: controller
+                                                              .formEditing !=
+                                                          'License',
                                                       fillColor: _textFieldBg,
+                                                      readOnly: controller
+                                                              .formEditing !=
+                                                          'License',
                                                       hintText: 'RES PRC ID #',
                                                       keyboardType:
                                                           TextInputType.number,
@@ -540,11 +674,13 @@ class _EditProfilePageState
                                           child: CustomDatePicker(
                                             controller: controller
                                                 .salesResDateTextController,
-                                            isRequired: true,
-                                            filled: true,
+                                            filled: controller.formEditing !=
+                                                'License',
                                             fillColor: _textFieldBg,
+                                            readOnly: controller.formEditing !=
+                                                'License',
+                                            isRequired: true,
                                             hintText: '',
-                                            readOnly: true,
                                             keyboardType: TextInputType.number,
                                             onTap: () async {
                                               final f =
@@ -623,8 +759,13 @@ class _EditProfilePageState
                                                       controller: controller
                                                           .salesRebPTRNumTextController,
                                                       isRequired: true,
-                                                      filled: true,
+                                                      filled: controller
+                                                              .formEditing !=
+                                                          'License',
                                                       fillColor: _textFieldBg,
+                                                      readOnly: controller
+                                                              .formEditing !=
+                                                          'License',
                                                       hintText: 'REB PTR No.',
                                                       keyboardType:
                                                           TextInputType.number,
@@ -659,10 +800,14 @@ class _EditProfilePageState
                                                       controller: controller
                                                           .salesRebPtrDateTextController,
                                                       isRequired: true,
-                                                      filled: true,
+                                                      filled: controller
+                                                              .formEditing !=
+                                                          'License',
                                                       fillColor: _textFieldBg,
+                                                      readOnly: controller
+                                                              .formEditing !=
+                                                          'License',
                                                       hintText: '',
-                                                      readOnly: true,
                                                       keyboardType:
                                                           TextInputType.number,
                                                       onTap: () async {
@@ -769,8 +914,13 @@ class _EditProfilePageState
                                                       controller: controller
                                                           .salesAipoNumTextController,
                                                       isRequired: true,
-                                                      filled: true,
+                                                      filled: controller
+                                                              .formEditing !=
+                                                          'License',
                                                       fillColor: _textFieldBg,
+                                                      readOnly: controller
+                                                              .formEditing !=
+                                                          'License',
                                                       hintText: 'AIPO No.',
                                                       keyboardType:
                                                           TextInputType.number,
@@ -805,10 +955,14 @@ class _EditProfilePageState
                                                       controller: controller
                                                           .salesAipoDateTextController,
                                                       isRequired: true,
-                                                      filled: true,
+                                                      filled: controller
+                                                              .formEditing !=
+                                                          'License',
                                                       fillColor: _textFieldBg,
+                                                      readOnly: controller
+                                                              .formEditing !=
+                                                          'License',
                                                       hintText: '',
-                                                      readOnly: true,
                                                       keyboardType:
                                                           TextInputType.number,
                                                       onTap: () async {
@@ -931,8 +1085,13 @@ class _EditProfilePageState
                                         children: [
                                           Flexible(
                                             child: CustomTextField(
-                                              filled: true,
+                                              isRequired: true,
+                                              filled: controller.formEditing !=
+                                                  'License',
                                               fillColor: _textFieldBg,
+                                              readOnly:
+                                                  controller.formEditing !=
+                                                      'License',
                                               controller: controller
                                                   .brokerFirstNameTextController,
                                               hintText: 'First Name',
@@ -956,7 +1115,6 @@ class _EditProfilePageState
                                                 }
                                                 return null;
                                               },
-                                              isRequired: true,
                                               textCapitalization:
                                                   TextCapitalization.sentences,
                                             ),
@@ -966,8 +1124,13 @@ class _EditProfilePageState
                                             child: CustomTextField(
                                               controller: controller
                                                   .brokerLastNameTextController,
-                                              filled: true,
+                                              isRequired: true,
+                                              filled: controller.formEditing !=
+                                                  'License',
                                               fillColor: _textFieldBg,
+                                              readOnly:
+                                                  controller.formEditing !=
+                                                      'License',
                                               validator: (val) {
                                                 final namePattern =
                                                     r'^[a-zA-Z_ ]*$';
@@ -989,7 +1152,6 @@ class _EditProfilePageState
                                                 return null;
                                               },
                                               hintText: 'Last Name',
-                                              isRequired: true,
                                               textCapitalization:
                                                   TextCapitalization.sentences,
                                             ),
@@ -1021,8 +1183,11 @@ class _EditProfilePageState
                                             controller: controller
                                                 .rebPrcLicenseNumTextController,
                                             isRequired: true,
-                                            filled: true,
+                                            filled: controller.formEditing !=
+                                                'License',
                                             fillColor: _textFieldBg,
+                                            readOnly: controller.formEditing !=
+                                                'License',
                                             hintText: 'REB PRC License #',
                                             keyboardType: TextInputType.number,
                                           ),
@@ -1053,9 +1218,12 @@ class _EditProfilePageState
                                           child: CustomTextField(
                                             controller: controller
                                                 .rebPrcIdNumTextController,
-                                            filled: true,
                                             isRequired: true,
+                                            filled: controller.formEditing !=
+                                                'License',
                                             fillColor: _textFieldBg,
+                                            readOnly: controller.formEditing !=
+                                                'License',
                                             hintText: 'REB PRC ID #',
                                             keyboardType: TextInputType.number,
                                           ),
@@ -1084,10 +1252,10 @@ class _EditProfilePageState
                                   controller:
                                       controller.rebPrcDateTextController,
                                   isRequired: true,
-                                  filled: true,
+                                  filled: controller.formEditing != 'License',
                                   fillColor: _textFieldBg,
+                                  readOnly: controller.formEditing != 'License',
                                   hintText: '',
-                                  readOnly: true,
                                   keyboardType: TextInputType.number,
                                   onTap: () async {
                                     final f = new DateFormat('MM/dd/yyyy');
@@ -1151,8 +1319,11 @@ class _EditProfilePageState
                                             controller: controller
                                                 .rebPTRNumTextController,
                                             isRequired: true,
-                                            filled: true,
+                                            filled: controller.formEditing !=
+                                                'License',
                                             fillColor: _textFieldBg,
+                                            readOnly: controller.formEditing !=
+                                                'License',
                                             hintText: 'REB PTR No.',
                                             keyboardType: TextInputType.number,
                                           ),
@@ -1184,10 +1355,12 @@ class _EditProfilePageState
                                             controller: controller
                                                 .rebPtrDateTextController,
                                             isRequired: true,
-                                            filled: true,
+                                            filled: controller.formEditing !=
+                                                'License',
                                             fillColor: _textFieldBg,
+                                            readOnly: controller.formEditing !=
+                                                'License',
                                             hintText: '',
-                                            readOnly: true,
                                             keyboardType: TextInputType.number,
                                             onTap: () async {
                                               final f =
@@ -1271,8 +1444,11 @@ class _EditProfilePageState
                                             controller: controller
                                                 .dhsudNumTextController,
                                             isRequired: true,
-                                            filled: true,
+                                            filled: controller.formEditing !=
+                                                'License',
                                             fillColor: _textFieldBg,
+                                            readOnly: controller.formEditing !=
+                                                'License',
                                             hintText: 'DHSUD No.',
                                             keyboardType: TextInputType.number,
                                           ),
@@ -1304,10 +1480,12 @@ class _EditProfilePageState
                                             controller: controller
                                                 .dhsudDateTextController,
                                             isRequired: true,
-                                            filled: true,
+                                            filled: controller.formEditing !=
+                                                'License',
                                             fillColor: _textFieldBg,
+                                            readOnly: controller.formEditing !=
+                                                'License',
                                             hintText: '',
-                                            readOnly: true,
                                             keyboardType: TextInputType.number,
                                             onTap: () async {
                                               final f =
@@ -1393,8 +1571,11 @@ class _EditProfilePageState
                                             controller: controller
                                                 .aipoNumTextController,
                                             isRequired: true,
-                                            filled: true,
+                                            filled: controller.formEditing !=
+                                                'License',
                                             fillColor: _textFieldBg,
+                                            readOnly: controller.formEditing !=
+                                                'License',
                                             hintText: 'AIPO No.',
                                             keyboardType: TextInputType.number,
                                           ),
@@ -1426,10 +1607,12 @@ class _EditProfilePageState
                                             controller: controller
                                                 .aipoDateTextController,
                                             isRequired: true,
-                                            filled: true,
+                                            filled: controller.formEditing !=
+                                                'License',
                                             fillColor: _textFieldBg,
+                                            readOnly: controller.formEditing !=
+                                                'License',
                                             hintText: '',
-                                            readOnly: true,
                                             keyboardType: TextInputType.number,
                                             onTap: () async {
                                               final f =
@@ -1486,25 +1669,46 @@ class _EditProfilePageState
                                 ],
                               ),
                               _space,
-                              CustomButton(
-                                text: 'Save',
-                                expanded: false,
-                                onPressed: () {
-                                  FocusScope.of(context).unfocus();
-                                  controller.formSaving = 'License Information';
+                              //* ----- Save Button - License Info [Start]
+                              controller.formEditing != 'License'
+                                  ? Container()
+                                  : Row(
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      children: [
+                                        CustomButton(
+                                          text: 'Cancel',
+                                          expanded: false,
+                                          onPressed: () {
+                                            controller.licenseInfoFormKey
+                                                .currentState!
+                                                .reset();
+                                            controller.setFormEditing(null);
+                                          },
+                                        ),
+                                        SizedBox(width: 10),
+                                        CustomButton(
+                                          text: 'Save',
+                                          expanded: false,
+                                          onPressed: () {
+                                            FocusScope.of(context).unfocus();
+                                            controller.formSaving =
+                                                'License Information';
 
-                                  if (controller
-                                      .licenseInfoFormKey.currentState!
-                                      .validate()) {
-                                    controller.licenseInfoFormKey.currentState!
-                                        .save();
+                                            if (controller.licenseInfoFormKey
+                                                .currentState!
+                                                .validate()) {
+                                              controller.licenseInfoFormKey
+                                                  .currentState!
+                                                  .save();
 
-                                    // controller.updateUser();
+                                              // controller.updateUser();
 
-                                    controller.saveLicenseInfo();
-                                  }
-                                },
-                              ),
+                                              controller.saveLicenseInfo();
+                                            }
+                                          },
+                                        ),
+                                      ],
+                                    ),
                             ],
                           )),
                     ],
