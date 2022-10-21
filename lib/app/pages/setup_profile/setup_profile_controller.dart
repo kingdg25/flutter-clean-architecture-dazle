@@ -26,6 +26,8 @@ class SetupProfileController extends Controller {
   final TextEditingController brokerLicenseNumberTextController;
   String brokerLicenseNumberTextField;
 
+  String? mobileNumber;
+
   SetupProfileController(userRepo)
       : setupProfilePresenter = SetupProfilePresenter(userRepo),
         setupProfileFormKey = GlobalKey<FormState>(),
@@ -117,7 +119,7 @@ class SetupProfileController extends Controller {
       setupProfilePresenter.setupProfile(
           firstName: firstNameTextController.text,
           lastName: lastNameTextController.text,
-          mobileNumber: mobileNumberTextController.text,
+          mobileNumber: mobileNumber,
           position: position,
           brokerLicenseNumber: brokerLicenseNumberTextController.text,
           email: _user!.email);

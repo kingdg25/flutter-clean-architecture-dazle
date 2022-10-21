@@ -335,11 +335,12 @@ class _EditProfilePageState
                                           CustomButton(
                                             text: 'Cancel',
                                             expanded: false,
-                                            onPressed: () {
+                                            onPressed: () async {
                                               _personalInfoFormKey.currentState!
                                                   .reset();
                                               _profilePicture = null;
                                               controller.setFormEditing(null);
+                                              await controller.getCurrentUser();
                                             },
                                           ),
                                           SizedBox(width: 10),
@@ -497,11 +498,12 @@ class _EditProfilePageState
                                       CustomButton(
                                         text: 'Cancel',
                                         expanded: false,
-                                        onPressed: () {
+                                        onPressed: () async {
                                           controller
                                               .businessInfoFormKey.currentState!
                                               .reset();
                                           controller.setFormEditing(null);
+                                          await controller.getCurrentUser();
                                         },
                                       ),
                                       SizedBox(width: 10),
@@ -1679,11 +1681,12 @@ class _EditProfilePageState
                                         CustomButton(
                                           text: 'Cancel',
                                           expanded: false,
-                                          onPressed: () {
+                                          onPressed: () async {
                                             controller.licenseInfoFormKey
                                                 .currentState!
                                                 .reset();
                                             controller.setFormEditing(null);
+                                            await controller.getCurrentUser();
                                           },
                                         ),
                                         SizedBox(width: 10),

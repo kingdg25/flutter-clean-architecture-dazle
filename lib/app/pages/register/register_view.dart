@@ -127,8 +127,10 @@ class _RegisterPageState extends ViewState<RegisterPage, RegisterController> {
                     selectorConfig: SelectorConfig(
                         selectorType: PhoneInputSelectorType.DIALOG),
                     onInputChanged: (PhoneNumber number) {
-                      controller.mobileNumberTextController.text =
-                          number.phoneNumber.toString();
+                      print(number.phoneNumber.toString());
+                    },
+                    onSaved: (number) {
+                      controller.mobileNumber = number.phoneNumber;
                     },
                   ),
                   TitleField(title: 'I am a Real Estate ..'),

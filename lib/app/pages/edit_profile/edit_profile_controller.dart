@@ -138,8 +138,9 @@ class EditProfileController extends Controller {
         success: false,
       );
       await getCurrentUser();
+      setFormEditing(null);
     };
-    editProfilePresenter.updateUserOnError = (e) {
+    editProfilePresenter.updateUserOnError = (e) async {
       print('update user on error $e');
       AppConstant.showLoader(getContext(), false);
       if (!e['error']) {
@@ -161,36 +162,36 @@ class EditProfileController extends Controller {
 
     if (user!.position == "Broker") {
       licenseDetails = {
-        "REB PRC License No.": rebPrcLicenseNumTextController.text,
-        "REB PRC Id No.": rebPrcIdNumTextController.text,
+        "REB PRC License No": rebPrcLicenseNumTextController.text,
+        "REB PRC Id No": rebPrcIdNumTextController.text,
         "REB PRC Date": dateFormat.format(rebPrcDate!),
-        "REB PTR No.": rebPTRNumTextController.text,
+        "REB PTR No": rebPTRNumTextController.text,
         "REB PTR Date": dateFormat.format(rebPtrDate!),
-        "DHSUD No.": dhsudNumTextController.text,
+        "DHSUD No": dhsudNumTextController.text,
         "DHSUD Date": dateFormat.format(dhsudDate!),
-        "AIPO No.": aipoNumTextController.text,
+        "AIPO No": aipoNumTextController.text,
         "AIPO Date": dateFormat.format(aipoDate!)
       };
     } else {
       licenseDetails = {
-        "REB PRC License No.": rebPrcLicenseNumTextController.text,
-        "REB PRC Id No.": rebPrcIdNumTextController.text,
+        "REB PRC License No": rebPrcLicenseNumTextController.text,
+        "REB PRC Id No": rebPrcIdNumTextController.text,
         "REB PRC Date": dateFormat.format(rebPrcDate!),
-        "REB PTR No.": rebPTRNumTextController.text,
+        "REB PTR No": rebPTRNumTextController.text,
         "REB PTR Date": dateFormat.format(rebPtrDate!),
-        "DHSUD No.": dhsudNumTextController.text,
+        "DHSUD No": dhsudNumTextController.text,
         "DHSUD Date": dateFormat.format(dhsudDate!),
-        "AIPO No.": aipoNumTextController.text,
+        "AIPO No": aipoNumTextController.text,
         "AIPO Date": dateFormat.format(aipoDate!),
         // --- For Salesperson
         "Broker First Name": brokerFirstNameTextController.text,
         "Broker Last Name": brokerLastNameTextController.text,
-        "Sales RES Accreditation No.": salesResAccNumTextController.text,
-        "Sales RES PRC Id No.": salesResIdNumTextController.text,
+        "Sales RES Accreditation No": salesResAccNumTextController.text,
+        "Sales RES PRC Id No": salesResIdNumTextController.text,
         "Sales RES PRC Date": dateFormat.format(salesResDate!),
-        "Sales REB PTR No.": salesRebPTRNumTextController.text,
+        "Sales REB PTR No": salesRebPTRNumTextController.text,
         "Sales REB PTR Date": dateFormat.format(salesRebPtrDate!),
-        "Sales AIPO No.": salesAipoNumTextController.text,
+        "Sales AIPO No": salesAipoNumTextController.text,
         "Sales AIPO Date": dateFormat.format(salesAipoDate!)
       };
     }
@@ -225,20 +226,20 @@ class EditProfileController extends Controller {
     final customDateFormat2 = new DateFormat('MMM yyyy');
     if (user.licenseDetails != null) {
       rebPrcLicenseNumTextController.text =
-          user.licenseDetails["REB PRC License No."];
-      rebPrcIdNumTextController.text = user.licenseDetails["REB PRC Id No."];
+          user.licenseDetails["REB PRC License No"];
+      rebPrcIdNumTextController.text = user.licenseDetails["REB PRC Id No"];
       rebPrcDate = DateTime.parse(user.licenseDetails["REB PRC Date"]);
       rebPrcDateTextController.text = customDateFormat1.format(rebPrcDate!);
 
-      rebPTRNumTextController.text = user.licenseDetails["REB PTR No."];
+      rebPTRNumTextController.text = user.licenseDetails["REB PTR No"];
       rebPtrDate = DateTime.parse(user.licenseDetails["REB PTR Date"]);
       rebPtrDateTextController.text = customDateFormat2.format(rebPtrDate!);
 
-      dhsudNumTextController.text = user.licenseDetails["DHSUD No."];
+      dhsudNumTextController.text = user.licenseDetails["DHSUD No"];
       dhsudDate = DateTime.parse(user.licenseDetails["DHSUD Date"]);
       dhsudDateTextController.text = customDateFormat2.format(dhsudDate!);
 
-      aipoNumTextController.text = user.licenseDetails["AIPO No."];
+      aipoNumTextController.text = user.licenseDetails["AIPO No"];
       aipoDate = DateTime.parse(user.licenseDetails["AIPO Date"]);
       aipoDateTextController.text = customDateFormat1.format(aipoDate!);
 
@@ -249,7 +250,7 @@ class EditProfileController extends Controller {
             user.licenseDetails["Broker Last Name"];
 
         salesResAccNumTextController.text =
-            user.licenseDetails["Sales RES Accreditation No."];
+            user.licenseDetails["Sales RES Accreditation No"];
         salesResIdNumTextController.text =
             user.licenseDetails["Sales RES PRC Id No."];
 
@@ -259,7 +260,7 @@ class EditProfileController extends Controller {
             salesResDate == null ? '' : customDateFormat1.format(salesResDate!);
 
         salesRebPTRNumTextController.text =
-            user.licenseDetails["Sales REB PTR No."];
+            user.licenseDetails["Sales REB PTR No"];
 
         salesRebPtrDate =
             DateTime.parse(user.licenseDetails["Sales REB PTR Date"]);
@@ -267,7 +268,7 @@ class EditProfileController extends Controller {
             ? ''
             : customDateFormat2.format(salesRebPtrDate!);
 
-        salesAipoNumTextController.text = user.licenseDetails["Sales AIPO No."];
+        salesAipoNumTextController.text = user.licenseDetails["Sales AIPO No"];
 
         salesAipoDate = DateTime.parse(user.licenseDetails["Sales AIPO Date"]);
         salesAipoDateTextController.text = salesAipoDate == null
@@ -350,7 +351,6 @@ class EditProfileController extends Controller {
     editProfilePresenter.updateUser(
         user: updatedUser, profilePicture: profilePicturePath);
     // getCurrentUser();
-    setFormEditing(null);
   }
 
   _statusDialog(String title, String text,
@@ -404,3 +404,5 @@ class EditProfileController extends Controller {
     super.onDisposed();
   }
 }
+
+//TODO: Dont exit/unfocus form onErrors

@@ -30,6 +30,8 @@ class RegisterController extends Controller {
 
   final RegisterPresenter registerPresenter;
 
+  String? mobileNumber;
+
   RegisterController(userRepo)
       : registerPresenter = RegisterPresenter(userRepo),
         registerPageController = PageController(),
@@ -184,7 +186,7 @@ class RegisterController extends Controller {
     registerPresenter.registerUser(
         firstName: firstNameTextController.text,
         lastName: lastNameTextController.text,
-        mobileNumber: mobileNumberTextController.text,
+        mobileNumber: mobileNumber,
         position: position,
         // brokerLicenseNumber: brokerLicenseNumberTextController.text,
         email: emailTextController.text,

@@ -368,24 +368,25 @@ class PdfGenerator {
                   ),
                   //* ================= Broker Contact Details [END]
                   // **********
-                  //* ================= Salesperson licence Details [START]
+                  // * ================= Salesperson licence Details [START]
                   currentUser.position != 'Salesperson' ||
                           currentUser.licenseDetails == null
-                      ? pw.Expanded(
-                          flex: 5,
-                          child: true
-                              ? pw.Container()
-                              : pw.Container(
-                                  padding: pw.EdgeInsets.only(left: 10),
-                                  child: pw.Center(
-                                    child: PdfWidgets().pdfCustomText(
-                                        fontSize: 10,
-                                        fontstyle: pw.FontStyle.italic,
-                                        text:
-                                            '"No License Details Provided by Broker."'),
-                                  ),
-                                ),
-                        )
+                      ? pw.Container()
+                      // pw.Expanded(
+                      //     flex: 5,
+                      //     child: true
+                      //         ? pw.Container()
+                      //         : pw.Container(
+                      //             padding: pw.EdgeInsets.only(left: 10),
+                      //             child: pw.Center(
+                      //               child: PdfWidgets().pdfCustomText(
+                      //                   fontSize: 10,
+                      //                   fontstyle: pw.FontStyle.italic,
+                      //                   text:
+                      //                       '"No License Details Provided by Broker."'),
+                      //             ),
+                      //           ),
+                      //   )
                       : pw.Expanded(
                           flex: 5,
                           child: pw.Container(
@@ -465,7 +466,7 @@ class PdfGenerator {
                               mainAxisSize: pw.MainAxisSize.min,
                               children: [
                                 currentUser.position != 'Salesperson'
-                                    ? Container()
+                                    ? pw.Container()
                                     : PdfWidgets().pdfCustomText(
                                         text:
                                             '${currentUser.licenseDetails['Broker First Name']} ${currentUser.licenseDetails['Broker Last Name']} ',
