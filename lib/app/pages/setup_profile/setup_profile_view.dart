@@ -97,11 +97,11 @@ class _SetupProfilePageState
                           inputBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(5.0),
                           ),
-                          onInputChanged: (number) {
-                            print(number.phoneNumber);
+                          onInputChanged: (PhoneNumber number) {
+                            print(number.phoneNumber.toString());
                           },
                           onSaved: (number) {
-                            print('On Saved: $number');
+                            controller.mobileNumber = number.phoneNumber;
                           },
                           keyboardType: TextInputType.numberWithOptions(
                             signed: true,
