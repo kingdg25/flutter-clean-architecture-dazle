@@ -401,13 +401,13 @@ class PdfGenerator {
                                     mainText: 'RES Accreditation No: ',
                                     fontSize: 10,
                                     valueText: currentUser.licenseDetails[
-                                        "Sales RES Accreditation No."]),
+                                        "Sales RES Accreditation No"]),
                                 pw.SizedBox(height: 1),
                                 PdfWidgets().pdfCustomRichText(
                                     mainText: 'RES PRC ID No: ',
                                     fontSize: 10,
-                                    valueText: currentUser.licenseDetails[
-                                        "Sales RES PRC Id No."]),
+                                    valueText: currentUser
+                                        .licenseDetails["Sales RES PRC Id No"]),
                                 pw.SizedBox(height: 1),
                                 PdfWidgets().pdfCustomRichText(
                                     mainText: 'Valid Until: ',
@@ -421,7 +421,7 @@ class PdfGenerator {
                                     mainText: 'REB PTR No:',
                                     fontSize: 10,
                                     valueText: currentUser
-                                        .licenseDetails["Sales REB PTR No."]),
+                                        .licenseDetails["Sales REB PTR No"]),
                                 pw.SizedBox(height: 1),
                                 PdfWidgets().pdfCustomRichText(
                                     mainText: 'Valid Until: ',
@@ -435,7 +435,7 @@ class PdfGenerator {
                                   mainText: 'AIPO No: ',
                                   fontSize: 10,
                                   valueText: currentUser
-                                      .licenseDetails["Sales AIPO No."],
+                                      .licenseDetails["Sales AIPO No"],
                                 ),
                                 pw.SizedBox(height: 1),
                                 PdfWidgets().pdfCustomRichText(
@@ -478,13 +478,13 @@ class PdfGenerator {
                                     mainText: 'REB PRC License No: ',
                                     fontSize: 10,
                                     valueText: currentUser
-                                        .licenseDetails["REB PRC License No."]),
+                                        .licenseDetails["REB PRC License No"]),
                                 pw.SizedBox(height: 1),
                                 PdfWidgets().pdfCustomRichText(
                                     mainText: 'REB PRC ID No: ',
                                     fontSize: 10,
                                     valueText: currentUser
-                                        .licenseDetails["REB PRC Id No."]),
+                                        .licenseDetails["REB PRC Id No"]),
                                 pw.SizedBox(height: 1),
                                 PdfWidgets().pdfCustomRichText(
                                     mainText: 'Valid Until: ',
@@ -497,7 +497,7 @@ class PdfGenerator {
                                     mainText: 'REB PTR No:',
                                     fontSize: 10,
                                     valueText: currentUser
-                                        .licenseDetails["REB PTR No."]),
+                                        .licenseDetails["REB PTR No"]),
                                 pw.SizedBox(height: 1),
                                 PdfWidgets().pdfCustomRichText(
                                     mainText: 'Valid Until: ',
@@ -509,8 +509,8 @@ class PdfGenerator {
                                 PdfWidgets().pdfCustomRichText(
                                     mainText: 'DHSUD No: ',
                                     fontSize: 10,
-                                    valueText: currentUser
-                                        .licenseDetails["DHSUD No."]),
+                                    valueText:
+                                        currentUser.licenseDetails["DHSUD No"]),
                                 pw.SizedBox(height: 1),
                                 PdfWidgets().pdfCustomRichText(
                                     mainText: 'Valid Until: ',
@@ -523,7 +523,7 @@ class PdfGenerator {
                                   mainText: 'AIPO No: ',
                                   fontSize: 10,
                                   valueText:
-                                      currentUser.licenseDetails["AIPO No."],
+                                      currentUser.licenseDetails["AIPO No"],
                                 ),
                                 pw.SizedBox(height: 1),
                                 PdfWidgets().pdfCustomRichText(
