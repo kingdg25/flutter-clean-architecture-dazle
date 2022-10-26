@@ -120,7 +120,8 @@ class _CreateListingPageState
                         : 'Are you sure you want to close Create Listing Form?',
                     onConfirm: () {
                       if (widget.property == null) {
-                        controller.mixpanel?.track('Exit Create Listing',
+                        AppConstant.mixPanelInstance!.track(
+                            'Exit Create Listing',
                             properties: {'Exited in': 'Step $currentPage'});
                       }
                       Navigator.of(context).pop();
@@ -225,6 +226,11 @@ class _CreateListingPageState
                 ],
                 radioButtonValue: (value) {
                   controller.propertyType = value;
+                  if (value == "Commercial Building" ||
+                      value == "Commercial Lot") {
+                  } else {
+                    controller.pricing = '';
+                  }
                   setState(() {});
                 },
                 defaultSelected: controller.propertyType,

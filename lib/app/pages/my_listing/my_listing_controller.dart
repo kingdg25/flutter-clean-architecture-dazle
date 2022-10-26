@@ -15,9 +15,6 @@ class MyListingController extends Controller {
   List<Property> get suggestionListing => _suggestionListing;
   List<Property>? searchResultListing;
 
-  Mixpanel? _mixpanel;
-  Mixpanel? get mixpanel => _mixpanel;
-
   Timer? _timer;
 
   MyListingController(userRepo)
@@ -29,7 +26,6 @@ class MyListingController extends Controller {
 
   @override
   void initListeners() {
-    initMixpanel();
     getData();
     const oneSec = Duration(seconds: 10);
     _timer = Timer.periodic(oneSec, (Timer t) {
@@ -112,10 +108,6 @@ class MyListingController extends Controller {
     }
 
     refreshUI();
-  }
-
-  Future<void> initMixpanel() async {
-    _mixpanel = await AppConstant.mixPanelInit();
   }
 
   @override

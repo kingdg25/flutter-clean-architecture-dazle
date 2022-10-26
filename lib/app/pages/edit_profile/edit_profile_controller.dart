@@ -252,7 +252,7 @@ class EditProfileController extends Controller {
         salesResAccNumTextController.text =
             user.licenseDetails["Sales RES Accreditation No"];
         salesResIdNumTextController.text =
-            user.licenseDetails["Sales RES PRC Id No."];
+            user.licenseDetails["Sales RES PRC Id No"];
 
         salesResDate =
             DateTime.parse(user.licenseDetails["Sales RES PRC Date"]);

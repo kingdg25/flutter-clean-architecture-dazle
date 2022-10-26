@@ -83,7 +83,8 @@ class _HomePageState extends ViewState<HomePage, HomeController> {
                   return FloatingActionButton.extended(
                       onPressed: () {
                         if (controller.user?.accountStatus != 'Deactivated') {
-                          controller.mixpanel!.track('Create New Listing',
+                          AppConstant.mixPanelInstance!.track(
+                              'Create New Listing',
                               properties: {'Page Pressed': 'Home Page'});
                           Navigator.push(
                               context,
@@ -212,7 +213,7 @@ class _HomePageState extends ViewState<HomePage, HomeController> {
                     subTitle: 'Your Listings',
                     child: PropertyListTile(
                       items: controller.myListing,
-                      mixpanel: controller.mixpanel,
+                      mixpanel: AppConstant.mixPanelInstance,
                     ),
                     viewAllOnTap: () {
                       print('view all your listings');

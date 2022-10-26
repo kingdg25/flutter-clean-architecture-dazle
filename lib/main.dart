@@ -3,6 +3,7 @@ import 'package:dazle/app/pages/login/login_view.dart';
 import 'package:dazle/app/pages/main/main_view.dart';
 import 'package:dazle/app/pages/register/register_view.dart';
 import 'package:dazle/app/pages/welcome/welcome_page.dart';
+import 'package:dazle/app/utils/app_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -35,6 +36,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     FlutterCleanArchitecture.debugModeOn();
+    AppConstant.mixPanelInit();
 
     return MaterialApp(
       localizationsDelegates: [
