@@ -29,9 +29,6 @@ class CreateListingController extends Controller {
   final CreateListingPresenter createListingPresenter;
   final Property? property;
 
-  Mixpanel? _mixpanel;
-  Mixpanel? get mixpanel => _mixpanel;
-
   PageController createListingPageController;
 
   // page 1
@@ -162,7 +159,6 @@ class CreateListingController extends Controller {
 
   @override
   void initListeners() {
-    initMixpanel();
     initializeProperty();
     // create listing
     createListingPresenter.createListingOnNext = (listing) async {
@@ -226,26 +222,28 @@ class CreateListingController extends Controller {
     };
   }
 
-  Future<void> initMixpanel() async {
-    _mixpanel = await AppConstant.mixPanelInit();
-  }
-
   void mixpanelSendData() async {
-    mixpanel?.track('Listing Saved');
-    mixpanel
-        ?.track('Property Type', properties: {'Property Type': propertyType});
-    mixpanel?.track('Property For', properties: {'Property For': propertyFor});
-    mixpanel?.track('Time Period', properties: {'Time Period': timePeriod});
-    mixpanel?.track('Furnished', properties: {'Furnished': isYourProperty});
-    mixpanel?.track('Ownership', properties: {'Ownership': ownwership});
-    mixpanel?.track('Amenities', properties: {'Amenities': amenities});
-    mixpanel?.track('View Type', properties: {'View Type': viewType});
+    AppConstant.mixPanelInstance!.track('Listing Saved');
+    AppConstant.mixPanelInstance!
+      ..track('Property Type', properties: {'Property Type': propertyType});
+    AppConstant.mixPanelInstance!
+      ..track('Property For', properties: {'Property For': propertyFor});
+    AppConstant.mixPanelInstance!
+      ..track('Time Period', properties: {'Time Period': timePeriod});
+    AppConstant.mixPanelInstance!
+      ..track('Furnished', properties: {'Furnished': isYourProperty});
+    AppConstant.mixPanelInstance!
+      ..track('Ownership', properties: {'Ownership': ownwership});
+    AppConstant.mixPanelInstance!
+      ..track('Amenities', properties: {'Amenities': amenities});
+    AppConstant.mixPanelInstance!
+      ..track('View Type', properties: {'View Type': viewType});
     if (mapSwitch) {
-      mixpanel?.track('Map Displayed');
+      AppConstant.mixPanelInstance!..track('Map Displayed');
     }
     User user = await App.getUser();
-    mixpanel?.identify(user.id!);
-    mixpanel?.getPeople().increment('Total Listings', 1);
+    AppConstant.mixPanelInstance!..identify(user.id!);
+    AppConstant.mixPanelInstance!..getPeople().increment('Total Listings', 1);
   }
 
   updateAmenitiesSelection({List amenities = const []}) {

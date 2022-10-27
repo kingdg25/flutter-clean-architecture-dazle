@@ -18,8 +18,8 @@ import 'package:upgrader/upgrader.dart';
 class HomeController extends Controller {
   final HomePresenter homePresenter;
 
-  Mixpanel? _mixpanel;
-  Mixpanel? get mixpanel => _mixpanel;
+  // Mixpanel? _mixpanel;
+  // Mixpanel? get mixpanel => _mixpanel;
 
   User? _user;
   User? get user => _user;
@@ -231,15 +231,15 @@ class HomeController extends Controller {
 
   // Mixpanel callback
   Future<void> initMixpanel() async {
-    _mixpanel = await AppConstant.mixPanelInit();
-
     // Set User Profile in Mixpanel
     User user = await App.getUser();
-    _mixpanel?.identify(user.id!);
+    AppConstant.mixPanelInstance!.identify(user.id!);
 
-    _mixpanel?.getPeople().set("\$name", user.displayName);
-    _mixpanel?.getPeople().set("\$email", user.email);
-    _mixpanel?.getPeople().set('Position', '${user.position}');
+    AppConstant.mixPanelInstance!.getPeople().set("\$name", user.displayName);
+    AppConstant.mixPanelInstance!.getPeople().set("\$email", user.email);
+    AppConstant.mixPanelInstance!
+        .getPeople()
+        .set('Position', '${user.position}');
     print('MIXPANEL INITIALIZED');
   }
 

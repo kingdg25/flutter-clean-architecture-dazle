@@ -6,9 +6,6 @@ import 'package:mixpanel_flutter/mixpanel_flutter.dart';
 class DownloadListController extends Controller {
   final DownloadListPresenter downloadListPresenter;
 
-  Mixpanel? _mixpanel;
-  Mixpanel? get mixpanel => _mixpanel;
-
   double progressValue = .25;
   bool showProgressBar = false;
 
@@ -17,9 +14,7 @@ class DownloadListController extends Controller {
         super();
 
   @override
-  void initListeners() {
-    initMixpanel();
-  }
+  void initListeners() {}
 
   void showHideProgressBar() {
     if (showProgressBar) {
@@ -40,9 +35,5 @@ class DownloadListController extends Controller {
     double percent = initial * 100;
 
     return '$percent';
-  }
-
-  Future<void> initMixpanel() async {
-    _mixpanel = await AppConstant.mixPanelInit();
   }
 }

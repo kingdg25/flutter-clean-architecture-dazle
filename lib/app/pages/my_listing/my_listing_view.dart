@@ -77,7 +77,7 @@ class _MyListingPageState
               items: controller.searchResultListing?.length == null
                   ? controller.myListing
                   : controller.searchResultListing,
-              mixpanel: controller.mixpanel,
+              mixpanel: AppConstant.mixPanelInstance,
               page: 'My Listing Page',
               height: 300,
               padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
@@ -94,7 +94,7 @@ class _MyListingPageState
                 onPressed: () async {
                   User currentUser = await App.getUser();
                   if (currentUser.accountStatus != 'Deactivated') {
-                    controller.mixpanel!.track('Create New Listing',
+                    AppConstant.mixPanelInstance!.track('Create New Listing',
                         properties: {'Page Pressed': 'Home Page'});
                     Navigator.push(
                         context,

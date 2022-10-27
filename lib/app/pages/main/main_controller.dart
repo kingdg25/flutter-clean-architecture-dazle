@@ -157,7 +157,8 @@ class MainController extends Controller {
                     Navigator.pop(getContext());
                     User currentUser = await App.getUser();
                     if (currentUser.accountStatus != 'Deactivated') {
-                      // mixpanel?.track('Share Listing');
+                      AppConstant.mixPanelInstance!
+                          .track('Share Listing as PDF');
                       showHideProgressBar();
 
                       await Future.delayed(const Duration(milliseconds: 700));
@@ -204,6 +205,8 @@ class MainController extends Controller {
                     fontWeight: FontWeight.w500,
                   ),
                   onPressed: () async {
+                    AppConstant.mixPanelInstance!
+                        .track('Share Listing as Link');
                     await Share.share(
                         'https://dazle-links.web.app/web_listing_details?listingId=${listingToShare!.id}',
                         subject: 'TestShare');

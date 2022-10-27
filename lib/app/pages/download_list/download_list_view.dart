@@ -312,7 +312,8 @@ class _DownloadListPageState
                               User currentUser = await App.getUser();
                               if (currentUser.accountStatus != 'Deactivated') {
                                 //? Changed to open pdf
-                                controller.mixpanel?.track('Download Listing');
+                                AppConstant.mixPanelInstance!
+                                    .track('Download Listing');
 
                                 controller.showHideProgressBar();
 
@@ -352,7 +353,8 @@ class _DownloadListPageState
                             onPressed: () async {
                               User currentUser = await App.getUser();
                               if (currentUser.accountStatus != 'Deactivated') {
-                                // controller.mixpanel?.track('Share Listing');
+                                AppConstant.mixPanelInstance!
+                                    .track('Share Listing');
 
                                 controller.showHideProgressBar();
 
