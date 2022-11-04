@@ -96,7 +96,7 @@ class PdfGenerator {
                           fontWeight: pw.FontWeight.bold,
                           textAlign: pw.TextAlign.center),
                       PdfWidgets().pdfCustomText(
-                        text: 'Location: ' + property.completeAddress,
+                        text: 'Location: ' + property.visibilityAddress,
                         fontSize: 14,
                         textAlign: pw.TextAlign.center,
                         textColor: PdfColor.fromHex('#FFFFFF'),
