@@ -2,10 +2,7 @@ import 'package:dazle/app/utils/app.dart';
 import 'package:dazle/app/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 
-
-
 class CustomButton extends StatelessWidget {
-  
   final String text;
   final Function onPressed;
   final EdgeInsets? padding;
@@ -21,9 +18,9 @@ class CustomButton extends StatelessWidget {
   final Color disabledColor;
 
   CustomButton({
-    required this.text, 
+    required this.text,
     required this.onPressed,
-    this.padding, 
+    this.padding,
     this.expanded = false,
     this.main = true,
     this.fontSize = 14.0,
@@ -43,7 +40,9 @@ class CustomButton extends StatelessWidget {
   }) {
     return CustomText(
       text: text,
-      color: (textColor != null) ? textColor : (main! ? Colors.white : backgroudColor),
+      color: (textColor != null)
+          ? textColor
+          : (main! ? Colors.white : backgroudColor),
       fontSize: fontSize,
       fontWeight: FontWeight.w700,
     );
@@ -53,7 +52,8 @@ class CustomButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Material(
       elevation: elevation,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(borderRadius)),
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(borderRadius)),
       child: Container(
         decoration: BoxDecoration(
           color: main ? backgroudColor : Colors.white,
@@ -71,17 +71,18 @@ class CustomButton extends StatelessWidget {
           height: height,
           width: width,
           padding: padding,
-          child: FlatButton(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(borderRadius))
+          child: TextButton(
+            style: TextButton.styleFrom(
+              shape: RoundedRectangleBorder(
+                  borderRadius:
+                      BorderRadius.all(Radius.circular(borderRadius))),
+              // foregroundColor: disabledColor,
             ),
-            disabledColor: disabledColor,
-            child: expanded ? Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                buttonText(text: text, fontSize: fontSize, main: main)
-              ]
-            ) : buttonText(text: text, fontSize: fontSize, main: main),
+            child: expanded
+                ? Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                    buttonText(text: text, fontSize: fontSize, main: main)
+                  ])
+                : buttonText(text: text, fontSize: fontSize, main: main),
             onPressed: onPressed as void Function()?,
           ),
         ),

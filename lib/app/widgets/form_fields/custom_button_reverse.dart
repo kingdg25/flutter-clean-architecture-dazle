@@ -71,10 +71,13 @@ class CustomButtonReverse extends StatelessWidget {
           height: height,
           width: width,
           padding: padding,
-          child: FlatButton(
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(borderRadius))),
-            disabledColor: disabledColor,
+          child: TextButton(
+            style: TextButton.styleFrom(
+              shape: RoundedRectangleBorder(
+                  borderRadius:
+                      BorderRadius.all(Radius.circular(borderRadius))),
+              // foregroundColor: disabledColor,
+            ),
             child: expanded
                 ? Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                     buttonText(text: text, fontSize: fontSize, main: main)

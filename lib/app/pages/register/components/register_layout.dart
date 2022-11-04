@@ -22,7 +22,7 @@ class RegisterLayout extends StatelessWidget {
     return SizedBox(
       height: height,
       child: Stack(
-        overflow: Overflow.visible,
+        // overflow: Overflow.visible,
         children: [
           Container(
             height: size.height * 0.33,

@@ -20,7 +20,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:flutter_overlay_loader/flutter_overlay_loader.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:open_file/open_file.dart';
+import 'package:open_filex/open_filex.dart';
 import 'package:dazle/app/widgets/pdf/pdf_generator.dart';
 import 'package:share_plus/share_plus.dart';
 
@@ -327,7 +327,7 @@ class _DownloadListPageState
                                 await Future.delayed(const Duration(
                                     seconds: 1, milliseconds: 300));
 
-                                await OpenFile.open(pdfFilePath);
+                                await OpenFilex.open(pdfFilePath);
 
                                 controller.setProgressBarValue(.25);
                                 controller.showHideProgressBar();

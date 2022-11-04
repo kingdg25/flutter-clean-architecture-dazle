@@ -57,7 +57,7 @@ class _ChatInputState extends State<ChatInput> {
                   color: Colors.grey,
                 ),
                 onPressed: () {
-                  controller.attachFile();
+                  // controller.attachFile();
                 },
               ),
               IconButton(
