@@ -10,7 +10,7 @@ import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:flutter_overlay_loader/flutter_overlay_loader.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:mixpanel_flutter/mixpanel_flutter.dart';
-import 'package:open_file/open_file.dart';
+import 'package:open_filex/open_filex.dart';
 import 'package:share_plus/share_plus.dart';
 
 import '../../../domain/entities/property.dart';
@@ -253,11 +253,11 @@ class ListingPropertyListTileDetails extends StatelessWidget {
                             await Future.delayed(
                                 const Duration(seconds: 1, milliseconds: 300));
 
-                            await OpenFile.open(pdfFilePath);
+                            await OpenFilex.open(pdfFilePath);
 
                             controller.setProgressBarValue(.25);
                             controller.showHideProgressBar();
-                            await OpenFile.open(pdfFilePath);
+                            await OpenFilex.open(pdfFilePath);
                           } else {
                             AppConstant.statusDialog(
                                 context: context,

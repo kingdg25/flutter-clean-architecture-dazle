@@ -16,7 +16,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:dazle/app/pages/download_list/download_list_view.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:open_file/open_file.dart';
+import 'package:open_filex/open_filex.dart';
 
 class ListingDetailsPage extends View {
   ListingDetailsPage({Key? key, required this.listingId}) : super(key: key);
@@ -115,7 +115,7 @@ class _ListingDetailsPageState
                                   await Future.delayed(const Duration(
                                       seconds: 1, milliseconds: 300));
 
-                                  await OpenFile.open(pdfFilePath);
+                                  await OpenFilex.open(pdfFilePath);
 
                                   controller.setProgressBarValue(.25);
                                   controller.showHideProgressBar();

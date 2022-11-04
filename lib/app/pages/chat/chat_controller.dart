@@ -3,8 +3,7 @@ import 'package:dazle/domain/entities/chat.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:file_picker/file_picker.dart';
-
+// import 'package:file_picker/file_picker.dart';
 
 import 'dart:io';
 
@@ -68,21 +67,21 @@ class ChatController extends Controller {
   }
 
   /// Attach file
-    Future attachFile() async {
-    FilePickerResult? result = await FilePicker.platform.pickFiles(
-      type: FileType.custom,
-      allowedExtensions: ['pdf', 'doc'],
-    );
+  //   Future attachFile() async {
+  //   FilePickerResult? result = await FilePicker.platform.pickFiles(
+  //     type: FileType.custom,
+  //     allowedExtensions: ['pdf', 'doc'],
+  //   );
 
-    if (result != null) {
-      File file = File(result.files.single.path.toString());
-      refreshUI();
-    } else {
-      refreshUI();
-      // User canceled the picker
-    }
-  }
-  
+  //   if (result != null) {
+  //     File file = File(result.files.single.path.toString());
+  //     refreshUI();
+  //   } else {
+  //     refreshUI();
+  //     // User canceled the picker
+  //   }
+  // }
+
   Future takeVideo() async {
     final pickedFile = await picker.getVideo(source: ImageSource.gallery);
     if (pickedFile != null) {
