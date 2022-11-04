@@ -860,6 +860,7 @@ class _CreateListingPageState
               AppConstant.customTitleFieldWithSwith(
                 title: 'Street Name',
                 optionalText: 'optional',
+                switchValue: controller.showStreet,
                 switchHandler: (val) {
                   setState(() {
                     controller.showStreet = val;
