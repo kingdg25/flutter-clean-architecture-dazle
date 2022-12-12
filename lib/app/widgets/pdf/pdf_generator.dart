@@ -56,6 +56,8 @@ class PdfGenerator {
     String mapLink = "";
     pw.Widget mapImage = pw.Container();
 
+    double spacing = 3;
+
     if (property.coordinates != null) {
       mapCoordinates = property.coordinates;
       latitude = mapCoordinates?["Latitude"];
@@ -91,7 +93,7 @@ class PdfGenerator {
                           text: property.title == null
                               ? '(No Listing Title)'
                               : property.title!,
-                          fontSize: 27,
+                          fontSize: 23,
                           textColor: PdfColor.fromHex('#FFFFFF'),
                           fontWeight: pw.FontWeight.bold,
                           textAlign: pw.TextAlign.center),
@@ -110,7 +112,7 @@ class PdfGenerator {
                       PdfWidgets().pdfCustomText(
                           text: property.propertyFor == 'Sell'
                               ? '${property.formatPrice} PHP'
-                              : '${property.formatPrice} PHP /${property.timePeriod}',
+                              : '${property.formatPrice} PHP / ${property.timePeriod}',
                           fontSize: 25,
                           textColor: PdfColor.fromHex('#FFFFFF'),
                           fontWeight: pw.FontWeight.bold,
@@ -118,31 +120,31 @@ class PdfGenerator {
                     ],
                   ),
                 ),
-                pw.SizedBox(height: 30),
+                pw.SizedBox(height: 10),
                 coverPhoto,
                 //*============================================================= PDF Title [END]
                 //***************
                 //*============================================================= Listing Details [START]
-                pw.SizedBox(height: 5),
+                pw.SizedBox(height: spacing),
                 pw.Column(
                   crossAxisAlignment: pw.CrossAxisAlignment.start,
                   children: [
                     pw.SizedBox(
-                      height: 5,
+                      height: spacing,
                     ),
                     PdfWidgets().pdfCustomRichText(
                       mainText: 'Property Type: ',
                       valueText: property.propertyType,
                     ),
                     pw.SizedBox(
-                      height: 5,
+                      height: spacing,
                     ),
                     PdfWidgets().pdfCustomRichText(
                       mainText: 'Property for: ',
                       valueText: property.propertyFor,
                     ),
                     pw.SizedBox(
-                      height: 5,
+                      height: spacing,
                     ),
                     PdfWidgets().pdfCustomRichText(
                       mainText: 'Lot area (sqm): ',
@@ -151,7 +153,7 @@ class PdfGenerator {
                     property.floorArea == 0
                         ? pw.Container()
                         : pw.SizedBox(
-                            height: 10,
+                            height: spacing,
                           ),
                     property.floorArea == 0
                         ? pw.Container()
@@ -162,7 +164,7 @@ class PdfGenerator {
                     property.frontageArea == 0
                         ? pw.Container()
                         : pw.SizedBox(
-                            height: 5,
+                            height: spacing,
                           ),
                     property.frontageArea == 0
                         ? pw.Container()
@@ -171,7 +173,7 @@ class PdfGenerator {
                             valueText: '${property.formatFrontageArea}',
                           ),
                     pw.SizedBox(
-                      height: 5,
+                      height: spacing,
                     ),
                     PdfWidgets().pdfCustomRichText(
                       mainText: 'Property Description: ',
@@ -181,7 +183,7 @@ class PdfGenerator {
                             property.isYourProperty == ''
                         ? pw.Container()
                         : pw.SizedBox(
-                            height: 5,
+                            height: spacing,
                           ),
                     property.isYourProperty == null ||
                             property.isYourProperty == ''
@@ -194,7 +196,7 @@ class PdfGenerator {
                             property.propertyType!.contains('Building')
                         ? pw.Container()
                         : pw.SizedBox(
-                            height: 5,
+                            height: spacing,
                           ),
                     property.propertyType!.contains('Lot') ||
                             property.propertyType!.contains('Building')
@@ -207,7 +209,7 @@ class PdfGenerator {
                             property.propertyType!.contains('Building')
                         ? pw.Container()
                         : pw.SizedBox(
-                            height: 5,
+                            height: spacing,
                           ),
                     property.propertyType!.contains('Lot') ||
                             property.propertyType!.contains('Building')
@@ -217,21 +219,21 @@ class PdfGenerator {
                             valueText: '${property.totalBathRoom}',
                           ),
                     pw.SizedBox(
-                      height: 5,
+                      height: spacing,
                     ),
                     PdfWidgets().pdfCustomRichText(
                       mainText: 'No. of parking spots: ',
                       valueText: property.totalParkingSpace,
                     ),
                     pw.SizedBox(
-                      height: 5,
+                      height: spacing,
                     ),
                     PdfWidgets().pdfCustomRichText(
                       mainText: 'Features and amenities: ',
                       valueText: property.amenities!.join(", "),
                     ),
                     pw.SizedBox(
-                      height: 5,
+                      height: spacing,
                     ),
                     property.coordinates == null
                         ? PdfWidgets().pdfCustomRichText(
@@ -650,7 +652,7 @@ class PdfGenerator {
         child: pw.Image(
           pw.MemoryImage(await imageConverter(photos[0])),
           fit: pw.BoxFit.cover,
-          height: 200,
+          height: 180,
         ),
       ),
     );

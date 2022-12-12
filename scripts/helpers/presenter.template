@@ -1,0 +1,7 @@
+import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
+
+class %pc%Presenter extends Presenter {
+  %pc%Presenter();
+  @override
+  void dispose() {}
+}

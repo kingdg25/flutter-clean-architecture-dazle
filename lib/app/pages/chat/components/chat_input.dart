@@ -67,7 +67,7 @@ class _ChatInputState extends State<ChatInput> {
                   color: Colors.grey,
                 ),
                 onPressed: () {
-                  controller.takeVideo();
+                  // controller.takeVideo();
                 },
               ),
               IconButton(

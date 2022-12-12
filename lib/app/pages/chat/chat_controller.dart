@@ -5,8 +5,6 @@ import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:image_picker/image_picker.dart';
 // import 'package:file_picker/file_picker.dart';
 
-import 'dart:io';
-
 class ChatController extends Controller {
   List<Chat> get chat => _chat.reversed.toList();
   List<Chat> _chat;
@@ -46,7 +44,7 @@ class ChatController extends Controller {
 
   /// Take a photo
   Future takePicture() async {
-    final pickedFile = await picker.getImage(source: ImageSource.camera);
+    final pickedFile = await picker.pickImage(source: ImageSource.camera);
     if (pickedFile != null) {
       refreshUI();
     } else {
@@ -57,7 +55,7 @@ class ChatController extends Controller {
 
   /// Upload from device
   Future uploadFromGallery() async {
-    final pickedFile = await picker.getImage(source: ImageSource.gallery);
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
 
     if (pickedFile != null) {
       refreshUI();
@@ -82,15 +80,15 @@ class ChatController extends Controller {
   //   }
   // }
 
-  Future takeVideo() async {
-    final pickedFile = await picker.getVideo(source: ImageSource.gallery);
-    if (pickedFile != null) {
-      refreshUI();
-    } else {
-      print('No video selected.');
-      refreshUI();
-    }
-  }
+  // Future takeVideo() async {
+  //   final pickedFile = await picker.getVideo(source: ImageSource.gallery);
+  //   if (pickedFile != null) {
+  //     refreshUI();
+  //   } else {
+  //     print('No video selected.');
+  //     refreshUI();
+  //   }
+  // }
 
   void getChatMessage() {
     chatPresenter.getAllMessage();
