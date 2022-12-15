@@ -8,7 +8,7 @@ import 'package:dazle/data/repositories/data_listing_repository.dart';
 import 'package:dazle/domain/entities/user.dart';
 import 'package:dazle/domain/entities/property.dart';
 import 'package:dazle/app/utils/app_constant.dart';
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:share_plus/share_plus.dart';
@@ -41,9 +41,9 @@ class ListingDetailsController extends Controller {
     // get selected listing
     listingDetailsPresenter.getSelectedListingOnNext = (Property res) {
       print('get selected listing on next $res');
-      if (res != null) {
-        _selectedListing = res;
-      }
+      // if (res != null) {
+      _selectedListing = res;
+      // }
     };
 
     listingDetailsPresenter.getSelectedListingOnComplete = () {
@@ -89,10 +89,10 @@ class ListingDetailsController extends Controller {
   getCurrentUser() async {
     User user = await App.getUser();
 
-    if (user != null) {
-      _currentUser = user;
-      refreshUI();
-    }
+    // if (user != null) {
+    _currentUser = user;
+    refreshUI();
+    // }
   }
 
   getSelectedListing() async {

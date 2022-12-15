@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:io';
-import 'dart:typed_data';
 
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dazle/app/pages/download_list/download_list_controller.dart';
@@ -16,10 +15,7 @@ import 'package:dazle/data/repositories/data_listing_repository.dart';
 import 'package:dazle/domain/entities/property.dart';
 import 'package:dazle/domain/entities/user.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
-import 'package:flutter_overlay_loader/flutter_overlay_loader.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:open_filex/open_filex.dart';
 import 'package:dazle/app/widgets/pdf/pdf_generator.dart';
 import 'package:share_plus/share_plus.dart';

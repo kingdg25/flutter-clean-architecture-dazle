@@ -1,21 +1,21 @@
-import 'dart:ui';
+// import 'dart:ui';
 
 import 'package:dazle/app/utils/app.dart';
-import 'package:dazle/app/widgets/form_fields/custom_field_layout.dart';
+// import 'package:dazle/app/widgets/form_fields/custom_field_layout.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+// import 'package:flutter/services.dart';
 
 class CustomDropdownSearch extends StatelessWidget {
   final List<String>? items;
   final Function(String?)? onChangeEvent;
   final double fontSize;
-  String hintText;
+  final String hintText;
   final Color fillColor;
   final bool filled;
   final Color hintColor;
-  String? selctedItem;
-  bool isEnabled;
+  final String? selctedItem;
+  final bool isEnabled;
 
   CustomDropdownSearch({
     required this.items,

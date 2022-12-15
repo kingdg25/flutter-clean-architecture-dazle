@@ -5,7 +5,6 @@ import 'package:dazle/app/pages/login/login_view.dart';
 import 'package:dazle/app/pages/main/main_view.dart';
 import 'package:dazle/app/utils/app.dart';
 import 'package:dazle/app/utils/app_constant.dart';
-import 'package:dazle/data/repositories/data_listing_repository.dart';
 import 'package:dazle/domain/entities/user.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:flutter/material.dart';

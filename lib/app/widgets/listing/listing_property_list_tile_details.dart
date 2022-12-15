@@ -1,17 +1,17 @@
-import 'dart:io';
+// import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dazle/app/pages/main/main_controller.dart';
-import 'package:dazle/app/widgets/profile/profile_info.dart';
+// import 'package:dazle/app/widgets/profile/profile_info.dart';
 import 'package:dazle/domain/entities/user.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
-import 'package:flutter_overlay_loader/flutter_overlay_loader.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+// import 'package:flutter_overlay_loader/flutter_overlay_loader.dart';
+// import 'package:fluttertoast/fluttertoast.dart';
 import 'package:mixpanel_flutter/mixpanel_flutter.dart';
 import 'package:open_filex/open_filex.dart';
-import 'package:share_plus/share_plus.dart';
+// import 'package:share_plus/share_plus.dart';
 
 import '../../../domain/entities/property.dart';
 import '../../pages/listing_details/components/listing_details_icon_button.dart';
@@ -29,7 +29,7 @@ class ListingPropertyListTileDetails extends StatelessWidget {
   final int index;
   final EdgeInsetsGeometry padding;
   final Mixpanel? mixpanel;
-  String? page;
+  final String? page;
   ListingPropertyListTileDetails(
       {required this.items,
       this.height = 255.0,
@@ -121,32 +121,32 @@ class ListingPropertyListTileDetails extends StatelessWidget {
                               fit: BoxFit.scaleDown,
                             ),
                           );
-                          return CachedNetworkImage(
-                            // height: height*0.51,
-                            imageUrl:
-                                items![index].photos![itemIndex].toString(),
-                            imageBuilder: (context, imageProvider) => Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(10),
-                                    topRight: Radius.circular(10)),
-                                image: DecorationImage(
-                                    image: imageProvider, fit: BoxFit.cover),
-                              ),
-                            ),
-                            progressIndicatorBuilder:
-                                (context, url, progress) => Center(
-                              child: CircularProgressIndicator(
-                                valueColor: AlwaysStoppedAnimation<Color?>(
-                                    Colors.indigo[900]),
-                                value: progress.progress,
-                              ),
-                            ),
-                            errorWidget: (context, url, error) => Image.asset(
-                              'assets/brooky_logo.png',
-                              fit: BoxFit.scaleDown,
-                            ),
-                          );
+                          // return CachedNetworkImage(
+                          //   // height: height*0.51,
+                          //   imageUrl:
+                          //       items![index].photos![itemIndex].toString(),
+                          //   imageBuilder: (context, imageProvider) => Container(
+                          //     decoration: BoxDecoration(
+                          //       borderRadius: BorderRadius.only(
+                          //           topLeft: Radius.circular(10),
+                          //           topRight: Radius.circular(10)),
+                          //       image: DecorationImage(
+                          //           image: imageProvider, fit: BoxFit.cover),
+                          //     ),
+                          //   ),
+                          //   progressIndicatorBuilder:
+                          //       (context, url, progress) => Center(
+                          //     child: CircularProgressIndicator(
+                          //       valueColor: AlwaysStoppedAnimation<Color?>(
+                          //           Colors.indigo[900]),
+                          //       value: progress.progress,
+                          //     ),
+                          //   ),
+                          //   errorWidget: (context, url, error) => Image.asset(
+                          //     'assets/brooky_logo.png',
+                          //     fit: BoxFit.scaleDown,
+                          //   ),
+                          // );
                         }),
                   ),
                   Padding(

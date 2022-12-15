@@ -1,9 +1,7 @@
-import 'dart:io';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dazle/app/pages/listing_details/listing_details_view.dart';
 import 'package:dazle/app/pages/main/main_controller.dart';
-import 'package:dazle/app/pages/main/main_view.dart';
+
 import 'package:dazle/app/widgets/property_text_info.dart';
 import 'package:dazle/app/utils/app.dart';
 import 'package:dazle/app/utils/app_constant.dart';
@@ -12,15 +10,12 @@ import 'package:dazle/domain/entities/property.dart';
 import 'package:dazle/domain/entities/user.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
-import 'package:flutter_overlay_loader/flutter_overlay_loader.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+
 import 'package:mixpanel_flutter/mixpanel_flutter.dart';
 import 'package:open_filex/open_filex.dart';
-import 'package:share_plus/share_plus.dart';
 
 import '../../listing_details/components/listing_details_icon_button.dart';
 import 'package:dazle/app/widgets/pdf/pdf_generator.dart';
-import 'package:dazle/app/pages/home/home_controller.dart';
 
 class PropertyListTile extends StatelessWidget {
   final List<Property> items;
@@ -73,9 +68,11 @@ class PropertyListTile extends StatelessWidget {
                         children: [
                           CachedNetworkImage(
                             height: height * 0.56,
-                            imageUrl: items[index].photos![0].toString() == null
-                                ? items[index].coverPhoto.toString()
-                                : items[index].photos![0].toString(),
+                            imageUrl:
+                                // items[index].photos![0].toString() == null
+                                //     ? items[index].coverPhoto.toString()
+                                //     :
+                                items[index].photos![0].toString(),
                             imageBuilder: (context, imageProvider) => Container(
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.only(

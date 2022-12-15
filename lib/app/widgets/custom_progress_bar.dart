@@ -1,5 +1,5 @@
 import 'package:dazle/app/utils/app.dart';
-import 'package:dazle/app/widgets/custom_text.dart';
+// import 'package:dazle/app/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 

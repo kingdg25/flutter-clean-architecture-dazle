@@ -111,7 +111,7 @@ class MyConnectionController extends Controller {
   void searchUser() {
     String text = searchTextController.text;
 
-    if (text == "" || text == null || text.isEmpty) {
+    if (text == "" || text.isEmpty) {
       myConnectionPresenter.searchUser(pattern: "");
       getMyConnection();
     } else {

@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-VERSION=$(curl -g https://asia-east1-dazle-370306.cloudfunctions.net/getAppVersion?company=sample-document | python3 -c "import sys, json; print(json.load(sys.stdin)['mobileVersion'])")
+VERSION=$(curl -g https://asia-east1-dazle-370306.cloudfunctions.net/getAppVersion?company=sample-document | python3 -c "import sys, json; print(json.load(sys.stdin)['dazleVersion'])")
 BUILD_NUMBER=$(( $VERSION ))
 BUILD_VERSION=$(( $BUILD_NUMBER + 900))
 BUILD_NAME="2.0.$BUILD_NUMBER"
@@ -20,7 +20,7 @@ fvm flutter doctor
 fvm flutter pub get
 yes | fvm flutter doctor --android-licenses
 fvm flutter analyze || exit 1
-sed -i '' "s/#{VERSION}/$BUILD_NAME.$BUILD_ENV/g" $CI_PROJECT_DIR/lib/Api/version.dart
+sed -i '' "s/#{VERSION}/$BUILD_NAME.$BUILD_ENV/g" $CI_PROJECT_DIR/lib/version.dart
 cd android
 rm Gemfile.lock
 ./gradlew clean assembleRelease

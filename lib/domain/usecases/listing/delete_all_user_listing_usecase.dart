@@ -1,8 +1,8 @@
 import 'dart:async';
-import 'dart:io';
+// import 'dart:io';
 
 import 'package:dazle/data/repositories/data_listing_repository.dart';
-import 'package:dazle/domain/entities/property.dart';
+// import 'package:dazle/domain/entities/property.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 
 class DeleteAllUserListingUseCase

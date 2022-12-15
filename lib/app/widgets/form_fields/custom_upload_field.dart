@@ -40,10 +40,11 @@ class _CustomUploadFieldState extends State<CustomUploadField> {
 
   @override
   Widget build(BuildContext context) {
-    bool isUpdating = false;
-    if (widget.maxImages != null) {
-      isUpdating = true;
-    }
+    //TODO: GIO - Check if below comment is essential
+    // bool isUpdating = false;
+    // if (widget.maxImages != null) {
+    //   isUpdating = true;
+    // }
     return CustomFieldLayout(
       child: Column(
         children: [

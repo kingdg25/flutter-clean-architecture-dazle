@@ -11,7 +11,7 @@ class ListingPropertyListTile extends StatelessWidget {
   final EdgeInsetsGeometry padding;
   final bool isCurrentUser;
   final Mixpanel? mixpanel;
-  String? page;
+  final String? page;
 
   ListingPropertyListTile(
       {required this.items,

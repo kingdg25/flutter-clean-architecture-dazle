@@ -2,7 +2,6 @@ import 'package:dazle/app/pages/message_listing/message_listing_presenter.dart';
 import 'package:dazle/domain/entities/message.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 
-
 class MessageListingController extends Controller {
   final MessageListingPresenter messageListingPresenter;
 
@@ -10,10 +9,9 @@ class MessageListingController extends Controller {
   List<Message> get messageListings => _messageListings;
 
   MessageListingController(userRepo)
-    : messageListingPresenter = MessageListingPresenter(userRepo),
-      _messageListings = <Message>[],
-      super();
-
+      : messageListingPresenter = MessageListingPresenter(userRepo),
+        _messageListings = <Message>[],
+        super();
 
   @override
   void initListeners() {
@@ -21,9 +19,9 @@ class MessageListingController extends Controller {
     // get message listings
     messageListingPresenter.getMessageListingsOnNext = (List<Message> res) {
       print('get message listings on next $res');
-      if(res != null) {
-        _messageListings = res;
-      }
+      // if(res != null) {
+      _messageListings = res;
+      // }
       refreshUI();
     };
 
@@ -36,8 +34,6 @@ class MessageListingController extends Controller {
     };
   }
 
-
-
   @override
   void onResumed() => print('On resumed');
 
@@ -49,8 +45,8 @@ class MessageListingController extends Controller {
 
   @override
   void onDisposed() {
-    messageListingPresenter.dispose(); // don't forget to dispose of the presenter
+    messageListingPresenter
+        .dispose(); // don't forget to dispose of the presenter
     super.onDisposed();
   }
-  
 }

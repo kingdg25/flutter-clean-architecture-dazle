@@ -73,19 +73,19 @@ class User {
 }
 
 class Verification {
-  final String? user_id;
+  final String? userId;
   final String? status;
   final String? attachment;
 
-  Verification({this.user_id, this.status, this.attachment});
+  Verification({this.userId, this.status, this.attachment});
 
   Verification.fromJson(Map<String, dynamic> json)
-      : user_id = json['user_id'],
+      : userId = json['user_id'],
         status = json['status'],
         attachment = json['attachment'];
 
   Map<String, dynamic> toJson() =>
-      {'user_id': user_id, 'status': status, 'attachment': attachment};
+      {'user_id': userId, 'status': status, 'attachment': attachment};
 }
 
 class UserFeedback {

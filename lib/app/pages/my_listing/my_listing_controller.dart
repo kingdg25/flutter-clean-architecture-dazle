@@ -4,7 +4,7 @@ import 'package:dazle/app/pages/my_listing/my_listing_presenter.dart';
 import 'package:dazle/app/utils/app_constant.dart';
 import 'package:dazle/domain/entities/property.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
-import 'package:mixpanel_flutter/mixpanel_flutter.dart';
+// import 'package:mixpanel_flutter/mixpanel_flutter.dart';
 
 class MyListingController extends Controller {
   final MyListingPresenter myListingPresenter;
@@ -35,9 +35,9 @@ class MyListingController extends Controller {
     // get my listing
     myListingPresenter.getMyListingOnNext = (List<Property> res) {
       print('get my listing on next $res');
-      if (res != null) {
-        _myListing = res;
-      }
+      // if (res != null) {
+      _myListing = res;
+      // }
     };
 
     myListingPresenter.getMyListingOnComplete = () {

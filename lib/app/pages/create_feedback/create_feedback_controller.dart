@@ -2,7 +2,7 @@ import 'package:dazle/app/pages/create_feedback/create_feedback_presenter.dart';
 import 'package:dazle/app/utils/app_constant.dart';
 import 'package:dazle/domain/entities/user.dart';
 import 'package:flutter/material.dart';
-import 'package:dazle/app/pages/profile/profile_view.dart';
+// import 'package:dazle/app/pages/profile/profile_view.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 
 class CreateFeedbackController extends Controller {

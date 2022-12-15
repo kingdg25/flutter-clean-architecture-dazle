@@ -46,106 +46,109 @@ class SocialLogin extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: true
-          ? <Widget>[
-              /** ===============================    LOGIN WITH APPLE           ============================================ */
-              Platform.isIOS
-                  ? AppleAuthButton(
-                      onPressed: appleHandleSignIn as Function()?,
-                      darkMode: false,
-                      text: 'Sign in with Apple',
-                      style: AuthButtonStyle(
-                        // buttonType: AuthButtonType.,
-                        height: 50,
-                        textStyle: TextStyle(
-                          fontSize: 18,
-                          color: Colors.black,
-                        ),
-                        iconSize: 25,
-                        borderRadius: 100,
-                        separator: 30,
-                      ),
-                    )
-                  : Container(),
-              Platform.isIOS ? SizedBox(height: 20.0) : Container(),
-              /** ===============================    LOGIN WITH GOOGLE           ============================================ */
-              GoogleAuthButton(
-                onPressed: googleHandleSignIn as Function(),
-                darkMode: false,
-                text: 'Continue with Google',
-                style: AuthButtonStyle(
-                  // buttonType: AuthButtonType.,
-                  height: 50,
-                  textStyle: TextStyle(
-                    fontSize: 18,
-                    color: Colors.black,
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children:
+            // true
+            //     ?
+            <Widget>[
+          /** ===============================    LOGIN WITH APPLE           ============================================ */
+          Platform.isIOS
+              ? AppleAuthButton(
+                  onPressed: appleHandleSignIn as Function()?,
+                  darkMode: false,
+                  text: 'Sign in with Apple',
+                  style: AuthButtonStyle(
+                    // buttonType: AuthButtonType.,
+                    height: 50,
+                    textStyle: TextStyle(
+                      fontSize: 18,
+                      color: Colors.black,
+                    ),
+                    iconSize: 25,
+                    borderRadius: 100,
+                    separator: 30,
                   ),
-                  iconSize: 25,
-                  borderRadius: 100,
-                  separator: 30,
-                ),
+                )
+              : Container(),
+          Platform.isIOS ? SizedBox(height: 20.0) : Container(),
+          /** ===============================    LOGIN WITH GOOGLE           ============================================ */
+          GoogleAuthButton(
+            onPressed: googleHandleSignIn as Function(),
+            darkMode: false,
+            text: 'Continue with Google',
+            style: AuthButtonStyle(
+              // buttonType: AuthButtonType.,
+              height: 50,
+              textStyle: TextStyle(
+                fontSize: 18,
+                color: Colors.black,
               ),
-              SizedBox(height: 20.0),
-              /** ===============================    LOGIN WITH FACEBOOK           ============================================ */
-              FacebookAuthButton(
-                onPressed: facebookHandleSignIn as Function(),
-                darkMode: false,
-                text: 'Continue with Facebook',
-                style: AuthButtonStyle(
-                  // buttonType: AuthButtonType.secondary,
-                  height: 50,
-                  width: double.infinity,
-                  borderRadius: 100,
-                  textStyle: TextStyle(
-                    fontSize: 18,
-                  ),
-                  // separator: 10
-                  // iconType: AuthIconType.,
-                ),
+              iconSize: 25,
+              borderRadius: 100,
+              separator: 30,
+            ),
+          ),
+          SizedBox(height: 20.0),
+          /** ===============================    LOGIN WITH FACEBOOK           ============================================ */
+          FacebookAuthButton(
+            onPressed: facebookHandleSignIn as Function(),
+            darkMode: false,
+            text: 'Continue with Facebook',
+            style: AuthButtonStyle(
+              // buttonType: AuthButtonType.secondary,
+              height: 50,
+              width: double.infinity,
+              borderRadius: 100,
+              textStyle: TextStyle(
+                fontSize: 18,
               ),
-            ]
-          :
+              // separator: 10
+              // iconType: AuthIconType.,
+            ),
+          ),
+        ]
+        // :
 
-          /** OLD VERSION */ <Widget>[
-              /** ===============================    LOGIN WITH APPLE           ============================================ */
-              Platform.isIOS
-                  ? brookySocialButton(
-                      text: 'Sign in with Apple',
-                      textColor: Colors.white,
-                      backgroundColor: Colors.black,
-                      image: AssetImage(
-                        "graphics/apple_logo_white.png",
-                        // package: "flutter_auth_buttons",
-                      ),
-                      onPressed: appleHandleSignIn,
-                    )
-                  : Container(),
-              Platform.isIOS ? SizedBox(width: 20.0) : Container(),
-              /** ===============================    LOGIN WITH FACEBOOK           ============================================ */
-              brookySocialButton(
-                text: 'Facebook',
-                backgroundColor: Color(0xff3b5999),
-                textColor: Colors.white,
-                image: AssetImage(
-                  "graphics/flogo-HexRBG-Wht-100.png",
-                  // package: "flutter_auth_buttons",
-                ),
-                onPressed: facebookHandleSignIn,
-              ),
-              SizedBox(width: 20.0),
-              /** ===============================    LOGIN WITH GOOGLE           ============================================ */
-              brookySocialButton(
-                text: 'Google',
-                image: AssetImage(
-                  "graphics/google-logo.png",
-                  package: "flutter_auth_buttons",
-                ),
-                border: Border.all(color: Colors.grey[300]!),
-                onPressed: googleHandleSignIn,
-              ),
-            ],
-    );
+        /** OLD VERSION */
+        // <Widget>[
+        //     /** ===============================    LOGIN WITH APPLE           ============================================ */
+        //     Platform.isIOS
+        //         ? brookySocialButton(
+        //             text: 'Sign in with Apple',
+        //             textColor: Colors.white,
+        //             backgroundColor: Colors.black,
+        //             image: AssetImage(
+        //               "graphics/apple_logo_white.png",
+        //               // package: "flutter_auth_buttons",
+        //             ),
+        //             onPressed: appleHandleSignIn,
+        //           )
+        //         : Container(),
+        //     Platform.isIOS ? SizedBox(width: 20.0) : Container(),
+        //     /** ===============================    LOGIN WITH FACEBOOK           ============================================ */
+        //     brookySocialButton(
+        //       text: 'Facebook',
+        //       backgroundColor: Color(0xff3b5999),
+        //       textColor: Colors.white,
+        //       image: AssetImage(
+        //         "graphics/flogo-HexRBG-Wht-100.png",
+        //         // package: "flutter_auth_buttons",
+        //       ),
+        //       onPressed: facebookHandleSignIn,
+        //     ),
+        //     SizedBox(width: 20.0),
+        //     /** ===============================    LOGIN WITH GOOGLE           ============================================ */
+        //     brookySocialButton(
+        //       text: 'Google',
+        //       image: AssetImage(
+        //         "graphics/google-logo.png",
+        //         package: "flutter_auth_buttons",
+        //       ),
+        //       border: Border.all(color: Colors.grey[300]!),
+        //       onPressed: googleHandleSignIn,
+        //     ),
+        // ],
+        );
   }
 }

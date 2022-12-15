@@ -1,18 +1,13 @@
-import 'package:dazle/app/pages/home/home_view.dart';
-import 'package:dazle/app/pages/listing/listing_view.dart';
-import 'package:dazle/app/pages/profile/profile_view.dart';
 import 'package:dazle/app/widgets/custom_progress_bar.dart';
 import 'package:dazle/app/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:dazle/app/pages/main/main_controller.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 
-import '../find_match/find_match_view.dart';
-
 class MainPage extends View {
   MainPage({this.backCurrentIndex = "HomePage", Key? key}) : super(key: key);
 
-  String? backCurrentIndex;
+  final String? backCurrentIndex;
 
   static const String id = 'main_page';
 

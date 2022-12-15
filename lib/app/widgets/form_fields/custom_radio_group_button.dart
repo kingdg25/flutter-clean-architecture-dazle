@@ -10,7 +10,7 @@ class CustomRadioGroupButton extends StatelessWidget {
   final List<String> buttonValues;
   final Function radioButtonValue;
   final String? defaultSelected;
-  bool autowidth;
+  final bool autowidth;
 
   CustomRadioGroupButton(
       {this.radioPadding = 6.0,

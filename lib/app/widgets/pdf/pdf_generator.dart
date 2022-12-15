@@ -1,8 +1,8 @@
 import 'dart:io';
-import 'dart:typed_data';
+// import 'dart:typed_data';
 
 import 'package:dazle/domain/entities/user.dart';
-import 'package:flutter/cupertino.dart';
+// import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
@@ -14,9 +14,9 @@ import 'package:dio/dio.dart';
 import 'package:dazle/app/utils/app.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'dart:async';
-import 'package:flutter/material.dart';
+// import 'package:flutter/material.dart';
 import 'package:printing/printing.dart';
-import 'package:intl_phone_number_input/intl_phone_number_input.dart';
+// import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 
 // import 'package:downloads_path_provider/downloads_path_provider.dart';
 // import 'package:ext_storage/ext_storage.dart';
@@ -33,7 +33,7 @@ class PdfGenerator {
     final defaultProfilePic =
         (await rootBundle.load('assets/user_profile.png')).buffer.asUint8List();
 
-    final List<pw.Widget> pdfImages = await pdfImageGenerator(property.photos!);
+    // final List<pw.Widget> pdfImages = await pdfImageGenerator(property.photos!);
     final User currentUser = await App.getUser();
     pw.MemoryImage userProfilePic = pw.MemoryImage(defaultProfilePic);
 

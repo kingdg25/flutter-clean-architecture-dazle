@@ -71,15 +71,15 @@ class LoginController extends Controller {
     //login
     loginPresenter.loginUserOnNext = (User res) {
       print('login user on next $res ${res.toString()}');
-      if (res != null) {
-        if (!(res.emailVerified ?? false) && res.id != null) {
-          emailVerificationPage();
-        } else if (res.isNewUser!) {
-          welcomePage();
-        } else {
-          mainPage();
-        }
+      // if (res != null) {
+      if (!(res.emailVerified ?? false) && res.id != null) {
+        emailVerificationPage();
+      } else if (res.isNewUser!) {
+        welcomePage();
+      } else {
+        mainPage();
       }
+      // }
     };
 
     loginPresenter.loginUserOnComplete = () {
@@ -105,19 +105,19 @@ class LoginController extends Controller {
     //social login
     loginPresenter.socialLoginOnNext = (User res) {
       print('social login on next $res ${res.toString()}');
-      if (res != null) {
-        if (res.position != null) {
-          if (!(res.emailVerified ?? false) && res.id != null) {
-            emailVerificationPage();
-          } else {
-            print('HOOOOMMMEEE PPAAGE');
-            mainPage();
-          }
+      // if (res != null) {
+      if (res.position != null) {
+        if (!(res.emailVerified ?? false) && res.id != null) {
+          emailVerificationPage();
         } else {
-          print('setup profile page');
-          setupProfilePage();
+          print('HOOOOMMMEEE PPAAGE');
+          mainPage();
         }
+      } else {
+        print('setup profile page');
+        setupProfilePage();
       }
+      // }
     };
 
     loginPresenter.socialLoginOnComplete = () {

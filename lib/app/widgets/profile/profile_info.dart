@@ -1,8 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dazle/app/pages/edit_profile/edit_profile_view.dart';
-import 'package:dazle/app/widgets/custom_progress_bar.dart';
+// import 'package:dazle/app/widgets/custom_progress_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:printing/printing.dart';
+// import 'package:printing/printing.dart';
 
 import '../../../domain/entities/property.dart';
 import '../../../domain/entities/user.dart';

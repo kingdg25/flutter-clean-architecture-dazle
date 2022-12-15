@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:dazle/app/widgets/custom_image.dart';
 import 'package:dazle/app/widgets/form_fields/custom_date_picker.dart';
 import 'package:dazle/app/widgets/form_fields/custom_email_field.dart';
 import 'package:flutter/material.dart';
@@ -36,7 +35,7 @@ class _EditProfilePageState
       : super(EditProfileController(DataProfileRepository()));
 
   // ===== declarations temp
-  var _loadImage = AssetImage('assets/user_profile.png');
+  // var _loadImage = AssetImage('assets/user_profile.png');
   var _space = SizedBox(height: 20.0);
   var _customDivider = CustomFieldLayout(
     child: Divider(
@@ -54,7 +53,7 @@ class _EditProfilePageState
 
   /// Take a photo
   Future takePicture() async {
-    final pickedFile = await picker.getImage(source: ImageSource.camera);
+    final pickedFile = await picker.pickImage(source: ImageSource.camera);
 
     setState(() {
       if (pickedFile != null) {
@@ -68,7 +67,7 @@ class _EditProfilePageState
 
   /// Upload from device
   Future uploadFromGallery() async {
-    final pickedFile = await picker.getImage(source: ImageSource.gallery);
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
 
     setState(() {
       if (pickedFile != null) {

@@ -1,12 +1,8 @@
-import 'package:dazle/app/pages/create_listing/create_listing_view.dart';
-import 'package:dazle/app/pages/my_collection/my_collection_view.dart';
 import 'package:dazle/app/pages/my_listing/my_listing_view.dart';
-import 'package:dazle/app/utils/app.dart';
+
 import 'package:dazle/app/widgets/custom_bottom_tab_bar.dart';
 import 'package:dazle/app/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
-import 'package:mixpanel_flutter/mixpanel_flutter.dart';
-import 'package:dazle/app/utils/app_constant.dart';
 
 class ListingTabBar extends StatefulWidget {
   const ListingTabBar({Key? key}) : super(key: key);
@@ -18,7 +14,6 @@ class ListingTabBar extends StatefulWidget {
 class _ListingTabBarState extends State<ListingTabBar>
     with SingleTickerProviderStateMixin {
   TabController? _tabcontroller;
-  Mixpanel? _mixpanel;
 
   final List myTabs = <Widget>[
     Tab(text: 'My Listings'),

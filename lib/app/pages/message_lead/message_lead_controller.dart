@@ -2,7 +2,6 @@ import 'package:dazle/app/pages/message_lead/message_lead_presenter.dart';
 import 'package:dazle/domain/entities/message.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 
-
 class MessageLeadController extends Controller {
   final MessageLeadPresenter messageLeadPresenter;
 
@@ -10,10 +9,9 @@ class MessageLeadController extends Controller {
   List<Message> get messageLeads => _messageLeads;
 
   MessageLeadController(userRepo)
-    : messageLeadPresenter = MessageLeadPresenter(userRepo),
-      _messageLeads = <Message>[],
-      super();
-
+      : messageLeadPresenter = MessageLeadPresenter(userRepo),
+        _messageLeads = <Message>[],
+        super();
 
   @override
   void initListeners() {
@@ -21,9 +19,9 @@ class MessageLeadController extends Controller {
     // get message leads
     messageLeadPresenter.getMessageLeadsOnNext = (List<Message> res) {
       print('get message leads on next $res');
-      if(res != null) {
-        _messageLeads = res;
-      }
+      // if(res != null) {
+      _messageLeads = res;
+      // }
       refreshUI();
     };
 
@@ -35,8 +33,6 @@ class MessageLeadController extends Controller {
       print('get message leads on error $e');
     };
   }
-
-
 
   @override
   void onResumed() => print('On resumed');
@@ -52,5 +48,4 @@ class MessageLeadController extends Controller {
     messageLeadPresenter.dispose(); // don't forget to dispose of the presenter
     super.onDisposed();
   }
-  
 }

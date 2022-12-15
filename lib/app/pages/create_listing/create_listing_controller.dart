@@ -1,9 +1,7 @@
 import 'dart:async';
 
 import 'package:dazle/app/pages/create_listing/create_listing_presenter.dart';
-import 'package:dazle/app/pages/email_verification/email_verification_view.dart';
 import 'package:dazle/app/pages/listing_details/listing_details_view.dart';
-import 'package:dazle/app/pages/login/login_view.dart';
 import 'package:dazle/app/utils/app.dart';
 import 'package:dazle/app/utils/app_constant.dart';
 import 'package:dazle/app/widgets/custom_text.dart';
@@ -16,7 +14,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:flutter_overlay_loader/flutter_overlay_loader.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:mixpanel_flutter/mixpanel_flutter.dart';
+// import 'package:mixpanel_flutter/mixpanel_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wechat_assets_picker/wechat_assets_picker.dart';
 
@@ -952,7 +950,6 @@ class CreateListingController extends Controller {
       if (totalPhotos >= 1) {
         isValidated = true;
       } else {
-        int neededPhotos = 10 - (totalPhotos + 1);
         await AppConstant.statusDialog(
             context: getContext(),
             text: "Upload at least 1 photo.",

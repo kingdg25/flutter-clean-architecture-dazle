@@ -9,7 +9,7 @@ import 'dart:convert' as convert;
 import 'package:http/http.dart' as http;
 import 'dart:typed_data';
 
-import '../../app/utils/app_constant.dart';
+// import '../../app/utils/app_constant.dart';
 
 class DataListingRepository extends ListingRepository {
   List<Property>? myListing;

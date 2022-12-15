@@ -1,8 +1,8 @@
 import 'package:dazle/app/pages/email_verification/email_verification_view.dart';
 import 'package:dazle/app/pages/main/main_view.dart';
 import 'package:dazle/app/pages/setup_profile/setup_profile_presenter.dart';
-import 'package:dazle/app/pages/register/components/send_request_screen.dart';
-import 'package:dazle/app/pages/register/components/waiting_screen.dart';
+// import 'package:dazle/app/pages/register/components/send_request_screen.dart';
+// import 'package:dazle/app/pages/register/components/waiting_screen.dart';
 import 'package:dazle/app/pages/welcome/welcome_page.dart';
 import 'package:dazle/app/utils/app.dart';
 import 'package:dazle/domain/entities/user.dart';
@@ -68,21 +68,21 @@ class SetupProfileController extends Controller {
         mainPage();
       }
 
-      return;
+      // return;
 
-      if (position == 'Broker') {
-        Navigator.push(
-            getContext(),
-            MaterialPageRoute(
-                builder: (buildContext) => WaitingScreen(
-                      firstName: firstNameTextController.text,
-                    )));
-      } else {
-        Navigator.push(getContext(),
-            MaterialPageRoute(builder: (buildContext) => SendRequestScreen()));
-      }
+      // if (position == 'Broker') {
+      //   Navigator.push(
+      //       getContext(),
+      //       MaterialPageRoute(
+      //           builder: (buildContext) => WaitingScreen(
+      //                 firstName: firstNameTextController.text,
+      //               )));
+      // } else {
+      //   Navigator.push(getContext(),
+      //       MaterialPageRoute(builder: (buildContext) => SendRequestScreen()));
+      // }
 
-      App.logOutUser();
+      // App.logOutUser();
     };
 
     setupProfilePresenter.setupProfileOnError = (e) {
@@ -145,17 +145,17 @@ class SetupProfileController extends Controller {
   getCurrentUser() async {
     User user = await App.getUser();
 
-    if (user != null) {
-      _user = user;
+    // if (user != null) {
+    _user = user;
 
-      firstNameTextController.text = user.firstName!;
-      lastNameTextController.text = user.lastName!;
-      mobileNumberTextController.text = user.mobileNumber ?? '';
-      position = user.position;
-      // brokerLicenseNumberTextController.text = user.brokerLicenseNumber!;
+    firstNameTextController.text = user.firstName!;
+    lastNameTextController.text = user.lastName!;
+    mobileNumberTextController.text = user.mobileNumber ?? '';
+    position = user.position;
+    // brokerLicenseNumberTextController.text = user.brokerLicenseNumber!;
 
-      refreshUI();
-    }
+    refreshUI();
+    // }
   }
 
   setPosition(value) {
