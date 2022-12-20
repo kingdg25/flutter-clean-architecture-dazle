@@ -11,9 +11,6 @@ import 'package:dazle/app/pages/home/home_presenter.dart';
 import 'package:dazle/domain/entities/user.dart';
 import 'package:flutter_overlay_loader/flutter_overlay_loader.dart';
 import 'package:dazle/app/pages/login/login_view.dart';
-import 'package:mixpanel_flutter/mixpanel_flutter.dart';
-import 'package:update_available/update_available.dart';
-import 'package:upgrader/upgrader.dart';
 
 class HomeController extends Controller {
   final HomePresenter homePresenter;
@@ -64,9 +61,9 @@ class HomeController extends Controller {
     // get user
     homePresenter.getUserOnNext = (User res) {
       print('get user on next $res ${res.displayName}');
-      if (res != null) {
-        _user = res;
-      }
+      // if (res != null) {
+      _user = res;
+      // }
       refreshUI();
     };
 
@@ -111,9 +108,9 @@ class HomeController extends Controller {
     // get spot light
     homePresenter.getSpotLightOnNext = (List<PhotoTile> res) {
       print('get spot light on next $res');
-      if (res != null) {
-        _spotLight = res;
-      }
+      // if (res != null) {
+      _spotLight = res;
+      // }
     };
 
     homePresenter.getSpotLightOnComplete = () {
@@ -128,9 +125,9 @@ class HomeController extends Controller {
     // get matched properties
     homePresenter.getMatchedPropertiesOnNext = (List<Property> res) {
       print('get matched properties on next $res');
-      if (res != null) {
-        _matchedProperties = res;
-      }
+      // if (res != null) {
+      _matchedProperties = res;
+      // }
     };
 
     homePresenter.getMatchedPropertiesOnComplete = () {
@@ -145,9 +142,9 @@ class HomeController extends Controller {
     // get why brooky
     homePresenter.getWhyBrookyOnNext = (List<PhotoTile> res) {
       print('get why brooky on next $res');
-      if (res != null) {
-        _whyBrooky = res;
-      }
+      // if (res != null) {
+      _whyBrooky = res;
+      // }
     };
 
     homePresenter.getWhyBrookyOnComplete = () {
@@ -162,9 +159,9 @@ class HomeController extends Controller {
     // get new homes
     homePresenter.getNewHomesOnNext = (List<Property> res) {
       print('get new homes on next $res');
-      if (res != null) {
-        _newHomes = res;
-      }
+      // if (res != null) {
+      _newHomes = res;
+      // }
     };
 
     homePresenter.getNewHomesOnComplete = () {
@@ -179,9 +176,9 @@ class HomeController extends Controller {
     // get my listing
     homePresenter.getMyListingOnNext = (List<Property> res) {
       print('get my listing on next $res');
-      if (res != null) {
-        _myListing = res;
-      }
+      // if (res != null) {
+      _myListing = res;
+      // }
     };
 
     homePresenter.getMyListingOnComplete = () {

@@ -1,6 +1,5 @@
 import 'package:dazle/app/pages/create_listing/create_listing_view.dart';
-import 'package:dazle/app/pages/filter/filter_view.dart';
-import 'package:dazle/app/pages/find_match/find_match_view.dart';
+
 import 'package:dazle/app/pages/home/components/header_home_tile.dart';
 import 'package:dazle/app/pages/home/components/property_list_tile.dart';
 import 'package:dazle/app/pages/home/components/photo_list_tile.dart';
@@ -9,14 +8,12 @@ import 'package:dazle/app/pages/main/main_view.dart';
 import 'package:dazle/app/pages/profile/profile_view.dart';
 import 'package:dazle/app/utils/app.dart';
 import 'package:dazle/app/utils/app_constant.dart';
-import 'package:dazle/app/widgets/custom_progress_bar.dart';
-import 'package:dazle/app/widgets/custom_text.dart';
-import 'package:dazle/app/widgets/form_fields/custom_search_field.dart';
+
 import 'package:dazle/data/repositories/data_home_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:dazle/app/pages/home/home_controller.dart';
-import 'package:dazle/app/pages/listing_details/listing_details_view.dart';
+
 import 'package:upgrader/upgrader.dart';
 import 'dart:io' show Platform;
 
@@ -139,50 +136,47 @@ class _HomePageState extends ViewState<HomePage, HomeController> {
                           boxShadow: [AppConstant.boxShadow],
                         ),
                       ),
-                      Positioned(
-                        top: 0,
-                        left: 1,
-                        right: 1,
-                        child: true
-                            ? Container()
-                            : CustomSearchField(
-                                controller: controller.searchTextController,
-                                hintText: 'Building, Neighboorhood, City',
-                                iconData: Icons.contacts_outlined,
-                                borderRadius: 10.0,
-                                filled: true,
-                                fillColor: Colors.white,
-                                enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.white),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.white),
-                                ),
-                                withIcon: true,
-                                isAssetIcon: true,
-                                asset: 'assets/icons/filter.png',
-                                onChanged: (value) {
-                                  // controller.searchUser();
-                                },
-                                suggestionsCallback: (pattern) async {
-                                  return [];
-                                },
-                                onSuggestionSelected: (suggestion) {
-                                  // controller.searchTextController.text = suggestion;
-                                  // controller.getMyConnection(filterByName: suggestion);
-                                },
-                                onSubmitted: (value) {
-                                  // controller.getMyConnection(filterByName: value);
-                                },
-                                onPressedButton: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (buildContext) =>
-                                              FilterPage()));
-                                },
-                              ),
-                      ),
+                      Positioned(top: 0, left: 1, right: 1, child: Container()
+
+                          // SEARCHFIELD HIDDEN
+                          // CustomSearchField(
+                          //     controller: controller.searchTextController,
+                          //     hintText: 'Building, Neighboorhood, City',
+                          //     iconData: Icons.contacts_outlined,
+                          //     borderRadius: 10.0,
+                          //     filled: true,
+                          //     fillColor: Colors.white,
+                          //     enabledBorder: OutlineInputBorder(
+                          //       borderSide: BorderSide(color: Colors.white),
+                          //     ),
+                          //     focusedBorder: OutlineInputBorder(
+                          //       borderSide: BorderSide(color: Colors.white),
+                          //     ),
+                          //     withIcon: true,
+                          //     isAssetIcon: true,
+                          //     asset: 'assets/icons/filter.png',
+                          //     onChanged: (value) {
+                          //       // controller.searchUser();
+                          //     },
+                          //     suggestionsCallback: (pattern) async {
+                          //       return [];
+                          //     },
+                          //     onSuggestionSelected: (suggestion) {
+                          //       // controller.searchTextController.text = suggestion;
+                          //       // controller.getMyConnection(filterByName: suggestion);
+                          //     },
+                          //     onSubmitted: (value) {
+                          //       // controller.getMyConnection(filterByName: value);
+                          //     },
+                          //     onPressedButton: () {
+                          //       Navigator.push(
+                          //           context,
+                          //           MaterialPageRoute(
+                          //               builder: (buildContext) =>
+                          //                   FilterPage()));
+                          //     },
+                          //   ),
+                          ),
                       Positioned(
                         bottom: screenHeight / 14,
                         left: 20,

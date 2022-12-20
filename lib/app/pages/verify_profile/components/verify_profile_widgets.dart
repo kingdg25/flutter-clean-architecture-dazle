@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:dazle/app/widgets/custom_text.dart';
-import 'package:dazle/app/utils/app.dart';
+// import 'package:dazle/app/utils/app.dart';
 
 class VerifyProfileWidgets {
   List<Widget> requirementsGenerator(List<String> requirements) {

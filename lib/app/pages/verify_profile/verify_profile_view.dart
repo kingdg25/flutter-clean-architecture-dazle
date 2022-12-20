@@ -1,18 +1,18 @@
 import 'dart:io';
 
-import 'package:dazle/domain/entities/user.dart';
+// import 'package:dazle/domain/entities/user.dart';
 import 'package:image_picker/image_picker.dart';
 
 import 'verify_profile_controller.dart';
 import 'package:dazle/app/pages/settings/settings_view.dart';
 import 'package:dazle/app/utils/app.dart';
-import 'package:dazle/app/widgets/custom_richtext.dart';
+// import 'package:dazle/app/widgets/custom_richtext.dart';
 import 'package:dazle/app/widgets/custom_text.dart';
 import 'package:dazle/app/widgets/form_fields/custom_button.dart';
-import 'package:dazle/app/widgets/form_fields/custom_field_layout.dart';
-import 'package:dazle/app/widgets/listing/listing_property_list_tile.dart';
+// import 'package:dazle/app/widgets/form_fields/custom_field_layout.dart';
+// import 'package:dazle/app/widgets/listing/listing_property_list_tile.dart';
 import 'package:dazle/data/repositories/data_profile_repository.dart';
-import 'package:dazle/domain/entities/property.dart';
+// import 'package:dazle/domain/entities/property.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'components/verify_profile_widgets.dart';
@@ -45,7 +45,7 @@ class _VerifyProfilePageState
 
   /// Take a photo
   Future takePicture() async {
-    final pickedFile = await picker.getImage(source: ImageSource.camera);
+    final pickedFile = await picker.pickImage(source: ImageSource.camera);
 
     setState(() {
       if (pickedFile != null) {
@@ -59,7 +59,7 @@ class _VerifyProfilePageState
 
   /// Upload from device
   Future uploadFromGallery() async {
-    final pickedFile = await picker.getImage(source: ImageSource.gallery);
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
 
     setState(() {
       if (pickedFile != null) {
@@ -152,8 +152,9 @@ class _VerifyProfilePageState
                           children: [
                             Image(
                               image: (_image == null
-                                  ? AssetImage('assets/upload_1.png')
-                                  : FileImage(_image!)) as ImageProvider<Object>,
+                                      ? AssetImage('assets/upload_1.png')
+                                      : FileImage(_image!))
+                                  as ImageProvider<Object>,
                               width: _image == null ? 77 : 150,
                               // height: 200,
                             ),

@@ -1,0 +1,19 @@
+import 'dart:async';
+import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
+import 'package:pedantic/pedantic.dart';
+
+class $Usecase$UseCase extends UseCase<void, void> {
+  $Repository$Repository _$repository$Repository;
+  $Usecase$UseCase(this._$repository$Repository);
+  @override
+  Future<Stream<void>> buildUseCaseStream(void params) async {
+    final StreamController<void> controller = StreamController();
+    try {
+      controller.add(await _$repository$Repository.$usecase$());
+      unawaited(controller.close());
+    } catch (err) {
+      controller.addError(err);
+    }
+    return controller.stream;
+  }
+}

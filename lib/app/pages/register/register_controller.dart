@@ -1,8 +1,8 @@
-import 'package:dazle/app/pages/email_verification/email_verification_view.dart';
-import 'package:dazle/app/pages/login/login_view.dart';
+// import 'package:dazle/app/pages/email_verification/email_verification_view.dart';
+// import 'package:dazle/app/pages/login/login_view.dart';
 import 'package:dazle/app/pages/notify_user/notify_user_view.dart';
-import 'package:dazle/app/pages/register/components/send_request_screen.dart';
-import 'package:dazle/app/pages/register/components/waiting_screen.dart';
+// import 'package:dazle/app/pages/register/components/send_request_screen.dart';
+// import 'package:dazle/app/pages/register/components/waiting_screen.dart';
 import 'package:dazle/app/pages/welcome/welcome_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
@@ -70,38 +70,38 @@ class RegisterController extends Controller {
       //         builder: (BuildContext context) => EmailVerificationPage()),
       //     (Route<dynamic> route) => false);
 
-      return;
+      // return;
 
-      if (position == 'Broker') {
-        // Navigator.push(
-        //   getContext(),
-        //   MaterialPageRoute(
-        //     builder: (buildContext) => WaitingScreen(
-        //       firstName: firstNameTextController.text,
-        //     )
-        //   )
-        // );
+      // if (position == 'Broker') {
+      // Navigator.push(
+      //   getContext(),
+      //   MaterialPageRoute(
+      //     builder: (buildContext) => WaitingScreen(
+      //       firstName: firstNameTextController.text,
+      //     )
+      //   )
+      // );
 
-        // instead, show email verification page
-      } else if (position == 'Salesperson') {
-        // if ( isBroker ) {
-        //   Navigator.push(
-        //     getContext(),
-        //     MaterialPageRoute(
-        //       builder: (buildContext) => SendRequestScreen()
-        //     )
-        //   );
-        // }
-        // else {
-        //   Navigator.push(
-        //     getContext(),
-        //     MaterialPageRoute(
-        //       builder: (buildContext) => NotifyUserPage()
-        //     )
-        //   );
-        // }
+      // instead, show email verification page
+      // } else if (position == 'Salesperson') {
+      // if ( isBroker ) {
+      //   Navigator.push(
+      //     getContext(),
+      //     MaterialPageRoute(
+      //       builder: (buildContext) => SendRequestScreen()
+      //     )
+      //   );
+      // }
+      // else {
+      //   Navigator.push(
+      //     getContext(),
+      //     MaterialPageRoute(
+      //       builder: (buildContext) => NotifyUserPage()
+      //     )
+      //   );
+      // }
 
-      }
+      // }
     };
 
     registerPresenter.registerUserOnError = (e) {

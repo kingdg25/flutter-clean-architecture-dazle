@@ -8,10 +8,8 @@ import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_overlay_loader/flutter_overlay_loader.dart';
 import 'package:intl/intl.dart';
-import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 
 import '../../utils/app_constant.dart';
-import '../main/main_view.dart';
 
 class EditProfileController extends Controller {
   final EditProfilePresenter editProfilePresenter;

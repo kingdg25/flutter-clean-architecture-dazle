@@ -1,16 +1,15 @@
 import 'dart:convert' as convert;
-import 'dart:typed_data';
+// import 'dart:typed_data';
 import 'package:dazle/app/utils/app_constant.dart';
 import 'package:dazle/data/constants.dart';
 import 'package:http/http.dart' as http;
 import 'dart:io';
-import 'package:path/path.dart';
+// import 'package:path/path.dart';
 import 'package:dazle/app/utils/app.dart';
 
 import 'package:dazle/domain/entities/user.dart';
 import 'package:dazle/domain/repositories/profile_repository.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:dazle/app/utils/app_constant.dart';
 
 class DataProfileRepository extends ProfileRepository {
   final double maxFileSize = 12.0;
@@ -228,8 +227,7 @@ class DataProfileRepository extends ProfileRepository {
     final user = await App.getUser();
     final uid = user.id;
 
-    Verification verification =
-        Verification(user_id: uid, attachment: imageUrl);
+    Verification verification = Verification(userId: uid, attachment: imageUrl);
 
     if (uid != null) {
       Map params = {

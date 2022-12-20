@@ -1,5 +1,5 @@
 import 'package:dazle/data/repositories/data_listing_repository.dart';
-import 'package:dazle/data/repositories/data_settings_repository.dart';
+
 import 'package:dazle/domain/usecases/home/get_matched_properties_usecase.dart';
 import 'package:dazle/domain/usecases/home/get_new_homes_usecase.dart';
 import 'package:dazle/domain/usecases/home/get_spot_light_usecase.dart';

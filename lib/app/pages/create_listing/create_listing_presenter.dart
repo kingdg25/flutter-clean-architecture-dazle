@@ -1,4 +1,3 @@
-import 'package:dazle/domain/entities/property.dart';
 import 'package:dazle/domain/usecases/listing/create_listing_usecase.dart';
 import 'package:dazle/domain/usecases/listing/update_listing_usecase.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
@@ -16,21 +15,20 @@ class CreateListingPresenter extends Presenter {
   final UpdateListingUseCase updateListingUseCase;
 
   CreateListingPresenter(userRepo)
-    : createListingUseCase = CreateListingUseCase(userRepo),
-      updateListingUseCase = UpdateListingUseCase(userRepo);
+      : createListingUseCase = CreateListingUseCase(userRepo),
+        updateListingUseCase = UpdateListingUseCase(userRepo);
 
-  
-  void createListing({Map? listing}){
-    createListingUseCase.execute(_CreateListingUseCaseObserver(this), CreateListingUseCaseParams(listing));
+  void createListing({Map? listing}) {
+    createListingUseCase.execute(_CreateListingUseCaseObserver(this),
+        CreateListingUseCaseParams(listing));
   }
 
   void updateListing(Map data) {
-    updateListingUseCase.execute(_UpdateListingUseCaseObserver(this), UpdateListingUseCaseParams(data));
+    updateListingUseCase.execute(
+        _UpdateListingUseCaseObserver(this), UpdateListingUseCaseParams(data));
   }
 
-  void fetchListingDetails({id}){
-    
-  }
+  void fetchListingDetails({id}) {}
 
   @override
   void dispose() {
@@ -38,9 +36,8 @@ class CreateListingPresenter extends Presenter {
   }
 }
 
-
-
-class _CreateListingUseCaseObserver extends Observer<CreateListingUseCaseResponse> {
+class _CreateListingUseCaseObserver
+    extends Observer<CreateListingUseCaseResponse> {
   final CreateListingPresenter presenter;
   _CreateListingUseCaseObserver(this.presenter);
   @override
@@ -57,12 +54,13 @@ class _CreateListingUseCaseObserver extends Observer<CreateListingUseCaseRespons
 
   @override
   void onNext(response) {
-    assert(presenter.createListingOnNext !=null);
+    assert(presenter.createListingOnNext != null);
     presenter.createListingOnNext!(response!.listing);
   }
 }
 
-class _UpdateListingUseCaseObserver extends Observer<UpdateListingUseCaseResponse> {
+class _UpdateListingUseCaseObserver
+    extends Observer<UpdateListingUseCaseResponse> {
   final CreateListingPresenter presenter;
   _UpdateListingUseCaseObserver(this.presenter);
   @override
@@ -79,7 +77,7 @@ class _UpdateListingUseCaseObserver extends Observer<UpdateListingUseCaseRespons
 
   @override
   void onNext(response) {
-    assert(presenter.updateListingOnNext !=null);
+    assert(presenter.updateListingOnNext != null);
     presenter.updateListingOnNext!(response!.listing);
   }
 }

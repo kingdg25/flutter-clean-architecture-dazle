@@ -1,19 +1,19 @@
-import 'dart:ui';
+// import 'dart:ui';
 
 import 'package:dazle/app/utils/app.dart';
 import 'package:dazle/app/widgets/form_fields/custom_field_layout.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+// import 'package:flutter/services.dart';
 
 class CustomDropdownField extends StatelessWidget {
   final List<DropdownMenuItem<String>>? items;
   final Function(String?)? onChangeEvent;
   final double fontSize;
-  String hintText;
+  final String hintText;
   final Color fillColor;
   final bool filled;
   final Color hintColor;
-  String? value;
+  final String? value;
 
   CustomDropdownField({
     this.items,

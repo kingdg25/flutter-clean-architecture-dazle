@@ -1,0 +1,21 @@
+before_script:
+  - source ~/.zshrc
+  - export LC_ALL=en_US.UTF-8
+  - export LANG=en_US.UTF-8
+stages:
+  - build
+
+build:staging:
+  stage: build
+  only:
+    - staging
+  script:
+    - scripts/build_dev.sh
+
+build:production:
+  stage: build
+  only:
+    - master
+  script:
+    - scripts/build_prod.sh
+

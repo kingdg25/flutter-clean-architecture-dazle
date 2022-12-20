@@ -3,15 +3,15 @@ import 'package:dazle/app/pages/delete_account/delete_account_controller.dart';
 import 'package:dazle/app/utils/app.dart';
 import 'package:dazle/app/widgets/custom_text.dart';
 import 'package:dazle/app/widgets/form_fields/custom_button.dart';
-import 'package:dazle/app/widgets/form_fields/custom_email_field.dart';
-import 'package:dazle/app/widgets/form_fields/custom_field_layout.dart';
+// import 'package:dazle/app/widgets/form_fields/custom_email_field.dart';
+// import 'package:dazle/app/widgets/form_fields/custom_field_layout.dart';
 import 'package:dazle/app/widgets/form_fields/custom_flat_button.dart';
-import 'package:dazle/app/widgets/form_fields/custom_icon_button.dart';
-import 'package:dazle/app/widgets/form_fields/title_field.dart';
+// import 'package:dazle/app/widgets/form_fields/custom_icon_button.dart';
+// import 'package:dazle/app/widgets/form_fields/title_field.dart';
 import 'package:dazle/domain/entities/user.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
-import 'package:dazle/app/pages/delete_account/delete_account_controller.dart';
+// import 'package:dazle/app/pages/delete_account/delete_account_controller.dart';
 
 class DeleteAccount extends StatelessWidget {
   final User? user;

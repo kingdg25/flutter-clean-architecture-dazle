@@ -59,7 +59,7 @@ class CustomButton extends StatelessWidget {
           color: main ? backgroudColor : Colors.white,
           borderRadius: BorderRadius.circular(borderRadius),
           border: Border.all(
-            color: (onPressed != null) ? backgroudColor : disabledColor,
+            color: backgroudColor,
             width: 1.5,
           ),
         ),

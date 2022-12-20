@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'dart:io';
+// import 'dart:io';
 
 import 'package:dazle/data/repositories/data_profile_repository.dart';
 import 'package:dazle/domain/entities/user.dart';
@@ -21,6 +21,7 @@ class CheckLoginTypeUseCase extends UseCase<CheckLoginTypeUseCaseResponse,
           await dataProfileRepository.checkLoginType(user: params!.user);
       controller.add(CheckLoginTypeUseCaseResponse(loginType));
       logger.finest('Check login type success.');
+      controller.close();
     } catch (e) {
       logger.severe('Check login type fail.');
       //Trigger .onError

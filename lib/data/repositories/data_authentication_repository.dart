@@ -199,31 +199,31 @@ class DataAuthenticationRepository extends AuthenticationRepository {
     }
     return false;
 
-    if (prefs.getString('accessToken') != null) {
-      Map params = {"token": prefs.getString('accessToken')};
+    // if (prefs.getString('accessToken') != null) {
+    //   Map params = {"token": prefs.getString('accessToken')};
 
-      var response = await http.post(
-          Uri.parse("${Constants.siteURL}/auth/is-authenticated"),
-          body: convert.jsonEncode(params),
-          headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-          });
+    //   var response = await http.post(
+    //       Uri.parse("${Constants.siteURL}/auth/is-authenticated"),
+    //       body: convert.jsonEncode(params),
+    //       headers: {
+    //         'Content-Type': 'application/json',
+    //         'Accept': 'application/json'
+    //       });
 
-      var jsonResponse = await convert.jsonDecode(response.body);
-      if (response.statusCode == 200) {
-        bool success = jsonResponse['success'];
+    //   var jsonResponse = await convert.jsonDecode(response.body);
+    //   if (response.statusCode == 200) {
+    //     bool success = jsonResponse['success'];
 
-        if (!success) {
-          await prefs.remove('accessToken');
-          await prefs.remove('user');
-        }
+    //     if (!success) {
+    //       await prefs.remove('accessToken');
+    //       await prefs.remove('user');
+    //     }
 
-        return success;
-      }
-    }
+    //     return success;
+    //   }
+    // }
 
-    return false;
+    // return false;
   }
 
   @override
@@ -455,7 +455,7 @@ class DataAuthenticationRepository extends AuthenticationRepository {
     }
   }
 
-  @override
+  // @override
   Future<bool> loggedIn() async {
     throw UnimplementedError();
   }

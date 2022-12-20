@@ -59,7 +59,7 @@ class CustomButtonReverse extends StatelessWidget {
           color: main ? backgroudColor : Colors.white,
           borderRadius: BorderRadius.circular(borderRadius),
           border: Border.all(
-            color: (onPressed != null) ? textColor! : disabledColor,
+            color: textColor!,
             width: 1.5,
           ),
         ),

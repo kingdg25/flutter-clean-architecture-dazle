@@ -1,0 +1,35 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
+import 'package:kahero/app/pages/widgets/conditionals_widget.dart';
+import 'package:kahero/app/pages/widgets/main_drawer.dart';
+
+import '%sc%_controller.dart';
+
+class %pc%View extends View {
+  %pc%View(routeObserver, {Key key})
+      : super(routeObserver: routeObserver, key: key);
+
+  @override
+  _%pc%ViewState createState() => _%pc%ViewState();
+}
+
+class _%pc%ViewState extends ViewState<%pc%View, %pc%Controller> {
+  _%pc%ViewState() : super(%pc%Controller());
+  @override
+  Widget buildPage() {
+    return Scaffold(
+      key: globalKey,
+      appBar: AppBar(title: Text('Template View')),
+      drawer: MainDrawer(),
+      body: Container(
+        child: SingleChildScrollView(
+          child: ConditionalsWidget(
+            condition: controller.isLoading,
+            passedWidget: CircularProgressIndicator(),
+            failedWidget: Text('Test'),
+          ),
+        ),
+      ),
+    );
+  }
+}

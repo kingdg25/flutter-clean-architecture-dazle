@@ -1,6 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:dazle/app/pages/create_listing/create_listing_view.dart';
+// import 'package:dazle/app/pages/create_listing/create_listing_view.dart';
 import 'package:dazle/app/pages/listing_details/components/listing_details_container_box.dart';
 import 'package:dazle/app/pages/listing_details/components/listing_details_icon_button.dart';
 import 'package:dazle/app/pages/listing_details/listing_details_controller.dart';
@@ -14,8 +14,8 @@ import 'package:dazle/domain/entities/property.dart';
 import 'package:dazle/domain/entities/user.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
-import 'package:dazle/app/pages/download_list/download_list_view.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
+
+// import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:open_filex/open_filex.dart';
 
 class ListingDetailsPage extends View {
@@ -80,14 +80,15 @@ class _ListingDetailsPageState
                                         "Getting locaton details please wait...",
                                     timeInSecForIosWeb: 3);
                                 Navigator.pop(context);
-                                final popThisPage = await Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (buildContext) =>
-                                          CreateListingPage(
-                                        property: selectedListing,
-                                      ),
-                                    ));
+                                // //TODO: GIO - Check if this commented code is essential
+                                // final popThisPage = await Navigator.push(
+                                //     context,
+                                //     MaterialPageRoute(
+                                //       builder: (buildContext) =>
+                                //           CreateListingPage(
+                                //         property: selectedListing,
+                                //       ),
+                                //     ));
                                 await controller.getListingToDisplay();
                               },
                             )

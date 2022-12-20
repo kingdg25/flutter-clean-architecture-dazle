@@ -16,31 +16,29 @@ class CustomSelectField extends StatelessWidget {
   final Function? validator;
   final Function? onTap;
   final Function? onSaved;
-  
-  CustomSelectField({
-    this.isRequired = false,
-    required this.value,
-    required this.onChanged,
-    required this.items,
-    this.hintText,
-    this.fontSize = 16.0,
-    this.validator,
-    this.onTap,
-    this.onSaved
-  });
 
-  customSelectMenuItems(List? arr){
+  CustomSelectField(
+      {this.isRequired = false,
+      required this.value,
+      required this.onChanged,
+      required this.items,
+      this.hintText,
+      this.fontSize = 16.0,
+      this.validator,
+      this.onTap,
+      this.onSaved});
+
+  customSelectMenuItems(List? arr) {
     try {
-      if(arr?.isNotEmpty ?? false){
-        return arr?.map<DropdownMenuItem<String>>((item) =>
-          new DropdownMenuItem<String>(
-            value: item ?? '',
-            child: CustomText(
-              text: item ?? '', 
-              color: App.fieldTextColor
-            ),
-          )
-        ).toList();
+      if (arr?.isNotEmpty ?? false) {
+        return arr
+            ?.map<DropdownMenuItem<String>>((item) =>
+                new DropdownMenuItem<String>(
+                  value: item ?? '',
+                  child:
+                      CustomText(text: item ?? '', color: App.fieldTextColor),
+                ))
+            .toList();
       }
     } catch (e) {
       print('customSelectMenuItems customSelectMenuItems error $e');
@@ -51,41 +49,41 @@ class CustomSelectField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CustomFieldLayout(
-      child: DropdownButtonFormField<String>(
-        value: value,
-        onChanged: onChanged as void Function(String?)?,
-        onSaved: onSaved as void Function(String?)?,
-        isDense: true,
-        isExpanded: true,
-        items: customSelectMenuItems(items),
-        style: TextStyle(
+        child: DropdownButtonFormField<String>(
+      value: value,
+      onChanged: onChanged as void Function(String?)?,
+      onSaved: onSaved as void Function(String?)?,
+      isDense: true,
+      isExpanded: true,
+      items: customSelectMenuItems(items),
+      style: TextStyle(
           decorationStyle: TextDecorationStyle.dotted,
           color: App.fieldTextColor,
           fontFamily: "Poppins",
-          fontSize: fontSize
-        ),
-        decoration: InputDecoration(
+          fontSize: fontSize),
+      decoration: InputDecoration(
           isDense: true,
           contentPadding: EdgeInsets.all(14.0),
           border: OutlineInputBorder(),
           enabledBorder: OutlineInputBorder(
-            borderSide:  BorderSide(color: App.hintColor),
+            borderSide: BorderSide(color: App.hintColor),
           ),
           focusedBorder: OutlineInputBorder(
-            borderSide:  BorderSide(color: App.hintColor),
+            borderSide: BorderSide(color: App.hintColor),
           ),
           hintText: hintText,
-          hintStyle: TextStyle(
-            color: App.hintColor
-          )
-        ),
-        validator: (isRequired && validator == null) ? (val) {
-          if (val == null || val.length == 0){
-            return "Required field.";
-          }
-          return null;
-        } as String? Function(String?)? : validator as String? Function(String?)?,
-      )
-    );
+          hintStyle: TextStyle(color: App.hintColor)),
+      validator: (isRequired && validator == null)
+          ? (val) {
+              if (val == null || val.length == 0) {
+                return "Required field.";
+              }
+              return null;
+            }
+          : validator as String? Function(String?)?,
+    ));
   }
 }
+
+
+// as String? Function(String?)? : validator as String? Function(String?)?,

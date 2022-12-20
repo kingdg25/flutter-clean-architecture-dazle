@@ -1,9 +1,7 @@
 import 'dart:async';
 
 import 'package:dazle/app/pages/create_listing/create_listing_presenter.dart';
-import 'package:dazle/app/pages/email_verification/email_verification_view.dart';
 import 'package:dazle/app/pages/listing_details/listing_details_view.dart';
-import 'package:dazle/app/pages/login/login_view.dart';
 import 'package:dazle/app/utils/app.dart';
 import 'package:dazle/app/utils/app_constant.dart';
 import 'package:dazle/app/widgets/custom_text.dart';
@@ -16,12 +14,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 import 'package:flutter_overlay_loader/flutter_overlay_loader.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:mixpanel_flutter/mixpanel_flutter.dart';
+// import 'package:mixpanel_flutter/mixpanel_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wechat_assets_picker/wechat_assets_picker.dart';
 
 import '../../../data/constants.dart';
-import '../map_location_picker/map_location_picker_view.dart';
+// import '../map_location_picker/map_location_picker_view.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
 
@@ -202,15 +200,15 @@ class CreateListingController extends Controller {
       await _statusDialog('Done!', 'Your listing has been updated.');
 
       print(property);
-      if (property != null && property.id != null) {
-        Navigator.pop(getContext(), true);
-        Navigator.push(
-            getContext(),
-            MaterialPageRoute(
-                builder: (buildContext) => ListingDetailsPage(
-                      listingId: property.id,
-                    )));
-      }
+      // if (property != null && property.id != null) {
+      Navigator.pop(getContext(), true);
+      Navigator.push(
+          getContext(),
+          MaterialPageRoute(
+              builder: (buildContext) => ListingDetailsPage(
+                    listingId: property.id,
+                  )));
+      // }
     };
     createListingPresenter.updateListingOnComplete = () async {
       // await _statusDialog('Done!', 'Updating listing complete.');
@@ -358,7 +356,7 @@ class CreateListingController extends Controller {
 
     var response = await http
         .post(Uri.parse("${Constants.siteURL}/api/listings/regions"), headers: {
-      'Authorization': 'Bearer ${prefs.getString("accessToken")}',
+      'Authorization': 'Bearer $userToken',
       'Content-Type': 'application/json',
       'Accept': 'application/json'
     });
@@ -453,7 +451,7 @@ class CreateListingController extends Controller {
     cityNames?.clear();
     cityCodes.clear();
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    List<DropdownMenuItem<String>> citiesFromAPi = [];
+    // List<DropdownMenuItem<String>> citiesFromAPi = [];
     var response = await http.get(
         Uri.parse(
             "${Constants.siteURL}/api/listings/cities?province_id=$provinceID"),
@@ -570,7 +568,7 @@ class CreateListingController extends Controller {
 
   validatePage2() {
     bool isValidated = false;
-    bool numberFound = areaTextController.text.contains(new RegExp(r'[0-9]'));
+    // bool numberFound = areaTextController.text.contains(new RegExp(r'[0-9]'));
 
     bool generalValidation =
         page2GeneralValidation(); // Execute the general validation
@@ -952,7 +950,6 @@ class CreateListingController extends Controller {
       if (totalPhotos >= 1) {
         isValidated = true;
       } else {
-        int neededPhotos = 10 - (totalPhotos + 1);
         await AppConstant.statusDialog(
             context: getContext(),
             text: "Upload at least 1 photo.",
