@@ -11,6 +11,7 @@ echo $BUILD_VERSION
 echo $CI_PROJECT_DIR
 echo "================"
 
+
 fvm flutter channel stable
 fvm flutter upgrade
 yes | fvm use stable
