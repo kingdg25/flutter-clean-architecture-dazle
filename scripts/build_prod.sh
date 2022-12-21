@@ -64,38 +64,39 @@ echo "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
 cd android
 
 bundle exec fastlane supply --aab ../build/app/outputs/bundle/release/app-release.aab --track production --skip_upload_metadata true --skip_upload_images true --skip_upload_screenshot true
-bundle exec fastlane app_gallery
+# bundle exec fastlane app_gallery
 
 # ==========================
 # End Android Sripts
 # ==========================
 
 
+
 # ==========================
 # Start iOS Sripts
 # ==========================
 
-python scripts/helpers/extract_git.py > $BUILD_CHANGELOG_IOS
-echo "=========== IOS =================="
-cat $BUILD_CHANGELOG_IOS
-echo "====================================="
-cd ..
-sed -i '' "s/#{BUILD}/$BUILD_NAME/g" $CI_PROJECT_DIR/ios/fastlane/Fastfile
-cd ios
-rm Gemfile.lock
-bundle install
-bundle exec fastlane update_plugins
+# python scripts/helpers/extract_git.py > $BUILD_CHANGELOG_IOS
+# echo "=========== IOS =================="
+# cat $BUILD_CHANGELOG_IOS
+# echo "====================================="
+# cd ..
+# sed -i '' "s/#{BUILD}/$BUILD_NAME/g" $CI_PROJECT_DIR/ios/fastlane/Fastfile
+# cd ios
+# rm Gemfile.lock
+# bundle install
+# bundle exec fastlane update_plugins
 
-bundle update fastlane
-bundle update
+# bundle update fastlane
+# bundle update
 
-bundle exec fastlane match appstore --readonly false --force
-bundle exec fastlane match adhoc --readonly false --force
-bundle exec fastlane match development --readonly false --force
+# bundle exec fastlane match appstore --readonly false --force
+# bundle exec fastlane match adhoc --readonly false --force
+# bundle exec fastlane match development --readonly false --force
 
-rm Podfile.lock
-pod install
-bundle exec fastlane production --verbose
+# rm Podfile.lock
+# pod install
+# bundle exec fastlane production --verbose
 
 # ==========================
 # End iOS Sripts
