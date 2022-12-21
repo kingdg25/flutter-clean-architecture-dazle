@@ -1,0 +1,72 @@
+default_platform(:ios)
+
+platform :ios do
+  desc "Push a new release build to the App Store"
+  lane :staging do
+    api_key = app_store_connect_api_key(
+       key_id: "UK95NP2AN5",
+       issuer_id: "bb339412-9c1c-4dfa-a3d2-ec3cbf5036a2",
+       key_filepath: "./AuthKey_UK95NP2AN5.p8",
+       duration: 500,
+       in_house: false
+    )
+    increment_build_number(
+        build_number: "#{BUILD}",
+        xcodeproj: "Runner.xcodeproj"
+    )
+    increment_version_number(
+       version_number: "#{BUILD}",
+       xcodeproj: "Runner.xcodeproj"
+    )
+    build_app(workspace: "Runner.xcworkspace", scheme: "Runner")
+    upload_to_testflight(api_key: api_key, skip_submission: false, skip_waiting_for_build_processing: true)
+  end
+
+  lane :production do
+    api_key = app_store_connect_api_key(
+      key_id: "8SJWQFWLMP",
+      issuer_id: "a0ad8ee3-4781-4d29-81c7-abca43513498",
+      key_filepath: "./AuthKey_8SJWQFWLMP.p8",
+      duration: 500,
+      in_house: false
+    )
+
+   update_code_signing_settings(
+     path: "Runner.xcodeproj",
+     use_automatic_signing: false,
+     profile_name: "match AppStore com.brooky.dazle",
+     profile_uuid: "6b8db3f2-0e5d-4e68-863f-c6c8f7b4d83c",
+     team_id: "FFG8P6JD6G",
+     bundle_identifier: "com.brooky.dazle",
+     code_sign_identity: "iPhone Distribution"
+   )
+   match(
+     type: 'appstore',
+     git_branch: 'master',
+     readonly: true,
+     keychain_name: 'login.keychain',
+   )
+   get_provisioning_profile(api_key: api_key, team_id: "FFG8P6JD6G", provisioning_name: "match AppStore com.brooky.dazle", filename: "AppStore_com.brooky.dazle.mobileprovision")
+    sigh(
+      api_key: api_key,
+      force: true
+    )
+    increment_build_number(xcodeproj: "Runner.xcodeproj")
+    increment_version_number(
+      version_number: "#{BUILD}",
+      xcodeproj: "Runner.xcodeproj"
+    )
+    build_app(workspace: "Runner.xcworkspace", scheme: "Runner")
+    deliver(
+       api_key: api_key,
+       submit_for_review: true,
+       force: true,
+       skip_metadata: false,
+       skip_screenshots: true,
+       run_precheck_before_submit: false,
+       automatic_release: true,
+       submission_information: { export_compliance_uses_encryption: false, "add_id_info_uses_idfa": false }
+    )
+
+   end
+end
