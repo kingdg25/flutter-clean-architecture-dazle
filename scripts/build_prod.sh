@@ -27,6 +27,7 @@ fvm flutter analyze || exit 1
 sed -i '' "s/#{VERSION}/$BUILD_NAME.$BUILD_ENV/g" $CI_PROJECT_DIR/lib/Api/version.dart
 
 
+
 # ==========================
 # Start Android Sripts
 # ==========================
