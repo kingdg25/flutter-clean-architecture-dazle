@@ -1,0 +1,22 @@
+[
+    {
+        "merged": "/home/gio-brooky/Desktop/Brooky/dazle-client-mobile/build/open_filex/intermediates/merged_res/release/drawable-hdpi-v4/notification_bg_normal.9.png",
+        "source": "/home/gio-brooky/.gradle/caches/transforms-3/128d2d0547c9407c418eda6e56c3b94d/transformed/core-1.6.0/res/drawable-hdpi-v4/notification_bg_normal.9.png"
+    },
+    {
+        "merged": "/home/gio-brooky/Desktop/Brooky/dazle-client-mobile/build/open_filex/intermediates/merged_res/release/drawable-hdpi-v4/notification_bg_low_normal.9.png",
+        "source": "/home/gio-brooky/.gradle/caches/transforms-3/128d2d0547c9407c418eda6e56c3b94d/transformed/core-1.6.0/res/drawable-hdpi-v4/notification_bg_low_normal.9.png"
+    },
+    {
+        "merged": "/home/gio-brooky/Desktop/Brooky/dazle-client-mobile/build/open_filex/intermediates/merged_res/release/drawable-hdpi-v4/notification_bg_normal_pressed.9.png",
+        "source": "/home/gio-brooky/.gradle/caches/transforms-3/128d2d0547c9407c418eda6e56c3b94d/transformed/core-1.6.0/res/drawable-hdpi-v4/notification_bg_normal_pressed.9.png"
+    },
+    {
+        "merged": "/home/gio-brooky/Desktop/Brooky/dazle-client-mobile/build/open_filex/intermediates/merged_res/release/drawable-hdpi-v4/notify_panel_notification_icon_bg.png",
+        "source": "/home/gio-brooky/.gradle/caches/transforms-3/128d2d0547c9407c418eda6e56c3b94d/transformed/core-1.6.0/res/drawable-hdpi-v4/notify_panel_notification_icon_bg.png"
+    },
+    {
+        "merged": "/home/gio-brooky/Desktop/Brooky/dazle-client-mobile/build/open_filex/intermediates/merged_res/release/drawable-hdpi-v4/notification_bg_low_pressed.9.png",
+        "source": "/home/gio-brooky/.gradle/caches/transforms-3/128d2d0547c9407c418eda6e56c3b94d/transformed/core-1.6.0/res/drawable-hdpi-v4/notification_bg_low_pressed.9.png"
+    }
+]

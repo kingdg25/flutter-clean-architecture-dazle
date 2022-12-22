@@ -1,0 +1,36 @@
+{
+    "logs": [
+        {
+            "outputFile": "/home/gio-brooky/Desktop/Brooky/dazle-client-mobile/build/flutter_facebook_auth/intermediates/incremental/mergeReleaseResources/merged.dir/values-watch-v21/values-watch-v21.xml",
+            "map": [
+                {
+                    "source": "/home/gio-brooky/.gradle/caches/transforms-3/13b4fac4ab94fdd1d704273750f0d391/transformed/appcompat-1.1.0/res/values-watch-v21/values-watch-v21.xml",
+                    "from": {
+                        "startLines": "2,6,10",
+                        "startColumns": "4,4,4",
+                        "startOffsets": "55,271,499",
+                        "endLines": "5,9,13",
+                        "endColumns": "12,12,12",
+                        "endOffsets": "266,494,724"
+                    }
+                }
+            ]
+        },
+        {
+            "outputFile": "/home/gio-brooky/Desktop/Brooky/dazle-client-mobile/build/flutter_facebook_auth/intermediates/merged_res/release/values-watch-v21/values-watch-v21.xml",
+            "map": [
+                {
+                    "source": "/home/gio-brooky/.gradle/caches/transforms-3/13b4fac4ab94fdd1d704273750f0d391/transformed/appcompat-1.1.0/res/values-watch-v21/values-watch-v21.xml",
+                    "from": {
+                        "startLines": "2,6,10",
+                        "startColumns": "4,4,4",
+                        "startOffsets": "55,271,499",
+                        "endLines": "5,9,13",
+                        "endColumns": "12,12,12",
+                        "endOffsets": "266,494,724"
+                    }
+                }
+            ]
+        }
+    ]
+}

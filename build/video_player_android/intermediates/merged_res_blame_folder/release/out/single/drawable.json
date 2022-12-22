@@ -1,0 +1,18 @@
+[
+    {
+        "merged": "/home/gio-brooky/Desktop/Brooky/dazle-client-mobile/build/video_player_android/intermediates/merged_res/release/drawable/notification_bg_low.xml",
+        "source": "/home/gio-brooky/.gradle/caches/transforms-3/128d2d0547c9407c418eda6e56c3b94d/transformed/core-1.6.0/res/drawable/notification_bg_low.xml"
+    },
+    {
+        "merged": "/home/gio-brooky/Desktop/Brooky/dazle-client-mobile/build/video_player_android/intermediates/merged_res/release/drawable/notification_icon_background.xml",
+        "source": "/home/gio-brooky/.gradle/caches/transforms-3/128d2d0547c9407c418eda6e56c3b94d/transformed/core-1.6.0/res/drawable/notification_icon_background.xml"
+    },
+    {
+        "merged": "/home/gio-brooky/Desktop/Brooky/dazle-client-mobile/build/video_player_android/intermediates/merged_res/release/drawable/notification_bg.xml",
+        "source": "/home/gio-brooky/.gradle/caches/transforms-3/128d2d0547c9407c418eda6e56c3b94d/transformed/core-1.6.0/res/drawable/notification_bg.xml"
+    },
+    {
+        "merged": "/home/gio-brooky/Desktop/Brooky/dazle-client-mobile/build/video_player_android/intermediates/merged_res/release/drawable/notification_tile_bg.xml",
+        "source": "/home/gio-brooky/.gradle/caches/transforms-3/128d2d0547c9407c418eda6e56c3b94d/transformed/core-1.6.0/res/drawable/notification_tile_bg.xml"
+    }
+]

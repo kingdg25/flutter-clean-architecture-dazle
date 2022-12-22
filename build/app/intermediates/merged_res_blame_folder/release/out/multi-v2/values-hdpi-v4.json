@@ -1,0 +1,20 @@
+{
+    "logs": [
+        {
+            "outputFile": "/home/gio-brooky/Desktop/Brooky/dazle-client-mobile/build/app/intermediates/incremental/mergeReleaseResources/merged.dir/values-hdpi-v4/values-hdpi-v4.xml",
+            "map": [
+                {
+                    "source": "/home/gio-brooky/.gradle/caches/transforms-3/13b4fac4ab94fdd1d704273750f0d391/transformed/appcompat-1.1.0/res/values-hdpi-v4/values-hdpi-v4.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endLines": "6",
+                        "endColumns": "13",
+                        "endOffsets": "327"
+                    }
+                }
+            ]
+        }
+    ]
+}

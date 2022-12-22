@@ -1,0 +1,486 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.brooky.dazle"
+4    android:versionCode="912"
+5    android:versionName="2.0.12" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="21"
+8-->/home/gio-brooky/Desktop/Brooky/dazle-client-mobile/android/app/src/main/AndroidManifest.xml
+9        android:targetSdkVersion="32" />
+9-->/home/gio-brooky/Desktop/Brooky/dazle-client-mobile/android/app/src/main/AndroidManifest.xml
+10
+11    <queries>
+11-->/home/gio-brooky/Desktop/Brooky/dazle-client-mobile/android/app/src/main/AndroidManifest.xml:3:5-5:15
+12        <provider android:authorities="com.facebook.katana.provider.PlatformProvider" />
+12-->/home/gio-brooky/Desktop/Brooky/dazle-client-mobile/android/app/src/main/AndroidManifest.xml:4:9-89
+12-->/home/gio-brooky/Desktop/Brooky/dazle-client-mobile/android/app/src/main/AndroidManifest.xml:4:19-86
+13    </queries>
+14
+15    <uses-permission android:name="android.permission.INTERNET" />
+15-->/home/gio-brooky/Desktop/Brooky/dazle-client-mobile/android/app/src/main/AndroidManifest.xml:7:5-66
+15-->/home/gio-brooky/Desktop/Brooky/dazle-client-mobile/android/app/src/main/AndroidManifest.xml:7:22-64
+16    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+16-->/home/gio-brooky/Desktop/Brooky/dazle-client-mobile/android/app/src/main/AndroidManifest.xml:8:5-81
+16-->/home/gio-brooky/Desktop/Brooky/dazle-client-mobile/android/app/src/main/AndroidManifest.xml:8:22-78
+17    <uses-permission
+17-->/home/gio-brooky/Desktop/Brooky/dazle-client-mobile/android/app/src/main/AndroidManifest.xml:9:5-80
+18        android:name="android.permission.READ_EXTERNAL_STORAGE"
+18-->/home/gio-brooky/Desktop/Brooky/dazle-client-mobile/android/app/src/main/AndroidManifest.xml:9:22-77
+19        android:maxSdkVersion="32" />
+19-->[:open_filex] /home/gio-brooky/Desktop/Brooky/dazle-client-mobile/build/open_filex/intermediates/merged_manifest/release/AndroidManifest.xml:12:9-35
+20    <!-- <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" /> -->
+21    <uses-permission android:name="android.permission.ACCESS_MEDIA_LOCATION" />
+21-->/home/gio-brooky/Desktop/Brooky/dazle-client-mobile/android/app/src/main/AndroidManifest.xml:11:5-80
+21-->/home/gio-brooky/Desktop/Brooky/dazle-client-mobile/android/app/src/main/AndroidManifest.xml:11:22-77
+22    <uses-permission android:name="android.permission.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION" />
+22-->/home/gio-brooky/Desktop/Brooky/dazle-client-mobile/android/app/src/main/AndroidManifest.xml:12:5-100
+22-->/home/gio-brooky/Desktop/Brooky/dazle-client-mobile/android/app/src/main/AndroidManifest.xml:12:22-97
+23    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+23-->/home/gio-brooky/Desktop/Brooky/dazle-client-mobile/android/app/src/main/AndroidManifest.xml:13:5-79
+23-->/home/gio-brooky/Desktop/Brooky/dazle-client-mobile/android/app/src/main/AndroidManifest.xml:13:22-76
+24    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+24-->/home/gio-brooky/Desktop/Brooky/dazle-client-mobile/android/app/src/main/AndroidManifest.xml:14:5-81
+24-->/home/gio-brooky/Desktop/Brooky/dazle-client-mobile/android/app/src/main/AndroidManifest.xml:14:22-78
+25    <!-- <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" /> -->
+26    <queries>
+26-->/home/gio-brooky/Desktop/Brooky/dazle-client-mobile/android/app/src/main/AndroidManifest.xml:3:5-5:15
+27        <provider android:authorities="com.facebook.katana.provider.PlatformProvider" />
+27-->/home/gio-brooky/Desktop/Brooky/dazle-client-mobile/android/app/src/main/AndroidManifest.xml:4:9-89
+27-->/home/gio-brooky/Desktop/Brooky/dazle-client-mobile/android/app/src/main/AndroidManifest.xml:4:19-86
+28
+29        <intent>
+29-->/home/gio-brooky/Desktop/Brooky/dazle-client-mobile/android/app/src/main/AndroidManifest.xml:18:9-22:18
+30            <action android:name="android.intent.action.VIEW" />
+30-->/home/gio-brooky/Desktop/Brooky/dazle-client-mobile/android/app/src/main/AndroidManifest.xml:19:13-65
+30-->/home/gio-brooky/Desktop/Brooky/dazle-client-mobile/android/app/src/main/AndroidManifest.xml:19:21-62
+31            <!-- If you don't know the MIME type in advance, set "mimeType" to "*/*". -->
+32            <data android:mimeType="*/*" /> <!-- "application/pdf" -->
+32-->/home/gio-brooky/Desktop/Brooky/dazle-client-mobile/android/app/src/main/AndroidManifest.xml:21:13-44
+32-->/home/gio-brooky/Desktop/Brooky/dazle-client-mobile/android/app/src/main/AndroidManifest.xml:21:19-41
+33        </intent>
+34        <intent>
+34-->/home/gio-brooky/Desktop/Brooky/dazle-client-mobile/android/app/src/main/AndroidManifest.xml:23:9-25:18
+35            <action android:name="android.media.action.IMAGE_CAPTURE" />
+35-->/home/gio-brooky/Desktop/Brooky/dazle-client-mobile/android/app/src/main/AndroidManifest.xml:24:13-73
+35-->/home/gio-brooky/Desktop/Brooky/dazle-client-mobile/android/app/src/main/AndroidManifest.xml:24:21-70
+36        </intent>
+37    </queries>
+38
+39    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+39-->[:geolocator_android] /home/gio-brooky/Desktop/Brooky/dazle-client-mobile/build/geolocator_android/intermediates/merged_manifest/release/AndroidManifest.xml:9:5-77
+39-->[:geolocator_android] /home/gio-brooky/Desktop/Brooky/dazle-client-mobile/build/geolocator_android/intermediates/merged_manifest/release/AndroidManifest.xml:9:22-74
+40    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+40-->[:open_filex] /home/gio-brooky/Desktop/Brooky/dazle-client-mobile/build/open_filex/intermediates/merged_manifest/release/AndroidManifest.xml:13:5-76
+40-->[:open_filex] /home/gio-brooky/Desktop/Brooky/dazle-client-mobile/build/open_filex/intermediates/merged_manifest/release/AndroidManifest.xml:13:22-73
+41    <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />
+41-->[:open_filex] /home/gio-brooky/Desktop/Brooky/dazle-client-mobile/build/open_filex/intermediates/merged_manifest/release/AndroidManifest.xml:14:5-75
+41-->[:open_filex] /home/gio-brooky/Desktop/Brooky/dazle-client-mobile/build/open_filex/intermediates/merged_manifest/release/AndroidManifest.xml:14:22-72
+42    <uses-permission android:name="android.permission.READ_MEDIA_AUDIO" /> <!-- Include required permissions for Google Maps API to run. -->
+42-->[:open_filex] /home/gio-brooky/Desktop/Brooky/dazle-client-mobile/build/open_filex/intermediates/merged_manifest/release/AndroidManifest.xml:15:5-75
+42-->[:open_filex] /home/gio-brooky/Desktop/Brooky/dazle-client-mobile/build/open_filex/intermediates/merged_manifest/release/AndroidManifest.xml:15:22-72
+43    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+43-->[com.google.android.gms:play-services-maps:17.0.0] /home/gio-brooky/.gradle/caches/transforms-3/32a6bf389e21d142d4bb0cffa5151a61/transformed/jetified-play-services-maps-17.0.0/AndroidManifest.xml:23:5-79
+43-->[com.google.android.gms:play-services-maps:17.0.0] /home/gio-brooky/.gradle/caches/transforms-3/32a6bf389e21d142d4bb0cffa5151a61/transformed/jetified-play-services-maps-17.0.0/AndroidManifest.xml:23:22-76
+44
+45    <uses-feature
+45-->[com.google.android.gms:play-services-maps:17.0.0] /home/gio-brooky/.gradle/caches/transforms-3/32a6bf389e21d142d4bb0cffa5151a61/transformed/jetified-play-services-maps-17.0.0/AndroidManifest.xml:26:5-28:35
+46        android:glEsVersion="0x00020000"
+46-->[com.google.android.gms:play-services-maps:17.0.0] /home/gio-brooky/.gradle/caches/transforms-3/32a6bf389e21d142d4bb0cffa5151a61/transformed/jetified-play-services-maps-17.0.0/AndroidManifest.xml:27:9-41
+47        android:required="true" />
+47-->[com.google.android.gms:play-services-maps:17.0.0] /home/gio-brooky/.gradle/caches/transforms-3/32a6bf389e21d142d4bb0cffa5151a61/transformed/jetified-play-services-maps-17.0.0/AndroidManifest.xml:28:9-32
+48
+49    <uses-permission android:name="com.google.android.finsky.permission.BIND_GET_INSTALL_REFERRER_SERVICE" />
+49-->[com.android.installreferrer:installreferrer:1.0] /home/gio-brooky/.gradle/caches/transforms-3/72ea01d2c7553cde1f8f76f1a3fe2d21/transformed/jetified-installreferrer-1.0/AndroidManifest.xml:9:5-110
+49-->[com.android.installreferrer:installreferrer:1.0] /home/gio-brooky/.gradle/caches/transforms-3/72ea01d2c7553cde1f8f76f1a3fe2d21/transformed/jetified-installreferrer-1.0/AndroidManifest.xml:9:22-107
+50    <!--
+51 io.flutter.app.FlutterApplication is an android.app.Application that
+52         calls FlutterMain.startInitialization(this); in its onCreate method.
+53         In most cases you can leave this as-is, but you if you want to provide
+54         additional functionality it is fine to subclass or reimplement
+55         FlutterApplication and put your custom class here.
+56    -->
+57    <application
+58        android:name="android.app.Application"
+58-->/home/gio-brooky/Desktop/Brooky/dazle-client-mobile/android/app/src/main/AndroidManifest.xml:33:9-42
+59        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+59-->[androidx.core:core:1.7.0] /home/gio-brooky/.gradle/caches/transforms-3/fcb7804255ad3adecc49a7c267e1929c/transformed/core-1.7.0/AndroidManifest.xml:24:18-86
+60        android:icon="@mipmap/ic_launcher"
+60-->/home/gio-brooky/Desktop/Brooky/dazle-client-mobile/android/app/src/main/AndroidManifest.xml:37:9-43
+61        android:label="Dazle"
+61-->/home/gio-brooky/Desktop/Brooky/dazle-client-mobile/android/app/src/main/AndroidManifest.xml:34:9-30
+62        android:largeHeap="true"
+62-->/home/gio-brooky/Desktop/Brooky/dazle-client-mobile/android/app/src/main/AndroidManifest.xml:35:9-33
+63        android:requestLegacyExternalStorage="true"
+63-->/home/gio-brooky/Desktop/Brooky/dazle-client-mobile/android/app/src/main/AndroidManifest.xml:36:9-52
+64        android:supportsRtl="true" >
+64-->[com.facebook.android:facebook-login:12.2.0] /home/gio-brooky/.gradle/caches/transforms-3/808793ad08bb6056938d2a4e0f3b35bf/transformed/jetified-facebook-login-12.2.0/AndroidManifest.xml:28:18-44
+65        <meta-data
+65-->/home/gio-brooky/Desktop/Brooky/dazle-client-mobile/android/app/src/main/AndroidManifest.xml:39:9-41:54
+66            android:name="com.facebook.sdk.ApplicationId"
+66-->/home/gio-brooky/Desktop/Brooky/dazle-client-mobile/android/app/src/main/AndroidManifest.xml:40:13-58
+67            android:value="@string/facebook_app_id" />
+67-->/home/gio-brooky/Desktop/Brooky/dazle-client-mobile/android/app/src/main/AndroidManifest.xml:41:13-52
+68        <meta-data
+68-->/home/gio-brooky/Desktop/Brooky/dazle-client-mobile/android/app/src/main/AndroidManifest.xml:42:9-44:60
+69            android:name="com.facebook.sdk.ClientToken"
+69-->/home/gio-brooky/Desktop/Brooky/dazle-client-mobile/android/app/src/main/AndroidManifest.xml:43:13-56
+70            android:value="@string/facebook_client_token" />
+70-->/home/gio-brooky/Desktop/Brooky/dazle-client-mobile/android/app/src/main/AndroidManifest.xml:44:13-58
+71
+72        <activity
+72-->/home/gio-brooky/Desktop/Brooky/dazle-client-mobile/android/app/src/main/AndroidManifest.xml:46:9-49:48
+73            android:name="com.facebook.FacebookActivity"
+73-->/home/gio-brooky/Desktop/Brooky/dazle-client-mobile/android/app/src/main/AndroidManifest.xml:46:19-63
+74            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+74-->/home/gio-brooky/Desktop/Brooky/dazle-client-mobile/android/app/src/main/AndroidManifest.xml:48:13-96
+75            android:exported="true"
+75-->/home/gio-brooky/Desktop/Brooky/dazle-client-mobile/android/app/src/main/AndroidManifest.xml:47:13-36
+76            android:label="@string/app_name"
+76-->/home/gio-brooky/Desktop/Brooky/dazle-client-mobile/android/app/src/main/AndroidManifest.xml:49:13-45
+77            android:theme="@style/com_facebook_activity_theme" />
+77-->[com.facebook.android:facebook-common:12.2.0] /home/gio-brooky/.gradle/caches/transforms-3/52aaff71112815f62275d26927db9567/transformed/jetified-facebook-common-12.2.0/AndroidManifest.xml:33:13-63
+78        <activity
+78-->/home/gio-brooky/Desktop/Brooky/dazle-client-mobile/android/app/src/main/AndroidManifest.xml:50:9-60:20
+79            android:name="com.facebook.CustomTabActivity"
+79-->/home/gio-brooky/Desktop/Brooky/dazle-client-mobile/android/app/src/main/AndroidManifest.xml:51:13-58
+80            android:exported="true" >
+80-->/home/gio-brooky/Desktop/Brooky/dazle-client-mobile/android/app/src/main/AndroidManifest.xml:52:13-36
+81            <intent-filter>
+81-->/home/gio-brooky/Desktop/Brooky/dazle-client-mobile/android/app/src/main/AndroidManifest.xml:54:13-59:29
+82                <action android:name="android.intent.action.VIEW" />
+82-->/home/gio-brooky/Desktop/Brooky/dazle-client-mobile/android/app/src/main/AndroidManifest.xml:19:13-65
+82-->/home/gio-brooky/Desktop/Brooky/dazle-client-mobile/android/app/src/main/AndroidManifest.xml:19:21-62
+83
+84                <category android:name="android.intent.category.DEFAULT" />
+84-->/home/gio-brooky/Desktop/Brooky/dazle-client-mobile/android/app/src/main/AndroidManifest.xml:56:17-76
+84-->/home/gio-brooky/Desktop/Brooky/dazle-client-mobile/android/app/src/main/AndroidManifest.xml:56:27-73
+85                <category android:name="android.intent.category.BROWSABLE" />
+85-->/home/gio-brooky/Desktop/Brooky/dazle-client-mobile/android/app/src/main/AndroidManifest.xml:57:17-78
+85-->/home/gio-brooky/Desktop/Brooky/dazle-client-mobile/android/app/src/main/AndroidManifest.xml:57:27-75
+86
+87                <data android:scheme="@string/fb_login_protocol_scheme" />
+87-->/home/gio-brooky/Desktop/Brooky/dazle-client-mobile/android/app/src/main/AndroidManifest.xml:21:13-44
+87-->/home/gio-brooky/Desktop/Brooky/dazle-client-mobile/android/app/src/main/AndroidManifest.xml:58:23-72
+88            </intent-filter>
+89            <intent-filter>
+89-->[com.facebook.android:facebook-common:12.2.0] /home/gio-brooky/.gradle/caches/transforms-3/52aaff71112815f62275d26927db9567/transformed/jetified-facebook-common-12.2.0/AndroidManifest.xml:39:13-48:29
+90                <action android:name="android.intent.action.VIEW" />
+90-->/home/gio-brooky/Desktop/Brooky/dazle-client-mobile/android/app/src/main/AndroidManifest.xml:19:13-65
+90-->/home/gio-brooky/Desktop/Brooky/dazle-client-mobile/android/app/src/main/AndroidManifest.xml:19:21-62
+91
+92                <category android:name="android.intent.category.DEFAULT" />
+92-->/home/gio-brooky/Desktop/Brooky/dazle-client-mobile/android/app/src/main/AndroidManifest.xml:56:17-76
+92-->/home/gio-brooky/Desktop/Brooky/dazle-client-mobile/android/app/src/main/AndroidManifest.xml:56:27-73
+93                <category android:name="android.intent.category.BROWSABLE" />
+93-->/home/gio-brooky/Desktop/Brooky/dazle-client-mobile/android/app/src/main/AndroidManifest.xml:57:17-78
+93-->/home/gio-brooky/Desktop/Brooky/dazle-client-mobile/android/app/src/main/AndroidManifest.xml:57:27-75
+94
+95                <data
+95-->/home/gio-brooky/Desktop/Brooky/dazle-client-mobile/android/app/src/main/AndroidManifest.xml:21:13-44
+96                    android:host="cct.com.brooky.dazle"
+97                    android:scheme="fbconnect" />
+97-->/home/gio-brooky/Desktop/Brooky/dazle-client-mobile/android/app/src/main/AndroidManifest.xml:58:23-72
+98            </intent-filter>
+99        </activity>
+100        <activity
+100-->/home/gio-brooky/Desktop/Brooky/dazle-client-mobile/android/app/src/main/AndroidManifest.xml:62:9-91:20
+101            android:name="io.flutter.embedding.android.FlutterActivity"
+101-->/home/gio-brooky/Desktop/Brooky/dazle-client-mobile/android/app/src/main/AndroidManifest.xml:63:13-72
+102            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
+102-->/home/gio-brooky/Desktop/Brooky/dazle-client-mobile/android/app/src/main/AndroidManifest.xml:67:13-163
+103            android:exported="true"
+103-->/home/gio-brooky/Desktop/Brooky/dazle-client-mobile/android/app/src/main/AndroidManifest.xml:65:13-36
+104            android:hardwareAccelerated="true"
+104-->/home/gio-brooky/Desktop/Brooky/dazle-client-mobile/android/app/src/main/AndroidManifest.xml:68:13-47
+105            android:launchMode="singleTop"
+105-->/home/gio-brooky/Desktop/Brooky/dazle-client-mobile/android/app/src/main/AndroidManifest.xml:64:13-43
+106            android:theme="@style/LaunchTheme"
+106-->/home/gio-brooky/Desktop/Brooky/dazle-client-mobile/android/app/src/main/AndroidManifest.xml:66:13-47
+107            android:windowSoftInputMode="adjustResize" >
+107-->/home/gio-brooky/Desktop/Brooky/dazle-client-mobile/android/app/src/main/AndroidManifest.xml:69:13-55
+108
+109            <!--
+110                 Specifies an Android theme to apply to this Activity as soon as
+111                 the Android process has started. This theme is visible to the user
+112                 while the Flutter UI initializes. After that, this theme continues
+113                 to determine the Window background behind the Flutter UI.
+114            -->
+115            <!-- <meta-data -->
+116            <!-- android:name="io.flutter.embedding.android.NormalTheme" -->
+117            <!-- android:resource="@style/NormalTheme" -->
+118            <!-- /> -->
+119            <!--
+120                 Displays an Android View that continues showing the launch screen
+121                 Drawable until Flutter paints its first frame, then this splash
+122                 screen fades out. A splash screen is useful to avoid any visual
+123                 gap between the end of Android's launch screen and the painting of
+124                 Flutter's first frame.
+125            -->
+126            <!-- <meta-data -->
+127            <!-- android:name="io.flutter.embedding.android.SplashScreenDrawable" -->
+128            <!-- android:resource="@drawable/launch_background" -->
+129            <!-- /> -->
+130            <intent-filter>
+130-->/home/gio-brooky/Desktop/Brooky/dazle-client-mobile/android/app/src/main/AndroidManifest.xml:87:13-90:29
+131                <action android:name="android.intent.action.MAIN" />
+131-->/home/gio-brooky/Desktop/Brooky/dazle-client-mobile/android/app/src/main/AndroidManifest.xml:88:17-68
+131-->/home/gio-brooky/Desktop/Brooky/dazle-client-mobile/android/app/src/main/AndroidManifest.xml:88:25-66
+132
+133                <category android:name="android.intent.category.LAUNCHER" />
+133-->/home/gio-brooky/Desktop/Brooky/dazle-client-mobile/android/app/src/main/AndroidManifest.xml:89:17-76
+133-->/home/gio-brooky/Desktop/Brooky/dazle-client-mobile/android/app/src/main/AndroidManifest.xml:89:27-74
+134            </intent-filter>
+135        </activity>
+136        <!--
+137             Don't delete the meta-data below.
+138             This is used by the Flutter tool to generate GeneratedPluginRegistrant.java
+139        -->
+140
+141        <meta-data
+141-->/home/gio-brooky/Desktop/Brooky/dazle-client-mobile/android/app/src/main/AndroidManifest.xml:95:9-96:70
+142            android:name="com.google.android.geo.API_KEY"
+142-->/home/gio-brooky/Desktop/Brooky/dazle-client-mobile/android/app/src/main/AndroidManifest.xml:95:20-65
+143            android:value="AIzaSyCSacvsau8vEncNbORdwU0buakm7Mx2rbE" />
+143-->/home/gio-brooky/Desktop/Brooky/dazle-client-mobile/android/app/src/main/AndroidManifest.xml:96:13-68
+144        <meta-data
+144-->/home/gio-brooky/Desktop/Brooky/dazle-client-mobile/android/app/src/main/AndroidManifest.xml:98:9-100:33
+145            android:name="flutterEmbedding"
+145-->/home/gio-brooky/Desktop/Brooky/dazle-client-mobile/android/app/src/main/AndroidManifest.xml:99:13-44
+146            android:value="2" />
+146-->/home/gio-brooky/Desktop/Brooky/dazle-client-mobile/android/app/src/main/AndroidManifest.xml:100:13-30
+147
+148        <service
+148-->[:geolocator_android] /home/gio-brooky/Desktop/Brooky/dazle-client-mobile/build/geolocator_android/intermediates/merged_manifest/release/AndroidManifest.xml:12:9-16:56
+149            android:name="com.baseflow.geolocator.GeolocatorLocationService"
+149-->[:geolocator_android] /home/gio-brooky/Desktop/Brooky/dazle-client-mobile/build/geolocator_android/intermediates/merged_manifest/release/AndroidManifest.xml:13:13-77
+150            android:enabled="true"
+150-->[:geolocator_android] /home/gio-brooky/Desktop/Brooky/dazle-client-mobile/build/geolocator_android/intermediates/merged_manifest/release/AndroidManifest.xml:14:13-35
+151            android:exported="false"
+151-->[:geolocator_android] /home/gio-brooky/Desktop/Brooky/dazle-client-mobile/build/geolocator_android/intermediates/merged_manifest/release/AndroidManifest.xml:15:13-37
+152            android:foregroundServiceType="location" />
+152-->[:geolocator_android] /home/gio-brooky/Desktop/Brooky/dazle-client-mobile/build/geolocator_android/intermediates/merged_manifest/release/AndroidManifest.xml:16:13-53
+153
+154        <provider
+154-->[:image_picker] /home/gio-brooky/Desktop/Brooky/dazle-client-mobile/build/image_picker/intermediates/merged_manifest/release/AndroidManifest.xml:10:9-18:20
+155            android:name="io.flutter.plugins.imagepicker.ImagePickerFileProvider"
+155-->[:image_picker] /home/gio-brooky/Desktop/Brooky/dazle-client-mobile/build/image_picker/intermediates/merged_manifest/release/AndroidManifest.xml:11:13-82
+156            android:authorities="com.brooky.dazle.flutter.image_provider"
+156-->[:image_picker] /home/gio-brooky/Desktop/Brooky/dazle-client-mobile/build/image_picker/intermediates/merged_manifest/release/AndroidManifest.xml:12:13-74
+157            android:exported="false"
+157-->[:image_picker] /home/gio-brooky/Desktop/Brooky/dazle-client-mobile/build/image_picker/intermediates/merged_manifest/release/AndroidManifest.xml:13:13-37
+158            android:grantUriPermissions="true" >
+158-->[:image_picker] /home/gio-brooky/Desktop/Brooky/dazle-client-mobile/build/image_picker/intermediates/merged_manifest/release/AndroidManifest.xml:14:13-47
+159            <meta-data
+159-->[:image_picker] /home/gio-brooky/Desktop/Brooky/dazle-client-mobile/build/image_picker/intermediates/merged_manifest/release/AndroidManifest.xml:15:13-17:75
+160                android:name="android.support.FILE_PROVIDER_PATHS"
+160-->[:image_picker] /home/gio-brooky/Desktop/Brooky/dazle-client-mobile/build/image_picker/intermediates/merged_manifest/release/AndroidManifest.xml:16:17-67
+161                android:resource="@xml/flutter_image_picker_file_paths" />
+161-->[:image_picker] /home/gio-brooky/Desktop/Brooky/dazle-client-mobile/build/image_picker/intermediates/merged_manifest/release/AndroidManifest.xml:17:17-72
+162        </provider>
+163        <provider
+163-->[:share_plus] /home/gio-brooky/Desktop/Brooky/dazle-client-mobile/build/share_plus/intermediates/merged_manifest/release/AndroidManifest.xml:10:9-18:20
+164            android:name="dev.fluttercommunity.plus.share.ShareFileProvider"
+164-->[:share_plus] /home/gio-brooky/Desktop/Brooky/dazle-client-mobile/build/share_plus/intermediates/merged_manifest/release/AndroidManifest.xml:11:13-77
+165            android:authorities="com.brooky.dazle.flutter.share_provider"
+165-->[:share_plus] /home/gio-brooky/Desktop/Brooky/dazle-client-mobile/build/share_plus/intermediates/merged_manifest/release/AndroidManifest.xml:12:13-74
+166            android:exported="false"
+166-->[:share_plus] /home/gio-brooky/Desktop/Brooky/dazle-client-mobile/build/share_plus/intermediates/merged_manifest/release/AndroidManifest.xml:13:13-37
+167            android:grantUriPermissions="true" >
+167-->[:share_plus] /home/gio-brooky/Desktop/Brooky/dazle-client-mobile/build/share_plus/intermediates/merged_manifest/release/AndroidManifest.xml:14:13-47
+168            <meta-data
+168-->[:image_picker] /home/gio-brooky/Desktop/Brooky/dazle-client-mobile/build/image_picker/intermediates/merged_manifest/release/AndroidManifest.xml:15:13-17:75
+169                android:name="android.support.FILE_PROVIDER_PATHS"
+169-->[:image_picker] /home/gio-brooky/Desktop/Brooky/dazle-client-mobile/build/image_picker/intermediates/merged_manifest/release/AndroidManifest.xml:16:17-67
+170                android:resource="@xml/flutter_share_file_paths" />
+170-->[:image_picker] /home/gio-brooky/Desktop/Brooky/dazle-client-mobile/build/image_picker/intermediates/merged_manifest/release/AndroidManifest.xml:17:17-72
+171        </provider>
+172
+173        <activity
+173-->[:url_launcher_android] /home/gio-brooky/Desktop/Brooky/dazle-client-mobile/build/url_launcher_android/intermediates/merged_manifest/release/AndroidManifest.xml:10:9-13:74
+174            android:name="io.flutter.plugins.urllauncher.WebViewActivity"
+174-->[:url_launcher_android] /home/gio-brooky/Desktop/Brooky/dazle-client-mobile/build/url_launcher_android/intermediates/merged_manifest/release/AndroidManifest.xml:11:13-74
+175            android:exported="false"
+175-->[:url_launcher_android] /home/gio-brooky/Desktop/Brooky/dazle-client-mobile/build/url_launcher_android/intermediates/merged_manifest/release/AndroidManifest.xml:12:13-37
+176            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
+176-->[:url_launcher_android] /home/gio-brooky/Desktop/Brooky/dazle-client-mobile/build/url_launcher_android/intermediates/merged_manifest/release/AndroidManifest.xml:13:13-71
+177
+178        <provider
+178-->[:printing] /home/gio-brooky/Desktop/Brooky/dazle-client-mobile/build/printing/intermediates/merged_manifest/release/AndroidManifest.xml:10:9-18:20
+179            android:name="net.nfet.flutter.printing.PrintFileProvider"
+179-->[:printing] /home/gio-brooky/Desktop/Brooky/dazle-client-mobile/build/printing/intermediates/merged_manifest/release/AndroidManifest.xml:11:13-71
+180            android:authorities="com.brooky.dazle.flutter.printing"
+180-->[:printing] /home/gio-brooky/Desktop/Brooky/dazle-client-mobile/build/printing/intermediates/merged_manifest/release/AndroidManifest.xml:12:13-68
+181            android:exported="false"
+181-->[:printing] /home/gio-brooky/Desktop/Brooky/dazle-client-mobile/build/printing/intermediates/merged_manifest/release/AndroidManifest.xml:13:13-37
+182            android:grantUriPermissions="true" >
+182-->[:printing] /home/gio-brooky/Desktop/Brooky/dazle-client-mobile/build/printing/intermediates/merged_manifest/release/AndroidManifest.xml:14:13-47
+183            <meta-data
+183-->[:image_picker] /home/gio-brooky/Desktop/Brooky/dazle-client-mobile/build/image_picker/intermediates/merged_manifest/release/AndroidManifest.xml:15:13-17:75
+184                android:name="android.support.FILE_PROVIDER_PATHS"
+184-->[:image_picker] /home/gio-brooky/Desktop/Brooky/dazle-client-mobile/build/image_picker/intermediates/merged_manifest/release/AndroidManifest.xml:16:17-67
+185                android:resource="@xml/flutter_printing_file_paths" />
+185-->[:image_picker] /home/gio-brooky/Desktop/Brooky/dazle-client-mobile/build/image_picker/intermediates/merged_manifest/release/AndroidManifest.xml:17:17-72
+186        </provider>
+187        <provider
+187-->[:open_filex] /home/gio-brooky/Desktop/Brooky/dazle-client-mobile/build/open_filex/intermediates/merged_manifest/release/AndroidManifest.xml:18:9-27:20
+188            android:name="com.crazecoder.openfile.FileProvider"
+188-->[:open_filex] /home/gio-brooky/Desktop/Brooky/dazle-client-mobile/build/open_filex/intermediates/merged_manifest/release/AndroidManifest.xml:19:13-64
+189            android:authorities="com.brooky.dazle.fileProvider.com.crazecoder.openfile"
+189-->[:open_filex] /home/gio-brooky/Desktop/Brooky/dazle-client-mobile/build/open_filex/intermediates/merged_manifest/release/AndroidManifest.xml:20:13-88
+190            android:exported="false"
+190-->[:open_filex] /home/gio-brooky/Desktop/Brooky/dazle-client-mobile/build/open_filex/intermediates/merged_manifest/release/AndroidManifest.xml:21:13-37
+191            android:grantUriPermissions="true" >
+191-->[:open_filex] /home/gio-brooky/Desktop/Brooky/dazle-client-mobile/build/open_filex/intermediates/merged_manifest/release/AndroidManifest.xml:22:13-47
+192            <meta-data
+192-->[:image_picker] /home/gio-brooky/Desktop/Brooky/dazle-client-mobile/build/image_picker/intermediates/merged_manifest/release/AndroidManifest.xml:15:13-17:75
+193                android:name="android.support.FILE_PROVIDER_PATHS"
+193-->[:image_picker] /home/gio-brooky/Desktop/Brooky/dazle-client-mobile/build/image_picker/intermediates/merged_manifest/release/AndroidManifest.xml:16:17-67
+194                android:resource="@xml/filepaths" />
+194-->[:image_picker] /home/gio-brooky/Desktop/Brooky/dazle-client-mobile/build/image_picker/intermediates/merged_manifest/release/AndroidManifest.xml:17:17-72
+195        </provider>
+196
+197        <activity android:name="com.facebook.CustomTabMainActivity" />
+197-->[com.facebook.android:facebook-common:12.2.0] /home/gio-brooky/.gradle/caches/transforms-3/52aaff71112815f62275d26927db9567/transformed/jetified-facebook-common-12.2.0/AndroidManifest.xml:34:9-71
+197-->[com.facebook.android:facebook-common:12.2.0] /home/gio-brooky/.gradle/caches/transforms-3/52aaff71112815f62275d26927db9567/transformed/jetified-facebook-common-12.2.0/AndroidManifest.xml:34:19-68
+198        <!--
+199         The initialization ContentProvider will call FacebookSdk.sdkInitialize automatically
+200         with the application context. This config is merged in with the host app's manifest,
+201         but there can only be one provider with the same authority activated at any given
+202         point; so if the end user has two or more different apps that use Facebook SDK, only the
+203         first one will be able to use the provider. To work around this problem, we use the
+204         following placeholder in the authority to identify each host application as if it was
+205         a completely different provider.
+206        -->
+207        <provider
+207-->[com.facebook.android:facebook-core:12.2.0] /home/gio-brooky/.gradle/caches/transforms-3/7443416bfadd57a1b29a6fa83ed44ef0/transformed/jetified-facebook-core-12.2.0/AndroidManifest.xml:39:9-42:40
+208            android:name="com.facebook.internal.FacebookInitProvider"
+208-->[com.facebook.android:facebook-core:12.2.0] /home/gio-brooky/.gradle/caches/transforms-3/7443416bfadd57a1b29a6fa83ed44ef0/transformed/jetified-facebook-core-12.2.0/AndroidManifest.xml:40:13-70
+209            android:authorities="com.brooky.dazle.FacebookInitProvider"
+209-->[com.facebook.android:facebook-core:12.2.0] /home/gio-brooky/.gradle/caches/transforms-3/7443416bfadd57a1b29a6fa83ed44ef0/transformed/jetified-facebook-core-12.2.0/AndroidManifest.xml:41:13-72
+210            android:exported="false" />
+210-->[com.facebook.android:facebook-core:12.2.0] /home/gio-brooky/.gradle/caches/transforms-3/7443416bfadd57a1b29a6fa83ed44ef0/transformed/jetified-facebook-core-12.2.0/AndroidManifest.xml:42:13-37
+211
+212        <receiver
+212-->[com.facebook.android:facebook-core:12.2.0] /home/gio-brooky/.gradle/caches/transforms-3/7443416bfadd57a1b29a6fa83ed44ef0/transformed/jetified-facebook-core-12.2.0/AndroidManifest.xml:44:9-50:20
+213            android:name="com.facebook.CurrentAccessTokenExpirationBroadcastReceiver"
+213-->[com.facebook.android:facebook-core:12.2.0] /home/gio-brooky/.gradle/caches/transforms-3/7443416bfadd57a1b29a6fa83ed44ef0/transformed/jetified-facebook-core-12.2.0/AndroidManifest.xml:45:13-86
+214            android:exported="false" >
+214-->[com.facebook.android:facebook-core:12.2.0] /home/gio-brooky/.gradle/caches/transforms-3/7443416bfadd57a1b29a6fa83ed44ef0/transformed/jetified-facebook-core-12.2.0/AndroidManifest.xml:46:13-37
+215            <intent-filter>
+215-->[com.facebook.android:facebook-core:12.2.0] /home/gio-brooky/.gradle/caches/transforms-3/7443416bfadd57a1b29a6fa83ed44ef0/transformed/jetified-facebook-core-12.2.0/AndroidManifest.xml:47:13-49:29
+216                <action android:name="com.facebook.sdk.ACTION_CURRENT_ACCESS_TOKEN_CHANGED" />
+216-->[com.facebook.android:facebook-core:12.2.0] /home/gio-brooky/.gradle/caches/transforms-3/7443416bfadd57a1b29a6fa83ed44ef0/transformed/jetified-facebook-core-12.2.0/AndroidManifest.xml:48:17-95
+216-->[com.facebook.android:facebook-core:12.2.0] /home/gio-brooky/.gradle/caches/transforms-3/7443416bfadd57a1b29a6fa83ed44ef0/transformed/jetified-facebook-core-12.2.0/AndroidManifest.xml:48:25-92
+217            </intent-filter>
+218        </receiver>
+219        <receiver
+219-->[com.facebook.android:facebook-core:12.2.0] /home/gio-brooky/.gradle/caches/transforms-3/7443416bfadd57a1b29a6fa83ed44ef0/transformed/jetified-facebook-core-12.2.0/AndroidManifest.xml:51:9-57:20
+220            android:name="com.facebook.AuthenticationTokenManager$CurrentAuthenticationTokenChangedBroadcastReceiver"
+220-->[com.facebook.android:facebook-core:12.2.0] /home/gio-brooky/.gradle/caches/transforms-3/7443416bfadd57a1b29a6fa83ed44ef0/transformed/jetified-facebook-core-12.2.0/AndroidManifest.xml:52:13-118
+221            android:exported="false" >
+221-->[com.facebook.android:facebook-core:12.2.0] /home/gio-brooky/.gradle/caches/transforms-3/7443416bfadd57a1b29a6fa83ed44ef0/transformed/jetified-facebook-core-12.2.0/AndroidManifest.xml:53:13-37
+222            <intent-filter>
+222-->[com.facebook.android:facebook-core:12.2.0] /home/gio-brooky/.gradle/caches/transforms-3/7443416bfadd57a1b29a6fa83ed44ef0/transformed/jetified-facebook-core-12.2.0/AndroidManifest.xml:54:13-56:29
+223                <action android:name="com.facebook.sdk.ACTION_CURRENT_AUTHENTICATION_TOKEN_CHANGED" />
+223-->[com.facebook.android:facebook-core:12.2.0] /home/gio-brooky/.gradle/caches/transforms-3/7443416bfadd57a1b29a6fa83ed44ef0/transformed/jetified-facebook-core-12.2.0/AndroidManifest.xml:55:17-103
+223-->[com.facebook.android:facebook-core:12.2.0] /home/gio-brooky/.gradle/caches/transforms-3/7443416bfadd57a1b29a6fa83ed44ef0/transformed/jetified-facebook-core-12.2.0/AndroidManifest.xml:55:25-100
+224            </intent-filter>
+225        </receiver> <!-- Needs to be explicitly declared on P+ -->
+226        <uses-library
+226-->[com.google.android.gms:play-services-maps:17.0.0] /home/gio-brooky/.gradle/caches/transforms-3/32a6bf389e21d142d4bb0cffa5151a61/transformed/jetified-play-services-maps-17.0.0/AndroidManifest.xml:33:9-35:40
+227            android:name="org.apache.http.legacy"
+227-->[com.google.android.gms:play-services-maps:17.0.0] /home/gio-brooky/.gradle/caches/transforms-3/32a6bf389e21d142d4bb0cffa5151a61/transformed/jetified-play-services-maps-17.0.0/AndroidManifest.xml:34:13-50
+228            android:required="false" />
+228-->[com.google.android.gms:play-services-maps:17.0.0] /home/gio-brooky/.gradle/caches/transforms-3/32a6bf389e21d142d4bb0cffa5151a61/transformed/jetified-play-services-maps-17.0.0/AndroidManifest.xml:35:13-37
+229
+230        <activity
+230-->[com.google.android.gms:play-services-auth:20.0.1] /home/gio-brooky/.gradle/caches/transforms-3/cbcd04c377b1b2939733bc053c82735b/transformed/jetified-play-services-auth-20.0.1/AndroidManifest.xml:23:9-27:75
+231            android:name="com.google.android.gms.auth.api.signin.internal.SignInHubActivity"
+231-->[com.google.android.gms:play-services-auth:20.0.1] /home/gio-brooky/.gradle/caches/transforms-3/cbcd04c377b1b2939733bc053c82735b/transformed/jetified-play-services-auth-20.0.1/AndroidManifest.xml:24:13-93
+232            android:excludeFromRecents="true"
+232-->[com.google.android.gms:play-services-auth:20.0.1] /home/gio-brooky/.gradle/caches/transforms-3/cbcd04c377b1b2939733bc053c82735b/transformed/jetified-play-services-auth-20.0.1/AndroidManifest.xml:25:13-46
+233            android:exported="false"
+233-->[com.google.android.gms:play-services-auth:20.0.1] /home/gio-brooky/.gradle/caches/transforms-3/cbcd04c377b1b2939733bc053c82735b/transformed/jetified-play-services-auth-20.0.1/AndroidManifest.xml:26:13-37
+234            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+234-->[com.google.android.gms:play-services-auth:20.0.1] /home/gio-brooky/.gradle/caches/transforms-3/cbcd04c377b1b2939733bc053c82735b/transformed/jetified-play-services-auth-20.0.1/AndroidManifest.xml:27:13-72
+235        <!--
+236            Service handling Google Sign-In user revocation. For apps that do not integrate with
+237            Google Sign-In, this service will never be started.
+238        -->
+239        <service
+239-->[com.google.android.gms:play-services-auth:20.0.1] /home/gio-brooky/.gradle/caches/transforms-3/cbcd04c377b1b2939733bc053c82735b/transformed/jetified-play-services-auth-20.0.1/AndroidManifest.xml:33:9-37:51
+240            android:name="com.google.android.gms.auth.api.signin.RevocationBoundService"
+240-->[com.google.android.gms:play-services-auth:20.0.1] /home/gio-brooky/.gradle/caches/transforms-3/cbcd04c377b1b2939733bc053c82735b/transformed/jetified-play-services-auth-20.0.1/AndroidManifest.xml:34:13-89
+241            android:exported="true"
+241-->[com.google.android.gms:play-services-auth:20.0.1] /home/gio-brooky/.gradle/caches/transforms-3/cbcd04c377b1b2939733bc053c82735b/transformed/jetified-play-services-auth-20.0.1/AndroidManifest.xml:35:13-36
+242            android:permission="com.google.android.gms.auth.api.signin.permission.REVOCATION_NOTIFICATION"
+242-->[com.google.android.gms:play-services-auth:20.0.1] /home/gio-brooky/.gradle/caches/transforms-3/cbcd04c377b1b2939733bc053c82735b/transformed/jetified-play-services-auth-20.0.1/AndroidManifest.xml:36:13-107
+243            android:visibleToInstantApps="true" />
+243-->[com.google.android.gms:play-services-auth:20.0.1] /home/gio-brooky/.gradle/caches/transforms-3/cbcd04c377b1b2939733bc053c82735b/transformed/jetified-play-services-auth-20.0.1/AndroidManifest.xml:37:13-48
+244
+245        <activity
+245-->[com.google.android.gms:play-services-base:18.0.1] /home/gio-brooky/.gradle/caches/transforms-3/1dfa2e39dce4861066d808364cc2d269/transformed/jetified-play-services-base-18.0.1/AndroidManifest.xml:20:9-22:45
+246            android:name="com.google.android.gms.common.api.GoogleApiActivity"
+246-->[com.google.android.gms:play-services-base:18.0.1] /home/gio-brooky/.gradle/caches/transforms-3/1dfa2e39dce4861066d808364cc2d269/transformed/jetified-play-services-base-18.0.1/AndroidManifest.xml:20:19-85
+247            android:exported="false"
+247-->[com.google.android.gms:play-services-base:18.0.1] /home/gio-brooky/.gradle/caches/transforms-3/1dfa2e39dce4861066d808364cc2d269/transformed/jetified-play-services-base-18.0.1/AndroidManifest.xml:22:19-43
+248            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+248-->[com.google.android.gms:play-services-base:18.0.1] /home/gio-brooky/.gradle/caches/transforms-3/1dfa2e39dce4861066d808364cc2d269/transformed/jetified-play-services-base-18.0.1/AndroidManifest.xml:21:19-78
+249
+250        <meta-data
+250-->[com.google.android.gms:play-services-basement:18.0.0] /home/gio-brooky/.gradle/caches/transforms-3/e48ca6bab811aa2f3d02448abb199859/transformed/jetified-play-services-basement-18.0.0/AndroidManifest.xml:21:9-23:69
+251            android:name="com.google.android.gms.version"
+251-->[com.google.android.gms:play-services-basement:18.0.0] /home/gio-brooky/.gradle/caches/transforms-3/e48ca6bab811aa2f3d02448abb199859/transformed/jetified-play-services-basement-18.0.0/AndroidManifest.xml:22:13-58
+252            android:value="@integer/google_play_services_version" />
+252-->[com.google.android.gms:play-services-basement:18.0.0] /home/gio-brooky/.gradle/caches/transforms-3/e48ca6bab811aa2f3d02448abb199859/transformed/jetified-play-services-basement-18.0.0/AndroidManifest.xml:23:13-66
+253
+254        <uses-library
+254-->[androidx.window:window:1.0.0-beta04] /home/gio-brooky/.gradle/caches/transforms-3/0075adec50118cd9ffddcb05f6200ea7/transformed/jetified-window-1.0.0-beta04/AndroidManifest.xml:25:9-27:40
+255            android:name="androidx.window.extensions"
+255-->[androidx.window:window:1.0.0-beta04] /home/gio-brooky/.gradle/caches/transforms-3/0075adec50118cd9ffddcb05f6200ea7/transformed/jetified-window-1.0.0-beta04/AndroidManifest.xml:26:13-54
+256            android:required="false" />
+256-->[androidx.window:window:1.0.0-beta04] /home/gio-brooky/.gradle/caches/transforms-3/0075adec50118cd9ffddcb05f6200ea7/transformed/jetified-window-1.0.0-beta04/AndroidManifest.xml:27:13-37
+257        <uses-library
+257-->[androidx.window:window:1.0.0-beta04] /home/gio-brooky/.gradle/caches/transforms-3/0075adec50118cd9ffddcb05f6200ea7/transformed/jetified-window-1.0.0-beta04/AndroidManifest.xml:28:9-30:40
+258            android:name="androidx.window.sidecar"
+258-->[androidx.window:window:1.0.0-beta04] /home/gio-brooky/.gradle/caches/transforms-3/0075adec50118cd9ffddcb05f6200ea7/transformed/jetified-window-1.0.0-beta04/AndroidManifest.xml:29:13-51
+259            android:required="false" /> <!-- The activities will be merged into the manifest of the hosting app. -->
+259-->[androidx.window:window:1.0.0-beta04] /home/gio-brooky/.gradle/caches/transforms-3/0075adec50118cd9ffddcb05f6200ea7/transformed/jetified-window-1.0.0-beta04/AndroidManifest.xml:30:13-37
+260        <activity
+260-->[com.google.android.play:core:1.8.0] /home/gio-brooky/.gradle/caches/transforms-3/6d235f1e63111ee78f23281a4c79769d/transformed/jetified-core-1.8.0/AndroidManifest.xml:12:5-271
+261            android:name="com.google.android.play.core.missingsplits.PlayCoreMissingSplitsActivity"
+261-->[com.google.android.play:core:1.8.0] /home/gio-brooky/.gradle/caches/transforms-3/6d235f1e63111ee78f23281a4c79769d/transformed/jetified-core-1.8.0/AndroidManifest.xml:12:15-102
+262            android:enabled="false"
+262-->[com.google.android.play:core:1.8.0] /home/gio-brooky/.gradle/caches/transforms-3/6d235f1e63111ee78f23281a4c79769d/transformed/jetified-core-1.8.0/AndroidManifest.xml:12:103-126
+263            android:exported="false"
+263-->[com.google.android.play:core:1.8.0] /home/gio-brooky/.gradle/caches/transforms-3/6d235f1e63111ee78f23281a4c79769d/transformed/jetified-core-1.8.0/AndroidManifest.xml:12:127-151
+264            android:launchMode="singleInstance"
+264-->[com.google.android.play:core:1.8.0] /home/gio-brooky/.gradle/caches/transforms-3/6d235f1e63111ee78f23281a4c79769d/transformed/jetified-core-1.8.0/AndroidManifest.xml:12:204-239
+265            android:process=":playcore_missing_splits_activity"
+265-->[com.google.android.play:core:1.8.0] /home/gio-brooky/.gradle/caches/transforms-3/6d235f1e63111ee78f23281a4c79769d/transformed/jetified-core-1.8.0/AndroidManifest.xml:12:152-203
+266            android:stateNotNeeded="true" />
+266-->[com.google.android.play:core:1.8.0] /home/gio-brooky/.gradle/caches/transforms-3/6d235f1e63111ee78f23281a4c79769d/transformed/jetified-core-1.8.0/AndroidManifest.xml:12:240-269
+267        <activity
+267-->[com.google.android.play:core:1.8.0] /home/gio-brooky/.gradle/caches/transforms-3/6d235f1e63111ee78f23281a4c79769d/transformed/jetified-core-1.8.0/AndroidManifest.xml:13:5-226
+268            android:name="com.google.android.play.core.common.PlayCoreDialogWrapperActivity"
+268-->[com.google.android.play:core:1.8.0] /home/gio-brooky/.gradle/caches/transforms-3/6d235f1e63111ee78f23281a4c79769d/transformed/jetified-core-1.8.0/AndroidManifest.xml:13:15-95
+269            android:enabled="false"
+269-->[com.google.android.play:core:1.8.0] /home/gio-brooky/.gradle/caches/transforms-3/6d235f1e63111ee78f23281a4c79769d/transformed/jetified-core-1.8.0/AndroidManifest.xml:13:96-119
+270            android:exported="false"
+270-->[com.google.android.play:core:1.8.0] /home/gio-brooky/.gradle/caches/transforms-3/6d235f1e63111ee78f23281a4c79769d/transformed/jetified-core-1.8.0/AndroidManifest.xml:13:120-144
+271            android:stateNotNeeded="true"
+271-->[com.google.android.play:core:1.8.0] /home/gio-brooky/.gradle/caches/transforms-3/6d235f1e63111ee78f23281a4c79769d/transformed/jetified-core-1.8.0/AndroidManifest.xml:13:145-174
+272            android:theme="@style/Theme.PlayCore.Transparent" /> <!-- The service will be merged into the manifest of the hosting app. -->
+272-->[com.google.android.play:core:1.8.0] /home/gio-brooky/.gradle/caches/transforms-3/6d235f1e63111ee78f23281a4c79769d/transformed/jetified-core-1.8.0/AndroidManifest.xml:13:175-224
+273        <service
+273-->[com.google.android.play:core:1.8.0] /home/gio-brooky/.gradle/caches/transforms-3/6d235f1e63111ee78f23281a4c79769d/transformed/jetified-core-1.8.0/AndroidManifest.xml:16:5-145
+274            android:name="com.google.android.play.core.assetpacks.AssetPackExtractionService"
+274-->[com.google.android.play:core:1.8.0] /home/gio-brooky/.gradle/caches/transforms-3/6d235f1e63111ee78f23281a4c79769d/transformed/jetified-core-1.8.0/AndroidManifest.xml:16:14-95
+275            android:enabled="false"
+275-->[com.google.android.play:core:1.8.0] /home/gio-brooky/.gradle/caches/transforms-3/6d235f1e63111ee78f23281a4c79769d/transformed/jetified-core-1.8.0/AndroidManifest.xml:16:96-119
+276            android:exported="true" />
+276-->[com.google.android.play:core:1.8.0] /home/gio-brooky/.gradle/caches/transforms-3/6d235f1e63111ee78f23281a4c79769d/transformed/jetified-core-1.8.0/AndroidManifest.xml:16:120-143
+277    </application>
+278
+279</manifest>

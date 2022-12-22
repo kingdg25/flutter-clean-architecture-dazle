@@ -1,0 +1,4 @@
+#Thu Dec 22 10:30:55 PST 2022
+base.0=/home/gio-brooky/Desktop/Brooky/dazle-client-mobile/build/app/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+path.0=classes.dex
+renamed.0=classes.dex
