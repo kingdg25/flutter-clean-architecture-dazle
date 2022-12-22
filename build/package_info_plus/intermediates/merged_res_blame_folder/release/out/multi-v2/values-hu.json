@@ -1,0 +1,34 @@
+{
+    "logs": [
+        {
+            "outputFile": "/home/gio-brooky/Desktop/Brooky/dazle-client-mobile/build/package_info_plus/intermediates/incremental/mergeReleaseResources/merged.dir/values-hu/values-hu.xml",
+            "map": [
+                {
+                    "source": "/home/gio-brooky/.gradle/caches/transforms-3/128d2d0547c9407c418eda6e56c3b94d/transformed/core-1.6.0/res/values-hu/values-hu.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "100",
+                        "endOffsets": "151"
+                    }
+                }
+            ]
+        },
+        {
+            "outputFile": "/home/gio-brooky/Desktop/Brooky/dazle-client-mobile/build/package_info_plus/intermediates/merged_res/release/values-hu/values-hu.xml",
+            "map": [
+                {
+                    "source": "/home/gio-brooky/.gradle/caches/transforms-3/128d2d0547c9407c418eda6e56c3b94d/transformed/core-1.6.0/res/values-hu/values-hu.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "100",
+                        "endOffsets": "151"
+                    }
+                }
+            ]
+        }
+    ]
+}

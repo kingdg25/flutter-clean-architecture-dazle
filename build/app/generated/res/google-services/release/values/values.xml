@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="default_web_client_id" translatable="false">857388716055-j76ms4171s6ci9u0itr8atpbifcig8vt.apps.googleusercontent.com</string>
+    <string name="gcm_defaultSenderId" translatable="false">857388716055</string>
+    <string name="google_api_key" translatable="false">AIzaSyDnM1Q7f0-ekMK5FtuSkzTRxVYGXaNfw8Y</string>
+    <string name="google_app_id" translatable="false">1:857388716055:android:fefd39c51d358304588c52</string>
+    <string name="google_crash_reporting_api_key" translatable="false">AIzaSyDnM1Q7f0-ekMK5FtuSkzTRxVYGXaNfw8Y</string>
+    <string name="google_storage_bucket" translatable="false">skilful-grammar-260603.appspot.com</string>
+    <string name="project_id" translatable="false">skilful-grammar-260603</string>
+</resources>
