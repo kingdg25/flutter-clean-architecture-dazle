@@ -4,12 +4,12 @@
 4
 5    <uses-sdk
 6        android:minSdkVersion="16"
-6-->/home/gio-brooky/.pub-cache/hosted/pub.dartlang.org/photo_manager-2.1.4/android/src/main/AndroidManifest.xml
+6-->/Users/elroyuta/.pub-cache/hosted/pub.dartlang.org/photo_manager-2.1.4/android/src/main/AndroidManifest.xml
 7        android:targetSdkVersion="16" />
-7-->/home/gio-brooky/.pub-cache/hosted/pub.dartlang.org/photo_manager-2.1.4/android/src/main/AndroidManifest.xml
+7-->/Users/elroyuta/.pub-cache/hosted/pub.dartlang.org/photo_manager-2.1.4/android/src/main/AndroidManifest.xml
 8
 9    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-9-->/home/gio-brooky/.pub-cache/hosted/pub.dartlang.org/photo_manager-2.1.4/android/src/main/AndroidManifest.xml:4:5-79
-9-->/home/gio-brooky/.pub-cache/hosted/pub.dartlang.org/photo_manager-2.1.4/android/src/main/AndroidManifest.xml:4:22-77
+9-->/Users/elroyuta/.pub-cache/hosted/pub.dartlang.org/photo_manager-2.1.4/android/src/main/AndroidManifest.xml:4:5-79
+9-->/Users/elroyuta/.pub-cache/hosted/pub.dartlang.org/photo_manager-2.1.4/android/src/main/AndroidManifest.xml:4:22-77
 10
 11</manifest>

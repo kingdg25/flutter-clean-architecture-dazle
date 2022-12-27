@@ -28,14 +28,14 @@ rm Gemfile.lock
 fvm flutter build appbundle --build-name=$BUILD_NAME --build-number=$BUILD_VERSION --no-tree-shake-icons
 bundle exec fastlane supply --aab ../build/app/outputs/bundle/release/app-release.aab --track internal 
 
-# cd ..
-# python scripts/helpers/replace.py ios/fastlane/Fastfile "#{BUILD}" "$BUILD_NAME"
-# cd $CI_PROJECT_DIR/ios/
-# rm Gemfile.lock
-# bundle install
-# bundle update fastlane
-# bundle update
-# rm Podfile.lock
-# pod install
-# fastlane staging --verbose
+cd ..
+python scripts/helpers/replace.py ios/fastlane/Fastfile "#{BUILD}" "$BUILD_NAME"
+cd ios
+rm Gemfile.lock
+bundle install
+bundle update fastlane
+bundle update
+rm Podfile.lock
+pod install
+fastlane staging --verbose
 curl https://asia-east1-dazle-370306.cloudfunctions.net/incrementAppVersion?company=sample-document
