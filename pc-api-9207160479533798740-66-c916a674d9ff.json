@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "pc-api-9207160479533798740-66",
+  "private_key_id": "c916a674d9fff41465ccb4bb4549adf8f777e0b8",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDpNsCEWEDPLqhc\n/g05XhHYsNEujm6r48DPK0ORq869NjVcJYrIbV7VOWPsfKYCiIP3JW9wmrxz5+uy\n25sB0IoorMUFi7b5qU6FUfUyjAZc2LABSWEulJ5MgS80p7O7PagjspAzmYcY8oWN\npvZF13oFZW9aPo0te6nsmU2I7P3Wts44OY0nLvRrYMYOsSddC3DdwiKzpCQoY8kl\nQ/loRZCjFX2BVbzVtWU53RASn6Xet+9JdOpFMSHG/xiE74Ogt0xwaMpwT3y/A45B\ngQSOJhcat22kevnbYen88tc3ufNIDzIJWjh1HBGYOUoYzzDGkjp/UddqUHt+DEr9\nU+nkEfddAgMBAAECggEANG+2nqs3Oz5K5cnLkGQJ0DaFehnVYXmunwYjxaujKuD2\n43afe0w4H+otAP3P1875GQdGRMPN7qOtV8RP2HsarWWXURVmeUErogdZAdoBDjw8\narWkj7Qj2aDMS+MPIuEMnqYmDSwOd7oD9GMfiXmW+oKhpGFfHeRpwwR/LfPXaUC4\nQMFKOIce0Wz/Be7W4VOHYDrKcIRaTADglGBVGJlQ2/J+yUt3cx6bzbu3c1kFcy6n\nOuCLvR6PBKAiI3oTQV/cHgHBaUaeiyHQHO1qXipOBZpY817FzjaxF2FOQqCO6lqn\nR6m05Y2woNYbD+CnAlu0d25IwCHer5jtTxMZBOvPcwKBgQD2K9/H9knmHO7arLaE\nzTbeNnJn3PnRVCJjDUltrbn9OkXoxV2Z1ZYexCQvG9g4giWgjFRFru+imG3dbsLu\n6G1r3q0hmUNOoZXWxuP/dWklR9CX2KpjooBQ45ykzpM3/EB73+MEA6HI4bG0BeZk\n++up9DKyK63EXG18h9L6154TlwKBgQDyhnBSJDKlfE3lvNwSCGsCzPBA5pUmKmWB\n1X5j29wH7PYRHH1FQjDSxFxbCMlgYWQHA4bfVLYD5CFIgV7fLDvrDCmxYxLR3CJ2\nFTBxMKqYcPjpLAXMGtWsw5Od49nxMomHqFmDap0jy36qvUYpHEzRlexepYQ4XqZW\n3PhhWqJbKwKBgQCLiydZVJVjafdD4i+8bA+0OyzzD2JVdNnhSEDdeWM61nOWlXqP\nn3Fvk0PnqGMS9UObFLEYpyeUBdARe53oi7yrLxj5OMXcpuAnVascvlOSHHlz+g/s\nVstiDwRWr/rn+4gaMDmhpuVo1/dB0y5dBCj8uD6cnQHtk29E7kF8jAlBlQKBgEym\ncs9zQ1KMI+6NLxy/7lpXPUO13MPQOH69ZBHZhgQ3P1oPIASIs/eZOftHnqXIgh25\nXqItGs3GB0LsKHjueQ2DrZWz01nicj3R2pqbn/9IDVNcp4RnosrUkU4gmlwh9deb\nPJdNVdbfVOxPn+IUYK8I7EjJlS1ftMDVW+chBxk7AoGAUfLzW8JLOX9Y0tWpRtY0\naGs2wKqU0lEQUUjOoe6y1NqICGwY21syb3x30ZgY1vqxTXO6CftKRMNiNxTj8rL6\nd0M8/x0/WWiL1jfrh2j51VvBEY2AD9xq5KzKPUzZ2JvhGFTNUT21BYBeHEqIqkNV\naZRtI/r9crDIs57D2s6SGuA=\n-----END PRIVATE KEY-----\n",
+  "client_email": "dazleautomation@pc-api-9207160479533798740-66.iam.gserviceaccount.com",
+  "client_id": "110101016801855487489",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/dazleautomation%40pc-api-9207160479533798740-66.iam.gserviceaccount.com"
+}
