@@ -24,7 +24,7 @@ fvm flutter analyze || exit 1
 sed -i '' "s/#{VERSION}/$BUILD_NAME.$BUILD_ENV/g" $CI_PROJECT_DIR/lib/version.dart
 cd android
 rm Gemfile.lock
-./gradlew clean assembleRelease
+# ./gradlew clean assembleReleases
 fvm flutter build appbundle --build-name=$BUILD_NAME --build-number=$BUILD_VERSION --no-tree-shake-icons
 bundle exec fastlane supply --aab ../build/app/outputs/bundle/release/app-release.aab --track internal 
 
