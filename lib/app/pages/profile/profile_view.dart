@@ -1,5 +1,6 @@
 import 'package:dazle/app/widgets/custom_appbar.dart';
 import 'package:dazle/app/widgets/custom_image.dart';
+import 'package:dazle/version.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 
@@ -207,7 +208,7 @@ class _ProfilePageState extends ViewState<ProfilePage, ProfileController> {
                                 controller.getProportionateScreenHeight(20.0),
                           ),
                           CustomText(
-                            text: 'V1.2.3',
+                            text: versionNumber(),
                             color: App.hintColor,
                           ),
                         ],
