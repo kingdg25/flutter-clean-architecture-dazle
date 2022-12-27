@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "/home/gio-brooky/Desktop/Brooky/dazle-client-mobile/build/app/intermediates/incremental/mergeReleaseResources/merged.dir/values-large-v4/values-large-v4.xml",
+            "outputFile": "/Users/elroyuta/Desktop/temp/Dazle/Automation/dazle-client-mobile/build/app/intermediates/incremental/mergeReleaseResources/merged.dir/values-large-v4/values-large-v4.xml",
             "map": [
                 {
-                    "source": "/home/gio-brooky/.gradle/caches/transforms-3/13b4fac4ab94fdd1d704273750f0d391/transformed/appcompat-1.1.0/res/values-large-v4/values-large-v4.xml",
+                    "source": "/Users/elroyuta/.gradle/caches/transforms-3/13b4fac4ab94fdd1d704273750f0d391/transformed/appcompat-1.1.0/res/values-large-v4/values-large-v4.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9,10",
                         "startColumns": "4,4,4,4,4,4,4,4,4",

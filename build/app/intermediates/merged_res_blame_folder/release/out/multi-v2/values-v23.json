@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "/home/gio-brooky/Desktop/Brooky/dazle-client-mobile/build/app/intermediates/incremental/mergeReleaseResources/merged.dir/values-v23/values-v23.xml",
+            "outputFile": "/Users/elroyuta/Desktop/temp/Dazle/Automation/dazle-client-mobile/build/app/intermediates/incremental/mergeReleaseResources/merged.dir/values-v23/values-v23.xml",
             "map": [
                 {
-                    "source": "/home/gio-brooky/.gradle/caches/transforms-3/13b4fac4ab94fdd1d704273750f0d391/transformed/appcompat-1.1.0/res/values-v23/values-v23.xml",
+                    "source": "/Users/elroyuta/.gradle/caches/transforms-3/13b4fac4ab94fdd1d704273750f0d391/transformed/appcompat-1.1.0/res/values-v23/values-v23.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,20,34,35,36,37,41,42,43,44",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4",
@@ -15,7 +15,7 @@
                     }
                 },
                 {
-                    "source": "/home/gio-brooky/.gradle/caches/transforms-3/2b7af5994867af4d4380c1d74a91ef90/transformed/cardview-1.0.0/res/values-v23/values-v23.xml",
+                    "source": "/Users/elroyuta/.gradle/caches/transforms-3/2b7af5994867af4d4380c1d74a91ef90/transformed/cardview-1.0.0/res/values-v23/values-v23.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",
