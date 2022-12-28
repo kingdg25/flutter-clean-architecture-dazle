@@ -7,6 +7,6 @@ public final class BuildConfig {
   public static final boolean DEBUG = false;
   public static final String APPLICATION_ID = "com.brooky.dazle";
   public static final String BUILD_TYPE = "release";
-  public static final int VERSION_CODE = 936;
-  public static final String VERSION_NAME = "2.0.36";
+  public static final int VERSION_CODE = 947;
+  public static final String VERSION_NAME = "2.0.47";
 }

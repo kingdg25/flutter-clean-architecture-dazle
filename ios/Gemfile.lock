@@ -215,11 +215,11 @@ GEM
       xcpretty (~> 0.2, >= 0.0.7)
 
 PLATFORMS
-  ruby
+  x86_64-darwin-22
 
 DEPENDENCIES
   fastlane
   fastlane-plugin-flutter_version!
 
 BUNDLED WITH
-   1.17.2
+   2.4.1
