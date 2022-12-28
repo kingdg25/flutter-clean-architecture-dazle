@@ -29,7 +29,7 @@ fvm flutter build appbundle --build-name=$BUILD_NAME --build-number=$BUILD_VERSI
 bundle exec fastlane supply --aab ../build/app/outputs/bundle/release/app-release.aab --track internal 
 
 cd ..
-python scripts/helpers/replace.py ios/fastlane/Fastfile "#{BUILD}" "$BUILD_NAME"
+python3 scripts/helpers/replace.py ios/fastlane/Fastfile "#{BUILD}" "$BUILD_NAME"
 cd ios
 rm Gemfile.lock
 bundle install
