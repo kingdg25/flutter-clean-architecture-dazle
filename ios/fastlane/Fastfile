@@ -53,7 +53,7 @@ platform :ios do
     )
     increment_build_number(xcodeproj: "Runner.xcodeproj")
     increment_version_number(
-      version_number: "#{BUILD}",
+      version_number: "2.0.50",
       xcodeproj: "Runner.xcodeproj"
     )
     build_app(workspace: "Runner.xcworkspace", scheme: "Runner")
